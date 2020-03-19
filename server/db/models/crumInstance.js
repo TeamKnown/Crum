@@ -15,6 +15,9 @@ const CrumInstance = db.define('crumInstance', {
   longitude: {
     type: Sequelize.DECIMAL(10, 4)
   },
+  altitude: {
+    type: Sequelize.DECIMAL(10, 4)
+  },
   latitudeIdx: {
     type: Sequelize.INTEGER
   },
@@ -39,6 +42,23 @@ CrumInstance.prototype.findNear = async function(radium) {
       longitudeIdx: {
         [Op.lte]: this.longitudeIdx + radium,
         [Op.gte]: this.longitudeIdx - radium
+      }
+    }
+  })
+  return near
+}
+
+CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
+  // console.log('here', this.longitudeIdx)
+  const near = await CrumInstance.findAll({
+    where: {
+      latitudeIdx: {
+        [Op.lte]: latitudeIdx + radium,
+        [Op.gte]: latitudeIdx - radium
+      },
+      longitudeIdx: {
+        [Op.lte]: longitudeIdx + radium,
+        [Op.gte]: longitudeIdx - radium
       }
     }
   })
