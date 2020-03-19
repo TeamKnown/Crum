@@ -1,0 +1,30 @@
+language: node_js
+node_js:
+  - node # uses most recent stable node version
+services:
+  - postgresql # starts up postgres
+addons:
+  postgresql: '10' # recent postgres version on Travis
+dist: xenial # uses xenial environment
+notifications:
+  email:
+    on_success: change # default: change (only when going from broken to fixed)
+    on_failure: always # default: always (which is annoying, as it should be)
+install:
+  - npm ci # faster, goes only from package-lock
+before_script:
+  - psql -c 'create database "crum-test";' -U postgres # remember to change this name if you change it elsewhere (e.g. package.json)
+script:
+  - npm test # test the code
+  - npm run build-client # make the bundle
+before_deploy: # omit node_modules, since we set skip_cleanup below
+  - rm -rf node_modules
+deploy: # see README for details on these keys
+  # prevents travis from deleting the build
+  skip_cleanup: true
+  provider: heroku
+  # app should be your heroku app name; see README
+  app: crums
+  # the secure key indicates an encrypted value; see README
+  api_key:
+    secure: JrkwP6AckkBXLV1+Bct7FYyos7DJoBJrlUZFXc+09w77bAzX39SD/Qwg4JHMf/V//9FAwOM8KC6XNNUZyHClSxBtLDmzhuoN4eE2ihPCeA2FtM3i3FwWNbD5Lre4plUK04Wqvjh4dq7YZryrHKtObgpTJt9G2MocTeQzFNuQqJbmCSzO9+UxhYaTrortLQgIfjccAevpLl6xnE4RD0KcQmDLlztz9FQevvr2BT+37HlQ8DXnayD1+8Tbed6vUYAKCURPdWz2TdvyMnU3aPi6BZU+jn7tG/OrQSpL+K/gOqe90BOgKiywBNmCQrX1FnL40aYjbqITyOY++ws4yjhgNuQCahkY6Aj6bzTAzwdPoUj5VZFHiA5MDWSG73HkBdxTCyyaKwfOGA46iEQTxXjB3n1A0CXyuM1NBJ9fwHz95hUZ1Z+uYMCmsXSnH7XnRbbZYMbtcuDch4cAJjKRHhVTLZ38vtnLH5060KngKkSr2bBG87gLA2CT3O9n7xKXzDZjMVh4ipd25gZnz90nj/W8EX6e+qcYCMcH4/0oSEumKHRguPz8x+Id4fJI3Y/AWApb7bSvJjsboTfPi1D9M2khmDqRtdDHZ8hf8UAo4vYtvA+tfumA7KNqooNJ0TwJB2cLXjCEQzscaiEWLWpKEupqrdaI/SslRwlQ9CtZ/MdX+cg=
