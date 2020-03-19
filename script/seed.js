@@ -2,7 +2,7 @@
 
 const {green, red} = require('chalk')
 const db = require('../server/db')
-const {User, Crumb, CrumbInstance} = require('../server/db/models')
+const {User, Crum, CrumInstance} = require('../server/db/models')
 
 const users = [
   {
@@ -118,11 +118,64 @@ const users = [
   }
 ]
 
+const crumInstances = [
+  {
+    title: 'april apartment',
+    des: 'april apartment 1',
+    latitude: 40.7074,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7074,
+    longitude: -74.0055
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7072,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7073,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7076,
+    longitude: -74.0051
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7076,
+    longitude: -74.0052
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7073,
+    longitude: -74.0056
+  }
+]
 const seed = async () => {
   try {
     await db.sync({force: true})
     console.log('db synced!')
     await Promise.all(users.map(user => User.create(user)))
+    await Promise.all(
+      crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
+    )
   } catch (error) {
     console.log(red(error))
   }
