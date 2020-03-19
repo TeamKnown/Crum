@@ -1,6 +1,9 @@
 {
   "name": "crum",
   "description": "drop crums",
+  "engines": {
+    "node": ">= 7.0.0"
+  },
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "build-client": "webpack",
