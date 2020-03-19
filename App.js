@@ -1,28 +1,28 @@
-import * as React from "react";
-import { Platform, View, Text, StyleSheet, Image } from "react-native";
-import { Router, Scene, Stack } from "react-native-router-flux";
-import NavigationBar from "react-native-navbar";
+import * as React from 'react'
+import {Platform, View, Text, StyleSheet, Image} from 'react-native'
+import {Router, Scene, Stack} from 'react-native-router-flux'
+import NavigationBar from 'react-native-navbar'
 
-import ScarletScreen from "./components/ScarletScreen.js";
-import GrayScreen from "./components/GrayScreen";
-import ARScreen from "./components/ARScreen";
+import ScarletScreen from './components/MapScreen.js'
+import GrayScreen from './components/GrayScreen'
+import ARScreen from './components/ARScreen'
 
 const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,
-    color: "red"
+    color: 'red'
   },
   nav: {
-    flexDirection: "row",
-    justifyContent: "space-around"
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
-});
+})
 
 export default class App extends React.Component {
   render() {
-    const TabIcon = ({ selected, title }) => {
-      return <Text style={{ color: selected ? "red" : "black" }}>{title}</Text>;
-    };
+    const TabIcon = ({selected, title}) => {
+      return <Text style={{color: selected ? 'red' : 'black'}}>{title}</Text>
+    }
 
     return (
       <Router>
@@ -32,6 +32,6 @@ export default class App extends React.Component {
           <Scene key="gray" component={GrayScreen} title="Gray" />
         </Scene>
       </Router>
-    );
+    )
   }
 }
