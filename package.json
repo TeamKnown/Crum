@@ -17,6 +17,8 @@
     "postinstall": "touch secrets.js",
     "seed": "node script/seed.js",
     "start": "expo start",
+    "start-dev": "NODE_ENV='development' npm run start & NODE_ENV='development' npm run start-server",
+    "start-server": "nodemon server -e html,js,scss --ignore public --ignore client",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",

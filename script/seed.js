@@ -2,12 +2,180 @@
 
 const {green, red} = require('chalk')
 const db = require('../server/db')
-const {User, Crumb, CrumbInstance} = require('../server/db/models')
+const {User, Crum, CrumInstance} = require('../server/db/models')
 
+const users = [
+  {
+    userName: 'Alric Venners',
+    email: 'avenners0@businessweek.com',
+    password: 'CzXV0m8',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    type: 'admin',
+    address: '1352 Gulseth Parkway, New York, NY',
+    zip: '10001',
+    phone: '703-457-2792'
+  },
+  {
+    userName: 'Sharline Croney',
+    email: 'scroney1@state.tx.us',
+    password: 'gFXBSSV1',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '9452 Rieder Way, San Francisco, CA',
+    zip: '90210',
+    phone: '567-970-1143'
+  },
+  {
+    userName: 'Moshe Btham',
+    email: 'mbtham2@angelfire.com',
+    password: 'JxmEPQKq0JW4',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '5734 Dapin Place, Englewood, FL',
+    zip: '34223',
+    phone: '529-336-3251'
+  },
+  {
+    userName: 'Frederica Muffen',
+    email: 'fmuffen3@japanpost.jp',
+    password: 'NOFv1iBo',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '5 Mccormick Crossing, Montville, NJ',
+    zip: '07045',
+    phone: '298-412-5928'
+  },
+  {
+    userName: 'Jerry Kleis',
+    email: 'jkleis4@google.fr',
+    password: 'Drc5fO2',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '990 Blackbird Avenue, Denver, CO',
+    zip: '80014',
+    phone: '650-764-6969'
+  },
+  {
+    userName: 'Morey Cunniffe',
+    email: 'mcunniffe5@who.int',
+    password: 'vs99rzUHHP',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '0 Columbus Center, New York, NY',
+    zip: '10016',
+    phone: '581-323-2900'
+  },
+  {
+    userName: 'Ameline Andrieu',
+    email: 'aandrieu6@google.es',
+    password: 'jHm15tU',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '7832 Gateway Junction, Las Vegas, NV',
+    zip: '88901',
+    phone: '100-845-9393'
+  },
+  {
+    userName: 'Courtenay Heald',
+    email: 'cheald7@meetup.com',
+    password: 'aRlDbxDYsFD',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '724 Coolidge Hill, Richmond, VA',
+    zip: '23713',
+    phone: '795-984-3609'
+  },
+  {
+    userName: 'Emlynn Birtwell',
+    email: 'ebirtwell8@storify.com',
+    password: 'M0oDOqBw4e',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '106 Monterey Point, Detroit, MI',
+    zip: '48127',
+    phone: '775-369-1751'
+  },
+  {
+    userName: 'Kayle Carlisle',
+    email: 'kcarlisle9@fotki.com',
+    password: 'NERY7QB2pRqy',
+    salt: null,
+    googleId: null,
+    stripeId: null,
+    address: '35 Di Loreto Place, Providence, RI',
+    zip: '02860',
+    phone: '523-678-1359'
+  }
+]
+
+const crumInstances = [
+  {
+    title: 'april apartment',
+    des: 'april apartment 1',
+    latitude: 40.7074,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7074,
+    longitude: -74.0055
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7072,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7073,
+    longitude: -74.0054
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7076,
+    longitude: -74.0051
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7076,
+    longitude: -74.0052
+  },
+  {
+    title: 'april apartment',
+    des: 'april apartment',
+    latitude: 40.7073,
+    longitude: -74.0056
+  }
+]
 const seed = async () => {
   try {
     await db.sync({force: true})
     console.log('db synced!')
+    await Promise.all(users.map(user => User.create(user)))
+    await Promise.all(
+      crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
+    )
   } catch (error) {
     console.log(red(error))
   }
