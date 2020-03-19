@@ -6,7 +6,8 @@ import * as React from 'react'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
-
+import axios from 'axios'
+import * as Location from 'expo-location'
 let renderer, scene, camera
 
 const styles = StyleSheet.create({
@@ -30,9 +31,12 @@ const styles = StyleSheet.create({
 export default class ARScreen extends React.Component {
   state = {
     currentLongitude: 'unknown', //Initial Longitude
-    currentLatitude: 'unknown' //Initial Latitude
+    currentLatitude: 'unknown', //Initial Latitude
+    currentMapHeading: 'unknown',
+    currentTrueHeading: 'unknown',
+    headingSubscription: undefined
   }
-  componentDidMount = () => {
+  componentDidMount = async () => {
     navigator.geolocation.getCurrentPosition(
       //Will give you the current location
       position => {
@@ -50,7 +54,7 @@ export default class ARScreen extends React.Component {
     )
     this.watchID = navigator.geolocation.watchPosition(position => {
       //Will give you the location on location change
-      console.log(position)
+      // console.log(position)
       const currentLongitude = JSON.stringify(position.coords.longitude)
       //getting the Longitude from the location json
       const currentLatitude = JSON.stringify(position.coords.latitude)
@@ -70,8 +74,6 @@ export default class ARScreen extends React.Component {
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
       AR.setPlaneDetection(AR.PlaneDetectionTypes.Horizontal)
 
-      // await addDetectionImageAsync(image);
-
       renderer = new Renderer({gl, pixelRatio, width, height})
       // renderer.gammaInput = true;
       // renderer.gammaOutput = true;
@@ -83,30 +85,43 @@ export default class ARScreen extends React.Component {
       camera = new Camera(width, height, 0.01, 1000)
 
       // Make a cube - notice that each unit is 1 meter in real life, we will make our box 0.1 meters
-      const geometry = new THREE.BoxGeometry(0.4, 0.4, 0.4)
+      const geometry = new THREE.BoxGeometry(0.4, 0.02, 0.02)
       // Simple color material
       const material = new THREE.MeshPhongMaterial({
         color: 0xff00ff
       })
 
+      const heading = await Location.getHeadingAsync()
       // Combine our geometry and material
       const cube = new THREE.Mesh(geometry, material)
-      // Place the box 0.4 meters in front of us.
-      console.log(Object.keys(cube))
-      // console.log(cube)
-      console.log(cube.position)
-      console.log(cube.rotation)
-      // console.log(cube.userData)
-      // console.log(cube.scale)
-      // console.log(cube.geometry)
-      // console.log(cube.matrix)
-      cube.position.x = 2
-      cube.position.y = -2
-      cube.position.z = 2
-      // Add the cube to the scene
+      const geometry2 = new THREE.PlaneGeometry(2, 2 * 0.75)
+      const loader = new THREE.TextureLoader()
+      const material2 = await new THREE.MeshPhongMaterial({
+        map: loader.load('public/HandSanitizer.png')
+      })
+      const plane = new THREE.Mesh(geometry2, material2)
+      // Place the box hi0.4 meters in front of us.
+      const {data} = await axios.get(
+        'http://192.168.1.167:19001/api/cruminstances'
+      )
+      console.log(data)
+      // console.log(Object.keys(cube))
+      // // console.log(cube)
+      // console.log(heading)
+      // console.log(cube.position)
+      // console.log(cube.rotation)
+      console.log(plane)
       scene.add(cube)
+      scene.add(plane)
       // Setup a light so we can see the cube color
       // AmbientLight colors all things in the scene equally.
+      const light = new THREE.PointLight(0xffffff, 1, 0)
+
+      // Specify the light's position
+      light.position.set(1, 1, 100)
+
+      // Add the light to the scene
+      scene.add(light)
       scene.add(new THREE.AmbientLight(0xffffff))
     }
 
@@ -119,9 +134,8 @@ export default class ARScreen extends React.Component {
 
     const onRender = delta => {
       // if (mesh) {
-      //   mesh.update(delta);
+      //   mesh.update(delta)
       // }
-
       renderer.render(scene, camera)
     }
 
@@ -160,6 +174,24 @@ export default class ARScreen extends React.Component {
           >
             Latitude: {this.state.currentLatitude}
           </Text>
+          {/* <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            MapHeading: {Math.floor(this.state.currentMapHeading)}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            TrueHeading: {Math.floor(this.state.currentTrueHeading)}
+          </Text> */}
         </View>
       </View>
     )

@@ -7,7 +7,7 @@ const passport = require('passport')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
-const PORT = process.env.PORT || 19001
+const PORT = process.env.PORT || 19001 //
 
 const app = express()
 const socketio = require('socket.io')
