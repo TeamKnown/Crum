@@ -15,6 +15,6 @@ secrets.js
 .DS_Store
 npm-debug.log
 yarn-error.log
-
+secrets.js
 # macOS
 .DS_Store
