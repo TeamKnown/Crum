@@ -6,7 +6,7 @@ import * as React from 'react'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
-
+import * as Location from 'expo-location'
 let renderer, scene, camera
 
 const styles = StyleSheet.create({
@@ -30,9 +30,20 @@ const styles = StyleSheet.create({
 export default class ARScreen extends React.Component {
   state = {
     currentLongitude: 'unknown', //Initial Longitude
-    currentLatitude: 'unknown' //Initial Latitude
+    currentLatitude: 'unknown', //Initial Latitude
+    currentMapHeading: 'unknown',
+    currentTrueHeading: 'unknown',
+    headingSubscription: undefined
   }
-  componentDidMount = () => {
+  componentDidMount = async () => {
+    const subscription = await Location.watchHeadingAsync(obj => {
+      console.log('watchHeadingAsync(obj ')
+      let heading = obj.magHeading
+      console.log(obj)
+      this.setState({currentMapHeading: obj.magHeading})
+      this.setState({currentTrueHeading: obj.trueHeading})
+    })
+    this.setState({headingSubscription: subscription})
     navigator.geolocation.getCurrentPosition(
       //Will give you the current location
       position => {
@@ -100,9 +111,9 @@ export default class ARScreen extends React.Component {
       // console.log(cube.scale)
       // console.log(cube.geometry)
       // console.log(cube.matrix)
-      cube.position.x = 2
-      cube.position.y = -2
-      cube.position.z = 2
+      // cube.position.x = 2
+      // cube.position.y = -2
+      // cube.position.z = 2
       // Add the cube to the scene
       scene.add(cube)
       // Setup a light so we can see the cube color
@@ -159,6 +170,24 @@ export default class ARScreen extends React.Component {
             }}
           >
             Latitude: {this.state.currentLatitude}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            MapHeading: {this.state.currentMapHeading}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            TrueHeading: {this.state.currentTrueHeading}
           </Text>
         </View>
       </View>
