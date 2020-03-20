@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import * as React from 'react'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 
-import {getCurrentPosition, stopTracking} from '../store'
+import {getCurrentPosition, stopTracking} from '../store/locations'
 import * as Location from 'expo-location'
 let renderer, scene, camera
 
