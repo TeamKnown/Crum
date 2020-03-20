@@ -101,6 +101,9 @@ export default class ARScreen extends React.Component {
       })
       const plane = new THREE.Mesh(geometry2, material2)
       // Place the box hi0.4 meters in front of us.
+
+      // var ip = require('ip')
+      // console.dir(ip.address())
       const {data} = await axios.get(
         'http://192.168.1.167:19001/api/cruminstances'
       )
