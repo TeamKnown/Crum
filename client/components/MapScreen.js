@@ -1,12 +1,14 @@
 import React, {Component} from 'react'
 import MapView, {Marker} from 'react-native-maps'
-import Button from 'react-native'
-import axios from 'axios'
+// import axios from 'axios'
+import {connect} from 'react-redux'
+import {fetchNearByCrumInstances} from '../store/crumInstances'
+import {getCurrentPosition, stopTracking} from '../store/locations'
 
 import {StyleSheet, Text, View, Dimensions} from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
 
-class MapScreen extends Component {
+class DisMapScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -18,31 +20,40 @@ class MapScreen extends Component {
   }
 
   componentDidMount = async () => {
-    // console.log('BEFORE AXIOS GET CALL')
-    // const {data} = await axios.get(
-    //   'http://192.168.0.223:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000'
-    // )
-    // console.log('THIS IS THE DATA', data)
+    this.props.fetchInitialData()
 
-    // this.setState({
-    //   crumInstances: [...data]
-    // })
-    // console.log('STATE CRUM', this.state.crumInstances)
+    // this.props.fetchNearByCrumInstances()
+  }
+  componentWillUnmount = () => {
+    this.props.unFetchInitialData()
+  }
 
-    navigator.geolocation.getCurrentPosition(
-      position => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null
-        })
-      },
-      error => this.setState({error: error.message}),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
-    )
+  static getDerivedStateFromProps(props, state) {
+    if (
+      Number.isInteger(props.locations.longitudeIdx) &&
+      Number.isInteger(props.locations.latitudeIdx) &&
+      (props.locations.latitudeIdx !== state.latitudeIdx ||
+        props.locations.longitudeIdx !== state.longitudeIdx)
+    ) {
+      console.log('location changed!!!', props.locations)
+      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
+      return {
+        ...state,
+        latitudeIdx: props.locations.latitudeIdx,
+        longitudeIdx: props.locations.longitudeIdx
+      }
+    } else {
+      return state
+    }
   }
 
   render() {
+    const {locations, crumInstances} = this.props
+    console.log('CRUM INSTANCES:', crumInstances)
+    // console.log('THIS.PROPS.LOCATION:', locations)
+    // console.log('THIS IS THE LAT', typeof locations.latitude)
+    // console.log('THIS IS THE LONG', typeof locations.longitude)
+
     return (
       <View style={styles.container}>
         {/* <Text
@@ -51,29 +62,32 @@ class MapScreen extends Component {
         >
           Scarlet Screen
         </Text> */}
-        {this.state.longitude !== 0 && this.state.latitude !== 0 ? (
-          <View style={{flex: 1}}>
-            <MapView
-              style={styles.map}
-              initialRegion={{
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.0121
-              }}
-            >
-              <Marker coordinate={this.state} />
-            </MapView>
-            {/* <View
-              style={{
-                position: 'absolute',
-                top: '50%',
-                alignSelf: 'flex-end'
-              }}
-            >
-              <Button />
-            </View> */}
-          </View>
+        {locations.longitude !== 0 && locations.latitude !== 0 ? (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: locations.latitude,
+              longitude: locations.longitude,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.0121
+            }}
+          >
+            <Marker coordinate={locations} />
+
+            {crumInstances
+              ? crumInstances.map(crum => {
+                  return (
+                    <Marker
+                      key={crum.id}
+                      coordinate={{
+                        latitude: +crum.latitude,
+                        longitude: +crum.longitude
+                      }}
+                    />
+                  )
+                })
+              : null}
+          </MapView>
         ) : (
           <Text>Loading your current location....</Text>
         )}
@@ -90,5 +104,30 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject
   }
 })
+
+const mapState = state => ({
+  crumInstances: state.crumInstances,
+  locations: {
+    ...state.locations,
+    longitudeIdx: Math.floor(state.locations.longitude * 10000),
+    latitudeIdx: Math.floor(state.locations.latitude * 10000)
+  }
+})
+
+const mapDispatch = dispatch => {
+  return {
+    fetchInitialData: () => {
+      dispatch(getCurrentPosition())
+    },
+    unFetchInitialData: () => {
+      dispatch(stopTracking())
+    },
+    fetchCrum: (latitudeIdx, longitudeIdx) => {
+      dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
+    }
+  }
+}
+
+const MapScreen = connect(mapState, mapDispatch)(DisMapScreen)
 
 export default MapScreen

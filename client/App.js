@@ -21,12 +21,6 @@ const styles = StyleSheet.create({
 })
 
 export default class App extends React.Component {
-  // componentDidMount = async () => {
-  //   this.props.fetchInitialData()
-  // }
-  // componentWillUnmount = () => {
-  //   this.props.unFetchInitialData()
-  // }
   render() {
     return (
       <Provider store={store}>

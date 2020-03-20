@@ -23,7 +23,7 @@ export const getCurrentPosition = () => async dispatch => {
         longitude: location.coords.longitude
       })
     )
-  }, 1200)
+  }, 3000)
 }
 
 const initialState = {}

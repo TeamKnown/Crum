@@ -17,5 +17,5 @@ const middleware = composeWithDevTools(
 const store = createStore(reducer, middleware)
 
 export default store
-// export * from './crumInstances'
+export * from './crumInstances'
 // export * from './locations'
