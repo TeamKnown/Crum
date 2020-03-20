@@ -4,7 +4,7 @@ import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
 
 import ScarletScreen from './components/MapScreen.js'
-import GrayScreen from './components/GrayScreen'
+// import GrayScreen from './components/GrayScreen'
 import ARScreen from './components/ARScreen'
 
 const styles = StyleSheet.create({
@@ -29,7 +29,7 @@ export default class App extends React.Component {
         <Scene key="root" tabs={true}>
           {/* <Scene key="AR" component={ARScreen} title="AR" /> */}
           <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
-          <Scene key="gray" component={GrayScreen} title="Gray" />
+          {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
         </Scene>
       </Router>
     )
