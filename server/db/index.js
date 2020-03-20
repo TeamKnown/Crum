@@ -23,8 +23,8 @@ const CrumInstance = require('./models/crumInstance')
 // CrumInstance.belongsTo(Crum)
 // Crum.hasMany(CrumInstance)
 
-Crum.belongsToMany(User, {through: CrumInstance})
-User.belongsToMany(Crum, {through: CrumInstance})
+// Crum.belongsToMany(User, {through: CrumInstance})
+// User.belongsToMany(Crum, {through: CrumInstance})
 
 // register models
 require('./models')
