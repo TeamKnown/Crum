@@ -28,6 +28,9 @@ export const addCrumInstance = crumInstance => ({
 //   }
 // }
 
+// +req.query.radium,
+// +req.query.latitudeIdx,
+// +req.query.longitudeIdx
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {

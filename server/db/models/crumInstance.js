@@ -49,7 +49,7 @@ CrumInstance.prototype.findNear = async function(radium) {
 }
 
 CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
-  // console.log('here', this.longitudeIdx)
+  console.log('here', this.longitudeIdx)
   const near = await CrumInstance.findAll({
     where: {
       latitudeIdx: {

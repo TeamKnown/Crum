@@ -11,6 +11,7 @@ import {
   fetchNearByCrumInstances
 } from '../store/crumInstances'
 import * as Location from 'expo-location'
+import {createCube, createPlane} from './Crums.js'
 let renderer, scene, camera
 
 const styles = StyleSheet.create({
@@ -32,59 +33,54 @@ const styles = StyleSheet.create({
 })
 
 class DisARScreen extends React.Component {
-  state = {}
-  componentDidMount = async () => {
+  state = {
+    longitudeIdx: undefined,
+    latitudeIdx: undefined
+  }
+  componentDidMount = () => {
     this.props.fetchInitialData()
   }
   componentWillUnmount = () => {
     this.props.unFetchInitialData()
   }
+
+  static getDerivedStateFromProps(props, state) {
+    // if (props.user && state.nickname === 'placeholder') {
+    if (
+      Number.isInteger(props.locations.longitudeIdx) &&
+      Number.isInteger(props.locations.latitudeIdx) &&
+      (props.locations.latitudeIdx !== state.latitudeIdx ||
+        props.locations.longitudeIdx !== state.longitudeIdx)
+    ) {
+      console.log('location changed!!!', props.locations)
+      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
+      return {
+        ...state,
+        latitudeIdx: props.locations.latitudeIdx,
+        longitudeIdx: props.locations.longitudeIdx
+      }
+    } else {
+      return state
+    }
+  }
   render() {
+    // this.props.fetchCrum(
+    //   this.props.locations.latitudeIdx,
+    //   this.props.locations.longitudeIdx
+    // )
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
       AR.setPlaneDetection(AR.PlaneDetectionTypes.Horizontal)
-
       renderer = new Renderer({gl, pixelRatio, width, height})
-
       scene = new THREE.Scene()
       scene.background = new BackgroundTexture(renderer)
-
       camera = new Camera(width, height, 0.01, 1000)
-
-      // Make a cube - notice that each unit is 1 meter in real life, we will make our box 0.1 meters
-      const geometry = new THREE.BoxGeometry(0.4, 0.02, 0.02)
-      // Simple color material
-      const material = new THREE.MeshPhongMaterial({
-        color: 0xff00ff
-      })
-
       const heading = await Location.getHeadingAsync()
-      // Combine our geometry and material
-      const cube = new THREE.Mesh(geometry, material)
-      const geometry2 = new THREE.PlaneGeometry(2, 2 * 0.75)
-      const loader = new THREE.TextureLoader()
-      const material2 = await new THREE.MeshPhongMaterial({
-        map: loader.load('public/HandSanitizer.png')
-      })
-      const plane = new THREE.Mesh(geometry2, material2)
-      // console.log(Object.keys(cube))
-      // // console.log(cube)
-      // console.log(heading)
-      // console.log(cube.position)
-      // console.log(cube.rotation)
-      // console.log(plane)
-      // scene.add(cube)
-      // scene.add(plane)
-      // Setup a light so we can see the cube color
-      // AmbientLight colors all things in the scene equally.
-      const light = new THREE.PointLight(0xffffff, 1, 0)
-
-      // Specify the light's position
-      light.position.set(1, 1, 100)
-
-      // Add the light to the scene
-      scene.add(light)
+      const plane = createPlane()
+      const cube = createCube()
+      scene.add(cube)
+      scene.add(plane)
       scene.add(new THREE.AmbientLight(0xffffff))
     }
 
@@ -133,7 +129,7 @@ class DisARScreen extends React.Component {
               />
             </View>
           </View>
-          <Text style={styles.boldText}>You are Here</Text>
+          {/* <Text style={styles.boldText}>You are Here</Text> */}
           <Text
             style={{
               justifyContent: 'center',
@@ -141,7 +137,20 @@ class DisARScreen extends React.Component {
               marginTop: 16
             }}
           >
-            Here: {JSON.stringify(this.props.locations)}
+            Long: {this.props.locations.longitudeIdx}
+            Lat: {this.props.locations.latitudeIdx}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            All nearby Crums:{' '}
+            {JSON.stringify(
+              this.props.crumInstances.map(crumInstance => crumInstance.id)
+            )}
           </Text>
         </View>
       </View>
@@ -149,7 +158,14 @@ class DisARScreen extends React.Component {
   }
 }
 
-const mapState = state => ({locations: state.locations})
+const mapState = state => ({
+  locations: {
+    ...state.locations,
+    longitudeIdx: Math.floor(state.locations.longitude * 10000),
+    latitudeIdx: Math.floor(state.locations.latitude * 10000)
+  },
+  crumInstances: state.crumInstances
+})
 const mapDispatch = dispatch => {
   return {
     fetchInitialData: () => {
@@ -158,8 +174,8 @@ const mapDispatch = dispatch => {
     unFetchInitialData: () => {
       dispatch(stopTracking())
     },
-    fetchCrum: () => {
-      dispatch(fetchNearByCrumInstances())
+    fetchCrum: (latitudeIdx, longitudeIdx) => {
+      dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     },
     dropCrum: newCrum => {
       dispatch(postCrumInstance(newCrum))
