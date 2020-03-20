@@ -46,6 +46,8 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
 export const postCrumInstance = newCrum => {
   return async dispatch => {
     try {
+      console.log(newCrum)
+      console.dir(devAxios)
       const {data} = await devAxios.post('/api/cruminstances', newCrum)
       dispatch(addCrumInstance(data))
     } catch (error) {

@@ -4,9 +4,12 @@ import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {Platform, View, Text, StyleSheet, Image} from 'react-native'
-
+import {Platform, View, Text, StyleSheet, Image, Button} from 'react-native'
 import {getCurrentPosition, stopTracking} from '../store/locations'
+import {
+  postCrumInstance,
+  fetchNearByCrumInstances
+} from '../store/crumInstances'
 import * as Location from 'expo-location'
 let renderer, scene, camera
 
@@ -102,15 +105,34 @@ class DisARScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>
-          <GraphicsView
-            style={{flex: 1}}
-            onContextCreate={onContextCreate}
-            onRender={onRender}
-            onResize={onResize}
-            isArEnabled
-            isArRunningStateEnabled
-            isArCameraStateEnabled
-          />
+          <View style={{flex: 1}}>
+            <GraphicsView
+              style={{flex: 1}}
+              onContextCreate={onContextCreate}
+              onRender={onRender}
+              onResize={onResize}
+              isArEnabled
+              isArRunningStateEnabled
+              isArCameraStateEnabled
+            />
+            <View
+              style={{
+                position: 'absolute',
+                top: '50%',
+                alignSelf: 'flex-end'
+              }}
+            >
+              <Button
+                title="Drop"
+                onPress={() => {
+                  this.props.dropCrum({
+                    longitude: this.props.locations.longitude,
+                    latitude: this.props.locations.latitude
+                  })
+                }}
+              />
+            </View>
+          </View>
           <Text style={styles.boldText}>You are Here</Text>
           <Text
             style={{
@@ -135,6 +157,12 @@ const mapDispatch = dispatch => {
     },
     unFetchInitialData: () => {
       dispatch(stopTracking())
+    },
+    fetchCrum: () => {
+      dispatch(fetchNearByCrumInstances())
+    },
+    dropCrum: newCrum => {
+      dispatch(postCrumInstance(newCrum))
     }
   }
 }

@@ -19,7 +19,7 @@ export const getCurrentPosition = () => async dispatch => {
     dispatch(
       getUpdatedPosition({
         heading: heading.magHeading,
-        altitude: location.coords.altitude,
+        latitude: location.coords.latitude,
         longitude: location.coords.longitude
       })
     )

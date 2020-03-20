@@ -64,7 +64,7 @@ class MapScreen extends Component {
             >
               <Marker coordinate={this.state} />
             </MapView>
-            <View
+            {/* <View
               style={{
                 position: 'absolute',
                 top: '50%',
@@ -72,7 +72,7 @@ class MapScreen extends Component {
               }}
             >
               <Button />
-            </View>
+            </View> */}
           </View>
         ) : (
           <Text>Loading your current location....</Text>
