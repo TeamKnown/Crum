@@ -15,6 +15,7 @@ router.get('/', async (req, res, next) => {
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 router.get('/nearme', async (req, res, next) => {
   try {
+    console.log('NEARME ROUTE IS HITING', req.query)
     const crumInstances = await CrumInstance.findNearMe(
       +req.query.radium,
       +req.query.latitudeIdx,

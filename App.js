@@ -27,7 +27,7 @@ export default class App extends React.Component {
     return (
       <Router>
         <Scene key="root" tabs={true}>
-          <Scene key="AR" component={ARScreen} title="AR" />
+          {/* <Scene key="AR" component={ARScreen} title="AR" /> */}
           <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
           <Scene key="gray" component={GrayScreen} title="Gray" />
         </Scene>

@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import MapView, {Marker} from 'react-native-maps'
+import axios from 'axios'
 
 import {StyleSheet, Text, View, Dimensions} from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
@@ -8,13 +9,17 @@ class MapScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      longitude: 10,
+      longitude: 0,
       latitude: 0,
       error: null
     }
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const {data} = await axios.get(
+      '/api/cruminstances/nearme/?radium=5&latitudeIdx=40.70508&longitudeIdx=-74.00897'
+    )
+
     navigator.geolocation.getCurrentPosition(
       position => {
         this.setState({
@@ -40,8 +45,8 @@ class MapScreen extends Component {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            latitude: 40.70508,
+            longitude: -74.00897,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121
           }}
