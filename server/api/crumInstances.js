@@ -5,7 +5,8 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    console.log('GET ROUTE HITTING')
+    // console.dir(ip.address())
+    // console.log('GET ROUTE HITTING')
     const crumInstances = await CrumInstance.findAll({})
     res.json(crumInstances)
   } catch (err) {
@@ -58,7 +59,7 @@ router.get('/:id', async (req, res, next) => {
 //http://localhost:19001/api/cruminstances/near/1?radium=1
 router.get('/near/:id', async (req, res, next) => {
   try {
-    console.log(req.query.radium)
+    // console.log(req.query.radium)
     const crumInstance = await CrumInstance.findByPk(req.params.id)
     const crumInstances = await crumInstance.findNear(+req.query.radium)
     res.json(crumInstances)

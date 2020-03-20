@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {devAxios} from '.'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 
@@ -20,9 +20,7 @@ export const addCrumInstance = crumInstance => ({
 export const fetchCrumInstances = () => {
   return async dispatch => {
     try {
-      const {data} = await axios.get(
-        'http://192.168.0.223:19001/api/cruminstances'
-      )
+      const {data} = await devAxios.get('/api/cruminstances')
 
       dispatch(setCrumInstances(data))
     } catch (error) {
@@ -34,10 +32,7 @@ export const fetchCrumInstances = () => {
 export const postCrumInstance = newCrum => {
   return async dispatch => {
     try {
-      const {data} = await axios.post(
-        'http://192.168.0.223:19001/api/cruminstances',
-        newCrum
-      )
+      const {data} = await devAxios.post('/api/cruminstances', newCrum)
       dispatch(addCrumInstance(data))
     } catch (error) {
       console.error('POST Error')

@@ -2,11 +2,11 @@ import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
-import {connect} from 'react-redux'
 import * as React from 'react'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
-
-import {getCurrentPosition, stopTracking} from '../store'
+// import {Router, Scene, Stack} from 'react-native-router-flux'
+// import NavigationBar from 'react-native-navbar'
+import axios from 'axios'
 import * as Location from 'expo-location'
 let renderer, scene, camera
 
@@ -28,13 +28,45 @@ const styles = StyleSheet.create({
   }
 })
 
-class DisARScreen extends React.Component {
-  state = {}
+export default class ARScreen extends React.Component {
+  state = {
+    currentLongitude: 'unknown', //Initial Longitude
+    currentLatitude: 'unknown', //Initial Latitude
+    currentMapHeading: 'unknown',
+    currentTrueHeading: 'unknown',
+    headingSubscription: undefined
+  }
   componentDidMount = async () => {
-    this.props.fetchInitialData()
+    navigator.geolocation.getCurrentPosition(
+      //Will give you the current location
+      position => {
+        const currentLongitude = JSON.stringify(position.coords.longitude)
+        //getting the Longitude from the location json
+        const currentLatitude = JSON.stringify(position.coords.latitude)
+        //getting the Latitude from the location json
+        this.setState({currentLongitude: currentLongitude})
+        //Setting state Longitude to re re-render the Longitude Text
+        this.setState({currentLatitude: currentLatitude})
+        //Setting state Latitude to re re-render the Longitude Text
+      },
+      error => alert(error.message),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    )
+    this.watchID = navigator.geolocation.watchPosition(position => {
+      //Will give you the location on location change
+      // console.log(position)
+      const currentLongitude = JSON.stringify(position.coords.longitude)
+      //getting the Longitude from the location json
+      const currentLatitude = JSON.stringify(position.coords.latitude)
+      //getting the Latitude from the location json
+      this.setState({currentLongitude: currentLongitude})
+      //Setting state Longitude to re re-render the Longitude Text
+      this.setState({currentLatitude: currentLatitude})
+      //Setting state Latitude to re re-render the Longitude Text
+    })
   }
   componentWillUnmount = () => {
-    this.props.unFetchInitialData()
+    navigator.geolocation.clearWatch(this.watchID)
   }
   render() {
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
@@ -43,6 +75,9 @@ class DisARScreen extends React.Component {
       AR.setPlaneDetection(AR.PlaneDetectionTypes.Horizontal)
 
       renderer = new Renderer({gl, pixelRatio, width, height})
+      // renderer.gammaInput = true;
+      // renderer.gammaOutput = true;
+      // renderer.shadowMap.enabled = true;
 
       scene = new THREE.Scene()
       scene.background = new BackgroundTexture(renderer)
@@ -65,14 +100,22 @@ class DisARScreen extends React.Component {
         map: loader.load('public/HandSanitizer.png')
       })
       const plane = new THREE.Mesh(geometry2, material2)
+      // Place the box hi0.4 meters in front of us.
+
+      // var ip = require('ip')
+      // console.dir(ip.address())
+      const {data} = await axios.get(
+        'http://192.168.1.167:19001/api/cruminstances'
+      )
+      console.log(data)
       // console.log(Object.keys(cube))
       // // console.log(cube)
       // console.log(heading)
       // console.log(cube.position)
       // console.log(cube.rotation)
-      // console.log(plane)
-      // scene.add(cube)
-      // scene.add(plane)
+      console.log(plane)
+      scene.add(cube)
+      scene.add(plane)
       // Setup a light so we can see the cube color
       // AmbientLight colors all things in the scene equally.
       const light = new THREE.PointLight(0xffffff, 1, 0)
@@ -99,6 +142,10 @@ class DisARScreen extends React.Component {
       renderer.render(scene, camera)
     }
 
+    // const TabIcon = ({selected, title}) => {
+    //   return <Text style={{color: selected ? 'red' : 'black'}}>{title}</Text>
+    // }
+
     return (
       <View style={styles.container}>
         <View style={{flex: 1}}>
@@ -119,26 +166,37 @@ class DisARScreen extends React.Component {
               marginTop: 16
             }}
           >
-            Here: {JSON.stringify(this.props.locations)}
+            Longitude: {this.state.currentLongitude}
           </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            Latitude: {this.state.currentLatitude}
+          </Text>
+          {/* <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            MapHeading: {Math.floor(this.state.currentMapHeading)}
+          </Text>
+          <Text
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16
+            }}
+          >
+            TrueHeading: {Math.floor(this.state.currentTrueHeading)}
+          </Text> */}
         </View>
       </View>
     )
   }
 }
-
-const mapState = state => ({locations: state.locations})
-const mapDispatch = dispatch => {
-  return {
-    fetchInitialData: () => {
-      dispatch(getCurrentPosition())
-    },
-    unFetchInitialData: () => {
-      dispatch(stopTracking())
-    }
-  }
-}
-
-const ARScreen = connect(mapState, mapDispatch)(DisARScreen)
-
-export default ARScreen
