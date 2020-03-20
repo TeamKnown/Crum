@@ -45,7 +45,6 @@ class DisARScreen extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    // if (props.user && state.nickname === 'placeholder') {
     if (
       Number.isInteger(props.locations.longitudeIdx) &&
       Number.isInteger(props.locations.latitudeIdx) &&
@@ -64,10 +63,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    // this.props.fetchCrum(
-    //   this.props.locations.latitudeIdx,
-    //   this.props.locations.longitudeIdx
-    // )
+    console.log('rerendering')
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
