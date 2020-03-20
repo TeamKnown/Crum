@@ -16,9 +16,9 @@ class MapScreen extends Component {
   }
 
   async componentDidMount() {
-    const {data} = await axios.get(
-      '/api/cruminstances/nearme/?radium=5&latitudeIdx=40.70508&longitudeIdx=-74.00897'
-    )
+    // const {data} = await axios.get(
+    //   '/api/cruminstances/nearme/?radium=5&latitudeIdx=40.70508&longitudeIdx=-74.00897'
+    // )
 
     navigator.geolocation.getCurrentPosition(
       position => {
@@ -42,17 +42,21 @@ class MapScreen extends Component {
         >
           Scarlet Screen
         </Text> */}
-        <MapView
-          style={styles.map}
-          initialRegion={{
-            latitude: 40.70508,
-            longitude: -74.00897,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121
-          }}
-        >
-          <Marker coordinate={this.state} />
-        </MapView>
+        {this.state.longitude !== 0 && this.state.latitude !== 0 ? (
+          <MapView
+            style={styles.map}
+            initialRegion={{
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.0121
+            }}
+          >
+            <Marker coordinate={this.state} />
+          </MapView>
+        ) : (
+          <Text>Loading your current location....</Text>
+        )}
       </View>
     )
   }
