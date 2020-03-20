@@ -6,6 +6,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     console.dir(ip.address())
+    console.log('GET ROUTE HITTING')
     const crumInstances = await CrumInstance.findAll({})
     res.json(crumInstances)
   } catch (err) {
@@ -14,6 +15,24 @@ router.get('/', async (req, res, next) => {
 })
 
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
+
+router.post('/', async (req, res, next) => {
+  try {
+    const newCrumInstance = await CrumInstance.create(req.body, {
+      include: [
+        {
+          model: Crum
+        }
+      ]
+    })
+    if (newCrumInstance) {
+      res.json(newCrumInstance)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.get('/nearme', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findNearMe(
