@@ -34,6 +34,7 @@ router.post('/', async (req, res, next) => {
 })
 
 router.get('/nearme', async (req, res, next) => {
+  console.log(req.query)
   try {
     const crumInstances = await CrumInstance.findNearMe(
       +req.query.radium,
