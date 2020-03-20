@@ -4,7 +4,7 @@ import store from './store'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
-import {devAxios, getCurrentPosition, stopTracking} from './store'
+import {devAxios} from './store'
 import ScarletScreen from './components/MapScreen.js'
 import ARScreen from './components/ARScreen'
 
