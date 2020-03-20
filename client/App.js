@@ -7,6 +7,7 @@ import NavigationBar from 'react-native-navbar'
 import {devAxios} from './store'
 import ScarletScreen from './components/MapScreen.js'
 import ARScreen from './components/ARScreen'
+import LoginScreen from './components/LoginScreen'
 
 const styles = StyleSheet.create({
   boldText: {
@@ -31,6 +32,11 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Router>
           <Scene key="root" tabs={true}>
+            <Scene
+              key="LoginScreen"
+              component={LoginScreen}
+              title="LoginScreen"
+            />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
             {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
