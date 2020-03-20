@@ -56,4 +56,4 @@ const crumInstancesReducer = (state = initialState, action) => {
       return state
   }
 }
-export default crumInstancesReducers
+export default crumInstancesReducer
