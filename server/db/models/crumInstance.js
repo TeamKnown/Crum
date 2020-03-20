@@ -6,7 +6,7 @@ const CrumInstance = db.define('crumInstance', {
   title: {
     type: Sequelize.TEXT
   },
-  des: {
+  description: {
     type: Sequelize.TEXT
   },
   latitude: {
