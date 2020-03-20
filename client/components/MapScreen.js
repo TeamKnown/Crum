@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import MapView, {Marker} from 'react-native-maps'
+import Button from 'react-native'
 import axios from 'axios'
 
 import {StyleSheet, Text, View, Dimensions} from 'react-native'
@@ -51,17 +52,28 @@ class MapScreen extends Component {
           Scarlet Screen
         </Text> */}
         {this.state.longitude !== 0 && this.state.latitude !== 0 ? (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: this.state.latitude,
-              longitude: this.state.longitude,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121
-            }}
-          >
-            <Marker coordinate={this.state} />
-          </MapView>
+          <View style={{flex: 1}}>
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121
+              }}
+            >
+              <Marker coordinate={this.state} />
+            </MapView>
+            <View
+              style={{
+                position: 'absolute',
+                top: '50%',
+                alignSelf: 'flex-end'
+              }}
+            >
+              <Button />
+            </View>
+          </View>
         ) : (
           <Text>Loading your current location....</Text>
         )}
