@@ -26,7 +26,7 @@ class MapScreen extends Component {
     // this.setState({
     //   crumInstances: [...data]
     // })
-    console.log('STATE CRUM', this.state.crumInstances)
+    // console.log('STATE CRUM', this.state.crumInstances)
 
     navigator.geolocation.getCurrentPosition(
       position => {

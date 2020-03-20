@@ -5,10 +5,8 @@ import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
-import {Router, Scene, Stack} from 'react-native-router-flux'
-import NavigationBar from 'react-native-navbar'
-import axios from 'axios'
-import {devAxios, getCurrentPosition, stopTracking} from '../store'
+
+import {getCurrentPosition, stopTracking} from '../store'
 import * as Location from 'expo-location'
 let renderer, scene, camera
 
@@ -67,20 +65,14 @@ class DisARScreen extends React.Component {
         map: loader.load('public/HandSanitizer.png')
       })
       const plane = new THREE.Mesh(geometry2, material2)
-      // Place the box hi0.4 meters in front of us.
-
-      // var ip = require('ip')
-      // console.dir(ip.address())
-      const {data} = await devAxios.get('/api/cruminstances')
-      // console.log(data)
       // console.log(Object.keys(cube))
       // // console.log(cube)
       // console.log(heading)
       // console.log(cube.position)
       // console.log(cube.rotation)
-      console.log(plane)
-      scene.add(cube)
-      scene.add(plane)
+      // console.log(plane)
+      // scene.add(cube)
+      // scene.add(plane)
       // Setup a light so we can see the cube color
       // AmbientLight colors all things in the scene equally.
       const light = new THREE.PointLight(0xffffff, 1, 0)
