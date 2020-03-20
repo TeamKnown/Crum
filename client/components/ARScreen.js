@@ -72,7 +72,7 @@ class DisARScreen extends React.Component {
       // var ip = require('ip')
       // console.dir(ip.address())
       const {data} = await devAxios.get('/api/cruminstances')
-      console.log(data)
+      // console.log(data)
       // console.log(Object.keys(cube))
       // // console.log(cube)
       // console.log(heading)
