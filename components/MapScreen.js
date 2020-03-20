@@ -11,14 +11,22 @@ class MapScreen extends Component {
     this.state = {
       longitude: 0,
       latitude: 0,
-      error: null
+      error: null,
+      crumInstances: []
     }
   }
 
-  async componentDidMount() {
-    // const {data} = await axios.get(
-    //   '/api/cruminstances/nearme/?radium=5&latitudeIdx=40.70508&longitudeIdx=-74.00897'
-    // )
+  componentDidMount = async () => {
+    // console.log('BEFORE AXIOS GET CALL')
+    const {data} = await axios.get(
+      'http://192.168.0.223:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000'
+    )
+    console.log('THIS IS THE DATA', data)
+
+    this.setState({
+      crumInstances: [...data]
+    })
+    console.log('STATE CRUM', this.state.crumInstances)
 
     navigator.geolocation.getCurrentPosition(
       position => {
