@@ -11,7 +11,7 @@ export const setCrumInstances = crumInstances => ({
   crumInstances: crumInstances
 })
 
-export const addCrumInstance = crum => ({
+export const addCrumInstance = crumInstance => ({
   type: ADD_CRUM_INSTANCE,
   crumInstance: crumInstance
 })
@@ -21,7 +21,7 @@ export const fetchCrumInstances = () => {
   return async dispatch => {
     try {
       const {data} = await axios.get(
-        'http://192.168.1.167:19001/api/cruminstances'
+        'http://192.168.0.223:19001/api/cruminstances'
       )
 
       dispatch(setCrumInstances(data))
@@ -35,7 +35,7 @@ export const postCrumInstance = newCrum => {
   return async dispatch => {
     try {
       const {data} = await axios.post(
-        'http://192.168.1.167:19001/api/cruminstances',
+        'http://192.168.0.223:19001/api/cruminstances',
         newCrum
       )
       dispatch(addCrumInstance(data))

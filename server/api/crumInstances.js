@@ -5,6 +5,7 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    console.log('GET ROUTE HITTING')
     const crumInstances = await CrumInstance.findAll({})
     res.json(crumInstances)
   } catch (err) {
