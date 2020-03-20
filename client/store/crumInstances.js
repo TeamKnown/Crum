@@ -1,5 +1,4 @@
-import axios from 'axios'
-import {devAxios} from '.'
+import {devAxios} from './devAxios'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 
@@ -17,10 +16,25 @@ export const addCrumInstance = crumInstance => ({
 })
 
 // thunks
-export const fetchCrumInstances = () => {
+// export const fetchCrumInstances = () => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await devAxios.get('/api/cruminstances')
+
+//       dispatch(setCrumInstances(data))
+//     } catch (error) {
+//       console.error('GET Error')
+//     }
+//   }
+// }
+
+// http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
+export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {
     try {
-      const {data} = await devAxios.get('/api/cruminstances')
+      const {data} = await devAxios.get(
+        `/api/cruminstances/nearme?radium=${3}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
+      )
 
       dispatch(setCrumInstances(data))
     } catch (error) {
