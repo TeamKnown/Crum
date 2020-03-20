@@ -19,11 +19,11 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     const newCrumInstance = await CrumInstance.create(req.body, {
-      include: [
-        {
-          model: Crum
-        }
-      ]
+      // include: [
+      //   {
+      //     model: Crum
+      //   }
+      // ]
     })
     if (newCrumInstance) {
       res.json(newCrumInstance)
