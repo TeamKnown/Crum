@@ -34,25 +34,31 @@ const styles = StyleSheet.create({
 
 class DisARScreen extends React.Component {
   state = {
-    longitudeIdx: undefined,
-    latitudeIdx: undefined
+    longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
+    latitudeIdx: undefined // likewise, it is floor of (10000 * latitude)
   }
   componentDidMount = () => {
-    this.props.fetchInitialData()
+    this.props.fetchInitialData() // this subscribed to update current locations every time interval
   }
   componentWillUnmount = () => {
-    this.props.unFetchInitialData()
+    this.props.unFetchInitialData() // this unsubscribed to update current locations
   }
 
+  // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
+  // likewise latitude is the floor of (10000 * latitude)
+  // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
+  // when longitudeIdx or latitude in REDUX store changes, we update REACT state
+  // we also requery the list of nearby crums
+  // this is subject to future optimization and code refactoring
   static getDerivedStateFromProps(props, state) {
     if (
-      Number.isInteger(props.locations.longitudeIdx) &&
+      Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
       Number.isInteger(props.locations.latitudeIdx) &&
       (props.locations.latitudeIdx !== state.latitudeIdx ||
         props.locations.longitudeIdx !== state.longitudeIdx)
     ) {
-      console.log('location changed!!!', props.locations)
-      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
+      // console.log('location changed!!!', props.locations)
+      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx) // fetch the list of nearby crums
       return {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
@@ -63,7 +69,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    console.log('rerendering')
+    // console.log('rerendering')
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {

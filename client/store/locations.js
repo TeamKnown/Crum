@@ -9,8 +9,11 @@ export const getUpdatedPosition = position => ({
   type: SUBSCRIBE_LOCATION,
   position
 })
+
+// this unsubscribes to our current location
 export const stopTracking = () => ({type: UNSUBSCRIBE_LOCATION})
 
+// this subscribes to our current location every 1200 milliseconds
 export const getCurrentPosition = () => async dispatch => {
   clearInterval(positionTracker)
   positionTracker = setInterval(async () => {
