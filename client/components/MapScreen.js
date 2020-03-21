@@ -1,13 +1,16 @@
 import React, {Component} from 'react'
-import MapView, {Marker} from 'react-native-maps'
+import MapView, {Marker, Callout, Circle} from 'react-native-maps'
 // import axios from 'axios'
 import {connect} from 'react-redux'
 import {fetchNearByCrumInstances} from '../store/crumInstances'
 import {getCurrentPosition, stopTracking} from '../store/locations'
-
-import {StyleSheet, Text, View, Dimensions} from 'react-native'
+import Carousel from 'react-native-snap-carousel'
+import {StyleSheet, Text, View, Dimensions, Image} from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
 
+function getRandomInt(min, max) {
+  return min + Math.random() * (max - min + 1)
+}
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
@@ -19,7 +22,7 @@ class DisMapScreen extends Component {
     }
   }
 
-  componentDidMount = async () => {
+  componentDidMount = () => {
     this.props.fetchInitialData()
 
     // this.props.fetchNearByCrumInstances()
@@ -28,28 +31,44 @@ class DisMapScreen extends Component {
     this.props.unFetchInitialData()
   }
 
-  static getDerivedStateFromProps(props, state) {
-    if (
-      Number.isInteger(props.locations.longitudeIdx) &&
-      Number.isInteger(props.locations.latitudeIdx) &&
-      (props.locations.latitudeIdx !== state.latitudeIdx ||
-        props.locations.longitudeIdx !== state.longitudeIdx)
-    ) {
-      console.log('location changed!!!', props.locations)
-      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
-      return {
-        ...state,
-        latitudeIdx: props.locations.latitudeIdx,
-        longitudeIdx: props.locations.longitudeIdx
-      }
-    } else {
-      return state
-    }
+  // static getDerivedStateFromProps(props, state) {
+  //   if (
+  //     Number.isInteger(props.locations.longitudeIdx) &&
+  //     Number.isInteger(props.locations.latitudeIdx) &&
+  //     (props.locations.latitudeIdx !== state.latitudeIdx ||
+  //       props.locations.longitudeIdx !== state.longitudeIdx)
+  //   ) {
+  //     console.log('location changed!!!', props.locations)
+  //     props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
+  //     return {
+  //       ...state,
+  //       latitudeIdx: props.locations.latitudeIdx,
+  //       longitudeIdx: props.locations.longitudeIdx
+  //     }
+  //   } else {
+  //     return state
+  //   }
+  // }
+  onCarouselItemChange = index => {
+    let location = this.props.crumInstances[index]
+    this._map.animateToRegion({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121
+    })
   }
+
+  renderCarouselItem = ({item}) => (
+    <View style={styles.cardContainer}>
+      <Text style={styles.cardTitle}>{item.title}</Text>
+      <Image style={styles.cardImage} source={require('./breakmarker.png')} />
+    </View>
+  )
 
   render() {
     const {locations, crumInstances} = this.props
-    console.log('CRUM INSTANCES:', crumInstances)
+    console.log('CRUM INSTANCES:', crumInstances.length)
     // console.log('THIS.PROPS.LOCATION:', locations)
     // console.log('THIS IS THE LAT', typeof locations.latitude)
     // console.log('THIS IS THE LONG', typeof locations.longitude)
@@ -62,8 +81,9 @@ class DisMapScreen extends Component {
         >
           Scarlet Screen
         </Text> */}
-        {locations.longitude !== 0 && locations.latitude !== 0 ? (
+        {locations.longitude && locations.latitude ? (
           <MapView
+            ref={map => (this._map = map)}
             style={styles.map}
             initialRegion={{
               latitude: locations.latitude,
@@ -73,24 +93,44 @@ class DisMapScreen extends Component {
             }}
           >
             <Marker coordinate={locations} />
-
-            {crumInstances
-              ? crumInstances.map(crum => {
-                  return (
-                    <Marker
-                      key={crum.id}
-                      coordinate={{
-                        latitude: +crum.latitude,
-                        longitude: +crum.longitude
-                      }}
-                    />
-                  )
-                })
-              : null}
+            <Circle
+              center={locations}
+              radius={100}
+              fillColor="rgba(200,300,200,0.5)"
+            />
+            {this.props.crumInstances.map(crum => {
+              let coordinate = {
+                latitude: +crum.latitude,
+                longitude: +crum.longitude
+              }
+              return (
+                <Marker key={crum.id} coordinate={coordinate}>
+                  <Image
+                    source={require('./breakmarker.png')}
+                    style={{height: 30, width: 30}}
+                  />
+                  <Callout>
+                    <Text>{crum.description}</Text>
+                  </Callout>
+                </Marker>
+              )
+            })}
+            <Text>{crumInstances.length}</Text>
           </MapView>
         ) : (
           <Text>Loading your current location....</Text>
         )}
+        <Carousel
+          ref={c => {
+            this._carousel = c
+          }}
+          data={this.props.crumInstances}
+          containerCustomStyle={styles.carousel}
+          renderItem={this.renderCarouselItem}
+          sliderWidth={Dimensions.get('window').width}
+          itemWidth={300}
+          onSnapToItem={index => this.onCarouselItemChange(index)}
+        />
       </View>
     )
   }
@@ -102,6 +142,31 @@ const styles = StyleSheet.create({
   },
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  carousel: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: 48
+  },
+  cardContainer: {
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    height: 200,
+    width: 300,
+    padding: 24,
+    borderRadius: 24
+  },
+  cardImage: {
+    height: 120,
+    width: 300,
+    bottom: 0,
+    position: 'absolute',
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24
+  },
+  cardTitle: {
+    color: 'white',
+    fontSize: 22,
+    alignSelf: 'center'
   }
 })
 
