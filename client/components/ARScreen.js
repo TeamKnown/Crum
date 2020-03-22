@@ -1,6 +1,7 @@
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
+import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
@@ -58,7 +59,7 @@ class DisARScreen extends React.Component {
       (props.locations.latitudeIdx !== state.latitudeIdx ||
         props.locations.longitudeIdx !== state.longitudeIdx)
     ) {
-      console.log('location changed!!!', props.locations)
+      // console.log('location changed!!!', props.locations)
       props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx) // fetch the list of nearby crums
       return {
         ...state,
@@ -70,25 +71,33 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    console.log('rerendering')
+    // console.log('rerendering')
 
     AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. x:1 means 1 meter South, z:1 means 1 meter east
     // AR.setWorldAlignment('alignmentCamera')
     // The scene coordinate system is locked to match the orientation of the camera.
     // AR.setWorldAlignment('gravity')
     // this is the default, The coordinate system's y-axis is parallel to gravity, and its origin is the initial position of the device.
-    console.log('world alignment is: ', AR.getWorldAlignment())
+    // console.log('world alignment is: ', AR.getWorldAlignment())
 
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
+      // console.log('onContextCreate')
       AR.setWorldAlignment('gravityAndHeading')
+      // console.log('world alignment is: ', AR.getWorldAlignment())
       AR.setPlaneDetection(AR.PlaneDetectionTypes.Horizontal)
       renderer = new Renderer({gl, pixelRatio, width, height})
       scene = new THREE.Scene()
       scene.background = new BackgroundTexture(renderer)
       camera = new Camera(width, height, 0.01, 1000)
       // generate a rainbow of boxes for demonstration purpose
+      scene.add(await createPlane(0xffffff, {x: 0, y: 1, z: -4.4}))
+
+      const texture = await Asset.loadAsync(
+        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/brick_bump.jpg'
+      )
+      // scene.add(createPlane(0xffffff, {x: 0, y: 1, z: -4.4})) // white plain to the North
       scene.add(createCube(0x0000ff, {x: 0, y: 0, z: 4.4})) // blue cube to the South
       scene.add(createCube(0x00ffff, {x: -3, y: 0, z: 3})) // teal cube to the South-West
       scene.add(createCube(0x00ff00, {x: -4.4, y: 0, z: 0})) // green cube to the West
@@ -96,9 +105,7 @@ class DisARScreen extends React.Component {
       scene.add(createCube(0xff9900, {x: 0, y: 0, z: -4.4})) // orange cube to the North
       scene.add(createCube(0xff0000, {x: 3, y: 0, z: -3})) // red cube to the North-East
       scene.add(createCube(0xff00ff, {x: 4.4, y: 0, z: 0})) // magenta cube to the East
-      scene.add(createPlane(0xffffff, {x: 0, y: 0, z: 6})) // white plain to the south
       scene.add(createCube(0x9900ff, {x: 3, y: 0, z: 3})) // Electric Purple cube to the South East
-      // generate boxes based on nearby crums
       scene.add(new THREE.AmbientLight(0xffffff))
     }
 
@@ -148,6 +155,10 @@ class DisARScreen extends React.Component {
             </View>
           </View>
           {/* <Text style={styles.boldText}>You are Here</Text> */}
+          <Image
+            style={{width: 50, height: 50}}
+            source={require('../../public/bg.jpg')}
+          />
           <Text
             style={{
               justifyContent: 'center',
