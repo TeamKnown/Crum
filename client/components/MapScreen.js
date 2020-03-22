@@ -15,11 +15,10 @@ class DisMapScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      longitude: 0,
-      latitude: 0,
-      error: null,
-      crumInstances: []
+      markers: []
     }
+    // this.onCarouselItemChange = this.onCarouselItemChange.bind(this)
+    // this.renderCarouselItem = this.renderCarouselItem.bind(this)
   }
 
   componentDidMount = () => {
@@ -49,6 +48,16 @@ class DisMapScreen extends Component {
   //     return state
   //   }
   // }
+
+  onMarkerPressed = (location, index) => {
+    this._map.animateToRegion({
+      latitude: location.latitude,
+      longitude: location.longitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121
+    })
+    this._carousel.snapToItem(index)
+  }
   onCarouselItemChange = index => {
     let location = this.props.crumInstances[index]
     this._map.animateToRegion({
@@ -57,6 +66,7 @@ class DisMapScreen extends Component {
       latitudeDelta: 0.015,
       longitudeDelta: 0.0121
     })
+    this.state.markers[index].showCallout()
   }
 
   renderCarouselItem = ({item}) => (
@@ -68,7 +78,7 @@ class DisMapScreen extends Component {
 
   render() {
     const {locations, crumInstances} = this.props
-    console.log('CRUM INSTANCES MAP VIEW:', crumInstances.length)
+    console.log('CRUM INSTANCES MAP VIEW:', crumInstances)
     // console.log('THIS.PROPS.LOCATION:', locations)
     // console.log('THIS IS THE LAT', typeof locations.latitude)
     // console.log('THIS IS THE LONG', typeof locations.longitude)
@@ -84,6 +94,7 @@ class DisMapScreen extends Component {
         {locations.longitude && locations.latitude ? (
           <MapView
             ref={map => (this._map = map)}
+            showsUserLocation={true}
             style={styles.map}
             initialRegion={{
               latitude: locations.latitude,
@@ -92,25 +103,30 @@ class DisMapScreen extends Component {
               longitudeDelta: 0.0121
             }}
           >
-            <Marker coordinate={locations} />
             <Circle
               center={locations}
-              radius={100}
+              radius={1000}
               fillColor="rgba(200,300,200,0.5)"
             />
-            {this.props.crumInstances.map(crum => {
-              let coordinate = {
-                latitude: +crum.latitude,
-                longitude: +crum.longitude
-              }
+            {this.props.crumInstances.map((crum, index) => {
               return (
-                <Marker key={crum.id} coordinate={coordinate}>
+                <Marker
+                  key={crum.id}
+                  // eslint-disable-next-line no-return-assign
+                  // eslint-disable-next-line react/no-direct-mutation-state
+                  ref={ref => (this.state.markers[index] = ref)}
+                  onPress={() => this.onMarkerPressed(crum, index)}
+                  coordinate={{
+                    latitude: +crum.latitude,
+                    longitude: +crum.longitude
+                  }}
+                >
                   <Image
                     source={require('./breakmarker.png')}
                     style={{height: 30, width: 30}}
                   />
-                  <Callout>
-                    <Text>{crum.description}</Text>
+                  <Callout style={{width: 110, height: 20}}>
+                    <Text>{crum.title}</Text>
                   </Callout>
                 </Marker>
               )
@@ -129,6 +145,7 @@ class DisMapScreen extends Component {
           renderItem={this.renderCarouselItem}
           sliderWidth={Dimensions.get('window').width}
           itemWidth={300}
+          removeClippedSubviews={false}
           onSnapToItem={index => this.onCarouselItemChange(index)}
         />
       </View>
@@ -146,7 +163,7 @@ const styles = StyleSheet.create({
   carousel: {
     position: 'absolute',
     bottom: 0,
-    marginBottom: 48
+    marginBottom: 10
   },
   cardContainer: {
     backgroundColor: 'rgba(0,0,0,0.6)',
