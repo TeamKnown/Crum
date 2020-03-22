@@ -16,6 +16,11 @@ const CrumInstance = require('./crumInstance')
  * instead of: const User = require('../db/models/user')
  */
 
+CrumInstance.belongsTo(User)
+User.hasMany(CrumInstance)
+
+CrumInstance.belongsTo(Crum)
+Crum.hasMany(CrumInstance)
 
 module.exports = {
   User,
