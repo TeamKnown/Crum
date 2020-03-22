@@ -205,18 +205,9 @@ const styles = StyleSheet.create({
     paddingBottom: 16
   },
   container: {
-    flex: 0.35,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
-  },
-  boldText: {
-    fontSize: 30,
-    color: 'red'
-  },
-  nav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
   },
   bottomContainer: {
     flexDirection: 'column',
@@ -234,6 +225,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 16
+  },
+  boldText: {
+    fontSize: 30,
+    color: 'red'
+  },
+  nav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
   }
 })
 
