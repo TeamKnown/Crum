@@ -7,6 +7,7 @@ import {connect} from 'react-redux'
 import * as React from 'react'
 import {
   Platform,
+  Button,
   View,
   Text,
   StyleSheet,
@@ -20,10 +21,14 @@ import {
   fetchNearByCrumInstances
 } from '../store/crumInstances'
 import * as Location from 'expo-location'
-import {createCube, createPlane} from './Crums.js'
+import {createCube, createPlane, createText} from './Crums.js'
 let renderer, scene, camera
 
 class DisARScreen extends React.Component {
+  constructor() {
+    super()
+    this.handleClick = this.handleClick.bind(this)
+  }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
     latitudeIdx: undefined // likewise, it is floor of (10000 * latitude)
@@ -34,7 +39,13 @@ class DisARScreen extends React.Component {
   componentWillUnmount = () => {
     this.props.unFetchInitialData() // this unsubscribed to update current locations
   }
-
+  handleClick = () => {
+    // alert('Button clicked!')
+    this.props.dropCrum({
+      longitude: this.props.locations.longitude,
+      latitude: this.props.locations.latitude
+    })
+  }
   // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
   // likewise latitude is the floor of (10000 * latitude)
   // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
@@ -62,7 +73,8 @@ class DisARScreen extends React.Component {
   }
   render() {
     // console.log('rerendering')
-
+    const {locations, crumInstances} = this.props
+    console.log('CRUM INSTANCES AR VIEW:', crumInstances.length)
     AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. x:1 means 1 meter South, z:1 means 1 meter east
     // AR.setWorldAlignment('alignmentCamera')
     // The scene coordinate system is locked to match the orientation of the camera.
@@ -73,7 +85,8 @@ class DisARScreen extends React.Component {
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
-      // console.log('onContextCreate')
+      console.log('ON CONTEXT CREATE', crumInstances.length)
+
       AR.setWorldAlignment('gravityAndHeading')
       // console.log('world alignment is: ', AR.getWorldAlignment())
       AR.setPlaneDetection(AR.PlaneDetectionTypes.Horizontal)
@@ -82,20 +95,72 @@ class DisARScreen extends React.Component {
       scene.background = new BackgroundTexture(renderer)
       camera = new Camera(width, height, 0.01, 1000)
       // generate a rainbow of boxes for demonstration purpose
-      scene.add(await createPlane(0xffffff, {x: 0, y: 1, z: -4.4}))
 
-      const texture = await Asset.loadAsync(
-        'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/brick_bump.jpg'
+      crumInstances.forEach(async crumInstance => {
+        // console.log(crumInstance)
+        const x =
+          (-(crumInstance.latitude - this.props.locations.latitude) *
+            6356000 *
+            3.14 *
+            2) /
+          360.0
+        const z =
+          (-(crumInstance.longitude - this.props.locations.longitude) *
+            6356000 *
+            3.14 *
+            Math.cos((this.props.locations.longitude * 2 * 3.14) / 360) *
+            2) /
+          360.0
+        // console.log(x, z)
+        scene.add(
+          await createText(0xff9900, `CRUM # ${crumInstance.id}`, 1, {
+            x: x,
+            y: 1,
+            z: z
+          })
+        )
+      })
+
+      // Showing hand sanitizer for testing purpose
+      scene.add(await createPlane(0xffffff, {x: 0, y: 1, z: -6}))
+      scene.add(
+        await createText(0xff9900, 'hand sanitizer', 0.3, {
+          x: -1.3,
+          y: 1,
+          z: -4.4
+        })
       )
-      // scene.add(createPlane(0xffffff, {x: 0, y: 1, z: -4.4})) // white plain to the North
-      scene.add(createCube(0x0000ff, {x: 0, y: 0, z: 4.4})) // blue cube to the South
-      scene.add(createCube(0x00ffff, {x: -3, y: 0, z: 3})) // teal cube to the South-West
-      scene.add(createCube(0x00ff00, {x: -4.4, y: 0, z: 0})) // green cube to the West
-      scene.add(createCube(0xffff00, {x: -3, y: 0, z: -3})) // yellow cube to the North-West
-      scene.add(createCube(0xff9900, {x: 0, y: 0, z: -4.4})) // orange cube to the North
-      scene.add(createCube(0xff0000, {x: 3, y: 0, z: -3})) // red cube to the North-East
-      scene.add(createCube(0xff00ff, {x: 4.4, y: 0, z: 0})) // magenta cube to the East
-      scene.add(createCube(0x9900ff, {x: 3, y: 0, z: 3})) // Electric Purple cube to the South East
+      scene.add(
+        await createText(0x00ff00, 'W', 0.3, {
+          x: -4.4,
+          y: 1,
+          z: 0
+        })
+      )
+      scene.add(
+        await createText(0xff9900, 'N', 0.3, {
+          x: 0,
+          y: 0,
+          z: -4.4
+        })
+      )
+
+      scene.add(
+        await createText(0x0000ff, 'S', 0.3, {
+          x: 0,
+          y: 0,
+          z: 4.4
+        })
+      )
+
+      scene.add(
+        await createText(0xff00ff, 'E', 0.3, {
+          x: 4.4,
+          y: 0,
+          z: 0
+        })
+      )
+
       scene.add(new THREE.AmbientLight(0xffffff))
     }
 
@@ -107,9 +172,7 @@ class DisARScreen extends React.Component {
     }
 
     const onRender = delta => {
-      // if (mesh) {
-      //   mesh.update(delta)
-      // }
+      // console.log('ON RENDER', crumInstances.length)
       renderer.render(scene, camera)
     }
 
@@ -169,25 +232,18 @@ class DisARScreen extends React.Component {
                 >
                   nearby crums:{' '}
                   {JSON.stringify(
-                    this.props.crumInstances.map(
-                      crumInstance => crumInstance.id
-                    )
+                    crumInstances.map(crumInstance => crumInstance.id)
                   )}
                 </Text>
               </View>
               <TouchableOpacity style={styles.btnDrop}>
-                <Text
+                <Button
                   style={{color: '#19ae9f'}}
-                  title="Drop"
-                  onPress={() => {
-                    this.props.dropCrum({
-                      longitude: this.props.locations.longitude,
-                      latitude: this.props.locations.latitude
-                    })
-                  }}
+                  title="Drop!"
+                  onPress={this.handleClick}
                 >
                   d r o p
-                </Text>
+                </Button>
               </TouchableOpacity>
             </View>
           </View>
@@ -255,6 +311,7 @@ const mapDispatch = dispatch => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     },
     dropCrum: newCrum => {
+      console.log('drop crum map dispatch')
       dispatch(postCrumInstance(newCrum))
     }
   }
