@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
 
-    paddingBottom: '5%'
+    paddingBottom: 16
   },
   container: {
     flex: 0.35,
