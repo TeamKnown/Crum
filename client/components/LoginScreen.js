@@ -79,7 +79,8 @@ export default class LoginScreen extends React.Component {
 const styles = StyleSheet.create({
   main: {
     height: '100%',
-    width: '100%'
+    width: '100%',
+    paddingBottom: 10
   },
   logo: {
     alignItems: 'center',
@@ -91,8 +92,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignContent: 'flex-end',
     alignItems: 'center',
-    height: '50%',
-    paddingTop: '10%'
+    height: '50%'
   },
   input: {
     height: 60,

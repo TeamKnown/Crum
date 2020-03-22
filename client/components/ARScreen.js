@@ -201,8 +201,7 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%',
-
-    paddingBottom: 16
+    paddingBottom: 10
   },
   container: {
     flexDirection: 'column',
