@@ -8,11 +8,19 @@ import {
   TouchableOpacity,
   ImageBackground
 } from 'react-native'
+import Expo from 'expo'
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+import {auth} from '../store'
+
 import {withState} from 'recompose'
 import crumInstancesReducer from '../store/crumInstances'
-
-// <ImageBackground source = {require('../../public/background.png')} style={styles.backgroundImage}/>
 export default class LoginScreen extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {signedIn: false, name: '', photoUrl: ''}
+  }
+
   render() {
     return (
       <ImageBackground
@@ -32,25 +40,32 @@ export default class LoginScreen extends React.Component {
           </View>
           <View style={styles.container}>
             <TextInput
+              required
+              id="userName"
               textAlign="center"
               style={styles.input}
               placeholder="u s e r n a m e"
+              autoComplete="userName"
               type="text"
             />
             <TextInput
+              required
+              type="password"
+              id="password"
               textAlign="center"
               style={styles.input}
               placeholder="p a s s w o r d"
+              autoComplete="current-password"
               secureTextEntry
             />
             <TouchableOpacity style={styles.btnLogin}>
               <Text style={{color: 'white'}}>l o g i n</Text>
             </TouchableOpacity>
             <View style={styles.buttons}>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} type="submit">
                 <Text style={{color: 'white'}}>s i g n u p</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity style={styles.btn} href="/auth/google">
                 <Text style={{color: 'white'}}>G o o g l e l o g i n</Text>
               </TouchableOpacity>
             </View>
