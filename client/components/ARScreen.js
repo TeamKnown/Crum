@@ -236,14 +236,17 @@ class DisARScreen extends React.Component {
                   )}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btnDrop}>
-                <Button
+              <TouchableOpacity
+                style={styles.btnDrop}
+                onPress={this.handleClick}
+              >
+                <Text
                   style={{color: '#19ae9f'}}
                   title="Drop!"
                   onPress={this.handleClick}
                 >
                   d r o p
-                </Button>
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
