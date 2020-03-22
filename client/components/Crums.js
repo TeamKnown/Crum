@@ -23,13 +23,13 @@ export const createCube = (color, orientation) => {
   return cube
 }
 
-export const createPlane = async (color, orientation) => {
+export const createPlane = async (color, imgUrl, orientation) => {
   const geometry = new THREE.PlaneGeometry(2, 2)
-  const texture2 = await ExpoTHREE.loadAsync(
-    'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png'
-  )
+  // const texture2 = await ExpoTHREE.loadAsync(imgUrl)
+  // console.log(imgUrl, '../../public/HandSanitizer.png')
+  // console.log(imgUrl === '../../public/HandSanitizer.png')
   const texture = await ExpoTHREE.loadTextureAsync({
-    asset: require('../../public/HandSanitizer.png')
+    asset: imgUrl
   })
   const material = new THREE.MeshLambertMaterial({
     map: texture
@@ -38,6 +38,7 @@ export const createPlane = async (color, orientation) => {
   plane.position.z = orientation.z
   plane.position.x = orientation.x
   plane.position.y = orientation.y
+  plane.rotation.y = Math.atan2(-orientation.x, -orientation.z) // make sure the text is facing us
   return plane
 }
 
@@ -58,7 +59,6 @@ export const createText = async (color, message, size, orientation) => {
   text.position.z = orientation.z
   text.position.x = orientation.x
   text.position.y = orientation.y
-  text.rotation.x = 0
   text.rotation.y = Math.atan2(-orientation.x, -orientation.z) // make sure the text is facing us
   text.rotation.z = 0
 
