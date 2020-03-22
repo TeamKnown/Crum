@@ -5,16 +5,12 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    // console.dir(ip.address())
-    // console.log('GET ROUTE HITTING')
     const crumInstances = await CrumInstance.findAll({})
     res.json(crumInstances)
   } catch (err) {
     next(err)
   }
 })
-
-// http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 
 router.post('/', async (req, res, next) => {
   try {
@@ -33,6 +29,8 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+// this post route takes three parameters: radium, latitude and longitude
+// http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 router.get('/nearme', async (req, res, next) => {
   console.log(req.query)
   try {
@@ -42,7 +40,6 @@ router.get('/nearme', async (req, res, next) => {
       +req.query.longitudeIdx
     )
     res.json(crumInstances)
-    // res.json({})
   } catch (err) {
     next(err)
   }
@@ -57,6 +54,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+// this post route takes one parameters: the id of the cruminstances
 //http://localhost:19001/api/cruminstances/near/1?radium=1
 router.get('/near/:id', async (req, res, next) => {
   try {
@@ -68,4 +66,3 @@ router.get('/near/:id', async (req, res, next) => {
     next(err)
   }
 })
-//http://localhost:19001/api/cruminstances/near/?radium=1&altitude=-74.00564098060971

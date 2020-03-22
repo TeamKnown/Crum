@@ -1,25 +1,44 @@
 import {Renderer, THREE} from 'expo-three'
+import ExpoTHREE from 'expo-three'
+import {Asset} from 'expo-asset'
+import {AR} from 'expo'
 
-export const createCube = () => {
+export const createCube = (color, orientation) => {
   const geometry = new THREE.BoxGeometry(0.4, 0.4, 0.4)
   // Simple color material
+  // const texture = new THREE.TextureLoader().load(
+  //   '../../public/HandSanitizer.png'
+  // )
   const material = new THREE.MeshPhongMaterial({
-    color: 0xff00ff
+    // map: texture,
+    color: color //0xff00ff
   })
+
   const cube = new THREE.Mesh(geometry, material)
-  cube.position.z = -2
-  cube.position.x = 1
-  cube.position.y = 1
+  cube.position.z = orientation.z
+  cube.position.x = orientation.x
+  cube.position.y = orientation.y
   return cube
 }
 
-export const createPlane = () => {
-  const geometry2 = new THREE.PlaneGeometry(2, 2 * 0.75)
-  const loader = new THREE.TextureLoader()
-  const material2 = new THREE.MeshPhongMaterial({
-    map: loader.load('public/HandSanitizer.png')
+export const createPlane = async (color, orientation) => {
+  const geometry = new THREE.PlaneGeometry(1, 1)
+  // const loader = new THREE.TextureLoader()
+  // const texture = await loader.load('https://i.imgur.com/RrXwcvm.jpeg')
+  // const texture = await ExpoTHREE.loadAsync('../../public/bg.jpg')
+  // const texture = await Asset.loadAsync('https://i.imgur.com/RrXwcvm.jpeg')
+  const texture = await ExpoTHREE.loadTextureAsync({
+    asset: require('../../public/bg.jpg')
   })
-  const plane = new THREE.Mesh(geometry2, material2)
-  plane.position.z = -3
+  console.log('texture')
+  console.log(texture)
+  const material = new THREE.MeshPhongMaterial({
+    map: texture,
+    color: color
+  })
+  const plane = new THREE.Mesh(geometry, material)
+  plane.position.z = orientation.z
+  plane.position.x = orientation.x
+  plane.position.y = orientation.y
   return plane
 }
