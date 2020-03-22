@@ -68,7 +68,7 @@ class DisMapScreen extends Component {
 
   render() {
     const {locations, crumInstances} = this.props
-    console.log('CRUM INSTANCES:', crumInstances.length)
+    console.log('CRUM INSTANCES MAP VIEW:', crumInstances.length)
     // console.log('THIS.PROPS.LOCATION:', locations)
     // console.log('THIS IS THE LAT', typeof locations.latitude)
     // console.log('THIS IS THE LONG', typeof locations.longitude)
