@@ -5,7 +5,15 @@ import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {Platform, View, Text, StyleSheet, Image, Button} from 'react-native'
+import {
+  Platform,
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  ImageBackground,
+  TouchableOpacity
+} from 'react-native'
 import {getCurrentPosition, stopTracking} from '../store/locations'
 import {
   postCrumInstance,
@@ -14,24 +22,6 @@ import {
 import * as Location from 'expo-location'
 import {createCube, createPlane, createText} from './Crums.js'
 let renderer, scene, camera
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 16
-  },
-  boldText: {
-    fontSize: 30,
-    color: 'red'
-  },
-  nav: {
-    flexDirection: 'row',
-    justifyContent: 'space-around'
-  }
-})
 
 class DisARScreen extends React.Component {
   state = {
@@ -125,68 +115,127 @@ class DisARScreen extends React.Component {
     }
 
     return (
-      <View style={styles.container}>
-        <View style={{flex: 1}}>
+      <ImageBackground
+        source={require('../../public/background.png')}
+        style={{
+          flex: 1,
+          width: null,
+          height: null
+        }}
+      >
+        <View style={styles.main}>
           <View style={{flex: 1}}>
-            <GraphicsView
-              style={{flex: 1}}
-              onContextCreate={onContextCreate}
-              onRender={onRender}
-              onResize={onResize}
-              isArEnabled
-              isArRunningStateEnabled
-              isArCameraStateEnabled
-            />
-            <View
-              style={{
-                position: 'absolute',
-                top: '50%',
-                alignSelf: 'flex-end'
-              }}
-            >
-              <Button
-                title="Drop"
-                onPress={() => {
-                  this.props.dropCrum({
-                    longitude: this.props.locations.longitude,
-                    latitude: this.props.locations.latitude
-                  })
-                }}
+            <View style={{flex: 1}}>
+              <GraphicsView
+                style={{flex: 1}}
+                onContextCreate={onContextCreate}
+                onRender={onRender}
+                onResize={onResize}
+                isArEnabled
+                isArRunningStateEnabled
+                isArCameraStateEnabled
               />
             </View>
-          </View>
-          {/* <Text style={styles.boldText}>You are Here</Text> */}
-          {/* <Image
+            {/* <Text style={styles.boldText}>You are Here</Text>
+          <Image
             style={{width: 50, height: 50}}
             source={require('../../public/bg.jpg')}
-          /> */}
-          <Text
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 16
-            }}
-          >
-            Long: {this.props.locations.longitudeIdx}
-            Lat: {this.props.locations.latitudeIdx}
-          </Text>
-          <Text
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 16
-            }}
-          >
-            All nearby Crums:{' '}
-            {JSON.stringify(
-              this.props.crumInstances.map(crumInstance => crumInstance.id)
-            )}
-          </Text>
+          />*/}
+            <View style={styles.container}>
+              <View style={styles.bottomContainer}>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 16
+                  }}
+                >
+                  longitude: {this.props.locations.longitudeIdx}
+                </Text>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 16
+                  }}
+                >
+                  latitude: {this.props.locations.latitudeIdx}
+                </Text>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 16
+                  }}
+                >
+                  nearby crums:{' '}
+                  {JSON.stringify(
+                    this.props.crumInstances.map(
+                      crumInstance => crumInstance.id
+                    )
+                  )}
+                </Text>
+              </View>
+              <TouchableOpacity style={styles.btnDrop}>
+                <Text
+                  style={{color: '#19ae9f'}}
+                  title="Drop"
+                  onPress={() => {
+                    this.props.dropCrum({
+                      longitude: this.props.locations.longitude,
+                      latitude: this.props.locations.latitude
+                    })
+                  }}
+                >
+                  d r o p
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </View>
+      </ImageBackground>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  main: {
+    height: '100%',
+    width: '100%',
+
+    paddingBottom: 16
+  },
+  container: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  bottomContainer: {
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center'
+  },
+  btnDrop: {
+    height: 60,
+    width: '90%',
+    backgroundColor: 'white',
+    borderColor: '#19ae9f',
+    borderWidth: 2,
+    textAlign: 'center',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 16
+  },
+  boldText: {
+    fontSize: 30,
+    color: 'red'
+  },
+  nav: {
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  }
+})
 
 const mapState = state => ({
   locations: {
