@@ -1,5 +1,7 @@
 import {Renderer, THREE} from 'expo-three'
 import ExpoTHREE from 'expo-three'
+// import * as Location from 'expo-location'
+
 import {Asset} from 'expo-asset'
 import {AR} from 'expo'
 
@@ -39,15 +41,14 @@ export const createPlane = async (color, orientation) => {
   return plane
 }
 
-export const createText = async (color, orientation) => {
+export const createText = async (color, message, size, orientation) => {
   const json = require('./three_fonts/neue_haas_unica_pro_medium.json')
   const font = await new THREE.FontLoader().parse(json)
-  const geometry = new THREE.TextBufferGeometry('hand sanitizer', {
+  const geometry = new THREE.TextBufferGeometry(message, {
     font: font,
-    size: 0.3,
+    size: size,
     height: 0.1
   })
-
   geometry.computeBoundingBox()
   geometry.computeVertexNormals()
   const material = new THREE.MeshPhongMaterial({
@@ -57,5 +58,19 @@ export const createText = async (color, orientation) => {
   text.position.z = orientation.z
   text.position.x = orientation.x
   text.position.y = orientation.y
+  text.rotation.x = 0
+  text.rotation.y = Math.atan2(-orientation.x, -orientation.z) // make sure the text is facing us
+  text.rotation.z = 0
+
   return text
 }
+
+// no longer need this code for not but it generates a rainbow of cubes i 8 directions
+// scene.add(createCube(0x0000ff, {x: 0, y: 0, z: 4.4})) // blue cube to the South
+// scene.add(createCube(0x00ffff, {x: -3, y: 0, z: 3})) // teal cube to the South-West
+// scene.add(createCube(0x00ff00, {x: -4.4, y: 0, z: 0})) // green cube to the West
+// scene.add(createCube(0xffff00, {x: -3, y: 0, z: -3})) // yellow cube to the North-West
+// scene.add(createCube(0xff9900, {x: 0, y: 0, z: -4.4})) // orange cube to the North
+// scene.add(createCube(0xff0000, {x: 3, y: 0, z: -3})) // red cube to the North-East
+// scene.add(createCube(0xff00ff, {x: 4.4, y: 0, z: 0})) // magenta cube to the East
+// scene.add(createCube(0x9900ff, {x: 3, y: 0, z: 3})) // Electric Purple cube to the South East
