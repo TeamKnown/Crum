@@ -20,7 +20,7 @@ import {
   fetchNearByCrumInstances
 } from '../store/crumInstances'
 import * as Location from 'expo-location'
-import {createCube, createPlane} from './Crums.js'
+import {createCube, createPlane, createText} from './Crums.js'
 let renderer, scene, camera
 
 class DisARScreen extends React.Component {
@@ -83,6 +83,7 @@ class DisARScreen extends React.Component {
       camera = new Camera(width, height, 0.01, 1000)
       // generate a rainbow of boxes for demonstration purpose
       scene.add(await createPlane(0xffffff, {x: 0, y: 1, z: -4.4}))
+      scene.add(await createText(0xff9900, {x: -1.3, y: 1, z: -4.4}))
 
       const texture = await Asset.loadAsync(
         'https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/brick_bump.jpg'
