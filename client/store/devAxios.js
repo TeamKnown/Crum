@@ -1,5 +1,7 @@
 import axios from 'axios'
+import {BASE_URL} from '../../secretDom'
 
+// console.log(Object.keys(process.env))
 export const devAxios = axios.create({
   // ngrok can publish your local host http://localhost:19001
   // to a public link http://*******/.ngrok.io'
@@ -8,5 +10,6 @@ export const devAxios = axios.create({
   // get your ngrok link by running "ngrok http 19001"
   // if you user your own server, make sure you run "npm run start-server" so that your server is on
   // if you change this, make sure you re-start your front end by running "npm start"
-  baseURL: process.env.BASE_URL
+  baseURL: BASE_URL
+  // baseURL: 'http://21e06df5.ngrok.io'
 })

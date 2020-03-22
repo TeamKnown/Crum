@@ -40,10 +40,10 @@ class DisARScreen extends React.Component {
     this.props.unFetchInitialData() // this unsubscribed to update current locations
   }
   handleClick = () => {
-    alert('Button clicked!')
+    // alert('Button clicked!')
     this.props.dropCrum({
-      longitude: locations.longitude,
-      latitude: locations.latitude
+      longitude: this.props.locations.longitude,
+      latitude: this.props.locations.latitude
     })
   }
   // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
