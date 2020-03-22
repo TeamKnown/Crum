@@ -10,12 +10,9 @@ const reducer = combineReducers({
   locations: locationsReducer
 })
 
-const middleware = composeWithDevTools(
-  // applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-  applyMiddleware(thunkMiddleware)
-)
+const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware))
 const store = createStore(reducer, middleware)
 
 export default store
 export * from './crumInstances'
-// export * from './locations'
+export * from './locations'

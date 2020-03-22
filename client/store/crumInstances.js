@@ -1,7 +1,6 @@
 import {devAxios} from './devAxios'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
-
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
 
 // action creator
@@ -28,9 +27,6 @@ export const addCrumInstance = crumInstance => ({
 //   }
 // }
 
-// +req.query.radium,
-// +req.query.latitudeIdx,
-// +req.query.longitudeIdx
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {
