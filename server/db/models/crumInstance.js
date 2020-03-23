@@ -2,10 +2,7 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const CrumInstance = db.define('crumInstance', {
-  title: {
-    type: Sequelize.TEXT
-  },
-  description: {
+  message: {
     type: Sequelize.TEXT
   },
   latitude: {

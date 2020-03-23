@@ -13,7 +13,10 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal,
+  TouchableHighlight,
+  Alert
 } from 'react-native'
 import {getCurrentPosition, stopTracking, fetchCrums} from '../store/'
 import {images, fonts} from '../../assets/'
@@ -33,7 +36,13 @@ class DisARScreen extends React.Component {
   }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
-    latitudeIdx: undefined // likewise, it is floor of (10000 * latitude)
+    latitudeIdx: undefined, // likewise, it is floor of (10000 * latitude)
+    visible: false
+  }
+  setModalVisible(visible) {
+    this.setState({
+      visible: visible
+    })
   }
   componentDidMount = () => {
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
@@ -181,24 +190,18 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
-            {Number.isInteger(this.props.numCrum) && (
-              <View style={{flex: 1}}>
-                {/* ??? does not rerender when the component rerender */}
-                {/*cmd + s is the only way that makes it re-render */}
-                {/*read docs more https://github.com/expo/expo-graphics*/}
-                {/*one of the props*/}
-                <GraphicsView
-                  style={{flex: 1}}
-                  onContextCreate={onContextCreate}
-                  onRender={onRender}
-                  onResize={onResize}
-                  isArEnabled
-                  isArRunningStateEnabled
-                  isArCameraStateEnabled
-                />
-                )}
-              </View>
-            )}
+            <View style={{flex: 1}}>
+              <GraphicsView
+                style={{flex: 1}}
+                onContextCreate={onContextCreate}
+                onRender={onRender}
+                onResize={onResize}
+                isArEnabled
+                isArRunningStateEnabled
+                isArCameraStateEnabled
+              />
+            </View>
+
             {/* <Text style={styles.boldText}>You are Here</Text>
           <Image
             style={{width: 50, height: 50}}
@@ -249,16 +252,43 @@ class DisARScreen extends React.Component {
               </View>
               <TouchableOpacity
                 style={styles.btnDrop}
-                onPress={this.handleClick}
+                onPress={() => {
+                  this.setModalVisible(true)
+                }}
+                // onPress={this.handleClick}
               >
                 <Text
                   style={{color: '#19ae9f'}}
                   title="Drop!"
-                  onPress={this.handleClick}
+                  // onPress={this.handleClick}
                 >
                   d r o p
                 </Text>
               </TouchableOpacity>
+              <Modal
+                animationType="none"
+                transparent={false}
+                visible={this.state.visible}
+                onRequestClose={() => {
+                  Alert.alert('Modal closed')
+                }}
+              >
+                <View style={styles.container}>
+                  <View style={styles.modal}>
+                    <Text>Select Crum</Text>
+                    <TouchableOpacity
+                      style={styles.btnDrop}
+                      onPress={() => {
+                        this.setModalVisible(!this.state.visible)
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                        d r o p
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
             </View>
           </View>
         </View>
@@ -272,6 +302,21 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     paddingBottom: 10
+  },
+  modal: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    borderColor: '#7c1e9f',
+    width: '90%',
+    height: '60%',
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderRadius: 10,
+    marginTop: 100
   },
   container: {
     flexDirection: 'column',
