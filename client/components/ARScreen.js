@@ -4,14 +4,16 @@ import {Renderer, THREE} from 'expo-three'
 import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
+import {Thumbnail, Picker} from 'native-base'
 import * as React from 'react'
 import {
   Platform,
-  Button,
+  TextInput,
   View,
   Text,
   StyleSheet,
   Image,
+  // Picker,
   ImageBackground,
   TouchableOpacity,
   Modal,
@@ -33,11 +35,13 @@ class DisARScreen extends React.Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (10000 * latitude)
-    visible: false
+    visible: false,
+    message: ''
   }
   setModalVisible(visible) {
     this.setState({
@@ -56,6 +60,11 @@ class DisARScreen extends React.Component {
     this.props.dropCrumInstances({
       longitude: this.props.locations.longitude,
       latitude: this.props.locations.latitude
+    })
+  }
+  handleChange(event) {
+    this.setState({
+      message: event.nativeEvent.text
     })
   }
   // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
@@ -132,7 +141,6 @@ class DisARScreen extends React.Component {
         )
       })
 
-      // Showing where is South, North, East and West
       scene.add(
         await createText(0x00ff00, 'W', fonts.font1, 0.3, {
           x: -4.4,
@@ -215,36 +223,6 @@ class DisARScreen extends React.Component {
                     marginTop: 16
                   }}
                 >
-                  longitude: {locations.longitudeIdx}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
-                  latitude: {locations.latitudeIdx}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
-                  nearby crums:{' '}
-                  {JSON.stringify(
-                    crumInstances.map(crumInstance => crumInstance.id)
-                  )}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
                   default crums:{' '}
                   {JSON.stringify(this.props.crums.map(crum => crum.name))}
                 </Text>
@@ -269,12 +247,82 @@ class DisARScreen extends React.Component {
                 transparent={false}
                 visible={this.state.visible}
                 onRequestClose={() => {
+                  this.handleClick()
                   Alert.alert('Modal closed')
                 }}
               >
                 <View style={styles.container}>
                   <View style={styles.modal}>
                     <Text>Select Crum</Text>
+                    {/* <Picker
+                      style={{width: 100, height: '100%', marginLeft: 5}}
+                      selectedValue={this.state.selectedCountry}
+                      onValueChange={value => this.onCodeChanged(value)}
+                    >
+                      <Picker.Item
+                        label={
+                          <Text
+                            style={{alignItems: 'center', flexDirection: 'row'}}
+                          >
+                            <Thumbnail
+                              square
+                              style={{width: 30, height: 20, marginTop: 5}}
+                              source={require('../../assets/Crums/Dog.png')}
+                            />{' '}
+                            +90
+                          </Text>
+                        }
+                        value="+90"
+                      />
+                      <Picker.Item
+                        label={
+                          <Text
+                            style={{alignItems: 'center', flexDirection: 'row'}}
+                          >
+                            <Thumbnail
+                              square
+                              style={{width: 30, height: 20, marginTop: 5}}
+                              source={require('../../assets/Crums/Dog.png')}
+                            />{' '}
+                            +1
+                          </Text>
+                        }
+                        value="+1"
+                      />
+                    </Picker> */}
+                    {/* <Picker
+                      selectedValue={this.state.language}
+                      style={{height: '80%', width: '100%'}}
+                      onValueChange={(itemValue, itemIndex) =>
+                        this.setState({language: itemValue})
+                      }
+                    >
+                      <Picker.Item label="Java2" value="java2" />
+                      <Picker.Item label="Java" value="java" />
+                      <Image
+                        style={{width: 50, height: 50}}
+                        source={require('../../assets/Crums/Dog.png')}
+                      ></Image>
+                      <Picker.Item label="Img" value="img"></Picker.Item>
+                      <Picker.Item label="JavaScript" value="js" />
+                    </Picker> */}
+
+                    <TextInput
+                      required
+                      id="message"
+                      value={this.state.message}
+                      onChange={this.handleChange}
+                      // onChange={() => {
+                      //   console.log('typing')
+                      //   console.log(this.state.message)
+                      // }}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder="m e s s a g e"
+                      autoComplete="message"
+                      type="text"
+                    />
+
                     <TouchableOpacity
                       style={styles.btnDrop}
                       onPress={() => {
@@ -317,6 +365,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 100
   },
+  picker: {
+    height: '40%'
+  },
   container: {
     flexDirection: 'column',
     alignItems: 'center',
@@ -342,6 +393,17 @@ const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,
     color: 'red'
+  },
+  input: {
+    height: 60,
+    width: '90%',
+    borderRadius: 10,
+    borderColor: 'grey',
+    backgroundColor: 'white',
+    borderWidth: 2,
+    alignItems: 'center',
+    padding: 8,
+    margin: 8
   },
   nav: {
     flexDirection: 'row',
