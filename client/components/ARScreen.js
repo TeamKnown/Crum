@@ -4,16 +4,16 @@ import {Renderer, THREE} from 'expo-three'
 import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
-import {Thumbnail, Picker} from 'native-base'
 import * as React from 'react'
 import {
   Platform,
   TextInput,
+  Button,
   View,
   Text,
   StyleSheet,
   Image,
-  // Picker,
+  Picker,
   ImageBackground,
   TouchableOpacity,
   Modal,
@@ -41,7 +41,8 @@ class DisARScreen extends React.Component {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (10000 * latitude)
     visible: false,
-    message: ''
+    message: '',
+    imgName: ''
   }
   setModalVisible(visible) {
     this.setState({
@@ -96,7 +97,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {locations, crumInstances, numCrum} = this.props
+    const {locations, crumInstances, numCrum, crums} = this.props
     // console.log('rerendering', locations)
     // console.log('CRUM INSTANCES AR VIEW:', numCrum)
     AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east
@@ -255,58 +256,37 @@ class DisARScreen extends React.Component {
                 <View style={styles.container}>
                   <View style={styles.modal}>
                     <Text>Select Crum</Text>
-                    {/* <Picker
-                      style={{width: 100, height: '100%', marginLeft: 5}}
-                      selectedValue={this.state.selectedCountry}
-                      onValueChange={value => this.onCodeChanged(value)}
+                    <View
+                      style={{
+                        width: '80%',
+                        height: '70%',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexWrap: 'wrap'
+                      }}
                     >
-                      <Picker.Item
-                        label={
-                          <Text
-                            style={{alignItems: 'center', flexDirection: 'row'}}
-                          >
-                            <Thumbnail
-                              square
-                              style={{width: 30, height: 20, marginTop: 5}}
-                              source={require('../../assets/Crums/Dog.png')}
-                            />{' '}
-                            +90
-                          </Text>
-                        }
-                        value="+90"
-                      />
-                      <Picker.Item
-                        label={
-                          <Text
-                            style={{alignItems: 'center', flexDirection: 'row'}}
-                          >
-                            <Thumbnail
-                              square
-                              style={{width: 30, height: 20, marginTop: 5}}
-                              source={require('../../assets/Crums/Dog.png')}
-                            />{' '}
-                            +1
-                          </Text>
-                        }
-                        value="+1"
-                      />
-                    </Picker> */}
-                    {/* <Picker
-                      selectedValue={this.state.language}
-                      style={{height: '80%', width: '100%'}}
-                      onValueChange={(itemValue, itemIndex) =>
-                        this.setState({language: itemValue})
-                      }
-                    >
-                      <Picker.Item label="Java2" value="java2" />
-                      <Picker.Item label="Java" value="java" />
-                      <Image
-                        style={{width: 50, height: 50}}
-                        source={require('../../assets/Crums/Dog.png')}
-                      ></Image>
-                      <Picker.Item label="Img" value="img"></Picker.Item>
-                      <Picker.Item label="JavaScript" value="js" />
-                    </Picker> */}
+                      {crums.map(crum => (
+                        <TouchableOpacity
+                          key={crum.id}
+                          onPress={() => {
+                            console.log(this.state)
+                            this.setState({
+                              imgName: crum.name
+                            })
+                          }}
+                        >
+                          <Image
+                            style={{width: 50, height: 50, margin: 6}}
+                            borderColor={0xf44336}
+                            borderWidth={
+                              this.state.imgName === crum.name ? 10 : 0
+                            }
+                            source={images[crum.name]}
+                          />
+                        </TouchableOpacity>
+                      ))}
+                    </View>
 
                     <TextInput
                       required
@@ -327,6 +307,7 @@ class DisARScreen extends React.Component {
                     <TouchableOpacity
                       style={styles.btnDrop}
                       onPress={() => {
+                        console.log('drop!!!', this.state)
                         this.setModalVisible(!this.state.visible)
                       }}
                     >
@@ -358,7 +339,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderColor: '#7c1e9f',
     width: '90%',
-    height: '60%',
+    height: '75%',
     shadowColor: 'grey',
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
@@ -367,7 +348,7 @@ const styles = StyleSheet.create({
     marginTop: 100
   },
   picker: {
-    height: '40%'
+    height: '80%'
   },
   container: {
     flexDirection: 'column',
