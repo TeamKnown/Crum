@@ -36,11 +36,11 @@ class DisARScreen extends React.Component {
     latitudeIdx: undefined // likewise, it is floor of (10000 * latitude)
   }
   componentDidMount = () => {
-    this.props.fetchInitialData() // this subscribed to update current locations every time interval
+    this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
-    this.props.unFetchInitialData() // this unsubscribed to update current locations
+    this.props.unsubscribeToLocationData() // this unsubscribed to update current locations
   }
   handleClick = () => {
     // alert('Button clicked!')
@@ -110,33 +110,18 @@ class DisARScreen extends React.Component {
             2) /
           360.0
         scene.add(
-          await createPlane(0xffffff, images[crumInstance.crum.name], {
-            x: x,
-            y: 0,
-            z: z
-          })
+          await createPlane(
+            0xffffff,
+            // require(`${crumInstance.crum.imgUrl}`),  // this will not work
+            images[crumInstance.crum.name],
+            {
+              x: x,
+              y: 0,
+              z: z
+            }
+          )
         )
       })
-
-      // Showing pics for testing
-      scene.add(
-        await createPlane(
-          0xffffff,
-          require('../../assets/Crums/HandSanitizer.png'),
-          {
-            x: 0,
-            y: 1,
-            z: -6
-          }
-        )
-      )
-      scene.add(
-        await createPlane(0xffffff, require('../../assets/Crums/Mask.png'), {
-          x: -1,
-          y: 1,
-          z: 6
-        })
-      )
 
       // Showing where is South, North, East and West
       scene.add(
@@ -181,6 +166,7 @@ class DisARScreen extends React.Component {
     }
 
     const onRender = delta => {
+      // run every frame
       renderer.render(scene, camera)
     }
 
@@ -197,6 +183,10 @@ class DisARScreen extends React.Component {
           <View style={{flex: 1}}>
             {Number.isInteger(this.props.numCrum) && (
               <View style={{flex: 1}}>
+                {/* ??? does not rerender when the component rerender */}
+                {/*cmd + s is the only way that makes it re-render */}
+                {/*read docs more https://github.com/expo/expo-graphics*/}
+                {/*one of the props*/}
                 <GraphicsView
                   style={{flex: 1}}
                   onContextCreate={onContextCreate}
@@ -206,6 +196,7 @@ class DisARScreen extends React.Component {
                   isArRunningStateEnabled
                   isArCameraStateEnabled
                 />
+                )}
               </View>
             )}
             {/* <Text style={styles.boldText}>You are Here</Text>
@@ -324,10 +315,10 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => {
   return {
-    fetchInitialData: () => {
+    subscribeToLocationData: () => {
       dispatch(getCurrentPosition())
     },
-    unFetchInitialData: () => {
+    unsubscribeToLocationData: () => {
       dispatch(stopTracking())
     },
     fetchCrums: () => {
