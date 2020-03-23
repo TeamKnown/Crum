@@ -8,6 +8,8 @@ import {devAxios} from './client/store'
 import ScarletScreen from './client/components/MapScreen.js'
 import ARScreen from './client/components/ARScreen'
 import LoginScreen from './client/components/LoginScreen'
+import UserProfile from './client/components/UserProfile'
+import SignIn from './client/components/SignIn'
 
 const styles = StyleSheet.create({
   boldText: {
@@ -26,11 +28,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <Router>
           <Scene key="root" tabs={true}>
-            <Scene
-              key="LoginScreen"
-              component={LoginScreen}
-              title="LoginScreen"
-            />
+            <Scene key="LoginScreen" component={SignIn} title="LoginScreen" />
             <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
