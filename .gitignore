@@ -11,6 +11,7 @@ web-build/
 web-report/
 public/bundle.js
 public/bundle.js.map
+secretDom.js
 secrets.js
 .DS_Store
 npm-debug.log
