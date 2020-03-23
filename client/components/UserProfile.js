@@ -31,11 +31,11 @@ export default class UserProfile extends React.Component {
           <Image
             source={require('../../public/defaultProfile1.png')}
             style={{
-              width: 180,
-              height: 180,
+              width: 220,
+              height: 220,
               marginRight: 10,
               marginBottom: 12,
-              marginTop: '20%'
+              marginTop: '15%'
             }}
           />
         </View>
@@ -50,15 +50,27 @@ export default class UserProfile extends React.Component {
             >
               u s e r n a m e:
             </Text>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16
-              }}
-            >
-              {userName}
-            </Text>
+            {userName ? (
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16
+                }}
+              >
+                {userName}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16
+                }}
+              >
+                P L A C E H O L D E R
+              </Text>
+            )}
             <Text
               style={{
                 justifyContent: 'center',
@@ -105,26 +117,14 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    height: '50%'
+    justifyContent: 'center'
   },
   bottomContainer: {
     flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center'
-  },
-  input: {
-    height: 60,
-    width: '90%',
-    borderRadius: 10,
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 2,
     alignItems: 'center',
-    padding: 8,
-    margin: 8
+    paddingBottom: '10%'
   },
   btnCrums: {
     height: 60,
