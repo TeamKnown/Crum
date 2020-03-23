@@ -9,6 +9,7 @@ import ScarletScreen from './components/MapScreen.js'
 import ARScreen from './components/ARScreen'
 import UserProfile from './components/UserProfile'
 import LoginScreen from './components/LoginScreen'
+import DropModal from './components/DropModal'
 
 const styles = StyleSheet.create({
   boldText: {
@@ -35,6 +36,7 @@ export default class App extends React.Component {
             <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
+            <Scene key="DropModal" component={DropModal} title="DropModal" />
             {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
           </Scene>
         </Router>
