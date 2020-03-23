@@ -4,7 +4,7 @@ import {Renderer, THREE} from 'expo-three'
 import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
-import {Thumbnail, Picker} from 'native-base'
+// import {Thumbnail, Picker} from 'native-base'
 import * as React from 'react'
 import {
   Platform,

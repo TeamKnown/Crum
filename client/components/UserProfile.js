@@ -181,7 +181,8 @@ const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   container: {
     flexDirection: 'column',
@@ -196,7 +197,7 @@ const styles = StyleSheet.create({
   bottomContainer: {
     flexDirection: 'column',
     alignItems: 'center',
-    paddingBottom: '10%'
+    paddingBottom: '4%'
   },
   btnCrums: {
     height: 60,
@@ -205,8 +206,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 16
+    justifyContent: 'center'
   },
   btnDrop: {
     height: 60,
