@@ -247,14 +247,17 @@ class DisARScreen extends React.Component {
                   {JSON.stringify(this.props.crums.map(crum => crum.name))}
                 </Text>
               </View>
-              <TouchableOpacity style={styles.btnDrop}>
-                <Button
+              <TouchableOpacity
+                style={styles.btnDrop}
+                onPress={this.handleClick}
+              >
+                <Text
                   style={{color: '#19ae9f'}}
                   title="Drop!"
                   onPress={this.handleClick}
                 >
                   d r o p
-                </Button>
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -268,8 +271,7 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%',
-
-    paddingBottom: 16
+    paddingBottom: 10
   },
   container: {
     flexDirection: 'column',

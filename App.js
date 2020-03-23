@@ -31,6 +31,7 @@ export default class App extends React.Component {
               component={LoginScreen}
               title="LoginScreen"
             />
+            <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
             {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
