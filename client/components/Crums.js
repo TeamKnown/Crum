@@ -25,11 +25,9 @@ export const createCube = (color, orientation) => {
 
 export const createPlane = async (color, imgUrl, orientation) => {
   const geometry = new THREE.PlaneGeometry(2, 2)
-  // const texture2 = await ExpoTHREE.loadAsync(imgUrl)
-  // console.log(imgUrl, '../../public/HandSanitizer.png')
-  // console.log(imgUrl === '../../public/HandSanitizer.png')
   const texture = await ExpoTHREE.loadTextureAsync({
-    asset: imgUrl
+    asset: imgUrl,
+    color: 0xffffff00
   })
   const material = new THREE.MeshLambertMaterial({
     map: texture
@@ -42,9 +40,14 @@ export const createPlane = async (color, imgUrl, orientation) => {
   return plane
 }
 
-export const createText = async (color, message, size, orientation) => {
-  const json = require('./three_fonts/neue_haas_unica_pro_medium.json')
-  const font = await new THREE.FontLoader().parse(json)
+export const createText = async (
+  color,
+  message,
+  fontJson,
+  size,
+  orientation
+) => {
+  const font = await new THREE.FontLoader().parse(fontJson)
   const geometry = new THREE.TextBufferGeometry(message, {
     font: font,
     size: size,

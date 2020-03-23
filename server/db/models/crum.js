@@ -11,8 +11,12 @@ const Crum = db.define('crum', {
     }
   },
   imageUrl: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   }
+})
+
+Crum.addHook('beforeValidate', (Crum, options) => {
+  Crum.imageUrl = `/assets/Crums/${Crum.name}.png`
 })
 
 module.exports = Crum

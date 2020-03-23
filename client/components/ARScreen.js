@@ -15,7 +15,9 @@ import {
   ImageBackground,
   TouchableOpacity
 } from 'react-native'
-import {getCurrentPosition, stopTracking} from '../store/locations'
+import {getCurrentPosition, stopTracking, fetchCrums} from '../store/'
+import {images, fonts} from '../../assets/'
+
 import {
   postCrumInstance,
   fetchNearByCrumInstances
@@ -35,13 +37,14 @@ class DisARScreen extends React.Component {
   }
   componentDidMount = () => {
     this.props.fetchInitialData() // this subscribed to update current locations every time interval
+    this.props.fetchCrums()
   }
   componentWillUnmount = () => {
     this.props.unFetchInitialData() // this unsubscribed to update current locations
   }
   handleClick = () => {
     // alert('Button clicked!')
-    this.props.dropCrum({
+    this.props.dropCrumInstances({
       longitude: this.props.locations.longitude,
       latitude: this.props.locations.latitude
     })
@@ -60,8 +63,10 @@ class DisARScreen extends React.Component {
       (props.locations.latitudeIdx !== state.latitudeIdx ||
         props.locations.longitudeIdx !== state.longitudeIdx)
     ) {
-      // console.log('location changed!!!', props.locations)
-      props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx) // fetch the list of nearby crums
+      props.fetchCrumInstances(
+        props.locations.latitudeIdx,
+        props.locations.longitudeIdx
+      ) // fetch the list of nearby crums
       return {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
@@ -74,8 +79,8 @@ class DisARScreen extends React.Component {
   }
   render() {
     const {locations, crumInstances, numCrum} = this.props
-    console.log('rerendering', locations)
-    console.log('CRUM INSTANCES AR VIEW:', numCrum)
+    // console.log('rerendering', locations)
+    // console.log('CRUM INSTANCES AR VIEW:', numCrum)
     AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east
     // AR.setWorldAlignment('alignmentCamera')
     // The scene coordinate system is locked to match the orientation of the camera.
@@ -94,7 +99,6 @@ class DisARScreen extends React.Component {
       camera = new Camera(width, height, 0.01, 1000)
 
       crumInstances.forEach(async crumInstance => {
-        // console.log(crumInstance)
         const z = // positive z means to the south, this should be correct
           (-(crumInstance.latitude - locations.latitude) * 6356000 * 3.14 * 2) /
           360.0
@@ -105,55 +109,45 @@ class DisARScreen extends React.Component {
             Math.cos((locations.longitude * 2 * 3.14) / 360) *
             2) /
           360.0
-        // console.log(x, z)
         scene.add(
-          await createText(0xff9900, `CRUM # ${crumInstance.id}`, 0.5, {
+          await createPlane(0xffffff, images[crumInstance.crum.name], {
             x: x,
-            y: 1,
+            y: 0,
             z: z
           })
         )
       })
 
-      // Showing hand sanitizer for testing purpose
+      // Showing pics for testing
       scene.add(
-        await createPlane(0xffffff, require('../../public/HandSanitizer.png'), {
-          x: 0,
-          y: 1,
-          z: -6
-        })
+        await createPlane(
+          0xffffff,
+          require('../../assets/Crums/HandSanitizer.png'),
+          {
+            x: 0,
+            y: 1,
+            z: -6
+          }
+        )
       )
       scene.add(
-        await createText(0xff9900, 'hand sanitizer', 0.3, {
-          x: -1.3,
-          y: 1,
-          z: -4.4
-        })
-      )
-
-      scene.add(
-        await createPlane(0xffffff, require('../../public/Mask.png'), {
+        await createPlane(0xffffff, require('../../assets/Crums/Mask.png'), {
           x: -1,
           y: 1,
           z: 6
         })
       )
+
+      // Showing where is South, North, East and West
       scene.add(
-        await createText(0x0000ff, 'mask', 0.3, {
-          x: 1.3,
-          y: 1,
-          z: 4.4
-        })
-      )
-      scene.add(
-        await createText(0x00ff00, 'W', 0.3, {
+        await createText(0x00ff00, 'W', fonts.font1, 0.3, {
           x: -4.4,
           y: 0,
           z: 0
         })
       )
       scene.add(
-        await createText(0xff9900, 'N', 0.3, {
+        await createText(0xff9900, 'N', fonts.font1, 0.3, {
           x: 0,
           y: 0,
           z: -4.4
@@ -161,7 +155,7 @@ class DisARScreen extends React.Component {
       )
 
       scene.add(
-        await createText(0x0000ff, 'S', 0.3, {
+        await createText(0x0000ff, 'S', fonts.font1, 0.3, {
           x: 0,
           y: 0,
           z: 4.4
@@ -169,7 +163,7 @@ class DisARScreen extends React.Component {
       )
 
       scene.add(
-        await createText(0xff00ff, 'E', 0.3, {
+        await createText(0xff00ff, 'E', fonts.font1, 0.3, {
           x: 4.4,
           y: 0,
           z: 0
@@ -187,7 +181,6 @@ class DisARScreen extends React.Component {
     }
 
     const onRender = delta => {
-      // console.log('ON RENDER', crumInstances.length)
       renderer.render(scene, camera)
     }
 
@@ -206,7 +199,6 @@ class DisARScreen extends React.Component {
               <View style={{flex: 1}}>
                 <GraphicsView
                   style={{flex: 1}}
-                  // crumInstances={crumInstances}
                   onContextCreate={onContextCreate}
                   onRender={onRender}
                   onResize={onResize}
@@ -252,6 +244,16 @@ class DisARScreen extends React.Component {
                   {JSON.stringify(
                     crumInstances.map(crumInstance => crumInstance.id)
                   )}
+                </Text>
+                <Text
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: 16
+                  }}
+                >
+                  default crums:{' '}
+                  {JSON.stringify(this.props.crums.map(crum => crum.name))}
                 </Text>
               </View>
               <TouchableOpacity style={styles.btnDrop}>
@@ -317,7 +319,8 @@ const mapState = state => ({
     latitudeIdx: Math.floor(state.locations.latitude * 10000)
   },
   numCrum: state.crumInstances.length,
-  crumInstances: state.crumInstances
+  crumInstances: state.crumInstances,
+  crums: state.crums
 })
 const mapDispatch = dispatch => {
   return {
@@ -327,10 +330,13 @@ const mapDispatch = dispatch => {
     unFetchInitialData: () => {
       dispatch(stopTracking())
     },
-    fetchCrum: (latitudeIdx, longitudeIdx) => {
+    fetchCrums: () => {
+      dispatch(fetchCrums())
+    },
+    fetchCrumInstances: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     },
-    dropCrum: newCrum => {
+    dropCrumInstances: newCrum => {
       dispatch(postCrumInstance(newCrum))
     }
   }
