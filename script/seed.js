@@ -117,7 +117,68 @@ const users = [
     phone: '523-678-1359'
   }
 ]
-
+const crums = [
+  {
+    name: 'Dog'
+  },
+  {
+    name: 'BrainFog'
+  },
+  {
+    name: 'JsHtmlCss'
+  },
+  {
+    name: 'Breakmarker'
+  },
+  {
+    name: 'LaughWithTear'
+  },
+  {
+    name: 'Chocolates'
+  },
+  {
+    name: 'LaughWithTeeth'
+  },
+  {
+    name: 'CoolGuy'
+  },
+  {
+    name: 'Mask'
+  },
+  {
+    name: 'MusicNote'
+  },
+  {
+    name: 'FourthOfJuly'
+  },
+  {
+    name: 'Pinocchio'
+  },
+  {
+    name: 'FullStack'
+  },
+  {
+    name: 'Ring'
+  },
+  {
+    name: 'GreenFace'
+  },
+  {
+    name: 'Sleepy'
+  },
+  {
+    name: 'Halo'
+  },
+  {
+    name: 'Smart'
+  },
+  {
+    name: 'HandSanitizer'
+  },
+  {
+    name: 'Stress'
+  }
+]
 const crumInstances = [
   {
     title: 'april apartment',
@@ -173,9 +234,19 @@ const seed = async () => {
     await db.sync({force: true})
     console.log('db synced!')
     await Promise.all(users.map(user => User.create(user)))
+    await Promise.all(crums.map(crum => Crum.create(crum)))
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
+    for (let i = 1; i < crumInstances.length + 1; i++) {
+      let j = Math.floor(Math.random() * 19) + 1
+      let k = Math.floor(Math.random() * 9) + 1
+      let crumInstanceI = await CrumInstance.findByPk(i)
+      let crumI = await Crum.findByPk(j)
+      let userK = await User.findByPk(k)
+      await crumInstanceI.setCrum(crumI)
+      await crumInstanceI.setUser(userK)
+    }
   } catch (error) {
     console.log(red(error))
   }

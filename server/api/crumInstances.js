@@ -59,8 +59,14 @@ router.get('/:id', async (req, res, next) => {
 router.get('/near/:id', async (req, res, next) => {
   try {
     // console.log(req.query.radium)
-    const crumInstance = await CrumInstance.findByPk(req.params.id)
-    const crumInstances = await crumInstance.findNear(+req.query.radium)
+    // const crumInstance = await CrumInstance.findByPk(req.params.id)
+    const crumInstances = await crumInstance.findNear(+req.query.radium, {
+      include: [
+        {
+          model: Crum
+        }
+      ]
+    })
     res.json(crumInstances)
   } catch (err) {
     next(err)
