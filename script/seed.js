@@ -131,56 +131,47 @@ const crums = [
 ]
 const crumInstances = [
   {
-    title: 'april apartment',
-    description: 'april apartment 1',
+    message: 'april apartment 1',
     latitude: 40.7074,
     longitude: -74.0054
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7074,
     longitude: -74.0055
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7072,
     longitude: -74.0054
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7073,
     longitude: -74.0054
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7075,
     longitude: -74.0057
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7076,
     longitude: -74.0051
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment',
     latitude: 40.7076,
     longitude: -74.0052
   },
   {
-    title: 'april apartment',
-    description: 'april apartment',
+    message: 'april apartment and I am hungry',
     latitude: 40.7073,
     longitude: -74.0056
   },
   {
-    title: 'mark apartment',
-    description: 'mark apartment',
+    message: 'mark is hungry',
     latitude: 40.7127,
     longitude: -73.9495
   }
