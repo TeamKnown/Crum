@@ -4,7 +4,6 @@ import store from './client/store'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
-
 import {devAxios} from './client/store'
 import ScarletScreen from './client/components/MapScreen.js'
 import ARScreen from './client/components/ARScreen'
