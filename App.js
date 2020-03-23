@@ -4,6 +4,7 @@ import store from './client/store'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
+import DropModal from './client/components/DropModal'
 import {devAxios} from './client/store'
 import ScarletScreen from './client/components/MapScreen.js'
 import ARScreen from './client/components/ARScreen'
@@ -34,6 +35,7 @@ export default class App extends React.Component {
             <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
+            <Scene key="DropModal" component={DropModal} title="DropModal" />
             {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
           </Scene>
         </Router>
