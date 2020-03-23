@@ -16,11 +16,11 @@ const {Op} = require('sequelize')
  * instead of: const User = require('../db/models/user')
  */
 
-// CrumInstance.belongsTo(User)
-// User.hasMany(CrumInstance)
+CrumInstance.belongsTo(User)
+User.hasMany(CrumInstance)
 
-// CrumInstance.belongsTo(Crum)
-// Crum.hasMany(CrumInstance)
+CrumInstance.belongsTo(Crum)
+Crum.hasMany(CrumInstance)
 
 CrumInstance.prototype.findNear = async function(radium) {
   // console.log('here', this.longitudeIdx)
