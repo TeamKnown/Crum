@@ -181,23 +181,17 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
-            {Number.isInteger(this.props.numCrum) && (
-              <View style={{flex: 1}}>
-                {/* ??? does not rerender when the component rerender */}
-                {/*cmd + s is the only way that makes it re-render */}
-                {/*read docs more https://github.com/expo/expo-graphics*/}
-                {/*one of the props*/}
-                <GraphicsView
-                  style={{flex: 1}}
-                  onContextCreate={onContextCreate}
-                  onRender={onRender}
-                  onResize={onResize}
-                  isArEnabled
-                  isArRunningStateEnabled
-                  isArCameraStateEnabled
-                />
-                )}
-              </View>
+            <View style={{flex: 1}}>
+              <GraphicsView
+                style={{flex: 1}}
+                onContextCreate={onContextCreate}
+                onRender={onRender}
+                onResize={onResize}
+                isArEnabled
+                isArRunningStateEnabled
+                isArCameraStateEnabled
+              />
+            </View>
             )}
             {/* <Text style={styles.boldText}>You are Here</Text>
           <Image
