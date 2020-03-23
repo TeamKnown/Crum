@@ -10,6 +10,7 @@ import ARScreen from './client/components/ARScreen'
 import LoginScreen from './client/components/LoginScreen'
 import UserProfile from './client/components/UserProfile'
 import SignIn from './client/components/SignIn'
+import SignUp from './client/components/SignUp'
 
 const styles = StyleSheet.create({
   boldText: {
@@ -29,10 +30,10 @@ export default class App extends React.Component {
         <Router>
           <Scene key="root" tabs={true}>
             <Scene key="LoginScreen" component={SignIn} title="LoginScreen" />
+            <Scene key="SignUp" component={SignUp} title="SignUp" />
             <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
-            {/* <Scene key="gray" component={GrayScreen} title="Gray" /> */}
           </Scene>
         </Router>
       </Provider>

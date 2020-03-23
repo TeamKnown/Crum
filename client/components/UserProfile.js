@@ -22,7 +22,6 @@ export default class UserProfile extends React.Component {
   // handleEdit = id => {
   //   this.props.history.push(`/users/${id}/edit`)
   // }
-
   render() {
     const {userName, email, password} = this.props
     return (

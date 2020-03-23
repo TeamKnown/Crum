@@ -35,10 +35,12 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  handleSignIn() {
-    this.props.auth(this.state.email, this.state.password)
-
-    // this.props.navigation.navigate('Profile')
+  async handleSignIn() {
+    await this.props.auth(this.state.email, this.state.password)
+    console.log('LOOK HERE ID!!!!!', this.props.user.id)
+    if (this.props.user.id) {
+      this.props.navigation.navigate('Profile')
+    }
   }
 
   textInputChange(value) {
@@ -272,7 +274,7 @@ var styles = StyleSheet.create({
 
 const mapState = state => {
   return {
-    // user: state.user,
+    user: state.user,
     error: state.user.error
   }
 }
