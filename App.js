@@ -1,15 +1,17 @@
 import * as React from 'react'
 import {Provider} from 'react-redux'
-import store from './store'
+import store from './client/store'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
 import {Router, Scene, Stack} from 'react-native-router-flux'
 import NavigationBar from 'react-native-navbar'
-import {devAxios} from './store'
-import ScarletScreen from './components/MapScreen.js'
-import ARScreen from './components/ARScreen'
-import UserProfile from './components/UserProfile'
-import LoginScreen from './components/LoginScreen'
-import DropModal from './components/DropModal'
+
+import DropModal from './client//components/DropModal'
+
+import {devAxios} from './client/store'
+import ScarletScreen from './client/components/MapScreen.js'
+import ARScreen from './client/components/ARScreen'
+import LoginScreen from './client/components/LoginScreen'
+import UserProfile from './client/components/UserProfile'
 
 const styles = StyleSheet.create({
   boldText: {
