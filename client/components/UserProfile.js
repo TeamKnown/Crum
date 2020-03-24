@@ -78,10 +78,10 @@ export default class UserProfile extends React.Component {
                 <Image
                   source={require('../../public/editIcon3.png')}
                   style={{
-                    width: 12,
-                    height: 12,
-                    marginBottom: 3,
-                    marginLeft: 5
+                    width: 15,
+                    height: 15,
+                    marginBottom: '14%',
+                    marginLeft: 7
                   }}
                 />
               </TouchableOpacity>
