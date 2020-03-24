@@ -1,5 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
+import {getSingleUser} from '../store'
+
 import {
   Platform,
   Button,
@@ -15,34 +17,41 @@ import {
   Alert
 } from 'react-native'
 
-export default class UserProfile extends React.Component {
-  constructor() {
-    super()
+class UserProfile extends React.Component {
+  constructor(props) {
+    super(props)
+    // this.handleChange = this.handleChange.bind(this)
     // this.handleEdit = this.handleEdit.bind(this)
+    this.state = {
+      visible: false
+    }
   }
-  state = {
-    visible: false
-  }
+
+  // componentDidMount() {
+  //   this.props.getSingleUser(this.props.user.id)
+  // }
+
   setModalVisible(visible) {
     this.setState({
       visible: visible
     })
   }
-  // componentDidMount() {
-  //   this.props.getSingleUser(this.props.match.params.id)
-  // }
+
   // handleEdit = id => {
   //   this.props.history.push(`/users/${id}/edit`)
   // }
-  handleChange(event) {
-    this.setState({
-      userName: event.nativeEvent.text,
-      email: event.nativeEvent.text,
-      password: event.nativeEvent.text
-    })
-  }
+  // handleChange(event) {
+  //   this.setState({
+  //     userName: event.nativeEvent.text,
+  //     email: event.nativeEvent.text,
+  //     password: event.nativeEvent.text
+  //   })
+  // }
   render() {
     const {user} = this.props
+    console.log('USERUSER', user)
+    console.log('CRUMS', user.totalCrums)
+
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
@@ -139,7 +148,7 @@ export default class UserProfile extends React.Component {
                 </View>
               </Modal>
             </View>
-            {user ? (
+            {user.id ? (
               <Text
                 style={{
                   justifyContent: 'center',
@@ -170,7 +179,7 @@ export default class UserProfile extends React.Component {
             >
               c r u m s d r o p p e d
             </Text>
-            {user ? (
+            {user.id ? (
               <Text
                 style={{
                   justifyContent: 'center',
@@ -179,7 +188,7 @@ export default class UserProfile extends React.Component {
                   fontSize: 40
                 }}
               >
-                {user.crumInstances.length}
+                {user.totalCrums}
               </Text>
             ) : (
               <Text
@@ -314,3 +323,17 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 })
+
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    getSingleUser: id => dispatch(getSingleUser(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserProfile)
