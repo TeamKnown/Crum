@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
@@ -24,7 +25,8 @@ import {
   stopTracking,
   fetchCrums,
   postCrumInstance,
-  fetchNearByCrumInstances
+  fetchNearByCrumInstances,
+  me
 } from '../store/'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
@@ -36,13 +38,15 @@ class DisARScreen extends React.Component {
     super()
     this.handleOpenModel = this.handleOpenModel.bind(this)
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
+    this.handleDropCrum = this.handleDropCrum.bind(this)
   }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
+    numCrum: 0,
     modalVisible: false,
     message: '',
-    imgName: '',
+    imgId: '',
     loading: true
   }
   setModalVisible(modalVisible) {
@@ -68,6 +72,12 @@ class DisARScreen extends React.Component {
       message: event.nativeEvent.text
     })
   }
+  handleDropCrum(crumInstance, userId, crumId) {
+    this.props.dropCrumInstance(crumInstance, userId, crumId)
+    // this.setState({loading: true})
+    // this.props.cruminstances length changes, but it does not trigger remount,
+    // see how to make that happen
+  }
   // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
   // likewise latitude is the floor of (SCALER * latitude)
   // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
@@ -91,7 +101,8 @@ class DisARScreen extends React.Component {
       Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
       Number.isInteger(props.locations.latitudeIdx) &&
       (props.locations.latitudeIdx !== state.latitudeIdx ||
-        props.locations.longitudeIdx !== state.longitudeIdx)
+        props.locations.longitudeIdx !== state.longitudeIdx ||
+        props.crumInstances.length !== state.numCrum)
     ) {
       props.fetchCrumInstances(
         props.locations.latitudeIdx,
@@ -101,7 +112,7 @@ class DisARScreen extends React.Component {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
         longitudeIdx: props.locations.longitudeIdx,
-        numCrum: props.locations.length,
+        numCrum: props.crumInstances.length, //numCrum: state.crumInstances.length,
         loading: true
       }
     } else {
@@ -206,32 +217,28 @@ class DisARScreen extends React.Component {
                       type="text"
                     />
                     <Text>Select Crum</Text>
-                    <View
-                      style={{
-                        width: '80%',
-                        height: '70%',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexWrap: 'wrap'
-                      }}
-                    >
+                    <Text>User</Text>
+                    <Text>{JSON.stringify(this.props.user.name)}</Text>
+                    <Text>{JSON.stringify(this.props.locations.heading)}</Text>
+                    <Text>
+                      {JSON.stringify(this.props.crumInstances.length)}
+                    </Text>
+                    {/* <text>{JSON.stringify(props.locations.lengthstate.numCrum)}</text> */}
+                    <View style={styles.pngSelector}>
                       {crums.map(crum => (
                         <TouchableOpacity
                           key={crum.id}
                           onPress={() => {
                             // console.log(this.state)
                             this.setState({
-                              imgName: crum.name
+                              imgId: crum.id
                             })
                           }}
                         >
                           <Image
-                            style={{width: 50, height: 50, margin: 6}}
+                            style={{width: 40, height: 40, margin: 6}}
                             borderColor={0xf44336}
-                            borderWidth={
-                              this.state.imgName === crum.name ? 10 : 0
-                            }
+                            borderWidth={this.state.imgId === crum.id ? 10 : 0}
                             source={images[crum.name]}
                           />
                         </TouchableOpacity>
@@ -242,6 +249,16 @@ class DisARScreen extends React.Component {
                       style={styles.btnDrop}
                       onPress={() => {
                         // console.log('drop!!!', this.state)
+                        //crumInstance, userId, crumId
+                        this.handleDropCrum(
+                          {
+                            message: this.state.message,
+                            latitude: this.props.locations.latitude,
+                            longitude: this.props.locations.longitude
+                          },
+                          this.props.user.id,
+                          this.state.imgId
+                        )
                         this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
@@ -261,17 +278,21 @@ class DisARScreen extends React.Component {
 }
 
 const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+  user: state.user,
   locations: {
     ...state.locations,
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),
     latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   },
-  numCrum: state.crumInstances.length,
   crumInstances: state.crumInstances,
   crums: state.crums
 })
 const mapDispatch = dispatch => {
   return {
+    getUser: () => {
+      dispatch(me())
+    },
     subscribeToLocationData: () => {
       dispatch(getCurrentPosition())
     },
@@ -284,8 +305,8 @@ const mapDispatch = dispatch => {
     fetchCrumInstances: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     },
-    dropCrumInstances: newCrum => {
-      dispatch(postCrumInstance(newCrum))
+    dropCrumInstance: (crumInstance, userId, crumId) => {
+      dispatch(postCrumInstance(crumInstance, userId, crumId))
     }
   }
 }
@@ -298,12 +319,23 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%',
+    // flex: 1,
+    // flexDirection: 'column',
+    // alignItems: 'center',
     paddingBottom: 10
   },
-  modal: {
+  container: {
+    position: 'absolute',
     flex: 1,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-end'
+  },
+  modal: {
     width: '90%',
-    height: '80%',
+    height: '78%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -315,16 +347,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     borderRadius: 10,
-    margin: 20
+    marginBottom: 60
   },
-  container: {
-    position: 'absolute',
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end'
+  pngSelector: {
+    width: '80%',
+    height: '50%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexWrap: 'wrap'
   },
   btnDrop: {
     height: 60,
@@ -340,7 +371,7 @@ const styles = StyleSheet.create({
     margin: 30
   },
   input: {
-    height: 120,
+    height: 60,
     width: '90%',
     borderRadius: 10,
     borderColor: 'grey',
@@ -348,6 +379,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     alignItems: 'center',
     padding: 8,
-    marginTop: 30
+    margin: 30
   }
 })

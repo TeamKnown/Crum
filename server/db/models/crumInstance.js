@@ -19,6 +19,9 @@ const CrumInstance = db.define('crumInstance', {
   },
   longitudeIdx: {
     type: Sequelize.INTEGER
+  },
+  headingInt: {
+    type: Sequelize.INTEGER
   }
 })
 const SCALER = 1000
