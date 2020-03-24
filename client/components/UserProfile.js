@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   ImageBackground,
+  TextInput,
   TouchableOpacity,
   Modal,
   TouchableHighlight,
@@ -33,6 +34,13 @@ export default class UserProfile extends React.Component {
   // handleEdit = id => {
   //   this.props.history.push(`/users/${id}/edit`)
   // }
+  handleChange(event) {
+    this.setState({
+      userName: event.nativeEvent.text,
+      email: event.nativeEvent.text,
+      password: event.nativeEvent.text
+    })
+  }
   render() {
     const {user} = this.props
     return (
@@ -51,16 +59,85 @@ export default class UserProfile extends React.Component {
         </View>
         <View style={styles.container}>
           <View style={styles.bottomContainer}>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16,
-                fontWeight: 'bold'
-              }}
-            >
-              u s e r n a m e:
-            </Text>
+            <View style={styles.buttons}>
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: 16,
+                  fontWeight: 'bold'
+                }}
+              >
+                u s e r n a m e
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.setModalVisible(true)
+                }}
+              >
+                <Image
+                  source={require('../../public/editIcon3.png')}
+                  style={{
+                    width: 12,
+                    height: 12,
+                    marginBottom: 3,
+                    marginLeft: 5
+                  }}
+                 />
+              </TouchableOpacity>
+              <Modal
+                animationType="none"
+                transparent={false}
+                visible={this.state.visible}
+                onRequestClose={() => {
+                  Alert.alert('Modal closed')
+                }}
+              >
+                <View style={styles.modalContainer}>
+                  <View style={styles.modal}>
+                    <Text>e d i t u s e r</Text>
+                    <TextInput
+                      id="userName"
+                      value={this.state.userName}
+                      onChange={this.handleChange}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder={this.state.userName}
+                      type="text"
+                    />
+                    <TextInput
+                      id="email"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder={this.state.email}
+                      type="text"
+                    />
+                    <TextInput
+                      required
+                      id="password"
+                      value={this.state.password}
+                      onChange={this.handleChange}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder={this.state.password}
+                      type="password"
+                    />
+                    <TouchableOpacity
+                      style={styles.btnDrop}
+                      onPress={() => {
+                        this.setModalVisible(!this.state.visible)
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                        e d i t
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
             {user ? (
               <Text
                 style={{
@@ -90,7 +167,7 @@ export default class UserProfile extends React.Component {
                 fontWeight: 'bold'
               }}
             >
-              c r u m s d r o p p e d:
+              c r u m s d r o p p e d
             </Text>
             {user ? (
               <Text
@@ -126,7 +203,7 @@ export default class UserProfile extends React.Component {
               m y c r u m s
             </Text>
           </TouchableOpacity>
-          <Modal
+          {/*<Modal
             animationType="none"
             transparent={false}
             visible={this.state.visible}
@@ -149,7 +226,7 @@ export default class UserProfile extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </Modal>
+                </Modal>*/}
         </View>
       </View>
     )
@@ -217,6 +294,22 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 16
+    marginTop: 8
+  },
+  input: {
+    height: 60,
+    width: '90%',
+    borderRadius: 10,
+    borderColor: 'grey',
+    backgroundColor: 'white',
+    borderWidth: 2,
+    alignItems: 'center',
+    padding: 8,
+    margin: 8
+  },
+  buttons: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around'
   }
 })
