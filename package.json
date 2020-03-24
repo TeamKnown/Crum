@@ -61,7 +61,7 @@
     "express-session": "^1.17.0",
     "history": "^4.10.1",
     "morgan": "^1.10.0",
-    "native-base": "^2.13.12",
+    "native-base": "2.13.8",
     "nodemailer": "^6.4.6",
     "nodemailer-smtp-transport": "^2.7.4",
     "npm-check-updates": "^4.0.4",

@@ -12,7 +12,6 @@ import UserProfile from './client/components/UserProfile'
 import SignIn from './client/components/SignIn'
 import SignUp from './client/components/SignUp'
 
-import UserProfile from './client/components/UserProfile'
 import DropModal from './client/components/DropModal'
 
 const styles = StyleSheet.create({
