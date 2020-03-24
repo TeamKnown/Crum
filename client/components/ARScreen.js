@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
@@ -42,6 +43,7 @@ class DisARScreen extends React.Component {
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
+    numCrum: 0,
     modalVisible: false,
     message: '',
     imgId: '',
@@ -72,6 +74,9 @@ class DisARScreen extends React.Component {
   }
   handleDropCrum(crumInstance, userId, crumId) {
     this.props.dropCrumInstance(crumInstance, userId, crumId)
+    // this.setState({loading: true})
+    // this.props.cruminstances length changes, but it does not trigger remount,
+    // see how to make that happen
   }
   // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
   // likewise latitude is the floor of (SCALER * latitude)
@@ -96,7 +101,8 @@ class DisARScreen extends React.Component {
       Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
       Number.isInteger(props.locations.latitudeIdx) &&
       (props.locations.latitudeIdx !== state.latitudeIdx ||
-        props.locations.longitudeIdx !== state.longitudeIdx)
+        props.locations.longitudeIdx !== state.longitudeIdx ||
+        props.crumInstances.length !== state.numCrum)
     ) {
       props.fetchCrumInstances(
         props.locations.latitudeIdx,
@@ -106,7 +112,7 @@ class DisARScreen extends React.Component {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
         longitudeIdx: props.locations.longitudeIdx,
-        numCrum: props.locations.length,
+        numCrum: props.crumInstances.length, //numCrum: state.crumInstances.length,
         loading: true
       }
     } else {
@@ -212,8 +218,12 @@ class DisARScreen extends React.Component {
                     />
                     <Text>Select Crum</Text>
                     <Text>User</Text>
-                    <Text>{JSON.stringify(this.props.user)}</Text>
-                    <Text>{JSON.stringify(this.props.isLoggedIn)}</Text>
+                    <Text>{JSON.stringify(this.props.user.name)}</Text>
+                    <Text>{JSON.stringify(this.props.locations.heading)}</Text>
+                    <Text>
+                      {JSON.stringify(this.props.crumInstances.length)}
+                    </Text>
+                    {/* <text>{JSON.stringify(props.locations.lengthstate.numCrum)}</text> */}
                     <View style={styles.pngSelector}>
                       {crums.map(crum => (
                         <TouchableOpacity
@@ -275,7 +285,6 @@ const mapState = state => ({
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),
     latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   },
-  numCrum: state.crumInstances.length,
   crumInstances: state.crumInstances,
   crums: state.crums
 })

@@ -14,6 +14,7 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
+    concole.log(req.body)
     const newCrumInstance = await CrumInstance.create(req.body)
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
