@@ -22,26 +22,19 @@ const updateUser = user => ({
  * THUNK CREATORS
  */
 
-// export const submitSignInThunk = (email, password) => async dispatch => {
-//   let res
-//   try {
-//     res = await devAxios.post(`/auth/login`, {email, password})
-//   } catch (authError) {
-//     console.log(authError)
-//     return dispatch(getUser({error: authError}))
-//   }
-
-//   try {
-//     dispatch(getUser(res.data))
-//     // SignIn.props.navigation.navigate('Profile')
-//   } catch (dispatchOrHistoryErr) {
-//     console.error(dispatchOrHistoryErr)
-//   }
-// }
-
+const defaultUser = {
+  id: 0,
+  userName: 'Guest',
+  email: 'Shopper',
+  googleId: null,
+  type: 'user',
+  address: '',
+  zip: '',
+  phone: ''
+}
 export const me = () => async dispatch => {
   try {
-    const res = await axios.get('/auth/me')
+    const res = await devAxios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
   } catch (err) {
     console.error(err)
@@ -51,6 +44,7 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {
+    email = email.toLowerCase()
     res = await devAxios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
@@ -58,7 +52,7 @@ export const auth = (email, password, method) => async dispatch => {
 
   try {
     dispatch(getUser(res.data))
-    // NavigationActions.navigate({ routeName: 'Profile' })
+    NavigationActions.navigate('Profile')
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -68,7 +62,7 @@ export const logout = () => async dispatch => {
   try {
     await axios.post('/auth/logout')
     dispatch(removeUser())
-    history.push('/login')
+    // history.push('/login')
   } catch (err) {
     console.error(err)
   }
@@ -101,8 +95,6 @@ export const updateUserThunk = (id, info) => {
 /**
  * INITIAL STATE
  */
-
-const defaultUser = {}
 
 /**
  * REDUCER
