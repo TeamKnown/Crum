@@ -35,12 +35,8 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  async handleSignIn() {
-    await this.props.auth(this.state.email, this.state.password)
-    console.log('LOOK HERE ID!!!!!', this.props.user.id)
-    if (this.props.user.id) {
-      this.props.navigation.navigate('Profile')
-    }
+  handleSignIn() {
+    this.props.auth(this.state.email, this.state.password)
   }
 
   textInputChange(value) {
@@ -63,7 +59,6 @@ class DisSignInComponent extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     const {error} = this.props
 
     return (
