@@ -5,8 +5,10 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import crumInstancesReducer from './crumInstances'
 import crumsReducer from './crums'
 import locationsReducer from './locations'
+import userReducer from './user'
 
 const reducer = combineReducers({
+  user: userReducer,
   crumInstances: crumInstancesReducer,
   crums: crumsReducer,
   locations: locationsReducer
@@ -21,3 +23,4 @@ export default store
 export * from './crumInstances'
 export * from './locations'
 export * from './crums'
+export * from './user'
