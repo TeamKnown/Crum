@@ -12,6 +12,9 @@ import UserProfile from './client/components/UserProfile'
 import SignIn from './client/components/SignIn'
 import SignUp from './client/components/SignUp'
 
+import UserProfile from './client/components/UserProfile'
+import DropModal from './client/components/DropModal'
+
 const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,
@@ -34,6 +37,7 @@ export default class App extends React.Component {
             <Scene key="Profile" component={UserProfile} title="Profile" />
             <Scene key="AR" component={ARScreen} title="AR" />
             <Scene key="scarlet" component={ScarletScreen} title="Scarlet" />
+            <Scene key="DropModal" component={DropModal} title="DropModal" />
           </Scene>
         </Router>
       </Provider>

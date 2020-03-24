@@ -4,16 +4,21 @@ import {Renderer, THREE} from 'expo-three'
 import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
+import {Thumbnail, Picker} from 'native-base'
 import * as React from 'react'
 import {
   Platform,
-  Button,
+  TextInput,
   View,
   Text,
   StyleSheet,
   Image,
+  // Picker,
   ImageBackground,
-  TouchableOpacity
+  TouchableOpacity,
+  Modal,
+  TouchableHighlight,
+  Alert
 } from 'react-native'
 import {getCurrentPosition, stopTracking, fetchCrums} from '../store/'
 import {images, fonts} from '../../assets/'
@@ -30,10 +35,18 @@ class DisARScreen extends React.Component {
   constructor() {
     super()
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
-    latitudeIdx: undefined // likewise, it is floor of (10000 * latitude)
+    latitudeIdx: undefined, // likewise, it is floor of (10000 * latitude)
+    visible: false,
+    message: ''
+  }
+  setModalVisible(visible) {
+    this.setState({
+      visible: visible
+    })
   }
   componentDidMount = () => {
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
@@ -47,6 +60,11 @@ class DisARScreen extends React.Component {
     this.props.dropCrumInstances({
       longitude: this.props.locations.longitude,
       latitude: this.props.locations.latitude
+    })
+  }
+  handleChange(event) {
+    this.setState({
+      message: event.nativeEvent.text
     })
   }
   // longitudeIdx is the integer version of longitude it is the floor of (10000 * longitude)
@@ -123,7 +141,6 @@ class DisARScreen extends React.Component {
         )
       })
 
-      // Showing where is South, North, East and West
       scene.add(
         await createText(0x00ff00, 'W', fonts.font1, 0.3, {
           x: -4.4,
@@ -181,24 +198,18 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
-            {Number.isInteger(this.props.numCrum) && (
-              <View style={{flex: 1}}>
-                {/* ??? does not rerender when the component rerender */}
-                {/*cmd + s is the only way that makes it re-render */}
-                {/*read docs more https://github.com/expo/expo-graphics*/}
-                {/*one of the props*/}
-                <GraphicsView
-                  style={{flex: 1}}
-                  onContextCreate={onContextCreate}
-                  onRender={onRender}
-                  onResize={onResize}
-                  isArEnabled
-                  isArRunningStateEnabled
-                  isArCameraStateEnabled
-                />
-                )}
-              </View>
-            )}
+            <View style={{flex: 1}}>
+              <GraphicsView
+                style={{flex: 1}}
+                onContextCreate={onContextCreate}
+                onRender={onRender}
+                onResize={onResize}
+                isArEnabled
+                isArRunningStateEnabled
+                isArCameraStateEnabled
+              />
+            </View>
+
             {/* <Text style={styles.boldText}>You are Here</Text>
           <Image
             style={{width: 50, height: 50}}
@@ -213,52 +224,119 @@ class DisARScreen extends React.Component {
                     marginTop: 16
                   }}
                 >
-                  longitude: {locations.longitudeIdx}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
-                  latitude: {locations.latitudeIdx}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
-                  nearby crums:{' '}
-                  {JSON.stringify(
-                    crumInstances.map(crumInstance => crumInstance.id)
-                  )}
-                </Text>
-                <Text
-                  style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    marginTop: 16
-                  }}
-                >
                   default crums:{' '}
                   {JSON.stringify(this.props.crums.map(crum => crum.name))}
                 </Text>
               </View>
               <TouchableOpacity
                 style={styles.btnDrop}
-                onPress={this.handleClick}
+                onPress={() => {
+                  this.setModalVisible(true)
+                }}
+                // onPress={this.handleClick}
               >
                 <Text
                   style={{color: '#19ae9f'}}
                   title="Drop!"
-                  onPress={this.handleClick}
+                  // onPress={this.handleClick}
                 >
                   d r o p
                 </Text>
               </TouchableOpacity>
+              <Modal
+                animationType="none"
+                transparent={false}
+                visible={this.state.visible}
+                onRequestClose={() => {
+                  this.handleClick()
+                  Alert.alert('Modal closed')
+                }}
+              >
+                <View style={styles.container}>
+                  <View style={styles.modal}>
+                    <Text>Select Crum</Text>
+                    {/* <Picker
+                      style={{width: 100, height: '100%', marginLeft: 5}}
+                      selectedValue={this.state.selectedCountry}
+                      onValueChange={value => this.onCodeChanged(value)}
+                    >
+                      <Picker.Item
+                        label={
+                          <Text
+                            style={{alignItems: 'center', flexDirection: 'row'}}
+                          >
+                            <Thumbnail
+                              square
+                              style={{width: 30, height: 20, marginTop: 5}}
+                              source={require('../../assets/Crums/Dog.png')}
+                            />{' '}
+                            +90
+                          </Text>
+                        }
+                        value="+90"
+                      />
+                      <Picker.Item
+                        label={
+                          <Text
+                            style={{alignItems: 'center', flexDirection: 'row'}}
+                          >
+                            <Thumbnail
+                              square
+                              style={{width: 30, height: 20, marginTop: 5}}
+                              source={require('../../assets/Crums/Dog.png')}
+                            />{' '}
+                            +1
+                          </Text>
+                        }
+                        value="+1"
+                      />
+                    </Picker> */}
+                    {/* <Picker
+                      selectedValue={this.state.language}
+                      style={{height: '80%', width: '100%'}}
+                      onValueChange={(itemValue, itemIndex) =>
+                        this.setState({language: itemValue})
+                      }
+                    >
+                      <Picker.Item label="Java2" value="java2" />
+                      <Picker.Item label="Java" value="java" />
+                      <Image
+                        style={{width: 50, height: 50}}
+                        source={require('../../assets/Crums/Dog.png')}
+                      ></Image>
+                      <Picker.Item label="Img" value="img"></Picker.Item>
+                      <Picker.Item label="JavaScript" value="js" />
+                    </Picker> */}
+
+                    <TextInput
+                      required
+                      id="message"
+                      value={this.state.message}
+                      onChange={this.handleChange}
+                      // onChange={() => {
+                      //   console.log('typing')
+                      //   console.log(this.state.message)
+                      // }}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder="m e s s a g e"
+                      autoComplete="message"
+                      type="text"
+                    />
+
+                    <TouchableOpacity
+                      style={styles.btnDrop}
+                      onPress={() => {
+                        this.setModalVisible(!this.state.visible)
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                        d r o p
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
             </View>
           </View>
         </View>
@@ -272,6 +350,24 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     paddingBottom: 10
+  },
+  modal: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+    borderColor: '#7c1e9f',
+    width: '90%',
+    height: '60%',
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    borderRadius: 10,
+    marginTop: 100
+  },
+  picker: {
+    height: '40%'
   },
   container: {
     flexDirection: 'column',
@@ -298,6 +394,17 @@ const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,
     color: 'red'
+  },
+  input: {
+    height: 60,
+    width: '90%',
+    borderRadius: 10,
+    borderColor: 'grey',
+    backgroundColor: 'white',
+    borderWidth: 2,
+    alignItems: 'center',
+    padding: 8,
+    margin: 8
   },
   nav: {
     flexDirection: 'row',
