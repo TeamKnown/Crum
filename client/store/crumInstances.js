@@ -1,4 +1,5 @@
 import {devAxios} from './devAxios'
+import {SCALER} from '../components/utils'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
@@ -32,7 +33,7 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {
     try {
       const {data} = await devAxios.get(
-        `/api/cruminstances/nearme?radium=${10000}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
+        `/api/cruminstances/nearme?radium=${SCALER}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
       )
 
       dispatch(setCrumInstances(data))
