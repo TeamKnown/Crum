@@ -83,7 +83,7 @@ export default class UserProfile extends React.Component {
                     marginBottom: 3,
                     marginLeft: 5
                   }}
-                 />
+                />
               </TouchableOpacity>
               <Modal
                 animationType="none"
@@ -95,7 +95,8 @@ export default class UserProfile extends React.Component {
               >
                 <View style={styles.modalContainer}>
                   <View style={styles.modal}>
-                    <Text>e d i t u s e r</Text>
+                    <Text>e d i t</Text>
+                    <Text>u s e r</Text>
                     <TextInput
                       id="userName"
                       value={this.state.userName}
@@ -130,7 +131,7 @@ export default class UserProfile extends React.Component {
                         this.setModalVisible(!this.state.visible)
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                      <Text style={{color: '#19ae9f'}} title="edit">
                         e d i t
                       </Text>
                     </TouchableOpacity>
@@ -246,7 +247,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'grey',
     borderColor: '#7c1e9f',
     width: '90%',
-    height: '60%',
+    height: '70%',
     shadowColor: 'grey',
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
