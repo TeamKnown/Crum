@@ -7,7 +7,7 @@ import {getCurrentPosition, stopTracking} from '../store/locations'
 import Carousel from 'react-native-snap-carousel'
 import {StyleSheet, Text, View, Dimensions, Image} from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
-
+import {SCALER} from './utils'
 function getRandomInt(min, max) {
   return min + Math.random() * (max - min + 1)
 }
@@ -78,7 +78,7 @@ class DisMapScreen extends Component {
 
   render() {
     const {locations, crumInstances} = this.props
-    console.log('CRUM INSTANCES MAP VIEW:', crumInstances)
+    // console.log('CRUM INSTANCES MAP VIEW:', crumInstances)
     // console.log('THIS.PROPS.LOCATION:', locations)
     // console.log('THIS IS THE LAT', typeof locations.latitude)
     // console.log('THIS IS THE LONG', typeof locations.longitude)
@@ -191,8 +191,8 @@ const mapState = state => ({
   crumInstances: state.crumInstances,
   locations: {
     ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * 10000),
-    latitudeIdx: Math.floor(state.locations.latitude * 10000)
+    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
+    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   }
 })
 

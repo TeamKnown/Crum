@@ -65,68 +65,98 @@ const users = [
     email: 'kcarlisle9@fotki.com',
     password: 'NERY7QB2pRqy',
     salt: null
+  },
+  {
+    userName: 'dad',
+    email: 'raddadsofficial@gmail.com',
+    password: 'yesDad',
+    salt: null
   }
 ]
 const crums = [
   {
-    name: 'Dog'
+    name: 'Dog',
+    category: '2-Animal'
   },
   {
-    name: 'BrainFog'
+    name: 'BrainFog',
+    category: '0-Emoji'
   },
   {
-    name: 'JsHtmlCss'
+    name: 'JsHtmlCss',
+    category: '3-Object'
   },
   {
-    name: 'Breakmarker'
+    name: 'Breakmarker',
+    category: '3-Object'
   },
   {
-    name: 'LaughWithTear'
+    name: 'LaughWithTear',
+    category: '0-Emoji'
   },
   {
-    name: 'Chocolates'
+    name: 'Chocolates',
+    category: '3-Object'
   },
   {
-    name: 'LaughWithTeeth'
+    name: 'LaughWithTeeth',
+    category: '0-Emoji'
   },
   {
-    name: 'CoolGuy'
+    name: 'CoolGuy',
+    category: '0-Emoji'
   },
   {
-    name: 'Mask'
+    name: 'Mask',
+    category: '3-Object'
   },
   {
-    name: 'MusicNote'
+    name: 'MusicNote',
+    category: '4-Symbol'
   },
   {
-    name: 'FourthOfJuly'
+    name: 'FourthOfJuly',
+    category: '4-Symbol'
   },
   {
-    name: 'Pinocchio'
+    name: 'Pinocchio',
+    category: '0-Emoji'
   },
   {
-    name: 'FullStack'
+    name: 'FullStack',
+    category: '4-Symbol'
   },
   {
-    name: 'Ring'
+    name: 'Ring',
+    category: '3-Object'
   },
   {
-    name: 'GreenFace'
+    name: 'GreenFace',
+    category: '0-Emoji'
   },
   {
-    name: 'Sleepy'
+    name: 'Sleepy',
+    category: '0-Emoji'
   },
   {
-    name: 'Halo'
+    name: 'Halo',
+    category: '0-Emoji'
   },
   {
-    name: 'Smart'
+    name: 'Smart',
+    category: '0-Emoji'
   },
   {
-    name: 'HandSanitizer'
+    name: 'HandSanitizer',
+    category: '3-Object'
   },
   {
-    name: 'Stress'
+    name: 'Stress',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Dad',
+    category: '1-Human'
   }
 ]
 const crumInstances = [
@@ -174,6 +204,13 @@ const crumInstances = [
     message: 'mark is hungry',
     latitude: 40.7127,
     longitude: -73.9495
+  },
+  {
+    message: 'Every Day is Fathers Day',
+    latitude: 40.7185,
+    longitude: -73.9743,
+    userId: 11,
+    crumId: 21
   }
 ]
 const seed = async () => {
