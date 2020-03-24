@@ -3,7 +3,6 @@
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
-// import {Asset} from 'expo-asset'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
@@ -23,9 +22,6 @@ import {createCube, createPlane, createText} from './Crums.js'
 let renderer, scene, camera
 
 class DisARScreen extends React.Component {
-  // constructor() {
-  //   super()
-  // }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
@@ -145,9 +141,7 @@ class DisARScreen extends React.Component {
                 />
               </View>
             ) : (
-              <Text style={{color: '#19ae9f'}} title="Drop!">
-                wait
-              </Text>
+              <Text>wait</Text>
             )}
             <DropCrumForm />
           </View>
