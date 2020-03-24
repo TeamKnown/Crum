@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
+import {logout} from '../store/user'
 
 import {
   Platform,
@@ -37,6 +38,9 @@ class UserProfile extends React.Component {
     })
   }
 
+  async handleSignOut() {
+    await this.props.logout()
+  }
   // handleEdit = id => {
   //   this.props.history.push(`/users/${id}/edit`)
   // }
@@ -49,12 +53,13 @@ class UserProfile extends React.Component {
   // }
   render() {
     const {user} = this.props
-    console.log('USERUSER', user)
-    console.log('CRUMS', user.totalCrums)
 
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
+          <TouchableOpacity onPress={() => this.handleSignOut()}>
+            <Text>logout</Text>
+          </TouchableOpacity>
           <Image
             source={require('../../public/defaultProfile1.png')}
             style={{
@@ -332,7 +337,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getSingleUser: id => dispatch(getSingleUser(id))
+    getSingleUser: id => dispatch(getSingleUser(id)),
+    logout: () => dispatch(logout())
   }
 }
 
