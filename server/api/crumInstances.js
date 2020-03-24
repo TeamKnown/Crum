@@ -14,7 +14,6 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body)
     const headingRadian = (req.body.headingInt * 3.24) / 180
     req.body.latitude =
       req.body.latitude + (Math.cos(headingRadian) * 20) / 6356000
