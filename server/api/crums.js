@@ -5,7 +5,9 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const crums = await Crum.findAll({})
+    const crums = await Crum.findAll({
+      order: [['category', 'ASC']]
+    })
     res.json(crums)
   } catch (err) {
     next(err)

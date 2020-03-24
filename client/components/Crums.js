@@ -7,13 +7,8 @@ import {AR} from 'expo'
 
 export const createCube = (color, orientation) => {
   const geometry = new THREE.BoxGeometry(0.4, 0.4, 0.4)
-  // Simple color material
-  // const texture = new THREE.TextureLoader().load(
-  //   '../../public/HandSanitizer.png'
-  // )
   const material = new THREE.MeshPhongMaterial({
-    // map: texture,
-    color: color //0xff00ff
+    color: color
   })
 
   const cube = new THREE.Mesh(geometry, material)
@@ -77,3 +72,33 @@ export const createText = async (
 // scene.add(createCube(0xff0000, {x: 3, y: 0, z: -3})) // red cube to the North-East
 // scene.add(createCube(0xff00ff, {x: 4.4, y: 0, z: 0})) // magenta cube to the East
 // scene.add(createCube(0x9900ff, {x: 3, y: 0, z: 3})) // Electric Purple cube to the South East
+// scene.add(
+//   await createText(0x00ff00, 'W', fonts.font1, 0.3, {
+//     x: -4.4,
+//     y: 0,
+//     z: 0
+//   })
+// )
+// scene.add(
+//   await createText(0xff9900, 'N', fonts.font1, 0.3, {
+//     x: 0,
+//     y: 0,
+//     z: -4.4
+//   })
+// )
+
+// scene.add(
+//   await createText(0x0000ff, 'S', fonts.font1, 0.3, {
+//     x: 0,
+//     y: 0,
+//     z: 4.4
+//   })
+// )
+
+// scene.add(
+//   await createText(0xff00ff, 'E', fonts.font1, 0.3, {
+//     x: 4.4,
+//     y: 0,
+//     z: 0
+//   })
+// )
