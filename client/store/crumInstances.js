@@ -43,10 +43,13 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   }
 }
 
-export const postCrumInstance = newCrum => {
+export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
     try {
-      const {data} = await devAxios.post('/api/cruminstances', newCrum)
+      const {data} = await devAxios.post(
+        `/api/cruminstances?userId=${userId}&crumId=${crumId}`,
+        crumInstance
+      )
       dispatch(addCrumInstance(data))
     } catch (error) {
       console.error('POST Error')
