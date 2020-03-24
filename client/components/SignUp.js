@@ -7,7 +7,10 @@ import Feather from 'react-native-vector-icons/Feather'
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
 
-export default class SignUpComponent extends React.Component {
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
+
+class DisSignUpComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -272,3 +275,25 @@ var styles = StyleSheet.create({
     color: 'gray'
   }
 })
+
+const mapState = state => {
+  return {
+    user: state.user,
+    error: state.user.error
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    auth: (email, password) => dispatch(auth(email, password, 'login'))
+  }
+}
+
+export default connect(mapState, mapDispatch)(DisSignInComponent)
+
+DisSignInComponent.propTypes = {
+  // name: PropTypes.string.isRequired,
+  // displayName: PropTypes.string.isRequired,
+  // handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.object
+}
