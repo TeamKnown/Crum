@@ -14,7 +14,15 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    concole.log(req.body)
+    console.log(req.body)
+    const headingRadian = (req.body.headingInt * 3.24) / 180
+    req.body.latitude =
+      req.body.latitude + (Math.cos(headingRadian) * 20) / 6356000
+    req.body.longitude =
+      req.body.longitude +
+      (Math.sin(headingRadian) * 20) /
+        (6356000 * Math.cos((req.body.longitude * 2 * 3.14) / 360))
+
     const newCrumInstance = await CrumInstance.create(req.body)
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
