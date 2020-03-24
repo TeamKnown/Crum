@@ -19,12 +19,16 @@ const CrumInstance = db.define('crumInstance', {
   },
   longitudeIdx: {
     type: Sequelize.INTEGER
+  },
+  headingInt: {
+    type: Sequelize.INTEGER
   }
 })
+const SCALER = 1000
 
 CrumInstance.addHook('beforeValidate', (CrumInstance, options) => {
-  CrumInstance.latitudeIdx = Math.floor(CrumInstance.latitude * 10000)
-  CrumInstance.longitudeIdx = Math.floor(CrumInstance.longitude * 10000)
+  CrumInstance.latitudeIdx = Math.floor(CrumInstance.latitude * SCALER)
+  CrumInstance.longitudeIdx = Math.floor(CrumInstance.longitude * SCALER)
 })
 
 module.exports = CrumInstance

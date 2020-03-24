@@ -35,8 +35,8 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  handleSignIn() {
-    this.props.auth(this.state.email, this.state.password)
+  async handleSignIn() {
+    await this.props.auth(this.state.email, this.state.password)
   }
 
   textInputChange(value) {
@@ -84,6 +84,7 @@ class DisSignInComponent extends React.Component {
                 {error.response.data}{' '}
               </Text>
             )}
+
             <Text style={styles.text_footer}>E-MAIL</Text>
             <View style={styles.action}>
               <FontAwesome name="user-o" color="#05375a" size={20} />
