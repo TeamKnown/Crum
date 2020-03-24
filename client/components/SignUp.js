@@ -1,13 +1,26 @@
 import React from 'react'
-import {View, Text, StyleSheet, TextInput, TouchableOpacity} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  ImageBackground,
+  Image
+} from 'react-native'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 // import {LinearGradient} from "react-native-linear-gradient"
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
-
+import {
+  FormLabel,
+  FormInput,
+  FormValidationMessage
+} from 'react-native-elements'
 import {connect} from 'react-redux'
+import {auth} from '../store/user'
 import PropTypes from 'prop-types'
 
 class DisSignUpComponent extends React.Component {
@@ -15,6 +28,7 @@ class DisSignUpComponent extends React.Component {
     super(props)
     this.state = {
       check_textInputChange: false,
+      email: '',
       password: '',
       password_confirm: '',
       secureTextEntry: true,
@@ -22,10 +36,16 @@ class DisSignUpComponent extends React.Component {
     }
   }
 
+  async handleSignUp() {
+    // console.log(this.state)
+    await this.props.auth(this.state.email, this.state.password)
+  }
+
   textInputChange(value) {
     if (value.length !== 0) {
       this.setState({
-        check_textInputChange: true
+        check_textInputChange: true,
+        email: value
       })
     } else {
       this.setState({
@@ -47,12 +67,28 @@ class DisSignUpComponent extends React.Component {
   }
 
   render() {
+    const {error} = this.props
     return (
+      //   <ImageBackground
+      //     source={require('../../public/background.png')}
+      //     style={{
+      //       flex: 1,
+      //       width: null,
+      //       height: null
+      //     }}
+      //   >
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.text_header}>Welcome Team KNOWN!</Text>
         </View>
         <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+          {error && error.response && (
+            <Text style={{color: 'red', alignSelf: 'center'}}>
+              {' '}
+              {error.response.data}{' '}
+            </Text>
+          )}
+
           <Text style={styles.text_footer}>E-MAIL</Text>
           <View style={styles.action}>
             <FontAwesome name="user-o" color="#05375a" size={20} />
@@ -189,24 +225,37 @@ class DisSignUpComponent extends React.Component {
             </Text>
           </View>
           <View style={styles.button}>
-            <LinearGradient
-              colors={['#5db8fe', '#39cff2']}
-              style={styles.signIn}
+            <TouchableOpacity
+              onPress={() => this.handleSignUp()}
+              style={[
+                styles.signIn,
+                {
+                  borderColor: '#4dc2f8',
+                  borderWidth: 1,
+                  marginTop: 15
+                }
+              ]}
             >
-              <Text
-                style={[
-                  styles.textSign,
-                  {
-                    color: 'white'
-                  }
-                ]}
+              <LinearGradient
+                colors={['#5db8fe', '#39cff2']}
+                style={styles.signIn}
               >
-                Sign Up
-              </Text>
-            </LinearGradient>
+                <Text
+                  style={[
+                    styles.textSign,
+                    {
+                      color: 'white'
+                    }
+                  ]}
+                >
+                  Sign Up
+                </Text>
+              </LinearGradient>
+            </TouchableOpacity>
           </View>
         </Animatable.View>
       </View>
+      //   </ImageBackground>
     )
   }
 }
@@ -285,13 +334,13 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (email, password) => dispatch(auth(email, password, 'login'))
+    auth: (email, password) => dispatch(auth(email, password, 'signup'))
   }
 }
 
-export default connect(mapState, mapDispatch)(DisSignInComponent)
+export default connect(mapState, mapDispatch)(DisSignUpComponent)
 
-DisSignInComponent.propTypes = {
+DisSignUpComponent.propTypes = {
   // name: PropTypes.string.isRequired,
   // displayName: PropTypes.string.isRequired,
   // handleSubmit: PropTypes.func.isRequired,
