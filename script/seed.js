@@ -65,6 +65,12 @@ const users = [
     email: 'kcarlisle9@fotki.com',
     password: 'NERY7QB2pRqy',
     salt: null
+  },
+  {
+    userName: 'dad',
+    email: 'raddadsofficial@gmail.com',
+    password: 'yesDad',
+    salt: null
   }
 ]
 const crums = [
@@ -127,6 +133,9 @@ const crums = [
   },
   {
     name: 'Stress'
+  },
+  {
+    name: 'Dad'
   }
 ]
 const crumInstances = [
@@ -174,6 +183,13 @@ const crumInstances = [
     message: 'mark is hungry',
     latitude: 40.7127,
     longitude: -73.9495
+  },
+  {
+    message: 'Every Day is Fathers Day',
+    latitude: 40.7185,
+    longitude: -73.9743,
+    userId: 11,
+    crumId: 21
   }
 ]
 const seed = async () => {

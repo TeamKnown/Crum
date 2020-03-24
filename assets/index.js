@@ -18,7 +18,8 @@ export const images = {
   Halo: require('./Crums/Halo.png'),
   Smart: require('./Crums/Smart.png'),
   HandSanitizer: require('./Crums/HandSanitizer.png'),
-  Stress: require('./Crums/Stress.png')
+  Stress: require('./Crums/Stress.png'),
+  Dad: require('./Crums/dad2.png')
 }
 export const fonts = {
   font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
