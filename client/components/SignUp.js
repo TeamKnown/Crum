@@ -38,6 +38,9 @@ class DisSignUpComponent extends React.Component {
 
   async handleSignUp() {
     // console.log(this.state)
+    if (this.state.password !== this.state.password_confirm) {
+      let diffPasswordError = 'Passwords must match'
+    }
     await this.props.auth(this.state.email, this.state.password)
   }
 
@@ -68,6 +71,8 @@ class DisSignUpComponent extends React.Component {
 
   render() {
     const {error} = this.props
+    let diffPasswordError
+
     return (
       //   <ImageBackground
       //     source={require('../../public/background.png')}
@@ -88,6 +93,10 @@ class DisSignUpComponent extends React.Component {
               {error.response.data}{' '}
             </Text>
           )}
+
+          <Text style={{color: 'red', alignSelf: 'center'}}>
+            {diffPasswordError}
+          </Text>
 
           <Text style={styles.text_footer}>E-MAIL</Text>
           <View style={styles.action}>
