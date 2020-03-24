@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
@@ -7,49 +8,34 @@ import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {computePos, SCALER} from './utils'
-import {
-  Platform,
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  ImageBackground,
-  TouchableOpacity,
-  Modal,
-  Alert
-} from 'react-native'
+import {Platform, View, Text, StyleSheet, ImageBackground} from 'react-native'
 import {
   getCurrentPosition,
   stopTracking,
   fetchCrums,
-  postCrumInstance,
-  fetchNearByCrumInstances
+  fetchNearByCrumInstances,
+  me
 } from '../store/'
+import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
 
 let renderer, scene, camera
 
 class DisARScreen extends React.Component {
-  constructor() {
-    super()
-    this.handleOpenModel = this.handleOpenModel.bind(this)
-    this.handleTypeMessage = this.handleTypeMessage.bind(this)
-  }
+  // constructor() {
+  //   super()
+  // }
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
+    numCrum: 0,
     modalVisible: false,
     message: '',
-    imgName: '',
+    imgId: '',
     loading: true
   }
-  setModalVisible(modalVisible) {
-    this.setState({
-      modalVisible: modalVisible
-    })
-  }
+
   componentDidMount = () => {
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
     this.props.fetchCrums()
@@ -57,17 +43,8 @@ class DisARScreen extends React.Component {
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData() // this unsubscribed to update current locations
   }
-  handleOpenModel = () => {
-    this.props.dropCrumInstances({
-      longitude: this.props.locations.longitude,
-      latitude: this.props.locations.latitude
-    })
-  }
-  handleTypeMessage(event) {
-    this.setState({
-      message: event.nativeEvent.text
-    })
-  }
+
+  // }
   // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
   // likewise latitude is the floor of (SCALER * latitude)
   // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
@@ -91,7 +68,8 @@ class DisARScreen extends React.Component {
       Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
       Number.isInteger(props.locations.latitudeIdx) &&
       (props.locations.latitudeIdx !== state.latitudeIdx ||
-        props.locations.longitudeIdx !== state.longitudeIdx)
+        props.locations.longitudeIdx !== state.longitudeIdx ||
+        props.crumInstances.length !== state.numCrum)
     ) {
       props.fetchCrumInstances(
         props.locations.latitudeIdx,
@@ -101,7 +79,7 @@ class DisARScreen extends React.Component {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
         longitudeIdx: props.locations.longitudeIdx,
-        numCrum: props.locations.length,
+        numCrum: props.crumInstances.length, //numCrum: state.crumInstances.length,
         loading: true
       }
     } else {
@@ -163,7 +141,6 @@ class DisARScreen extends React.Component {
                   onRender={onRender}
                   onResize={onResize}
                   isArEnabled
-                  // isArRunningStateEnabled
                   isArCameraStateEnabled
                 />
               </View>
@@ -172,87 +149,7 @@ class DisARScreen extends React.Component {
                 wait
               </Text>
             )}
-            <View style={styles.container}>
-              <TouchableOpacity
-                style={styles.btnDrop}
-                onPress={() => {
-                  this.setModalVisible(true)
-                }}
-              >
-                <Text style={{color: '#19ae9f'}} title="Drop!">
-                  d r o p
-                </Text>
-              </TouchableOpacity>
-              <Modal
-                animationType="fade"
-                transparent={true}
-                visible={this.state.modalVisible}
-                onRequestClose={() => {
-                  this.handleOpenModel()
-                  Alert.alert('Modal closed')
-                }}
-              >
-                <View style={styles.container}>
-                  <View style={styles.modal}>
-                    <TextInput
-                      required
-                      id="message"
-                      value={this.state.message}
-                      onChange={this.handleTypeMessage}
-                      textAlign="center"
-                      style={styles.input}
-                      placeholder="m e s s a g e"
-                      autoComplete="message"
-                      type="text"
-                    />
-                    <Text>Select Crum</Text>
-                    <View
-                      style={{
-                        width: '80%',
-                        height: '70%',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        flexWrap: 'wrap'
-                      }}
-                    >
-                      {crums.map(crum => (
-                        <TouchableOpacity
-                          key={crum.id}
-                          onPress={() => {
-                            // console.log(this.state)
-                            this.setState({
-                              imgName: crum.name
-                            })
-                          }}
-                        >
-                          <Image
-                            style={{width: 50, height: 50, margin: 6}}
-                            borderColor={0xf44336}
-                            borderWidth={
-                              this.state.imgName === crum.name ? 10 : 0
-                            }
-                            source={images[crum.name]}
-                          />
-                        </TouchableOpacity>
-                      ))}
-                    </View>
-
-                    <TouchableOpacity
-                      style={styles.btnDrop}
-                      onPress={() => {
-                        // console.log('drop!!!', this.state)
-                        this.setModalVisible(!this.state.modalVisible)
-                      }}
-                    >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
-                        d r o p
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                </View>
-              </Modal>
-            </View>
+            <DropCrumForm />
           </View>
         </View>
       </ImageBackground>
@@ -261,17 +158,20 @@ class DisARScreen extends React.Component {
 }
 
 const mapState = state => ({
+  isLoggedIn: !!state.user.id,
+  user: state.user,
   locations: {
     ...state.locations,
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),
     latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   },
-  numCrum: state.crumInstances.length,
-  crumInstances: state.crumInstances,
-  crums: state.crums
+  crumInstances: state.crumInstances
 })
 const mapDispatch = dispatch => {
   return {
+    getUser: () => {
+      dispatch(me())
+    },
     subscribeToLocationData: () => {
       dispatch(getCurrentPosition())
     },
@@ -283,9 +183,6 @@ const mapDispatch = dispatch => {
     },
     fetchCrumInstances: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
-    },
-    dropCrumInstances: newCrum => {
-      dispatch(postCrumInstance(newCrum))
     }
   }
 }
@@ -297,57 +194,6 @@ export default ARScreen
 const styles = StyleSheet.create({
   main: {
     height: '100%',
-    width: '100%',
-    paddingBottom: 10
-  },
-  modal: {
-    flex: 1,
-    width: '90%',
-    height: '80%',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
-    borderColor: '#7c1e9f',
-    alignSelf: 'center',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    borderRadius: 10,
-    margin: 20
-  },
-  container: {
-    position: 'absolute',
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end'
-  },
-  btnDrop: {
-    height: 60,
-    width: '90%',
-    backgroundColor: 'white',
-    borderColor: '#19ae9f',
-    borderWidth: 2,
-    textAlign: 'center',
-    borderRadius: 10,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: 30
-  },
-  input: {
-    height: 120,
-    width: '90%',
-    borderRadius: 10,
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 2,
-    alignItems: 'center',
-    padding: 8,
-    marginTop: 30
+    width: '100%'
   }
 })

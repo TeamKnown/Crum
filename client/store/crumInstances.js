@@ -3,6 +3,7 @@ import {SCALER} from '../components/utils'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
+import * as Location from 'expo-location'
 
 // action creator
 export const setCrumInstances = crumInstances => ({
@@ -43,10 +44,17 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   }
 }
 
-export const postCrumInstance = newCrum => {
+export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
     try {
-      const {data} = await devAxios.post('/api/cruminstances', newCrum)
+      const heading = await Location.getHeadingAsync()
+      const headingInt = Math.floor(heading.magHeading)
+      crumInstance.headingInt = headingInt
+      console.log(crumInstance)
+      const {data} = await devAxios.post(
+        `/api/cruminstances?userId=${userId}&crumId=${crumId}&direction=front`,
+        crumInstance
+      )
       dispatch(addCrumInstance(data))
     } catch (error) {
       console.error('POST Error')

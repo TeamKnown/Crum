@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {CrumInstance} = require('../db/models')
+const {CrumInstance, Crum, User} = require('../db/models')
 // const {adminOnly, selfOnly} = require('./utlis')
 module.exports = router
 
@@ -14,13 +14,19 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const newCrumInstance = await CrumInstance.create(req.body, {
-      // include: [
-      //   {
-      //     model: Crum
-      //   }
-      // ]
-    })
+    const headingRadian = (req.body.headingInt * 3.24) / 180
+    req.body.latitude =
+      req.body.latitude + (Math.cos(headingRadian) * 20) / 6356000
+    req.body.longitude =
+      req.body.longitude +
+      (Math.sin(headingRadian) * 20) /
+        (6356000 * Math.cos((req.body.longitude * 2 * 3.14) / 360))
+
+    const newCrumInstance = await CrumInstance.create(req.body)
+    const user = await User.findByPk(req.query.userId)
+    const crum = await Crum.findByPk(req.query.crumId)
+    newCrumInstance.setUser(user)
+    newCrumInstance.setCrum(crum)
     if (newCrumInstance) {
       res.json(newCrumInstance)
     }
