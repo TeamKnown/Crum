@@ -1,5 +1,6 @@
 import axios from 'axios'
-import history from '../history'
+import {devAxios} from './devAxios'
+import {NavigationActions} from 'react-navigation'
 
 /**
  * ACTION TYPES
@@ -20,6 +21,24 @@ const updateUser = user => ({
 /**
  * THUNK CREATORS
  */
+
+// export const submitSignInThunk = (email, password) => async dispatch => {
+//   let res
+//   try {
+//     res = await devAxios.post(`/auth/login`, {email, password})
+//   } catch (authError) {
+//     console.log(authError)
+//     return dispatch(getUser({error: authError}))
+//   }
+
+//   try {
+//     dispatch(getUser(res.data))
+//     // SignIn.props.navigation.navigate('Profile')
+//   } catch (dispatchOrHistoryErr) {
+//     console.error(dispatchOrHistoryErr)
+//   }
+// }
+
 export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
@@ -32,14 +51,14 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {
-    res = await axios.post(`/auth/${method}`, {email, password})
+    res = await devAxios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
 
   try {
     dispatch(getUser(res.data))
-    history.push('/')
+    // NavigationActions.navigate({ routeName: 'Profile' })
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
