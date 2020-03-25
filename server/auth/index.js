@@ -31,10 +31,12 @@ router.post('/signup', async (req, res, next) => {
   }
 })
 
+// DELETE /auth/logout 302 4.389 ms - 28
 router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
   res.json({})
+  // res.redirect('/letustryit') // DELETE /login 404 2.556 ms - 147
 })
 
 router.get('/me', (req, res) => {

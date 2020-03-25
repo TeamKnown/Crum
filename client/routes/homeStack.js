@@ -22,21 +22,21 @@ function HomeTabs() {
         name="Profile"
         component={UserProfile}
         options={{
-          tabBarLabel: 'Profile'
+          tabBarLabel: 'profile'
         }}
       />
       <Tab.Screen
         name="ARScreen"
         component={ARScreen}
         options={{
-          tabBarLabel: 'ARScreen'
+          tabBarLabel: 'view'
         }}
       />
       <Tab.Screen
         name="MapScreen"
         component={MapScreen}
         options={{
-          tabBarLabel: 'MapScreen'
+          tabBarLabel: 'map'
         }}
       />
     </Tab.Navigator>

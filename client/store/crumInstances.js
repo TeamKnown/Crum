@@ -51,10 +51,11 @@ export const postCrumInstance = (crumInstance, userId, crumId) => {
       const headingInt = Math.floor(heading.magHeading)
       crumInstance.headingInt = headingInt
       console.log(crumInstance)
-      const {data} = await devAxios.post(
+      let {data} = await devAxios.post(
         `/api/cruminstances?userId=${userId}&crumId=${crumId}&direction=front`,
         crumInstance
       )
+      // {data} = await devAxios.get(`/api/cruminstances/${data.id}`)
       dispatch(addCrumInstance(data))
     } catch (error) {
       console.error('POST Error')

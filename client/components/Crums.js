@@ -1,5 +1,11 @@
 import {Renderer, THREE} from 'expo-three'
 import ExpoTHREE from 'expo-three'
+
+// var THREE = require('three') // require peer dependency
+// var initializeDomEvents = require('threex.domevents')
+
+// var domEvents = new THREEx.DomEvents(camera, renderer.domElement)
+// initializeDomEvents(THREE, THREEx)
 // import * as Location from 'expo-location'
 
 import {Asset} from 'expo-asset'
@@ -32,6 +38,9 @@ export const createPlane = async (color, imgUrl, orientation) => {
   plane.position.x = orientation.x
   plane.position.y = orientation.y
   plane.rotation.y = Math.atan2(-orientation.x, -orientation.z) // make sure the text is facing us
+  // plane.on('click', () => {
+  //   console.log('this pic is clicked')
+  // })
   return plane
 }
 
