@@ -8,35 +8,38 @@ import SignUp from '../components/SignUp'
 import MapScreen from '../components/MapScreen'
 import ARScreen from '../components/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
-
+import {createDrawerNavigator} from '@react-navigation/drawer'
+import {Dimensions, View, TouchableOpacity} from 'react-native'
+import Animated from 'react-native-reanimated'
 //the home screens after users login
+
 const Tab = createMaterialTopTabNavigator()
 function HomeTabs() {
+  const {height} = Dimensions.get('window')
   return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      activeColor="#e91e63"
-      style={{backgroundColor: 'tomato'}}
-    >
+    <Tab.Navigator style={{paddingTop: height > 600 ? 30 : 10}}>
       <Tab.Screen
         name="Profile"
         component={UserProfile}
         options={{
-          tabBarLabel: 'profile'
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({color}) => (
+            <MaterialCommunityIcons name="account" color={color} size={26} />
+          )
         }}
       />
       <Tab.Screen
         name="ARScreen"
         component={ARScreen}
         options={{
-          tabBarLabel: 'view'
+          tabBarLabel: 'ARView'
         }}
       />
       <Tab.Screen
         name="MapScreen"
         component={MapScreen}
         options={{
-          tabBarLabel: 'map'
+          tabBarLabel: 'MapView'
         }}
       />
     </Tab.Navigator>
