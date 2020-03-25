@@ -217,6 +217,35 @@ class DisSignUpComponent extends React.Component {
                     </TouchableOpacity>
                   </View>
 
+                  <View style={styles.button}>
+                    <TouchableOpacity
+                      onPress={() => this.handleSignUp()}
+                      style={[
+                        styles.signIn,
+                        {
+                          borderColor: '#4dc2f8',
+                          borderWidth: 1
+                        }
+                      ]}
+                    >
+                      <LinearGradient
+                        colors={['#5db8fe', '#39cff2']}
+                        style={styles.signIn}
+                      >
+                        <Text
+                          style={[
+                            styles.textSign,
+                            {
+                              color: 'white'
+                            }
+                          ]}
+                        >
+                          Sign Up
+                        </Text>
+                      </LinearGradient>
+                    </TouchableOpacity>
+                  </View>
+
                   <View style={styles.textPrivate}>
                     <Text style={styles.color_textPrivate}>
                       By signing up you agree to our
@@ -243,35 +272,6 @@ class DisSignUpComponent extends React.Component {
                     >
                       Privacy Policy
                     </Text>
-                  </View>
-                  <View style={styles.button}>
-                    <TouchableOpacity
-                      onPress={() => this.handleSignUp()}
-                      style={[
-                        styles.signIn,
-                        {
-                          borderColor: '#4dc2f8',
-                          borderWidth: 1,
-                          marginTop: -90
-                        }
-                      ]}
-                    >
-                      <LinearGradient
-                        colors={['#5db8fe', '#39cff2']}
-                        style={styles.signIn}
-                      >
-                        <Text
-                          style={[
-                            styles.textSign,
-                            {
-                              color: 'white'
-                            }
-                          ]}
-                        >
-                          Sign Up
-                        </Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
                   </View>
                 </Animatable.View>
               </View>
@@ -320,7 +320,7 @@ var styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: '1.5%',
+    marginTop: '2%',
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: '2%'
@@ -328,11 +328,13 @@ var styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: '3%',
-    color: '#05375a'
+    color: '#05375a',
+    marginTop: '1%',
+    marginBottom: '1%'
   },
   button: {
     alignItems: 'center',
-    marginTop: 50
+    marginTop: '7%'
   },
   signIn: {
     width: '100%',
@@ -348,10 +350,11 @@ var styles = StyleSheet.create({
   textPrivate: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 20
+    marginTop: '2%'
   },
   color_textPrivate: {
-    color: 'gray'
+    color: 'gray',
+    fontSize: 11
   }
 })
 
