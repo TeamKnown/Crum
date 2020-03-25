@@ -25,6 +25,7 @@ import {
 import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
+// import {request, PERMISSIONS} from 'react-native-permissions'
 
 let scene
 class DisARScreen extends React.Component {
@@ -33,7 +34,14 @@ class DisARScreen extends React.Component {
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
     crumInstances: []
   }
-
+  // requestLocationPermission = async () => {
+  //   if (Platform.OS === 'ios') {
+  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+  //     if (response === 'granted') {
+  //       this.props.subscribeToLocationData()
+  //     }
+  //   }
+  // }
   componentDidMount = () => {
     THREE.suppressExpoWarnings(true)
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
