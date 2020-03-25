@@ -7,9 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
-  Dimensions,
-  Keyboard,
-  TouchableWithoutFeedback
+  Dimensions
 } from 'react-native'
 import {Header} from 'react-navigation-stack'
 
@@ -27,11 +25,7 @@ import {connect} from 'react-redux'
 import {auth} from '../store/user'
 import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
-const DismissKeyBoard = ({children}) => (
-  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-    {children}
-  </TouchableWithoutFeedback>
-)
+import {DismissKeyBoard} from './DismissKeyBoard'
 const {width, height} = Dimensions.get('window')
 class DisSignInComponent extends React.Component {
   constructor(props) {
