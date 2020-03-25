@@ -19,6 +19,7 @@ import {
 import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
+// import {request, PERMISSIONS} from 'react-native-permissions'
 
 let renderer, scene, camera
 
@@ -35,7 +36,14 @@ class DisARScreen extends React.Component {
     imgId: '',
     loading: true
   }
-
+  // requestLocationPermission = async () => {
+  //   if (Platform.OS === 'ios') {
+  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+  //     if (response === 'granted') {
+  //       this.props.subscribeToLocationData()
+  //     }
+  //   }
+  // }
   componentDidMount = () => {
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
     this.props.fetchCrums()

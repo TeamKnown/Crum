@@ -13,9 +13,7 @@ const reducer = combineReducers({
   crums: crumsReducer,
   locations: locationsReducer
 })
-// const middleware = composeWithDevTools(
-//   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
-// )
+
 const middleware = composeWithDevTools(applyMiddleware(thunkMiddleware))
 const store = createStore(reducer, middleware)
 
