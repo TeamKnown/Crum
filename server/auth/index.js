@@ -32,7 +32,7 @@ router.post('/signup', async (req, res, next) => {
 })
 
 // DELETE /auth/logout 302 4.389 ms - 28
-router.delete('/logout', (req, res) => {
+router.post('/logout', (req, res) => {
   req.logout()
   req.session.destroy()
   res.json({})

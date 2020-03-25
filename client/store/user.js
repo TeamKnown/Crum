@@ -60,7 +60,7 @@ export const auth = (email, password, method) => async dispatch => {
 
 export const logout = () => async dispatch => {
   try {
-    await devAxios.delete('/auth/logout')
+    await devAxios.post('/auth/logout')
     dispatch(removeUser())
     NavigationActions.navigate('SignIn')
   } catch (err) {
