@@ -285,13 +285,15 @@ class DisSignUpComponent extends React.Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    height: '100%',
+    width: '100%'
   },
   header: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingHorizontal: '5%',
+    paddingBottom: '10%',
     alignItems: 'center',
     height: '50%'
   },
@@ -300,8 +302,10 @@ var styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    paddingHorizontal: 40,
-    paddingVertical: 40
+    paddingHorizontal: '5%',
+    paddingVertical: '5%',
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40
   },
   text_header: {
     color: 'purple',
@@ -316,14 +320,14 @@ var styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: '1.5%',
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
-    paddingBottom: 5
+    paddingBottom: '2%'
   },
   textInput: {
     flex: 1,
-    paddingLeft: 10,
+    paddingLeft: '3%',
     color: '#05375a'
   },
   button: {
