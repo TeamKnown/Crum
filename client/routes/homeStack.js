@@ -48,8 +48,16 @@ const Stack = createStackNavigator()
 function Signin() {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{headerTransparent: true, title: ''}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{headerTransparent: true, title: ''}}
+      />
     </Stack.Navigator>
   )
 }
