@@ -16,16 +16,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 })
-const getFonts = () =>
+const getAssets = () =>
   Font.loadAsync({
     FuturaBold: require('./assets/fonts/FuturaBold.ttf'),
     FuturaBoldE: require('./assets/fonts/FuturaExtra.ttf')
   })
 
 export default function App() {
-  const [fontsLoaded, setFontsLoaded] = useState(false)
-  console.log(fontsLoaded)
-  if (fontsLoaded) {
+  const [assetsLoaded, setAssetsLoaded] = useState(false)
+  console.log(assetsLoaded)
+  if (assetsLoaded) {
     return (
       <Provider store={store}>
         <Routes />
@@ -33,7 +33,10 @@ export default function App() {
     )
   } else {
     return (
-      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+      <AppLoading
+        startAsync={getAssets}
+        onFinish={() => setAssetsLoaded(true)}
+      />
     )
   }
 }

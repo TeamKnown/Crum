@@ -7,14 +7,7 @@ import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {computePos, SCALER, crumPlaneNamer} from './utils'
-import {
-  Platform,
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image
-} from 'react-native'
+import {Platform, View, StyleSheet, ImageBackground} from 'react-native'
 import {
   getCurrentPosition,
   stopTracking,
@@ -24,7 +17,7 @@ import {
 } from '../store/'
 import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
-import {createCube, createPlane, createText} from './Crums.js'
+import {createPlane, createText} from './Crums.js'
 // import {request, PERMISSIONS} from 'react-native-permissions'
 
 let scene
@@ -44,11 +37,11 @@ class DisARScreen extends React.Component {
   // }
   componentDidMount = () => {
     THREE.suppressExpoWarnings(true)
-    this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
+    this.props.subscribeToLocationData()
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
-    this.props.unsubscribeToLocationData() // this unsubscribed to update current locations
+    this.props.unsubscribeToLocationData()
     THREE.suppressExpoWarnings(false)
   }
 
@@ -80,13 +73,14 @@ class DisARScreen extends React.Component {
         plane.name = planeName
         scene.add(plane)
         let newObj = scene.getObjectByName(planeName)
-        console.log('ADDED NEW CRUM: ', newObj.name) // this works actaully
+        console.log('ADDED NEW CRUM: ', newObj.name)
       })
 
       toRemove.forEach(async crumInstance => {
-        let planeToRemove = scene.getObjectByName(crumInstance.crum.name)
+        var planeName = crumPlaneNamer(crumInstance)
+        let planeToRemove = scene.getObjectByName(planeName)
         scene.remove(planeToRemove)
-        console.log('REMOVED OLD CRUM', planeToRemove.name) // this works actaully
+        console.log('REMOVED OLD CRUM', planeToRemove.name)
       })
       // console.log('is scene defined2?', Object.keys(scene))
 
@@ -151,7 +145,6 @@ class DisARScreen extends React.Component {
     }
 
     const onRender = delta => {
-      // run every frame
       this.renderer.render(scene, this.camera)
     }
 
