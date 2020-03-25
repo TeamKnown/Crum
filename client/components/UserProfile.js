@@ -253,7 +253,7 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%',
-    paddingBottom: 10
+    paddingBottom: '4%'
   },
   modal: {
     flexDirection: 'column',
@@ -277,6 +277,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   container: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
@@ -287,8 +288,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   bottomContainer: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     width: '90%',
     paddingBottom: '4%'
   },
