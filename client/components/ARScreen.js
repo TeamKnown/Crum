@@ -61,14 +61,6 @@ class DisARScreen extends React.Component {
     )
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
-      // console.log(
-      //   'Stuff to add!!!============',
-      //   toAdd.map(item => item.id)
-      // )
-      // console.log(
-      //   'Stuff to remove!!!============',
-      //   toRemove.map(item => item.id)
-      // )
       toAdd.forEach(async crumInstance => {
         const pos = computePos(crumInstance, props.locations)
         let plane = await createPlane(
