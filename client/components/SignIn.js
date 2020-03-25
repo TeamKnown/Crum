@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native'
-// import {Header} from 'react-navigation-stack'
+
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
