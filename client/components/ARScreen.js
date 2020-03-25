@@ -17,7 +17,7 @@ import {
 } from '../store/'
 import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
-import {createPlane, createText} from './Crums.js'
+import {createPlane} from './Crums.js'
 // import {request, PERMISSIONS} from 'react-native-permissions'
 
 let scene
@@ -62,27 +62,32 @@ class DisARScreen extends React.Component {
     )
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
-      toAdd.forEach(async crumInstance => {
-        const pos = computePos(crumInstance, props.locations)
-        let plane = await createPlane(
-          0xffffff,
-          images[crumInstance.crum.name],
-          pos
-        )
-        var planeName = crumPlaneNamer(crumInstance)
-        plane.name = planeName
-        scene.add(plane)
-        let newObj = scene.getObjectByName(planeName)
-        console.log('ADDED NEW CRUM: ', newObj.name)
-      })
+      const addCrums = async () => {
+        for (const crumInstance of toAdd) {
+          let pos = computePos(crumInstance, props.locations)
+          let plane = await createPlane(
+            0xffffff,
+            images[crumInstance.crum.name],
+            pos
+          )
+          let planeName = crumPlaneNamer(crumInstance)
+          plane.name = planeName
+          scene.add(plane)
+          let newObj = scene.getObjectByName(planeName)
+          console.log('ADDED NEW CRUM: ', newObj.name)
+        }
+      }
 
-      toRemove.forEach(async crumInstance => {
-        var planeName = crumPlaneNamer(crumInstance)
-        let planeToRemove = scene.getObjectByName(planeName)
-        scene.remove(planeToRemove)
-        console.log('REMOVED OLD CRUM', planeToRemove.name)
-      })
-      // console.log('is scene defined2?', Object.keys(scene))
+      const removeCrums = () => {
+        for (const crumInstance of toRemove) {
+          let planeName = crumPlaneNamer(crumInstance)
+          let planeToRemove = scene.getObjectByName(planeName)
+          scene.remove(planeToRemove)
+          console.log('REMOVED OLD CRUM', planeToRemove.name)
+        }
+      }
+      addCrums()
+      removeCrums()
 
       return {
         ...state,
@@ -122,17 +127,6 @@ class DisARScreen extends React.Component {
       scene = new THREE.Scene()
       scene.background = new BackgroundTexture(this.renderer)
       this.camera = new Camera(width, height, 0.01, 1000)
-
-      crumInstances.forEach(async crumInstance => {
-        const pos = computePos(crumInstance, locations)
-        let plane = await createPlane(
-          0xffffff,
-          images[crumInstance.crum.name],
-          pos
-        )
-
-        scene.add(plane)
-      })
 
       scene.add(new THREE.AmbientLight(0xffffff))
     }
