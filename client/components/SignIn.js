@@ -13,7 +13,7 @@ import {
   ScrollView
 } from 'react-native'
 // import {Header} from 'react-navigation-stack'
-
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 // import {LinearGradient} from "react-native-linear-gradient"
@@ -68,158 +68,152 @@ class DisSignInComponent extends React.Component {
     const {error} = this.props
 
     return (
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.container}
-          // keyboardVerticalOffset={Header.HEIGHT}
-        >
+      <ImageBackground
+        source={require('../../public/background.png')}
+        style={{
+          flex: 1,
+          width: null,
+          height: null
+        }}
+      >
+        <KeyboardAwareScrollView style={styles.container}>
           {/* <ScrollView> */}
-          <ImageBackground
-            source={require('../../public/background.png')}
-            style={{
-              flex: 1,
-              width: null,
-              height: null
-            }}
-          >
-            <DismissKeyBoard>
-              <View style={styles.container}>
-                <View style={styles.header}>
-                  <Text style={styles.text_header}>CRUM</Text>
+          <DismissKeyBoard>
+            <SafeAreaView style={styles.container}>
+              <View style={styles.header}>
+                <Text style={styles.text_header}>crum</Text>
+              </View>
+              <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+                {error && error.response && (
+                  <Text style={{color: 'red', alignSelf: 'center'}}>
+                    {' '}
+                    {error.response.data}{' '}
+                  </Text>
+                )}
+
+                <Text style={styles.text_footer}>E-MAIL</Text>
+                <View style={styles.action}>
+                  <FontAwesome name="user-o" color="#05375a" size={20} />
+                  <TextInput
+                    placeholder="Your email..."
+                    style={styles.textInput}
+                    onChangeText={text => this.textInputChange(text)}
+                  />
+
+                  {this.state.check_textInputChange ? (
+                    <Animatable.View animation="bounceIn">
+                      <Feather name="check-circle" color="green" size={20} />
+                    </Animatable.View>
+                  ) : null}
                 </View>
-                <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-                  {error && error.response && (
-                    <Text style={{color: 'red', alignSelf: 'center'}}>
-                      {' '}
-                      {error.response.data}{' '}
-                    </Text>
+
+                <Text
+                  style={[
+                    styles.text_footer,
+                    {
+                      marginTop: 35
+                    }
+                  ]}
+                >
+                  Password
+                </Text>
+                <View style={styles.action}>
+                  <Feather name="lock" color="#05375a" size={20} />
+                  {this.state.secureTextEntry ? (
+                    <TextInput
+                      placeholder="Your password..."
+                      secureTextEntry={true}
+                      style={styles.textInput}
+                      value={this.state.password}
+                      onChangeText={text =>
+                        this.setState({
+                          password: text
+                        })
+                      }
+                    />
+                  ) : (
+                    <TextInput
+                      placeholder="Your password..."
+                      style={styles.textInput}
+                      value={this.state.password}
+                      onChangeText={text =>
+                        this.setState({
+                          password: text
+                        })
+                      }
+                    />
                   )}
 
-                  <Text style={styles.text_footer}>E-MAIL</Text>
-                  <View style={styles.action}>
-                    <FontAwesome name="user-o" color="#05375a" size={20} />
-                    <TextInput
-                      placeholder="Your email..."
-                      style={styles.textInput}
-                      onChangeText={text => this.textInputChange(text)}
-                    />
+                  <TouchableOpacity onPress={() => this.secureTextEntry()}>
+                    {this.state.secureTextEntry ? (
+                      <Feather name="eye-off" color="gray" size={20} />
+                    ) : (
+                      <Feather name="eye" color="gray" size={20} />
+                    )}
+                  </TouchableOpacity>
+                </View>
+                <Text style={{color: '#009bd1', marginTop: 15}}>
+                  Forgot password?
+                </Text>
 
-                    {this.state.check_textInputChange ? (
-                      <Animatable.View animation="bounceIn">
-                        <Feather name="check-circle" color="green" size={20} />
-                      </Animatable.View>
-                    ) : null}
-                  </View>
-
-                  <Text
+                <View style={styles.button}>
+                  <TouchableOpacity
+                    onPress={() => this.handleSignIn()}
                     style={[
-                      styles.text_footer,
+                      styles.signIn,
                       {
-                        marginTop: 35
+                        borderColor: '#4dc2f8',
+                        borderWidth: 1,
+                        marginTop: -30
                       }
                     ]}
                   >
-                    Password
-                  </Text>
-                  <View style={styles.action}>
-                    <Feather name="lock" color="#05375a" size={20} />
-                    {this.state.secureTextEntry ? (
-                      <TextInput
-                        placeholder="Your password..."
-                        secureTextEntry={true}
-                        style={styles.textInput}
-                        value={this.state.password}
-                        onChangeText={text =>
-                          this.setState({
-                            password: text
-                          })
-                        }
-                      />
-                    ) : (
-                      <TextInput
-                        placeholder="Your password..."
-                        style={styles.textInput}
-                        value={this.state.password}
-                        onChangeText={text =>
-                          this.setState({
-                            password: text
-                          })
-                        }
-                      />
-                    )}
-
-                    <TouchableOpacity onPress={() => this.secureTextEntry()}>
-                      {this.state.secureTextEntry ? (
-                        <Feather name="eye-off" color="gray" size={20} />
-                      ) : (
-                        <Feather name="eye" color="gray" size={20} />
-                      )}
-                    </TouchableOpacity>
-                  </View>
-                  <Text style={{color: '#009bd1', marginTop: 15}}>
-                    Forgot password?
-                  </Text>
-
-                  <View style={styles.button}>
-                    <TouchableOpacity
-                      onPress={() => this.handleSignIn()}
-                      style={[
-                        styles.signIn,
-                        {
-                          borderColor: '#4dc2f8',
-                          borderWidth: 1,
-                          marginTop: -50
-                        }
-                      ]}
-                    >
-                      <LinearGradient
-                        colors={['#5db8fe', '#39cff2']}
-                        style={styles.signIn}
-                      >
-                        <Text
-                          style={[
-                            styles.textSign,
-                            {
-                              color: 'white'
-                            }
-                          ]}
-                        >
-                          Sign In
-                        </Text>
-                      </LinearGradient>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
-                      onPress={() => this.props.navigation.navigate('SignUp')}
-                      style={[
-                        styles.signIn,
-                        {
-                          borderColor: '#4dc2f8',
-                          borderWidth: 1,
-                          marginTop: 15
-                        }
-                      ]}
+                    <LinearGradient
+                      colors={['#5db8fe', '#39cff2']}
+                      style={styles.signIn}
                     >
                       <Text
-                        style={
-                          ([styles.textSign],
+                        style={[
+                          styles.textSign,
                           {
-                            color: '#4dc2f8'
-                          })
-                        }
+                            color: 'white'
+                          }
+                        ]}
                       >
-                        Sign Up
+                        Sign In
                       </Text>
-                    </TouchableOpacity>
-                  </View>
-                </Animatable.View>
-              </View>
-            </DismissKeyBoard>
-          </ImageBackground>
+                    </LinearGradient>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('SignUp')}
+                    style={[
+                      styles.signIn,
+                      {
+                        borderColor: '#4dc2f8',
+                        borderWidth: 1,
+                        marginTop: 15
+                      }
+                    ]}
+                  >
+                    <Text
+                      style={
+                        ([styles.textSign],
+                        {
+                          color: '#4dc2f8'
+                        })
+                      }
+                    >
+                      Sign Up
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </Animatable.View>
+            </SafeAreaView>
+          </DismissKeyBoard>
           {/* </ScrollView> */}
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+        </KeyboardAwareScrollView>
+      </ImageBackground>
     )
   }
 }
@@ -227,7 +221,7 @@ class DisSignInComponent extends React.Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1
-    // backgroundColor: '#05375a'
+    // backgroundColor: '#05375a',
   },
   header: {
     flex: 1,
@@ -243,11 +237,14 @@ var styles = StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     paddingHorizontal: 20,
-    paddingVertical: 30
+    paddingVertical: 30,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40
   },
   text_header: {
     color: 'purple',
     fontWeight: 'bold',
+    fontStyle: 'italic',
     fontSize: 90,
     fontFamily: 'FuturaBoldE'
   },

@@ -69,9 +69,6 @@ class UserProfile extends React.Component {
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
-          <TouchableOpacity onPress={() => this.handleSignOut()}>
-            <Text>logout</Text>
-          </TouchableOpacity>
           <Image
             source={require('../../public/defaultProfile1.png')}
             style={{
@@ -86,6 +83,9 @@ class UserProfile extends React.Component {
         <View style={styles.container}>
           <View style={styles.bottomContainer}>
             <View style={styles.buttons}>
+              <TouchableOpacity onPress={() => this.handleSignOut()}>
+                <Text>logout</Text>
+              </TouchableOpacity>
               <Text
                 style={{
                   justifyContent: 'center',
