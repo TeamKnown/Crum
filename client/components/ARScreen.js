@@ -19,30 +19,25 @@ import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
 
-let renderer, scene, camera
-
 class DisARScreen extends React.Component {
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
     numCrum: 0,
-    modalVisible: false,
-    message: '',
-    imgId: '',
     loading: true
   }
 
   componentDidMount = () => {
+    THREE.suppressExpoWarnings(true)
     this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData() // this unsubscribed to update current locations
+    THREE.suppressExpoWarnings(false)
   }
 
-  // }
-  // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
-  // likewise latitude is the floor of (SCALER * latitude)
+  // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude), likewise latitude is the floor of (SCALER * latitude)
   // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
   // when longitudeIdx or latitude in REDUX store changes, we update REACT state
   // we also requery the list of nearby crums
@@ -70,13 +65,13 @@ class DisARScreen extends React.Component {
       props.fetchCrumInstances(
         props.locations.latitudeIdx,
         props.locations.longitudeIdx
-      ) // fetch the list of nearby crums
+      )
       return {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
         longitudeIdx: props.locations.longitudeIdx,
-        numCrum: props.crumInstances.length, //numCrum: state.crumInstances.length,
-        loading: true
+        numCrum: props.crumInstances.length
+        // loading: true
       }
     } else {
       return state
@@ -91,31 +86,35 @@ class DisARScreen extends React.Component {
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
       this.setState({loading: false})
       AR.setWorldAlignment('gravityAndHeading')
-      renderer = new Renderer({gl, pixelRatio, width, height})
-      scene = new THREE.Scene()
-      scene.background = new BackgroundTexture(renderer)
-      camera = new Camera(width, height, 0.01, 1000)
+      this.renderer = new Renderer({gl, pixelRatio, width, height})
+      this.scene = new THREE.Scene()
+      this.scene.background = new BackgroundTexture(this.renderer)
+      this.camera = new Camera(width, height, 0.01, 1000)
 
       crumInstances.forEach(async crumInstance => {
         const pos = computePos(crumInstance, locations)
-        scene.add(
-          await createPlane(0xffffff, images[crumInstance.crum.name], pos)
+        let plane = await createPlane(
+          0xffffff,
+          images[crumInstance.crum.name],
+          pos
         )
+
+        this.scene.add(plane)
       })
 
-      scene.add(new THREE.AmbientLight(0xffffff))
+      this.scene.add(new THREE.AmbientLight(0xffffff))
     }
 
     const onResize = ({scale, width, height}) => {
-      camera.aspect = width / height
-      camera.updateProjectionMatrix()
-      renderer.setPixelRatio(scale)
-      renderer.setSize(width, height)
+      this.camera.aspect = width / height
+      this.camera.updateProjectionMatrix()
+      this.renderer.setPixelRatio(scale)
+      this.renderer.setSize(width, height)
     }
 
     const onRender = delta => {
       // run every frame
-      renderer.render(scene, camera)
+      this.renderer.render(this.scene, this.camera)
     }
 
     return (

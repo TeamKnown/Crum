@@ -1,5 +1,5 @@
 import axios from 'axios'
-import BASE_URL from '../../secretDom'
+import {BASE_URL} from '../../secretDom'
 
 // console.log(Object.keys(process.env))
 export const devAxios = axios.create({
