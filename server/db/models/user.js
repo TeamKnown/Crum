@@ -36,6 +36,10 @@ const User = db.define('user', {
   type: {
     type: Sequelize.ENUM(['admin', 'user']),
     defaultValue: 'user'
+  },
+  totalCrums: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 
@@ -48,6 +52,13 @@ User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
+User.prototype.userCrums = async function() {
+  const crums = await this.getCrumInstances()
+  console.log('crums', crums)
+  this.totalCrums = crums.length
+  this.save()
+  return crums.length
+}
 /**
  * classMethods
  */

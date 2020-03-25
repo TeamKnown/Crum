@@ -12,7 +12,7 @@ import {
   Alert
 } from 'react-native'
 import {postCrumInstance} from '../store/'
-import {images, fonts} from '../../assets/'
+import {images} from '../../assets/'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -39,7 +39,7 @@ class DisDropCrumForm extends React.Component {
     this.props.dropCrumInstance(crumInstance, userId, crumId)
   }
   render() {
-    const {locations, crumInstances, numCrum, crums} = this.props
+    const {locations, crums, user} = this.props
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -100,10 +100,10 @@ class DisDropCrumForm extends React.Component {
                   this.handleDropCrum(
                     {
                       message: this.state.message,
-                      latitude: this.props.locations.latitude,
-                      longitude: this.props.locations.longitude
+                      latitude: locations.latitude,
+                      longitude: locations.longitude
                     },
-                    this.props.user.id,
+                    user.id,
                     this.state.imgId
                   )
                   this.setModalVisible(!this.state.modalVisible)

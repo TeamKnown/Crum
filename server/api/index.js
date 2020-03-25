@@ -3,7 +3,7 @@ module.exports = router
 
 router.use('/users', require('./users'))
 router.use('/crums', require('./crums'))
-router.use('/cruminstances', require('./cruminstances'))
+router.use('/cruminstances', require('./crumInstances'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')

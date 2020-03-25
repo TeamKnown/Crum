@@ -22,8 +22,15 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId, {
-      attributes: ['id', 'userName', 'email']
+      attributes: ['id', 'userName', 'email', 'type'],
+      include: [
+        {
+          model: CrumInstance
+        }
+      ]
     })
+    await user.userCrums()
+
     res.json(user)
   } catch (error) {
     next(error)

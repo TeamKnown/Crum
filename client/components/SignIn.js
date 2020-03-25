@@ -7,11 +7,13 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  Dimensions,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView
 } from 'react-native'
-
+// import {Header} from 'react-navigation-stack'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -25,7 +27,8 @@ import {connect} from 'react-redux'
 import {auth} from '../store/user'
 import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
-
+import {DismissKeyBoard} from './DismissKeyBoard'
+const {width, height} = Dimensions.get('window')
 class DisSignInComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -64,24 +67,20 @@ class DisSignInComponent extends React.Component {
     const {error} = this.props
 
     return (
-      <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+      <ImageBackground
+        source={require('../../public/background.png')}
+        style={{
+          flex: 1,
+          width: null,
+          height: null
+        }}
+      >
+        <KeyboardAwareScrollView style={styles.container}>
           {/* <ScrollView> */}
-
-          <ImageBackground
-            source={require('../../public/background.png')}
-            style={{
-              flex: 1,
-              width: null,
-              height: null
-            }}
-          >
-            <View style={styles.container}>
+          <DismissKeyBoard>
+            <SafeAreaView style={styles.container}>
               <View style={styles.header}>
-                <Image
-                  source={require('../../public/crum.png')}
-                  style={{width: '100%'}}
-                />
+                <Text style={styles.text_header}>crum</Text>
               </View>
               <Animatable.View animation="fadeInUpBig" style={styles.footer}>
                 {error && error.response && (
@@ -164,7 +163,7 @@ class DisSignInComponent extends React.Component {
                       {
                         borderColor: '#4dc2f8',
                         borderWidth: 1,
-                        marginTop: 15
+                        marginTop: -30
                       }
                     ]}
                   >
@@ -209,12 +208,11 @@ class DisSignInComponent extends React.Component {
                   </TouchableOpacity>
                 </View>
               </Animatable.View>
-            </View>
-          </ImageBackground>
-
+            </SafeAreaView>
+          </DismissKeyBoard>
           {/* </ScrollView> */}
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+        </KeyboardAwareScrollView>
+      </ImageBackground>
     )
   }
 }
@@ -222,7 +220,7 @@ class DisSignInComponent extends React.Component {
 var styles = StyleSheet.create({
   container: {
     flex: 1
-    // backgroundColor: '#05375a'
+    // backgroundColor: '#05375a',
   },
   header: {
     flex: 1,
@@ -235,15 +233,19 @@ var styles = StyleSheet.create({
   footer: {
     flex: 3,
     backgroundColor: 'white',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
     paddingHorizontal: 20,
-    paddingVertical: 30
+    paddingVertical: 30,
+    borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40
   },
   text_header: {
-    color: 'white',
+    color: 'purple',
     fontWeight: 'bold',
-    fontSize: 30
+    fontStyle: 'italic',
+    fontSize: 90,
+    fontFamily: 'FuturaBoldE'
   },
   text_footer: {
     color: '#05375a',
