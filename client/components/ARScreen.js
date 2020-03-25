@@ -6,8 +6,15 @@ import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {computePos, SCALER} from './utils'
-import {Platform, View, Text, StyleSheet, ImageBackground} from 'react-native'
+import {computePos, SCALER, crumPlaneNamer} from './utils'
+import {
+  Platform,
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image
+} from 'react-native'
 import {
   getCurrentPosition,
   stopTracking,
@@ -19,12 +26,12 @@ import DropCrumForm from './DropCrumForm'
 import {images, fonts} from '../../assets/'
 import {createCube, createPlane, createText} from './Crums.js'
 
+let scene
 class DisARScreen extends React.Component {
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
-    latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude)
-    numCrum: 0,
-    loading: true
+    latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
+    crumInstances: []
   }
 
   componentDidMount = () => {
@@ -44,23 +51,56 @@ class DisARScreen extends React.Component {
   // this is subject to future optimization and code refactoring
   // More at https://reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations
   static getDerivedStateFromProps(props, state) {
-    if (
-      Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
-      Number.isInteger(props.locations.latitudeIdx) &&
-      state.loading === true
-    ) {
-      console.log('remounting', 'state', state.longitudeIdx, state.latitudeIdx)
+    const toAdd = props.crumInstances.filter(
+      crumInstance =>
+        !state.crumInstances.map(item => item.id).includes(crumInstance.id)
+    )
+    const toRemove = state.crumInstances.filter(
+      crumInstance =>
+        !props.crumInstances.map(item => item.id).includes(crumInstance.id)
+    )
+
+    if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
+      // console.log(
+      //   'Stuff to add!!!============',
+      //   toAdd.map(item => item.id)
+      // )
+      // console.log(
+      //   'Stuff to remove!!!============',
+      //   toRemove.map(item => item.id)
+      // )
+      toAdd.forEach(async crumInstance => {
+        const pos = computePos(crumInstance, props.locations)
+        let plane = await createPlane(
+          0xffffff,
+          images[crumInstance.crum.name],
+          pos
+        )
+        var planeName = crumPlaneNamer(crumInstance)
+        plane.name = planeName
+        scene.add(plane)
+        let newObj = scene.getObjectByName(planeName)
+        console.log('ADDED NEW CRUM: ', newObj.name) // this works actaully
+      })
+
+      toRemove.forEach(async crumInstance => {
+        let planeToRemove = scene.getObjectByName(crumInstance.crum.name)
+        scene.remove(planeToRemove)
+        console.log('REMOVED OLD CRUM', planeToRemove.name) // this works actaully
+      })
+      // console.log('is scene defined2?', Object.keys(scene))
+
       return {
         ...state,
-        loading: false
+        crumInstances: props.crumInstances.map(crumInstance => ({
+          ...crumInstance
+        }))
       }
-    }
-    if (
+    } else if (
       Number.isInteger(props.locations.longitudeIdx) && //initially longitudeIdx and latitudeIdx are NaN
       Number.isInteger(props.locations.latitudeIdx) &&
       (props.locations.latitudeIdx !== state.latitudeIdx ||
-        props.locations.longitudeIdx !== state.longitudeIdx ||
-        props.crumInstances.length !== state.numCrum)
+        props.locations.longitudeIdx !== state.longitudeIdx)
     ) {
       props.fetchCrumInstances(
         props.locations.latitudeIdx,
@@ -69,16 +109,14 @@ class DisARScreen extends React.Component {
       return {
         ...state,
         latitudeIdx: props.locations.latitudeIdx,
-        longitudeIdx: props.locations.longitudeIdx,
-        numCrum: props.crumInstances.length
-        // loading: true
+        longitudeIdx: props.locations.longitudeIdx
       }
     } else {
       return state
     }
   }
   render() {
-    const {locations, crumInstances, numCrum, crums} = this.props
+    const {locations, crumInstances, crums} = this.props
     // console.log('CRUM INSTANCES AR VIEW:', numCrum)
     AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
@@ -87,8 +125,8 @@ class DisARScreen extends React.Component {
       this.setState({loading: false})
       AR.setWorldAlignment('gravityAndHeading')
       this.renderer = new Renderer({gl, pixelRatio, width, height})
-      this.scene = new THREE.Scene()
-      this.scene.background = new BackgroundTexture(this.renderer)
+      scene = new THREE.Scene()
+      scene.background = new BackgroundTexture(this.renderer)
       this.camera = new Camera(width, height, 0.01, 1000)
 
       crumInstances.forEach(async crumInstance => {
@@ -99,10 +137,10 @@ class DisARScreen extends React.Component {
           pos
         )
 
-        this.scene.add(plane)
+        scene.add(plane)
       })
 
-      this.scene.add(new THREE.AmbientLight(0xffffff))
+      scene.add(new THREE.AmbientLight(0xffffff))
     }
 
     const onResize = ({scale, width, height}) => {
@@ -114,7 +152,7 @@ class DisARScreen extends React.Component {
 
     const onRender = delta => {
       // run every frame
-      this.renderer.render(this.scene, this.camera)
+      this.renderer.render(scene, this.camera)
     }
 
     return (
@@ -128,20 +166,16 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
-            {this.state.loading === false ? (
-              <View style={{flex: 1, height: '100%'}}>
-                <GraphicsView
-                  style={{flex: 1}}
-                  onContextCreate={onContextCreate}
-                  onRender={onRender}
-                  onResize={onResize}
-                  isArEnabled
-                  isArCameraStateEnabled
-                />
-              </View>
-            ) : (
-              <Text>wait</Text>
-            )}
+            <View style={{flex: 1, height: '100%'}}>
+              <GraphicsView
+                style={{flex: 1}}
+                onContextCreate={onContextCreate}
+                onRender={onRender}
+                onResize={onResize}
+                isArEnabled
+                isArCameraStateEnabled
+              />
+            </View>
             <DropCrumForm />
           </View>
         </View>
