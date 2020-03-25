@@ -11,6 +11,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback
 } from 'react-native'
+import {Header} from 'react-navigation-stack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
