@@ -2,6 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {logout} from '../store/user'
+import {updateUserThunk} from '../store/'
 
 import {
   Platform,
@@ -21,16 +22,17 @@ import {
 class UserProfile extends React.Component {
   constructor(props) {
     super(props)
-    // this.handleChange = this.handleChange.bind(this)
-    // this.handleEdit = this.handleEdit.bind(this)
-    this.state = {
-      visible: false
-    }
+    this.handleTypeUser = this.handleTypeUser.bind(this)
+    this.handleTypeEmail = this.handleTypeEmail.bind(this)
+    // this.handleTypePassword= this.handleTypePassword.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
-
-  // componentDidMount() {
-  //   this.props.getSingleUser(this.props.user.id)
-  // }
+  state = {
+    visible: false,
+    userName: this.props.user.userName,
+    email: this.props.user.email
+    // password: this.props.user.password
+  }
 
   setModalVisible(visible) {
     this.setState({
@@ -41,19 +43,29 @@ class UserProfile extends React.Component {
   async handleSignOut() {
     await this.props.logout()
   }
-  // handleEdit = id => {
-  //   this.props.history.push(`/users/${id}/edit`)
-  // }
-  // handleChange(event) {
+
+  handleTypeUser(event) {
+    this.setState({
+      userName: event.nativeEvent.text
+    })
+  }
+  handleTypeEmail(event) {
+    this.setState({
+      email: event.nativeEvent.text
+    })
+  }
+  // handleTypePassword(event) {
   //   this.setState({
-  //     userName: event.nativeEvent.text,
-  //     email: event.nativeEvent.text,
-  //     password: event.nativeEvent.text
+  //     password: event.nativeEvent.password
   //   })
   // }
+
+  handleSubmit(userId, info) {
+    this.props.editUser(userId, info)
+  }
   render() {
     const {user} = this.props
-
+    console.log('state', this.state)
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
@@ -113,35 +125,43 @@ class UserProfile extends React.Component {
                     <Text>u s e r</Text>
                     <TextInput
                       id="userName"
+                      name="userName"
                       value={this.state.userName}
-                      onChange={this.handleChange}
+                      onChange={this.handleTypeUser}
                       textAlign="center"
                       style={styles.input}
-                      placeholder={this.state.userName}
+                      placeholder="u s e r n a m e"
                       type="text"
                     />
                     <TextInput
                       id="email"
+                      name="email"
                       value={this.state.email}
-                      onChange={this.handleChange}
+                      onChange={this.handleTypeEmail}
                       textAlign="center"
                       style={styles.input}
-                      placeholder={this.state.email}
+                      placeholder="e m a i l"
                       type="text"
                     />
-                    <TextInput
+                    {/*<TextInput
                       required
                       id="password"
+                      name="password"
                       value={this.state.password}
-                      onChange={this.handleChange}
+                      onChange={this.handleTypePassword}
                       textAlign="center"
                       style={styles.input}
-                      placeholder={this.state.password}
+                      placeholder='p a s s w o r d'
                       type="password"
-                    />
+                    />*/}
                     <TouchableOpacity
                       style={styles.btnDrop}
                       onPress={() => {
+                        this.handleSubmit(this.props.user.id, {
+                          userName: this.state.userName,
+                          email: this.state.email
+                          // password: this.state.password
+                        })
                         this.setModalVisible(!this.state.visible)
                       }}
                     >
@@ -338,7 +358,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    editUser: (userId, info) => {
+      dispatch(updateUserThunk(userId, info))
+    }
   }
 }
 
