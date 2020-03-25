@@ -80,7 +80,7 @@ class DisSignUpComponent extends React.Component {
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
           behavior="padding"
-          keyboardVerticalOffset={Header.HEIGHT + 336}
+          keyboardVerticalOffset={Header.HEIGHT + 90}
           style={{flex: 1, backgroundColor: 'white'}}
         >
           <View style={styles.container}>
