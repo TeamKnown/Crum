@@ -2,11 +2,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {NavigationContainer} from '@react-navigation/native'
-
 import {HomeTabs, Signin} from './routes/homeStack'
-
 import {me} from './store'
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
+import {Keyboard} from 'react-native'
 
+const DismissKeyBoard = ({children}) => (
+  <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+)
 /**
  * COMPONENT
  */
@@ -46,6 +51,3 @@ const mapDispatch = dispatch => {
 const Routes = connect(mapState, mapDispatch)(disRoutes)
 
 export default Routes
-/**
- * PROP TYPES
- */

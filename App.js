@@ -1,9 +1,11 @@
-import * as React from 'react'
+import React, {useState} from 'react'
 import {Provider} from 'react-redux'
 import store from './client/store'
 import {Platform, View, Text, StyleSheet, Image} from 'react-native'
-
+import * as Font from 'expo-font'
 import Routes from './client/routes'
+import {fonts} from './assets'
+import {AppLoading} from 'expo'
 const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,
@@ -14,21 +16,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 })
+const getFonts = () =>
+  Font.loadAsync({
+    FuturaBold: require('./assets/fonts/FuturaBold.ttf'),
+    FuturaBoldE: require('./assets/fonts/FuturaExtra.ttf')
+  })
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      signedIn: false,
-      checkedSignIn: false
-    }
-  }
-  render() {
+export default function App() {
+  const [fontsLoaded, setFontsLoaded] = useState(false)
+  console.log(fontsLoaded)
+  if (fontsLoaded) {
     return (
       <Provider store={store}>
         <Routes />
       </Provider>
+    )
+  } else {
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
     )
   }
 }

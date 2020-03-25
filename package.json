@@ -89,6 +89,7 @@
     "react-native-maps": "^0.27.1",
     "react-native-navbar": "^2.1.0",
     "react-native-paper": "^3.6.0",
+    "react-native-permissions": "^2.0.10",
     "react-native-reanimated": "~1.4.0",
     "react-native-router-flux": "^4.2.0",
     "react-native-safe-area-context": "0.6.0",
