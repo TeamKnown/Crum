@@ -82,10 +82,7 @@ class UserProfile extends React.Component {
         </View>
         <View style={styles.container}>
           <View style={styles.bottomContainer}>
-            <View style={styles.buttons}>
-              <TouchableOpacity onPress={() => this.handleSignOut()}>
-                <Text>logout</Text>
-              </TouchableOpacity>
+            <View style={styles.editButtons}>
               <Text
                 style={{
                   justifyContent: 'center',
@@ -228,40 +225,24 @@ class UserProfile extends React.Component {
               </Text>
             )}
           </View>
-          <TouchableOpacity
-            style={styles.btnCrums}
-            onPress={() => {
-              this.setModalVisible(true)
-            }}
-          >
-            <Text style={{color: 'white'}} title="update">
-              m y c r u m s
-            </Text>
-          </TouchableOpacity>
-          {/*<Modal
-            animationType="none"
-            transparent={false}
-            visible={this.state.visible}
-            onRequestClose={() => {
-              Alert.alert('Modal closed')
-            }}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.modal}>
-                <Text>Select Crum</Text>
-                <TouchableOpacity
-                  style={styles.btnDrop}
-                  onPress={() => {
-                    this.setModalVisible(!this.state.visible)
-                  }}
-                >
-                  <Text style={{color: '#19ae9f'}} title="Drop!">
-                    d r o p
-                  </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-                </Modal>*/}
+          <View style={styles.buttons}>
+            <TouchableOpacity
+              style={styles.btnLogout}
+              onPress={() => this.handleSignOut()}
+            >
+              <Text style={{color: 'white'}}>logout</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btnCrum}
+              onPress={() => {
+                this.setModalVisible(true)
+              }}
+            >
+              <Text style={{color: 'white'}} title="update">
+                m y c r u m s
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     )
@@ -272,7 +253,7 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%',
-    paddingBottom: 10
+    paddingBottom: '4%'
   },
   modal: {
     flexDirection: 'column',
@@ -296,6 +277,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   container: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
@@ -306,18 +288,42 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   bottomContainer: {
+    flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
+    width: '90%',
     paddingBottom: '4%'
   },
-  btnCrums: {
-    height: 60,
+  buttons: {
     width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  editButtons: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-around'
+  },
+  btnLogout: {
+    width: '47%',
+    height: 60,
+    backgroundColor: '#19ae9f',
+    textAlign: 'center',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10
+  },
+  btnCrum: {
+    width: '47%',
+    height: 60,
     backgroundColor: '#7c1e9f',
     textAlign: 'center',
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginTop: 10
   },
   btnDrop: {
     height: 60,
@@ -341,11 +347,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 8,
     margin: 8
-  },
-  buttons: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'space-around'
   }
 })
 
