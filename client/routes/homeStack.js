@@ -22,21 +22,21 @@ function HomeTabs() {
         name="Profile"
         component={UserProfile}
         options={{
-          tabBarLabel: 'Profile'
+          tabBarLabel: 'profile'
         }}
       />
       <Tab.Screen
         name="ARScreen"
         component={ARScreen}
         options={{
-          tabBarLabel: 'ARScreen'
+          tabBarLabel: 'view'
         }}
       />
       <Tab.Screen
         name="MapScreen"
         component={MapScreen}
         options={{
-          tabBarLabel: 'MapScreen'
+          tabBarLabel: 'map'
         }}
       />
     </Tab.Navigator>
@@ -48,8 +48,16 @@ const Stack = createStackNavigator()
 function Signin() {
   return (
     <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="SignIn" component={SignIn} />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen
+        name="SignIn"
+        component={SignIn}
+        options={{headerTransparent: true, title: ''}}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{headerTransparent: true, title: ''}}
+      />
     </Stack.Navigator>
   )
 }
