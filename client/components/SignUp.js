@@ -10,11 +10,9 @@ import {
   KeyboardAvoidingView,
   SafeAreaView
 } from 'react-native'
-import {Header} from 'react-navigation-stack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
-// import {LinearGradient} from "react-native-linear-gradient"
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
 import {
@@ -80,7 +78,6 @@ class DisSignUpComponent extends React.Component {
       <SafeAreaView style={styles.container}>
         <KeyboardAvoidingView
           behavior="padding"
-          keyboardVerticalOffset={Header.HEIGHT + 90}
           style={{flex: 1, backgroundColor: 'white'}}
         >
           <View style={styles.container}>

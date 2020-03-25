@@ -11,11 +11,9 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native'
-import {Header} from 'react-navigation-stack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
-// import {LinearGradient} from "react-native-linear-gradient"
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
 import {
@@ -67,11 +65,7 @@ class DisSignInComponent extends React.Component {
 
     return (
       <SafeAreaView style={styles.container}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          style={styles.container}
-          // keyboardVerticalOffset={Header.HEIGHT}
-        >
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
           {/* <ScrollView> */}
 
           <ImageBackground
