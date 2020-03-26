@@ -22,13 +22,23 @@ import {
 } from 'react-native'
 
 class UserProfile extends React.Component {
+  componentDidMount() {
+    const {navigation} = this.props
+    navigation.addListener(
+      'focus',
+      () =>
+        // run function that updates the data on entering the screen
+        this.props.getSingleUser(this.props.user.id),
+      console.log('userProfile')
+    )
+  }
   handleSignOut() {
     this.props.logout()
   }
 
   render() {
     const {user} = this.props
-    console.log('state', this.state)
+    console.log('state', this.props)
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
