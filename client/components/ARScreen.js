@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
+import * as Permissions from 'expo-permissions'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
@@ -32,19 +33,24 @@ class DisARScreen extends React.Component {
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
-    crumInstances: []
+    crumInstances: [],
+    errorMessage: null
   }
-  // requestLocationPermission = async () => {
-  //   if (Platform.OS === 'ios') {
-  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-  //     if (response === 'granted') {
-  //       this.props.subscribeToLocationData()
-  //     }
-  //   }
-  // }
+  requestLocationPermission = async () => {
+    let {status} = await Permissions.askAsync(Permissions.CAMERA)
+
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access camera was denied'
+      })
+    } else {
+      this.props.subscribeToLocationData()
+    }
+  }
   componentDidMount = () => {
     THREE.suppressExpoWarnings(true)
-    this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
+    this.requestLocationPermission()
+    // this.props.subscribeToLocationData() // this subscribed to update current locations every time interval
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
