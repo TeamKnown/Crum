@@ -20,92 +20,94 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native'
+import {useFocusEffect} from '@react-navigation/native'
+function UserProfile(props) {
+  // componentDidMount() {
+  //   const {navigation} = this.props
+  //   navigation.addListener('focus', () =>
+  //     // run function that updates the data on entering the screen
+  //     this.props.getSingleUser(this.props.user.id)
+  //   )
+  // }
 
-class UserProfile extends React.Component {
-  componentDidMount() {
-    const {navigation} = this.props
-    navigation.addListener(
-      'focus',
-      () =>
-        // run function that updates the data on entering the screen
-        this.props.getSingleUser(this.props.user.id),
-      console.log('userProfile')
-    )
-  }
-  handleSignOut() {
-    this.props.logout()
-  }
+  // handleSignOut() {
+  //   this.props.logout()
+  // }
 
-  render() {
-    const {user} = this.props
-    console.log('state', this.props)
-    return (
-      <View style={styles.main}>
-        <View style={styles.topContainer}>
-          <Image
-            source={require('../../public/defaultProfile1.png')}
-            style={{
-              width: 220,
-              height: 220,
-              marginRight: 10,
-              marginBottom: 12,
-              marginTop: '15%'
-            }}
-          />
-        </View>
-        <View style={styles.container}>
-          <View style={styles.bottomContainer}>
-            <View style={styles.editButtons}>
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 16,
-                  fontWeight: 'bold'
-                }}
-              >
-                u s e r n a m e
-              </Text>
-              <View>
-                <EditUserModalForm />
-              </View>
-            </View>
-            {user.id ? (
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 16
-                }}
-              >
-                {user.userName}
-              </Text>
-            ) : (
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginTop: 16
-                }}
-              >
-                P L A C E H O L D E R
-              </Text>
-            )}
-            <ViewCrumsModal />
-          </View>
-          <View style={styles.buttons}>
-            <TouchableOpacity
-              style={styles.btnLogout}
-              onPress={() => this.handleSignOut()}
+  useFocusEffect(
+    React.useCallback(() => {
+      props.getSingleUser(props.user.id)
+    }, [props.getSingleUser, props.user.id])
+  )
+
+  const {user} = props
+  // console.log('state', props)
+  return (
+    <View style={styles.main}>
+      <View style={styles.topContainer}>
+        <Image
+          source={require('../../public/defaultProfile1.png')}
+          style={{
+            width: 220,
+            height: 220,
+            marginRight: 10,
+            marginBottom: 12,
+            marginTop: '15%'
+          }}
+        />
+      </View>
+      <View style={styles.container}>
+        <View style={styles.bottomContainer}>
+          <View style={styles.editButtons}>
+            <Text
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16,
+                fontWeight: 'bold'
+              }}
             >
-              <Text style={{color: 'white'}}>l o g o u t</Text>
-            </TouchableOpacity>
-            <UserSettingsModal style={styles.btnCrum} />
+              u s e r n a m e
+            </Text>
+            <View>
+              <EditUserModalForm />
+            </View>
           </View>
+          {user.id ? (
+            <Text
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16
+              }}
+            >
+              {user.userName}
+            </Text>
+          ) : (
+            <Text
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: 16
+              }}
+            >
+              P L A C E H O L D E R
+            </Text>
+          )}
+          <ViewCrumsModal />
+        </View>
+        <View style={styles.buttons}>
+          <TouchableOpacity
+            style={styles.btnLogout}
+            onPress={() => props.logout()}
+          >
+            <Text style={{color: 'white'}}>l o g o u t</Text>
+          </TouchableOpacity>
+          <UserSettingsModal style={styles.btnCrum} />
         </View>
       </View>
-    )
-  }
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({
