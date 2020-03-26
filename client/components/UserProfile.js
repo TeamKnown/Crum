@@ -33,15 +33,15 @@ class UserProfile extends React.Component {
     email: this.props.user.email
     // password: this.props.user.password
   }
-
+  componentDidMount() {}
   setModalVisible(visible) {
     this.setState({
       visible: visible
     })
   }
 
-  async handleSignOut() {
-    await this.props.logout()
+  handleSignOut() {
+    this.props.logout()
   }
 
   handleTypeUser(event) {
