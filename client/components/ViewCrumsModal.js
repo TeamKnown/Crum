@@ -45,9 +45,9 @@ class ViewCrumsModal extends React.Component {
 
   render() {
     const {user, crums} = this.props
-    console.log('user', user)
+    // console.log('user', user)
     const {crumInstances} = this.props
-    console.log('userCrums', crumInstances)
+    // console.log('userCrums', crumInstances)
 
     return (
       <View>

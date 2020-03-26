@@ -14,5 +14,5 @@ export const computePos = (crumInstance, locations) => {
 export const SCALER = 1000
 
 export const crumPlaneNamer = crumInstance => {
-  return 'Crum_' + crumInstance.id + '_' + crumInstance.crum.name
+  return 'Crum?id=' + crumInstance.id + '&name=' + crumInstance.crum.name
 }
