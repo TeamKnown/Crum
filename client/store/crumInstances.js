@@ -2,6 +2,7 @@ import {devAxios} from './devAxios'
 import {SCALER} from '../components/utils'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
+
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
 import * as Location from 'expo-location'
 
@@ -36,6 +37,18 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
       const {data} = await devAxios.get(
         `/api/cruminstances/nearme?radium=${SCALER}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
       )
+
+      dispatch(setCrumInstances(data))
+    } catch (error) {
+      console.error('GET Error')
+    }
+  }
+}
+
+export const fetchUserCrumInstances = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
 
       dispatch(setCrumInstances(data))
     } catch (error) {

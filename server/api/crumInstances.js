@@ -76,6 +76,19 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
+router.get('/user/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findAll({
+      where: {
+        userId: req.params.id
+      }
+    })
+    res.json(crumInstance)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // this post route takes one parameters: the id of the cruminstances
 //http://localhost:19001/api/cruminstances/near/1?radium=1
 router.get('/near/:id', async (req, res, next) => {

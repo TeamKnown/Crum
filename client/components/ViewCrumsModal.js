@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser} from '../store'
+import {getSingleUser, fetchUserCrumInstances} from '../store'
 // import {} from '../store/'
 
 import {
@@ -21,9 +21,14 @@ import {
 class ViewCrumsModal extends React.Component {
   constructor(props) {
     super(props)
+    this.handleGetCrum = this.handleGetCrum.bind(this)
   }
   state = {
     visible: false
+  }
+
+  handleGetCrum(userId) {
+    this.props.getUserCrumInstances(userId)
   }
 
   setModalVisible(visible) {
@@ -35,6 +40,9 @@ class ViewCrumsModal extends React.Component {
   render() {
     const {user} = this.props
     console.log('user', user)
+    const userCrums = this.handleGetCrum(user.id)
+    console.log('userCrums', userCrums)
+
     return (
       <View>
         <TouchableOpacity
@@ -153,7 +161,10 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    getSingleUser: id => dispatch(getSingleUser(id))
+    getSingleUser: id => dispatch(getSingleUser(id)),
+    getUserCrumInstances: userId => {
+      dispatch(fetchUserCrumInstances(userId))
+    }
   }
 }
 
