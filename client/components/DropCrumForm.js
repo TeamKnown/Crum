@@ -11,8 +11,8 @@ import {
   Modal,
   Alert
 } from 'react-native'
+import {imageThumbnails} from '../../assets/'
 import {postCrumInstance, getSingleUser} from '../store/'
-import {images} from '../../assets/'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -79,6 +79,7 @@ class DisDropCrumForm extends React.Component {
                   <TouchableOpacity
                     key={crum.id}
                     onPress={() => {
+                      console.log('you selected this crum')
                       this.setState({
                         imgId: crum.id
                       })
@@ -86,9 +87,10 @@ class DisDropCrumForm extends React.Component {
                   >
                     <Image
                       style={{width: 40, height: 40, margin: 6}}
-                      borderColor={0xf44336}
-                      borderWidth={this.state.imgId === crum.id ? 10 : 0}
-                      source={images[crum.name]}
+                      borderColor="gray"
+                      borderWidth={this.state.imgId === crum.id ? 2 : 0}
+                      borderRadius={3}
+                      source={imageThumbnails[crum.name]}
                     />
                   </TouchableOpacity>
                 ))}
@@ -106,6 +108,7 @@ class DisDropCrumForm extends React.Component {
                     user.id,
                     this.state.imgId
                   )
+                  // this.props.hideDropCrumForm()
                   this.setModalVisible(!this.state.modalVisible)
                 }}
               >
@@ -157,7 +160,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: '90%',
-    height: '78%',
+    height: '90%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -169,7 +172,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     borderRadius: 10,
-    marginBottom: 60
+    marginBottom: 30
   },
   pngSelector: {
     width: '80%',
