@@ -118,12 +118,12 @@ class DisARScreen extends React.Component {
   render() {
     const {locations, crumInstances, crums} = this.props
     // console.log('CRUM INSTANCES AR VIEW:', numCrum)
-    AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
+    // AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     const onContextCreate = async ({gl, pixelRatio, width, height}) => {
       this.setState({loading: false})
-      AR.setWorldAlignment('gravityAndHeading')
+      // AR.setWorldAlignment('gravityAndHeading')
       this.renderer = new Renderer({gl, pixelRatio, width, height})
       scene = new THREE.Scene()
       scene.background = new BackgroundTexture(this.renderer)

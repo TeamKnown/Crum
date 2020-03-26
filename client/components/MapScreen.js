@@ -5,7 +5,14 @@ import {connect} from 'react-redux'
 import {fetchNearByCrumInstances} from '../store/crumInstances'
 import {getCurrentPosition, stopTracking} from '../store/locations'
 import Carousel from 'react-native-snap-carousel'
-import {StyleSheet, Text, View, Dimensions, Image} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  SafeAreaView
+} from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
 import {SCALER} from './utils'
 function getRandomInt(min, max) {
@@ -84,7 +91,7 @@ class DisMapScreen extends Component {
     // console.log('THIS IS THE LONG', typeof locations.longitude)
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {/* <Text
           style={styles.welcome}
           onPress={() => Actions.gray()} // New Code
@@ -148,7 +155,7 @@ class DisMapScreen extends Component {
           removeClippedSubviews={false}
           onSnapToItem={index => this.onCarouselItemChange(index)}
         />
-      </View>
+      </SafeAreaView>
     )
   }
 }

@@ -40,8 +40,8 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  async handleSignIn() {
-    await this.props.auth(this.state.email, this.state.password)
+  handleSignIn() {
+    this.props.auth(this.state.email, this.state.password)
   }
 
   textInputChange(value) {
@@ -191,7 +191,7 @@ class DisSignInComponent extends React.Component {
                       {
                         borderColor: '#19ae9f',
                         borderWidth: 1,
-                        marginTop: 15
+                        marginTop: '3%'
                       }
                     ]}
                   >
@@ -262,7 +262,9 @@ var styles = StyleSheet.create({
   textInput: {
     flex: 1,
     paddingLeft: '3%',
-    color: '#05375a'
+    color: '#05375a',
+    marginTop: '1%',
+    marginBottom: '1%'
   },
   button: {
     alignItems: 'center',
