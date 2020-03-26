@@ -122,10 +122,10 @@ const crums = [
     name: 'Pinocchio',
     category: '0-Emoji'
   },
-  {
-    name: 'FullStack',
-    category: '4-Symbol'
-  },
+  // {
+  //   name: 'FullStack',
+  //   category: '4-Symbol'
+  // },
   {
     name: 'Ring',
     category: '3-Object'
@@ -161,56 +161,9 @@ const crums = [
 ]
 const crumInstances = [
   {
-    message: 'april apartment 1',
-    latitude: 40.7074,
-    longitude: -74.0054
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7074,
-    longitude: -74.0055
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7072,
-    longitude: -74.0054
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7073,
-    longitude: -74.0054
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7076,
-    longitude: -74.0051
-  },
-  {
-    message: 'april apartment',
-    latitude: 40.7076,
-    longitude: -74.0052
-  },
-  {
-    message: 'april apartment and I am hungry',
-    latitude: 40.7073,
-    longitude: -74.0056
-  },
-  {
-    message: 'mark is hungry',
-    latitude: 40.7127,
-    longitude: -73.9495
-  },
-  {
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
-    longitude: -73.9743,
-    userId: 11,
-    crumId: 21
+    longitude: -73.9743
   }
 ]
 const seed = async () => {
