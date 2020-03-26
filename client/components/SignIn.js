@@ -6,11 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  Image,
   Dimensions,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView
+  SafeAreaView
 } from 'react-native'
 
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -25,30 +22,40 @@ import {
 } from 'react-native-elements'
 import {connect} from 'react-redux'
 import {auth} from '../store/user'
-import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from './DismissKeyBoard'
 const {width, height} = Dimensions.get('window')
+
 class DisSignInComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       check_textInputChange: false,
       password: '',
-      email: '',
-      secureTextEntry: true
+      username: '',
+      secureTextEntry: true,
+      validationError: ''
     }
   }
 
   handleSignIn() {
-    this.props.auth(this.state.email, this.state.password)
+    const {username, password, validationError} = this.state
+    this.setState({validationError: ''})
+
+    if (username === '')
+      this.setState({validationError: 'Please enter your username'})
+    else if (password === '')
+      this.setState({validationError: 'Please enter your password'})
+    else {
+      this.props.auth(this.state.username, this.state.password)
+    }
   }
 
   textInputChange(value) {
-    if (value.length !== 0) {
+    if (value.length > 4) {
       this.setState({
         check_textInputChange: true,
-        email: value
+        username: value
       })
     } else {
       this.setState({
@@ -76,7 +83,6 @@ class DisSignInComponent extends React.Component {
         }}
       >
         <KeyboardAwareScrollView style={styles.container}>
-          {/* <ScrollView> */}
           <DismissKeyBoard>
             <SafeAreaView style={styles.container}>
               <View style={styles.header}>
@@ -90,11 +96,15 @@ class DisSignInComponent extends React.Component {
                   </Text>
                 )}
 
-                <Text style={styles.text_footer}>E-MAIL</Text>
+                <Text style={{color: 'red', textAlign: 'center'}}>
+                  {this.state.validationError}
+                </Text>
+
+                <Text style={styles.text_footer}>Username</Text>
                 <View style={styles.action}>
                   <FontAwesome name="user-o" color="#05375a" size={20} />
                   <TextInput
-                    placeholder="Your email..."
+                    placeholder="Your username..."
                     style={styles.textInput}
                     onChangeText={text => this.textInputChange(text)}
                   />
@@ -210,7 +220,6 @@ class DisSignInComponent extends React.Component {
               </Animatable.View>
             </SafeAreaView>
           </DismissKeyBoard>
-          {/* </ScrollView> */}
         </KeyboardAwareScrollView>
       </ImageBackground>
     )
@@ -292,7 +301,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (email, password) => dispatch(auth(email, password, 'login'))
+    auth: (username, password) => dispatch(auth(username, password, 'login'))
   }
 }
 
