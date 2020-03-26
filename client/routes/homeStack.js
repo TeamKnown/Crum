@@ -22,10 +22,7 @@ function HomeTabs() {
         name="Profile"
         component={UserProfile}
         options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({color}) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          )
+          tabBarLabel: 'Profile'
         }}
       />
       <Tab.Screen
