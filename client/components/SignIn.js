@@ -12,11 +12,10 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native'
-// import {Header} from 'react-navigation-stack'
+
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
-// import {LinearGradient} from "react-native-linear-gradient"
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
 import {
@@ -41,8 +40,8 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  async handleSignIn() {
-    await this.props.auth(this.state.email, this.state.password)
+  handleSignIn() {
+    this.props.auth(this.state.email, this.state.password)
   }
 
   textInputChange(value) {
@@ -152,7 +151,7 @@ class DisSignInComponent extends React.Component {
                     )}
                   </TouchableOpacity>
                 </View>
-                <Text style={{color: '#009bd1', marginTop: 15}}>
+                <Text style={{color: '#19ae9f', marginTop: 15}}>
                   Forgot password?
                 </Text>
 
@@ -162,14 +161,14 @@ class DisSignInComponent extends React.Component {
                     style={[
                       styles.signIn,
                       {
-                        borderColor: '#4dc2f8',
+                        borderColor: '#19ae9f',
                         borderWidth: 1,
                         marginTop: -30
                       }
                     ]}
                   >
                     <LinearGradient
-                      colors={['#5db8fe', '#39cff2']}
+                      colors={['#19ae9f', '#26decb']}
                       style={styles.signIn}
                     >
                       <Text
@@ -190,9 +189,9 @@ class DisSignInComponent extends React.Component {
                     style={[
                       styles.signIn,
                       {
-                        borderColor: '#4dc2f8',
+                        borderColor: '#19ae9f',
                         borderWidth: 1,
-                        marginTop: 15
+                        marginTop: '3%'
                       }
                     ]}
                   >
@@ -200,7 +199,7 @@ class DisSignInComponent extends React.Component {
                       style={
                         ([styles.textSign],
                         {
-                          color: '#4dc2f8'
+                          color: '#19ae9f'
                         })
                       }
                     >
@@ -220,14 +219,15 @@ class DisSignInComponent extends React.Component {
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1
-    // backgroundColor: '#05375a',
+    flex: 1,
+    height: '100%',
+    width: '100%'
   },
   header: {
     flex: 1,
     justifyContent: 'flex-end',
-    paddingHorizontal: 20,
-    paddingBottom: 50,
+    paddingHorizontal: '5%',
+    paddingBottom: '13%',
     alignItems: 'center',
     height: '50%'
   },
@@ -236,8 +236,8 @@ var styles = StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
+    paddingHorizontal: '5%',
+    paddingVertical: '5%',
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40
   },
@@ -246,7 +246,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: 90,
-    fontFamily: 'FuturaBoldE'
+    fontFamily: 'FuturaBoldI'
   },
   text_footer: {
     color: '#05375a',
@@ -254,19 +254,21 @@ var styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: '2%',
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
-    paddingBottom: 5
+    paddingBottom: '2%'
   },
   textInput: {
     flex: 1,
-    paddingLeft: 10,
-    color: '#05375a'
+    paddingLeft: '3%',
+    color: '#05375a',
+    marginTop: '1%',
+    marginBottom: '1%'
   },
   button: {
     alignItems: 'center',
-    marginTop: 50
+    marginTop: '13%'
   },
   signIn: {
     width: '100%',

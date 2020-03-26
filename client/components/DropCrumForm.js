@@ -11,8 +11,8 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import {postCrumInstance} from '../store/'
-import {images, imageThumbnails} from '../../assets/'
+import {imageThumbnails} from '../../assets/'
+import {postCrumInstance, getSingleUser} from '../store/'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -136,6 +136,7 @@ const mapDispatch = dispatch => {
   return {
     dropCrumInstance: (crumInstance, userId, crumId) => {
       dispatch(postCrumInstance(crumInstance, userId, crumId))
+      dispatch(getSingleUser(userId))
     }
   }
 }

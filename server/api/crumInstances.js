@@ -5,7 +5,16 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const crumInstances = await CrumInstance.findAll({})
+    const crumInstances = await CrumInstance.findAll({
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Crum
+        }
+      ]
+    })
     res.json(crumInstances)
   } catch (err) {
     next(err)
@@ -30,6 +39,9 @@ router.post('/', async (req, res, next) => {
     newCrumInstance.user = user
     newCrumInstance.save()
     newCrumInstance.reload()
+
+    await user.userCrums()
+    console.log('dorp', user)
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
@@ -69,6 +81,27 @@ router.get('/:id', async (req, res, next) => {
           model: User
         }
       ]
+    })
+    res.json(crumInstance)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/user/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findAll({
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Crum
+        }
+      ],
+      where: {
+        userId: req.params.id
+      }
     })
     res.json(crumInstance)
   } catch (err) {
