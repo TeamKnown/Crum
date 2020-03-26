@@ -12,7 +12,7 @@ import {
   Alert
 } from 'react-native'
 import {postCrumInstance} from '../store/'
-import {images} from '../../assets/'
+import {images, imageThumbnails} from '../../assets/'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -88,7 +88,7 @@ class DisDropCrumForm extends React.Component {
                       style={{width: 40, height: 40, margin: 6}}
                       borderColor={0xf44336}
                       borderWidth={this.state.imgId === crum.id ? 10 : 0}
-                      source={images[crum.name]}
+                      source={imageThumbnails[crum.name]}
                     />
                   </TouchableOpacity>
                 ))}
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: '90%',
-    height: '78%',
+    height: '90%',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     borderRadius: 10,
-    marginBottom: 60
+    marginBottom: 30
   },
   pngSelector: {
     width: '80%',
