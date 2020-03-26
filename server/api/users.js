@@ -30,9 +30,7 @@ router.get('/:userId', async (req, res, next) => {
       ]
     })
     await user.userCrums()
-    console.log('server side before', user)
     user.reload()
-    console.log('server side after', user)
     res.json(user)
   } catch (error) {
     next(error)

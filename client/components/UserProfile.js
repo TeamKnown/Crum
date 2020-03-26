@@ -27,6 +27,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
+    console.log('user profile component did mount')
     this.props.getSingleUser(this.props.user.id)
     // this.props.getUserCrumInstances(this.props.user.id)
   }
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
 const mapState = state => {
   return {
     user: state.user
+    // totalCrums: state.user.totalCrums
   }
 }
 

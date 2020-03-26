@@ -34,14 +34,15 @@ router.post('/', async (req, res, next) => {
     const newCrumInstance = await CrumInstance.create(req.body)
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
-    newCrumInstance.setUser(user)
-    newCrumInstance.setCrum(crum)
+    await newCrumInstance.setUser(user)
+    await newCrumInstance.setCrum(crum)
     newCrumInstance.user = user
-    newCrumInstance.save()
-    newCrumInstance.reload()
-
+    await newCrumInstance.save()
+    await newCrumInstance.reload()
+    console.log('user crum count', user.dataValues.totalCrums)
     await user.userCrums()
-    console.log('dorp', user)
+    console.log('user crum count', user.dataValues.totalCrums)
+    // console.log('dorp', user)
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
@@ -56,7 +57,7 @@ router.post('/', async (req, res, next) => {
 // this post route takes three parameters: radium, latitude and longitude
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=40707&longitudeIdx=-74000
 router.get('/nearme', async (req, res, next) => {
-  console.log(req.query)
+  // console.log(req.query)
   try {
     const crumInstances = await CrumInstance.findNearMe(
       +req.query.radium,
