@@ -35,27 +35,35 @@ class DisSignUpComponent extends React.Component {
     super(props)
     this.state = {
       check_textInputChange: false,
-      email: '',
+      username: '',
       password: '',
       password_confirm: '',
       secureTextEntry: true,
-      secureTextEntry_confirm: true
+      secureTextEntry_confirm: true,
+      validationError: ''
     }
   }
 
-  async handleSignUp() {
-    // console.log(this.state)
-    // if (this.state.password !== this.state.password_confirm) {
-    //   let diffPasswordError = 'Passwords must match'
-    // }
-    await this.props.auth(this.state.email, this.state.password)
+  handleSignUp() {
+    const {username, password, password_confirm, validationError} = this.state
+    this.setState({validationError: ''})
+
+    if (username === '')
+      this.setState({validationError: 'Please enter your username'})
+    else if (password === '')
+      this.setState({validationError: 'Please enter your password'})
+    else if (password_confirm === '' || password_confirm !== password)
+      this.setState({validationError: 'Passwords must match'})
+    else {
+      this.props.auth(this.state.username, this.state.password)
+    }
   }
 
   textInputChange(value) {
     if (value.length !== 0) {
       this.setState({
         check_textInputChange: true,
-        email: value
+        username: value
       })
     } else {
       this.setState({
@@ -103,15 +111,19 @@ class DisSignUpComponent extends React.Component {
                     </Text>
                   )}
 
+                  <Text style={{color: 'red', textAlign: 'center'}}>
+                    {this.state.validationError}
+                  </Text>
+
                   <Text style={{color: 'red', alignSelf: 'center'}}>
                     {diffPasswordError}
                   </Text>
 
-                  <Text style={styles.text_footer}>E-MAIL</Text>
+                  <Text style={styles.text_footer}>Username</Text>
                   <View style={styles.action}>
                     <FontAwesome name="user-o" color="#05375a" size={20} />
                     <TextInput
-                      placeholder="Your email..."
+                      placeholder="Your username..."
                       style={styles.textInput}
                       onChangeText={text => this.textInputChange(text)}
                     />
@@ -367,7 +379,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (email, password) => dispatch(auth(email, password, 'signup'))
+    auth: (username, password) => dispatch(auth(username, password, 'signup'))
   }
 }
 

@@ -173,6 +173,7 @@ const styles = StyleSheet.create({
 const mapState = state => {
   return {
     user: state.user
+    // totalCrums: state.user.totalCrums
   }
 }
 

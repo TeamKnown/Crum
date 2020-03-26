@@ -54,7 +54,7 @@ User.prototype.correctPassword = function(candidatePwd) {
 
 User.prototype.userCrums = async function() {
   const crums = await this.getCrumInstances()
-  console.log('crums', crums)
+  // console.log('crums', crums)
   this.totalCrums = crums.length
   this.save()
   return crums.length
