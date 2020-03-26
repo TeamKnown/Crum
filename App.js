@@ -19,7 +19,8 @@ const styles = StyleSheet.create({
 const getFonts = () =>
   Font.loadAsync({
     FuturaBold: require('./assets/fonts/FuturaBold.ttf'),
-    FuturaBoldE: require('./assets/fonts/FuturaExtra.ttf')
+    FuturaBoldE: require('./assets/fonts/FuturaExtra.ttf'),
+    FuturaBoldI: require('./assets/fonts/FuturaBoldItalic.ttf')
   })
 
 export default function App() {
