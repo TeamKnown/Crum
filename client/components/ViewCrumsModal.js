@@ -34,6 +34,7 @@ class ViewCrumsModal extends React.Component {
 
   render() {
     const {user} = this.props
+    console.log('user', user)
     return (
       <View>
         <TouchableOpacity

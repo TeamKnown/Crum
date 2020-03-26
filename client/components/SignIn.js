@@ -151,7 +151,7 @@ class DisSignInComponent extends React.Component {
                     )}
                   </TouchableOpacity>
                 </View>
-                <Text style={{color: '#009bd1', marginTop: 15}}>
+                <Text style={{color: '#19ae9f', marginTop: 15}}>
                   Forgot password?
                 </Text>
 
@@ -161,14 +161,14 @@ class DisSignInComponent extends React.Component {
                     style={[
                       styles.signIn,
                       {
-                        borderColor: '#4dc2f8',
+                        borderColor: '#19ae9f',
                         borderWidth: 1,
                         marginTop: -30
                       }
                     ]}
                   >
                     <LinearGradient
-                      colors={['#5db8fe', '#39cff2']}
+                      colors={['#19ae9f', '#26decb']}
                       style={styles.signIn}
                     >
                       <Text
@@ -189,7 +189,7 @@ class DisSignInComponent extends React.Component {
                     style={[
                       styles.signIn,
                       {
-                        borderColor: '#4dc2f8',
+                        borderColor: '#19ae9f',
                         borderWidth: 1,
                         marginTop: 15
                       }
@@ -199,7 +199,7 @@ class DisSignInComponent extends React.Component {
                       style={
                         ([styles.textSign],
                         {
-                          color: '#4dc2f8'
+                          color: '#19ae9f'
                         })
                       }
                     >
@@ -246,7 +246,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: 90,
-    fontFamily: 'FuturaBoldE'
+    fontFamily: 'FuturaBoldI'
   },
   text_footer: {
     color: '#05375a',
