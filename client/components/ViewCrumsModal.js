@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser, fetchUserCrumInstances} from '../store'
+import {images} from '../../assets/'
 // import {} from '../store/'
 
 import {
@@ -17,19 +18,23 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native'
+import crumInstancesReducer from '../store/crumInstances'
 
 class ViewCrumsModal extends React.Component {
   constructor(props) {
     super(props)
-    this.handleGetCrum = this.handleGetCrum.bind(this)
+    // this.handleGetCrum = this.handleGetCrum.bind(this)
   }
   state = {
     visible: false
   }
-
-  handleGetCrum(userId) {
-    this.props.getUserCrumInstances(userId)
+  componentDidMount() {
+    this.props.getUserCrumInstances(this.props.user.id)
   }
+
+  // handleGetCrum(userId) {
+  //   this.props.getUserCrumInstances(userId)
+  // }
 
   setModalVisible(visible) {
     this.setState({
@@ -38,10 +43,11 @@ class ViewCrumsModal extends React.Component {
   }
 
   render() {
-    const {user} = this.props
+    const {user, crums} = this.props
     console.log('user', user)
-    const userCrums = this.handleGetCrum(user.id)
-    console.log('userCrums', userCrums)
+    const {crumInstances} = this.props
+    console.log('userCrums', crumInstances)
+    console.log('one', crums[crumInstances[0].crumId].name)
 
     return (
       <View>
@@ -95,9 +101,21 @@ class ViewCrumsModal extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text>e d i t</Text>
-              <Text>u s e r</Text>
-
+              <Text>m y c r u m s</Text>
+              {crumInstances.map(crum => (
+                <View style={styles.instance}>
+                  <Image
+                    style={{
+                      width: 40,
+                      height: 40,
+                      margin: 6,
+                      borderColor: 'black',
+                      borderWidth: 2
+                    }}
+                  />
+                  <Text>{crum.message}</Text>
+                </View>
+              ))}
               <TouchableOpacity
                 style={styles.btnDrop}
                 onPress={() => {
@@ -105,7 +123,7 @@ class ViewCrumsModal extends React.Component {
                 }}
               >
                 <Text style={{color: '#19ae9f'}} title="edit">
-                  e d i t
+                  b a c k
                 </Text>
               </TouchableOpacity>
             </View>
@@ -120,7 +138,7 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     backgroundColor: 'grey',
     borderColor: '#7c1e9f',
     width: '90%',
@@ -139,6 +157,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  instance: {
+    width: '90%',
+    height: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 8
+  },
+
   btnDrop: {
     height: 60,
     width: '90%',
@@ -155,7 +184,9 @@ const styles = StyleSheet.create({
 
 const mapState = state => {
   return {
-    user: state.user
+    user: state.user,
+    crums: state.crums,
+    crumInstances: state.crumInstances
   }
 }
 

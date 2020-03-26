@@ -5,7 +5,16 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
-    const crumInstances = await CrumInstance.findAll({})
+    const crumInstances = await CrumInstance.findAll({
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Crum
+        }
+      ]
+    })
     res.json(crumInstances)
   } catch (err) {
     next(err)
@@ -82,6 +91,14 @@ router.get('/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Crum
+        }
+      ],
       where: {
         userId: req.params.id
       }
