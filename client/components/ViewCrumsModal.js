@@ -29,6 +29,7 @@ class ViewCrumsModal extends React.Component {
     visible: false
   }
   componentDidMount() {
+    this.props.getSingleUser(this.props.user.id)
     this.props.getUserCrumInstances(this.props.user.id)
   }
 
