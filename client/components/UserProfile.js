@@ -92,7 +92,7 @@ class UserProfile extends React.Component {
               style={styles.btnLogout}
               onPress={() => this.handleSignOut()}
             >
-              <Text style={{color: 'white'}}>logout</Text>
+              <Text style={{color: 'white'}}>l o g o u t</Text>
             </TouchableOpacity>
             <UserSettingsModal style={styles.btnCrum} />
           </View>

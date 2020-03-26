@@ -122,7 +122,7 @@ class DisMapScreen extends Component {
                   }}
                 >
                   <Image
-                    source={require('./breakmarker.png')}
+                    source={require('../../assets/crumicon.png')}
                     style={{height: 30, width: 30}}
                   />
                   <Callout style={{width: 110, height: 20}}>

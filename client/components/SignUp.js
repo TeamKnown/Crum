@@ -229,7 +229,7 @@ class DisSignUpComponent extends React.Component {
                       ]}
                     >
                       <LinearGradient
-                        colors={['#5db8fe', '#39cff2']}
+                        colors={['#19ae9f', '#26decb']}
                         style={styles.signIn}
                       >
                         <Text
@@ -312,7 +312,7 @@ var styles = StyleSheet.create({
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: 90,
-    fontFamily: 'FuturaBoldE'
+    fontFamily: 'FuturaBoldI'
   },
   text_footer: {
     color: '#05375a',
