@@ -30,6 +30,9 @@ router.post('/', async (req, res, next) => {
     newCrumInstance.user = user
     newCrumInstance.save()
     newCrumInstance.reload()
+
+    await user.userCrums()
+    console.log('dorp', user)
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues

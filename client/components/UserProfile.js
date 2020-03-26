@@ -6,7 +6,6 @@ import {updateUserThunk} from '../store/'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
-
 import {
   Platform,
   Button,
@@ -17,17 +16,14 @@ import {
   ImageBackground,
   TextInput,
   TouchableOpacity,
+  Modal,
   TouchableHighlight,
   Alert
 } from 'react-native'
 
 class UserProfile extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
-  async handleSignOut() {
-    await this.props.logout()
+  handleSignOut() {
+    this.props.logout()
   }
 
   render() {

@@ -40,8 +40,8 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  async handleSignIn() {
-    await this.props.auth(this.state.email, this.state.password)
+  handleSignIn() {
+    this.props.auth(this.state.email, this.state.password)
   }
 
   textInputChange(value) {
