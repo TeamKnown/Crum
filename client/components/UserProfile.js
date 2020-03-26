@@ -26,6 +26,11 @@ class UserProfile extends React.Component {
     this.props.logout()
   }
 
+  componentDidMount() {
+    this.props.getSingleUser(this.props.user.id)
+    // this.props.getUserCrumInstances(this.props.user.id)
+  }
+
   render() {
     const {user} = this.props
     console.log('state', this.state)

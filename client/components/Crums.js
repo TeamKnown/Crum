@@ -17,13 +17,13 @@ import ExpoTHREE from 'expo-three'
 export const createPlane = async (color, imgUrl, orientation) => {
   const geometry = new THREE.PlaneGeometry(2, 2)
   const texture = await ExpoTHREE.loadTextureAsync({
-    asset: imgUrl,
-    // color: 0xffffff00,
-    opacity: 0.5,
-    transparent: true
+    asset: imgUrl
+    // opacity: 0.5,
+    // transparent: true
   })
   const material = new THREE.MeshStandardMaterial({
-    map: texture
+    map: texture,
+    transparent: true
   })
   const plane = new THREE.Mesh(geometry, material)
   plane.position.z = orientation.z

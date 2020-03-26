@@ -7,7 +7,16 @@ import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {computePos, SCALER, crumPlaneNamer} from './utils'
-import {Platform, View, StyleSheet, ImageBackground} from 'react-native'
+import {
+  Platform,
+  View,
+  StyleSheet,
+  ImageBackground,
+  Dimensions,
+  Vibration,
+  Text,
+  TouchableOpacity
+} from 'react-native'
 import {
   getCurrentPosition,
   stopTracking,
@@ -22,10 +31,16 @@ import {createPlane} from './Crums.js'
 
 let scene
 class DisARScreen extends React.Component {
+  constructor() {
+    super()
+    this.updateTouch = this.updateTouch.bind(this)
+  }
+
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
-    crumInstances: []
+    crumInstances: [],
+    dropCrumFormVisible: false
   }
   // requestLocationPermission = async () => {
   //   if (Platform.OS === 'ios') {
@@ -35,6 +50,10 @@ class DisARScreen extends React.Component {
   //     }
   //   }
   // }
+
+  touch = new THREE.Vector2()
+  raycaster = new THREE.Raycaster()
+
   componentDidMount = () => {
     THREE.suppressExpoWarnings(true)
     this.props.subscribeToLocationData()
@@ -43,6 +62,51 @@ class DisARScreen extends React.Component {
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
     THREE.suppressExpoWarnings(false)
+  }
+
+  runHitTest = () => {
+    this.raycaster.setFromCamera(this.touch, this.camera)
+    const intersects = this.raycaster.intersectObjects([scene], true)
+    if (intersects.length > 0) {
+      let crumClicked = intersects[intersects.length - 1].object.name
+      console.log('CRUM CLICKED: ', crumClicked)
+    } else {
+      this.setState({dropCrumFormVisible: true})
+    }
+  }
+  hideDropCrumForm = () => {
+    this.setState({dropCrumFormVisible: false})
+  }
+
+  updateTouch = evt => {
+    let {height, width} = Dimensions.get('window')
+    let x = evt.nativeEvent.locationX
+    let y = evt.nativeEvent.locationY
+    this.touch.x = (x / width) * 2 - 1
+    this.touch.y = -(y / height) * 2 + 1
+    this.runHitTest()
+  }
+
+  onContextCreate = async ({gl, pixelRatio, width, height}) => {
+    this.setState({loading: false})
+    // AR.setWorldAlignment('gravityAndHeading')
+    this.renderer = new Renderer({gl, pixelRatio, width, height})
+    scene = new THREE.Scene()
+    scene.background = new BackgroundTexture(this.renderer)
+    this.camera = new Camera(width, height, 0.01, 1000)
+
+    scene.add(new THREE.AmbientLight(0xffffff))
+  }
+
+  onResize = ({scale, width, height}) => {
+    this.camera.aspect = width / height
+    this.camera.updateProjectionMatrix()
+    this.renderer.setPixelRatio(scale)
+    this.renderer.setSize(width, height)
+  }
+
+  onRender = delta => {
+    this.renderer.render(scene, this.camera)
   }
 
   // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude), likewise latitude is the floor of (SCALER * latitude)
@@ -120,28 +184,6 @@ class DisARScreen extends React.Component {
     // AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
-    const onContextCreate = async ({gl, pixelRatio, width, height}) => {
-      this.setState({loading: false})
-      // AR.setWorldAlignment('gravityAndHeading')
-      this.renderer = new Renderer({gl, pixelRatio, width, height})
-      scene = new THREE.Scene()
-      scene.background = new BackgroundTexture(this.renderer)
-      this.camera = new Camera(width, height, 0.01, 1000)
-
-      scene.add(new THREE.AmbientLight(0xffffff))
-    }
-
-    const onResize = ({scale, width, height}) => {
-      this.camera.aspect = width / height
-      this.camera.updateProjectionMatrix()
-      this.renderer.setPixelRatio(scale)
-      this.renderer.setSize(width, height)
-    }
-
-    const onRender = delta => {
-      this.renderer.render(scene, this.camera)
-    }
-
     return (
       <ImageBackground
         source={require('../../public/background.png')}
@@ -153,17 +195,28 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
-            <View style={{flex: 1, height: '100%'}}>
-              <GraphicsView
+            <View style={{flex: 1, height: '100%', width: '100%'}}>
+              <TouchableOpacity
+                disabled={false}
+                onPress={evt => {
+                  this.updateTouch(evt)
+                }}
+                activeOpacity={1.0}
                 style={{flex: 1}}
-                onContextCreate={onContextCreate}
-                onRender={onRender}
-                onResize={onResize}
-                isArEnabled
-                isArCameraStateEnabled
-              />
+              >
+                <GraphicsView
+                  style={{flex: 1}}
+                  onContextCreate={this.onContextCreate}
+                  onRender={this.onRender}
+                  onResize={this.onResize}
+                  isArEnabled
+                  isArCameraStateEnabled
+                />
+              </TouchableOpacity>
             </View>
-            <DropCrumForm />
+            {this.state.dropCrumFormVisible && (
+              <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} />
+            )}
           </View>
         </View>
       </ImageBackground>
