@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#19ae9f',
     borderWidth: 2,
-    textAlign: 'center',
+    // textAlign: 'center',   // april's comment: causes error
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     width: '47%',
     height: 60,
     backgroundColor: '#7c1e9f',
-    textAlign: 'center',
+    // textAlign: 'center',   // april's comment: causes error
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',

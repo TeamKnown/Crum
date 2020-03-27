@@ -5,6 +5,7 @@ import {logout} from '../store/user'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
+// import DeviceInfo from 'react-native-device-info'
 import {LinearGradient} from 'expo-linear-gradient'
 import {
   Platform,
@@ -153,7 +154,7 @@ const styles = StyleSheet.create({
     width: '47%',
     height: 60,
     backgroundColor: '#19ae9f',
-    textAlign: 'center',
+    // textAlign: 'center',   // causes error  Failed prop type: Invalid props.style key `textAlign` supplied to `LinearGradient`.
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',

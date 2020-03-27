@@ -18,8 +18,6 @@ export const createPlane = async (color, imgUrl, orientation) => {
   const geometry = new THREE.PlaneGeometry(2, 2)
   const texture = await ExpoTHREE.loadTextureAsync({
     asset: imgUrl
-    // opacity: 0.5,
-    // transparent: true
   })
   const material = new THREE.MeshStandardMaterial({
     map: texture,
