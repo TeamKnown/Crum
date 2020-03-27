@@ -202,11 +202,12 @@ class DisARScreen extends React.Component {
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
       const addCrums = async () => {
-        // console.log('Too ADD')
+        console.log('Too ADD')
         // console.log(JSON.stringify(toAdd))
         for (const crumInstance of toAdd) {
           // console.log('crum:', JSON.stringify(crumInstance.crum))
           if (crumInstance.crum === null) continue
+          // console.log('crum continused:', JSON.stringify(crumInstance.crum))
           let pos = computePos(crumInstance, props.locations)
           let plane = await createPlane(
             0xffffff,
@@ -224,6 +225,7 @@ class DisARScreen extends React.Component {
         // console.log('Too DELETE')
         // console.log(toRemove)
         for (const crumInstance of toRemove) {
+          if (crumInstance.crum === null) continue
           let planeName = crumInstanceNamer(crumInstance)
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
