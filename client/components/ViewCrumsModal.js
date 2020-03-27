@@ -18,7 +18,6 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native'
-import crumInstancesReducer from '../store/crumInstances'
 
 class ViewCrumsModal extends React.Component {
   constructor(props) {
@@ -103,7 +102,7 @@ class ViewCrumsModal extends React.Component {
             <View style={styles.modal}>
               <Text>m y c r u m s</Text>
               {crumInstances.map(crum => (
-                <View style={styles.instance}>
+                <View style={styles.instance} key={crum.id}>
                   <Image
                     style={{
                       width: 40,

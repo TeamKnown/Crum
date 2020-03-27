@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser} from '../store'
+import {getSingleUser, fetchUserCrumInstances} from '../store'
 import {logout} from '../store/user'
 import {updateUserThunk} from '../store/'
 import EditUserModalForm from './EditUserModalForm'
@@ -26,15 +26,25 @@ class UserProfile extends React.Component {
     this.props.logout()
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     console.log('user profile component did mount')
-    this.props.getSingleUser(this.props.user.id)
-    // this.props.getUserCrumInstances(this.props.user.id)
+    const {navigation} = await this.props
+    navigation.addListener(
+      'focus',
+      () =>
+        // run function that updates the data on entering the screen
+        this.props.getSingleUser(this.props.user.id),
+      this.props.getUserCrumInstances(this.props.user.id),
+
+      console.log('userProfile')
+    )
+    // this.props.getSingleUser(this.props.user.id)
   }
 
   render() {
     const {user} = this.props
     console.log('state', this.state)
+
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>
@@ -174,7 +184,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    getUserCrumInstances: userId => {
+      dispatch(fetchUserCrumInstances(userId))
+    }
   }
 }
 
