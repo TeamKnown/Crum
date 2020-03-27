@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import {imageThumbnails} from '../../assets/'
 import {postCrumInstance, getSingleUser} from '../store/'
+import {ActionConst} from 'react-native-router-flux'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -39,7 +40,28 @@ class DisDropCrumForm extends React.Component {
     await this.props.dropCrumInstance(crumInstance, userId, crumId)
     this.props.getSingleUser(userId)
   }
+
+  getiPhoneModel() {
+    if (
+      window.devicePixelRatio >= 3 &&
+      ((window.innerHeight == 368 && window.innerWidth == 207) ||
+        (window.innerHeight == 667 && window.innerWidth == 375) ||
+        (window.innerHeight == 736 && window.innerWidth == 414) ||
+        (window.innerHeight == 812 && window.innerWidth == 375) ||
+        (window.innerHeight >= 812 && window.innerWidth >= 375))
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   render() {
+    // console.log('IPHONE MODEL', this.getiPhoneModel())
+    // console.log('SCREEN PIXEL', window.devicePixelRatio)
+    // console.log('SCREEN Height', window.innerHeight)
+    // console.log('SCREEN Width', window.innerWidth)
+    // console.log('SCREEN', Object.keys(window))
     const {locations, crums, user} = this.props
     return (
       <View style={styles.container}>

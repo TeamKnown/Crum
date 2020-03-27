@@ -22,7 +22,7 @@ import {
 class ViewCrumsModal extends React.Component {
   constructor(props) {
     super(props)
-    // this.handleGetCrum = this.handleGetCrum.bind(this)
+    this.handleGetCrum = this.handleGetCrum.bind(this)
   }
   state = {
     visible: false
@@ -32,9 +32,10 @@ class ViewCrumsModal extends React.Component {
     this.props.getUserCrumInstances(this.props.user.id)
   }
 
-  // handleGetCrum(userId) {
-  //   this.props.getUserCrumInstances(userId)
-  // }
+  async handleGetCrum(userId) {
+    this.props.getSingleUser(userId)
+    await this.props.getUserCrumInstances(userId)
+  }
 
   setModalVisible(visible) {
     this.setState({
@@ -53,6 +54,7 @@ class ViewCrumsModal extends React.Component {
         <TouchableOpacity
           style={styles.modalContainer}
           onPress={() => {
+            this.handleGetCrum(user.id)
             this.setModalVisible(true)
           }}
         >

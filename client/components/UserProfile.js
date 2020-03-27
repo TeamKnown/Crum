@@ -21,11 +21,12 @@ import {
 } from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
 function UserProfile(props) {
-  // componentDidMount() {
-  //   const {navigation} = this.props
+  // async componentDidMount() {
+  //   const {navigation} = await this.props
   //   navigation.addListener('focus', () =>
   //     // run function that updates the data on entering the screen
-  //     this.props.getSingleUser(this.props.user.id)
+  //     this.props.getSingleUser(this.props.user.id),
+  //     this.props.fetchUserCrumInstances(this.props.user.id)
   //   )
   // }
 
