@@ -16,6 +16,7 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
+  Picker,
   TouchableHighlight,
   Alert
 } from 'react-native'
@@ -24,9 +25,11 @@ class UserSettingsModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSelectMode = this.handleSelectMode.bind(this)
   }
   state = {
-    visible: false
+    visible: false,
+    device: this.props.user.device
   }
   getiPhoneModel() {
     if (
@@ -48,12 +51,18 @@ class UserSettingsModal extends React.Component {
       visible: visible
     })
   }
+  handleSelectMode(device) {
+    this.setState({
+      device: device
+    })
+  }
 
   handleSubmit(userId, info) {
     this.props.editUser(userId, info)
   }
   render() {
     const {user} = this.props
+    console.log('device', user.device)
     return (
       <LinearGradient style={styles.btnCrum} colors={['#7c1e9f', '#bd7cde']}>
         <View>
@@ -77,10 +86,9 @@ class UserSettingsModal extends React.Component {
           >
             <View style={styles.modalContainer}>
               <View style={styles.modal}>
-                <Text>e d i t s e t t i n g s</Text>
-                <View>
+                <View style={styles.deviceContainer}>
                   <View style={styles.device}>
-                    <Text style={{fontWeight: 'bold'}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 16}}>
                       Recommended Device Setting:
                     </Text>
                     {this.getiPhoneModel() ? (
@@ -92,7 +100,7 @@ class UserSettingsModal extends React.Component {
                           fontSize: 40
                         }}
                       >
-                        Advanced
+                        a d v a n c e d
                       </Text>
                     ) : (
                       <Text
@@ -103,7 +111,7 @@ class UserSettingsModal extends React.Component {
                           fontSize: 40
                         }}
                       >
-                        Standard
+                        s t a n d a r d
                       </Text>
                     )}
                   </View>
@@ -115,9 +123,22 @@ class UserSettingsModal extends React.Component {
                     *Upgrade to Advanced Mode if using iPhone X or newer
                   </Text>
                 </View>
+
+                <Picker
+                  style={styles.picker}
+                  itemStyle={styles.pickerItem}
+                  selectedValue={this.state.device}
+                  onValueChange={this.handleSelectMode}
+                >
+                  <Picker.Item label="s t a n d a r d" value="standard" />
+                  <Picker.Item label="a d v a n c e d" value="advanced" />
+                </Picker>
                 <TouchableOpacity
                   style={styles.btnDrop}
                   onPress={() => {
+                    this.handleSubmit(this.props.user.id, {
+                      device: this.state.device
+                    })
                     this.setModalVisible(!this.state.visible)
                   }}
                 >
@@ -138,7 +159,7 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
@@ -178,12 +199,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10
   },
-  info: {
-    fontStyle: 'italic'
+  deviceContainer: {
+    flex: 1
   },
   device: {
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  info: {
+    fontStyle: 'italic'
+  },
+
+  picker: {
+    // flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  pickerItem: {
+    height: 120
   }
 })
 
