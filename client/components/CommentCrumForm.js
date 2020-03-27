@@ -12,10 +12,10 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import {images} from '../../assets/'
-import {putCrumInstance, deleteCrumInstance, getSingleUser} from '../store/'
+import {images} from '../../assets'
+import {putCrumInstance, deleteCrumInstance, getSingleUser} from '../store'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-class DisEditDeleteCrumForm extends React.Component {
+class DisCommentCrumForm extends React.Component {
   constructor(props) {
     super()
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
@@ -41,7 +41,7 @@ class DisEditDeleteCrumForm extends React.Component {
   }
   handleDeleteCrum(crumInstance, userId) {
     this.props.DeleteCrumInstance(crumInstance, userId)
-    this.props.hideEditDeleteCrumForm()
+    this.props.hideCommentCrumForm()
     // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
@@ -49,13 +49,12 @@ class DisEditDeleteCrumForm extends React.Component {
       this.setState({validationError: 'Message cannot be empty'})
     else {
       this.props.EditCrumInstance(crumInstance, userId)
-      this.props.hideEditDeleteCrumForm()
+      this.props.hideCommentCrumForm()
       // this.setModalVisible(!this.state.modalVisible)
     }
   }
   render() {
-    const {user, hideEditDeleteCrumForm, crumInstance} = this.props
-    const self = user.id === +crumInstance.user.id
+    const {user, hideCommentCrumForm, crumInstance} = this.props
     return (
       <View style={styles.container}>
         <Modal
@@ -79,72 +78,61 @@ class DisEditDeleteCrumForm extends React.Component {
                       source={images[crumInstance.crum.name]}
                     />
                   </View>
-                  {/* <Text>{JSON.stringify(user.id)}</Text>
-                  <Text>{JSON.stringify(crumInstance.user.id)}</Text>
-                  <Text>{'disabled'}</Text>
-                  <Text>{JSON.stringify(self)}</Text> */}
-
                   <View style={styles.modalInput}>
                     <TextInput
                       required
                       id="message"
-                      disabled={!self === true}
                       value={this.state.message}
                       onChange={this.handleTypeMessage}
                       textAlign="center"
-                      style={self ? styles.input : styles.inputDisabled}
+                      style={styles.input}
                       placeholder="m e s s a g e"
                       autoComplete="message"
                       type="text"
                     />
                   </View>
-
                   <Text
                     style={{color: 'red', textAlign: 'left', marginLeft: 10}}
                   >
                     {this.state.validationError}
                   </Text>
-
                   <View style={styles.modalButtons}>
-                    {self && (
-                      <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => {
-                          this.handleEditCrum(
-                            {
-                              message: this.state.message,
-                              id: crumInstance.id
-                            },
-                            user.id
-                          )
-                        }}
-                      >
-                        <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                          edit
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                    {self && (
-                      <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => {
-                          this.handleDeleteCrum(
-                            {
-                              id: crumInstance.id
-                            },
-                            user.id
-                          )
-                        }}
-                      >
-                        <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                          collect
-                        </Text>
-                      </TouchableOpacity>
-                    )}
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
-                        this.props.hideEditDeleteCrumForm()
+                        this.handleEditCrum(
+                          {
+                            message: this.state.message,
+                            id: crumInstance.id
+                          },
+                          user.id
+                        )
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                        cannot edit
+                      </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        this.handleDeleteCrum(
+                          {
+                            id: crumInstance.id
+                          },
+                          user.id
+                        )
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                        cannot collect
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        this.props.hideCommentCrumForm()
                       }}
                     >
                       <Text style={{color: '#19ae9f'}} title="EditDelete!">
@@ -186,9 +174,9 @@ const mapDispatch = dispatch => {
   }
 }
 
-const EditDeleteCrumForm = connect(mapState, mapDispatch)(DisEditDeleteCrumForm)
+const CommentCrumForm = connect(mapState, mapDispatch)(DisCommentCrumForm)
 
-export default EditDeleteCrumForm
+export default CommentCrumForm
 
 const styles = StyleSheet.create({
   container: {
@@ -256,7 +244,6 @@ const styles = StyleSheet.create({
     // borderColor: 'gray',
     // borderWidth: 1
   },
-
   input: {
     height: 60,
     borderRadius: 10,
@@ -265,13 +252,5 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     alignItems: 'center',
     margin: 5
-  },
-  inputDisabled: {
-    justifyContent: 'center',
-    flexBasis: '16%',
-    display: 'flex',
-    borderColor: 'red',
-    borderWidth: 0,
-    fontSize: 20
   }
 })

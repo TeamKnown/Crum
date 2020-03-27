@@ -98,11 +98,11 @@ class DisARScreen extends React.Component {
   componentDidMount = () => {
     // this.getiPhoneModel()
     THREE.suppressExpoWarnings(true)
-    this.props.subscribeToLocationData()
+    // this.props.subscribeToLocationData()
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
-    this.props.unsubscribeToLocationData()
+    // this.props.unsubscribeToLocationData()
     THREE.suppressExpoWarnings(false)
   }
 
@@ -202,7 +202,7 @@ class DisARScreen extends React.Component {
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
       const addCrums = async () => {
-        console.log('Too ADD')
+        // console.log('Too ADD')
         // console.log(JSON.stringify(toAdd))
         for (const crumInstance of toAdd) {
           // console.log('crum:', JSON.stringify(crumInstance.crum))
@@ -330,12 +330,12 @@ const mapDispatch = dispatch => {
     getUser: () => {
       dispatch(me())
     },
-    subscribeToLocationData: () => {
-      dispatch(getCurrentPosition())
-    },
-    unsubscribeToLocationData: () => {
-      dispatch(stopTracking())
-    },
+    // subscribeToLocationData: () => {
+    //   dispatch(getCurrentPosition())
+    // },
+    // unsubscribeToLocationData: () => {
+    //   dispatch(stopTracking())
+    // },
     fetchCrums: () => {
       dispatch(fetchCrums())
     },
