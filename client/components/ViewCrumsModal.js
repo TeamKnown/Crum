@@ -18,12 +18,11 @@ import {
   TouchableHighlight,
   Alert
 } from 'react-native'
-import crumInstancesReducer from '../store/crumInstances'
 
 class ViewCrumsModal extends React.Component {
   constructor(props) {
     super(props)
-    // this.handleGetCrum = this.handleGetCrum.bind(this)
+    this.handleGetCrum = this.handleGetCrum.bind(this)
   }
   state = {
     visible: false
@@ -33,9 +32,10 @@ class ViewCrumsModal extends React.Component {
     this.props.getUserCrumInstances(this.props.user.id)
   }
 
-  // handleGetCrum(userId) {
-  //   this.props.getUserCrumInstances(userId)
-  // }
+  async handleGetCrum(userId) {
+    this.props.getSingleUser(userId)
+    await this.props.getUserCrumInstances(userId)
+  }
 
   setModalVisible(visible) {
     this.setState({
@@ -44,16 +44,21 @@ class ViewCrumsModal extends React.Component {
   }
 
   render() {
+    if (this.state.modalVisible) {
+      scrollYPos = this.state.screenHeight * 1
+      this.scroller.scrollTo({x: 0, y: scrollYPos})
+    }
     const {user, crums} = this.props
-    console.log('user', user)
+    // console.log('user', user)
     const {crumInstances} = this.props
-    console.log('userCrums', crumInstances)
+    // console.log('userCrums', crumInstances)
 
     return (
       <View>
         <TouchableOpacity
           style={styles.modalContainer}
           onPress={() => {
+            this.handleGetCrum(user.id)
             this.setModalVisible(true)
           }}
         >
@@ -92,7 +97,7 @@ class ViewCrumsModal extends React.Component {
           )}
         </TouchableOpacity>
         <Modal
-          animationType="none"
+          animationType="slide"
           transparent={false}
           visible={this.state.visible}
           onRequestClose={() => {
@@ -101,9 +106,13 @@ class ViewCrumsModal extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text>m y c r u m s</Text>
+              {!crumInstances.length ? (
+                <Text>n o c r u m s</Text>
+              ) : (
+                <Text>m y c r u m s</Text>
+              )}
               {crumInstances.map(crum => (
-                <View style={styles.instance}>
+                <View style={styles.instance} key={crum.id}>
                   <Image
                     style={{
                       width: 40,
@@ -116,6 +125,7 @@ class ViewCrumsModal extends React.Component {
                   <Text>{crum.message}</Text>
                 </View>
               ))}
+
               <TouchableOpacity
                 style={styles.btnDrop}
                 onPress={() => {
@@ -139,7 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'grey',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',

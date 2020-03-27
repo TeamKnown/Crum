@@ -68,7 +68,7 @@ const users = [
   },
   {
     userName: 'dad',
-    email: 'raddadsofficial@gmail.com',
+    email: 'dad@gmail.com',
     password: 'yesDad',
     salt: null
   }

@@ -1,11 +1,11 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser} from '../store'
+import {getSingleUser, fetchUserCrumInstances} from '../store'
 import {logout} from '../store/user'
-import {updateUserThunk} from '../store/'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
+import {LinearGradient} from 'expo-linear-gradient'
 import {
   Platform,
   Button,
@@ -22,11 +22,12 @@ import {
 } from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
 function UserProfile(props) {
-  // componentDidMount() {
-  //   const {navigation} = this.props
+  // async componentDidMount() {
+  //   const {navigation} = await this.props
   //   navigation.addListener('focus', () =>
   //     // run function that updates the data on entering the screen
-  //     this.props.getSingleUser(this.props.user.id)
+  //     this.props.getSingleUser(this.props.user.id),
+  //     this.props.fetchUserCrumInstances(this.props.user.id)
   //   )
   // }
 
@@ -97,12 +98,14 @@ function UserProfile(props) {
           <ViewCrumsModal />
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity
+          <LinearGradient
             style={styles.btnLogout}
-            onPress={() => props.logout()}
+            colors={['#19ae9f', '#26decb']}
           >
-            <Text style={{color: 'white'}}>l o g o u t</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.logout()}>
+              <Text style={{color: 'white'}}>l o g o u t</Text>
+            </TouchableOpacity>
+          </LinearGradient>
           <UserSettingsModal style={styles.btnCrum} />
         </View>
       </View>
@@ -180,7 +183,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()),
+    getUserCrumInstances: userId => {
+      dispatch(fetchUserCrumInstances(userId))
+    }
   }
 }
 
