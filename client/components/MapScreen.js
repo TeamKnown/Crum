@@ -133,7 +133,7 @@ class DisMapScreen extends Component {
                     style={{height: 30, width: 30}}
                   />
                   <Callout style={{width: 110, height: 20}}>
-                    <Text>{crum.title}</Text>
+                    <Text>{crum.message}</Text>
                   </Callout>
                 </Marker>
               )
@@ -174,18 +174,17 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: 'rgba(0,0,0,0.6)',
-    height: 200,
+    height: 100,
     width: 300,
     padding: 24,
-    borderRadius: 24
+    borderRadius: 24,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   cardImage: {
     height: 120,
-    width: 300,
-    bottom: 0,
-    position: 'absolute',
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24
+    width: 100,
+    bottom: 0
   },
   cardTitle: {
     color: 'white',
