@@ -5,6 +5,7 @@ import {logout} from '../store/user'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
+import {LinearGradient} from 'expo-linear-gradient'
 import {
   Platform,
   Button,
@@ -97,12 +98,14 @@ function UserProfile(props) {
           <ViewCrumsModal />
         </View>
         <View style={styles.buttons}>
-          <TouchableOpacity
+          <LinearGradient
             style={styles.btnLogout}
-            onPress={() => props.logout()}
+            colors={['#19ae9f', '#26decb']}
           >
-            <Text style={{color: 'white'}}>l o g o u t</Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.logout()}>
+              <Text style={{color: 'white'}}>l o g o u t</Text>
+            </TouchableOpacity>
+          </LinearGradient>
           <UserSettingsModal style={styles.btnCrum} />
         </View>
       </View>

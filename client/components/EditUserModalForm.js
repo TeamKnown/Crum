@@ -88,6 +88,7 @@ class EditUserModalForm extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
+              <Text> e d i t u s e r i n f o</Text>
               <View style={styles.inputForm}>
                 <Text style={styles.text_footer}>Username</Text>
                 <View style={styles.action}>
@@ -142,7 +143,7 @@ class EditUserModalForm extends React.Component {
                 }}
               >
                 <Text style={{color: '#19ae9f'}} title="edit">
-                  u p d a t e i n f o
+                  u p d a t e
                 </Text>
               </TouchableOpacity>
             </View>
