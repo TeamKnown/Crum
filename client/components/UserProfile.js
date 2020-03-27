@@ -6,6 +6,7 @@ import {updateUserThunk} from '../store/'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
+// import DeviceInfo from 'react-native-device-info'
 import {
   Platform,
   Button,

@@ -35,6 +35,12 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+// if you get error ativeModule.RNDeviceInfo is null
+// run this command:
+//npx react-native-clean-project clean-project-auto
+// react-native link react-native-device-info
+// import DeviceInfo from 'react-native-device-info'
+// import {getUniqueId, getManufacturer} from 'react-native-device-info'
 // import {request, PERMISSIONS} from 'react-native-permissions'
 
 let scene
@@ -63,10 +69,34 @@ class DisARScreen extends React.Component {
   //   }
   // }
 
+  // getiPhoneModel = () => {
+  //   function _getiPhoneModel() {
+  //     if (
+  //       window.devicePixelRatio >= 3 &&
+  //       ((window.innerHeight == 368 && window.innerWidth == 207) ||
+  //         (window.innerHeight == 667 && window.innerWidth == 375) ||
+  //         (window.innerHeight == 736 && window.innerWidth == 414) ||
+  //         (window.innerHeight == 812 && window.innerWidth == 375) ||
+  //         (window.innerHeight >= 812 && window.innerWidth >= 375))
+  //     ) {
+  //       return true
+  //     } else {
+  //       return false
+  //     }
+  //   }
+  //   // const deviceInfo1 = 'getModel:  ' + DeviceInfo.getModel()
+  //   // console.log('IPHONE MODEL', deviceInfo1)
+  //   console.log('IPHONE MODEL', _getiPhoneModel())
+  //   console.log('SCREEN PIXEL', window.devicePixelRatio)
+  //   console.log('SCREEN Height', window.innerHeight)
+  //   console.log('SCREEN Width', window.innerWidth)
+  // }
+
   touch = new THREE.Vector2()
   raycaster = new THREE.Raycaster()
 
   componentDidMount = () => {
+    // this.getiPhoneModel()
     THREE.suppressExpoWarnings(true)
     this.props.subscribeToLocationData()
     this.props.fetchCrums()
@@ -90,13 +120,6 @@ class DisARScreen extends React.Component {
       this.setState({dropCrumFormVisible: true})
     }
   }
-  hideDropCrumForm = () => {
-    this.setState({dropCrumFormVisible: false})
-  }
-  hideEditDeleteCrumForm = () => {
-    this.setState({editDeleteCrumFormVisible: false})
-  }
-
   updateTouch = evt => {
     let {height, width} = Dimensions.get('window')
     let x = evt.nativeEvent.locationX
@@ -105,26 +128,57 @@ class DisARScreen extends React.Component {
     this.touch.y = -(y / height) * 2 + 1
     this.runHitTest()
   }
+  hideDropCrumForm = () => {
+    this.setState({dropCrumFormVisible: false})
+  }
+  hideEditDeleteCrumForm = () => {
+    this.setState({editDeleteCrumFormVisible: false})
+  }
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    // AR.setWorldAlignment('gravityAndHeading')
+    AR.setWorldAlignment('gravityAndHeading')
+    // console.log('on contect create')
+    // console.log(pixelRatio, width, height)
     this.renderer = new Renderer({gl, pixelRatio, width, height})
     scene = new THREE.Scene()
     scene.background = new BackgroundTexture(this.renderer)
     this.camera = new Camera(width, height, 0.01, 1000)
 
     scene.add(new THREE.AmbientLight(0xffffff))
+    // console.log('end on contect create')
   }
 
-  onResize = ({scale, width, height}) => {
-    this.camera.aspect = width / height
-    this.camera.updateProjectionMatrix()
-    this.renderer.setPixelRatio(scale)
-    this.renderer.setSize(width, height)
-  }
+  // onResize = ({scale, width, height}) => {
+  //   this.camera.aspect = width / height
+  //   this.camera.updateProjectionMatrix()
+  //   this.renderer.setPixelRatio(scale)
+  //   this.renderer.setSize(width, height)
+  // }n
 
   onRender = delta => {
+    // console.log(
+    //   'on render ',
+    //   'scale,',
+    //   JSON.stringify(scene.scale),
+    //   JSON.stringify(this.camera.scale),
+    //   'width,',
+    //   JSON.stringify(this.camera.width),
+    //   'height,',
+    //   JSON.stringify(this.camera.height),
+    //   'matrix,',
+    //   JSON.stringify(scene.matrix),
+    //   JSON.stringify(this.camera.matrix),
+    //   'matrixWorld,',
+    //   JSON.stringify(scene.matrixWorld),
+    //   JSON.stringify(this.camera.matrixWorld),
+    //   'matrixAutoUpdate,',
+    //   JSON.stringify(scene.matrixAutoUpdate),
+    //   JSON.stringify(this.camera.matrixAutoUpdate),
+    //   'matrixWorldNeedsUpdate,',
+    //   JSON.stringify(scene.matrixWorldNeedsUpdate),
+    //   JSON.stringify(this.camera.matrixWorldNeedsUpdate))
+
     this.renderer.render(scene, this.camera)
   }
 
@@ -134,6 +188,8 @@ class DisARScreen extends React.Component {
   // we also requery the list of nearby crums
   // this is subject to future optimization and code refactoring
   // More at https://reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations
+
+  // Warning: THREE.Matrix3: .getInverse() can't invert matrix, determinant is 0 without any object
   static getDerivedStateFromProps(props, state) {
     const toAdd = props.crumInstances.filter(
       crumInstance =>
@@ -146,6 +202,8 @@ class DisARScreen extends React.Component {
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
       const addCrums = async () => {
+        // console.log('Too ADD')
+        // console.log(toAdd)
         for (const crumInstance of toAdd) {
           let pos = computePos(crumInstance, props.locations)
           let plane = await createPlane(
@@ -157,17 +215,16 @@ class DisARScreen extends React.Component {
           plane.name = planeName
           scene.add(plane)
           let newObj = scene.getObjectByName(planeName)
-          console.log('ADDED NEW CRUM: ', newObj.name)
         }
       }
 
       const removeCrums = () => {
+        // console.log('Too DELETE')
+        // console.log(toRemove)
         for (const crumInstance of toRemove) {
-          // console.log('OLD CRUM TO REMOVE', JSON.stringify(crumInstance))
           let planeName = crumInstanceNamer(crumInstance)
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
-          console.log('REMOVED OLD CRUM', planeToRemove.name)
         }
       }
       addCrums()
@@ -200,7 +257,6 @@ class DisARScreen extends React.Component {
   }
   render() {
     const {locations, crumInstances, crums} = this.props
-    // console.log('CRUM INSTANCES AR VIEW:', numCrum)
     // AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
@@ -228,7 +284,7 @@ class DisARScreen extends React.Component {
                   style={{flex: 1}}
                   onContextCreate={this.onContextCreate}
                   onRender={this.onRender}
-                  onResize={this.onResize}
+                  // onResize={this.onResize}
                   isArEnabled
                   isArCameraStateEnabled
                 />
@@ -248,7 +304,6 @@ class DisARScreen extends React.Component {
               />
             )}
           </View>
-          {/* <Text>{JSON.stringify(crumInstances.map(i => i.id))}</Text> */}
         </View>
       </ImageBackground>
     )

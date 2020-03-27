@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER, crumInstanceParser} from './utils'
+import {SCALER} from './utils'
 import {
   TextInput,
   View,
@@ -13,25 +13,22 @@ import {
   Alert
 } from 'react-native'
 import {images} from '../../assets/'
-import {
-  postCrumInstance,
-  putCrumInstance,
-  deleteCrumInstance,
-  getSingleUser
-} from '../store/'
+import {putCrumInstance, deleteCrumInstance, getSingleUser} from '../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 class DisEditDeleteCrumForm extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
     this.handleDeleteCrum = this.handleDeleteCrum.bind(this)
     this.handleEditCrum = this.handleEditCrum.bind(this)
+    this.state = {
+      modalVisible: true,
+      message: props.crumInstance.message,
+      imgId: '',
+      validationError: ''
+    }
   }
-  state = {
-    modalVisible: true,
-    message: '',
-    imgId: ''
-  }
+
   setModalVisible(modalVisible) {
     this.setState({
       modalVisible: modalVisible
@@ -44,37 +41,27 @@ class DisEditDeleteCrumForm extends React.Component {
   }
   handleDeleteCrum(crumInstance, userId) {
     this.props.DeleteCrumInstance(crumInstance, userId)
+    this.props.hideEditDeleteCrumForm()
+    this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
-    this.props.EditCrumInstance(crumInstance, userId)
+    if (crumInstance.message === '')
+      this.setState({validationError: 'Message cannot be empty'})
+    else {
+      this.props.EditCrumInstance(crumInstance, userId)
+      this.props.hideEditDeleteCrumForm()
+      this.setModalVisible(!this.state.modalVisible)
+    }
   }
   render() {
-    const {
-      locations,
-      crums,
-      user,
-      hideEditDeleteCrumForm,
-      crumInstance
-    } = this.props
-    // const crumClickedParsed = crumInstanceParser(this.props.crumClicked)
+    const {user, hideEditDeleteCrumForm, crumInstance} = this.props
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity
-          style={styles.btnEditDelete}
-          onPress={() => {
-            this.setModalVisible(true)
-          }}
-        >
-          <Text style={{color: '#19ae9f'}} title="EditDelete!">
-            d r o p
-          </Text>
-        </TouchableOpacity> */}
         <Modal
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            // this.handleOpenModel()
             Alert.alert('Modal closed')
           }}
         >
@@ -86,13 +73,10 @@ class DisEditDeleteCrumForm extends React.Component {
                     <Image
                       style={{width: 320, height: 320, margin: 6}}
                       // borderColor="gray"
-                      // borderWidth={this.state.imgId === crum.id ? 2 : 0}
+                      // borderWidth={2}
                       borderRadius={3}
                       source={images[crumInstance.crum.name]}
                     />
-                    <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                      {JSON.stringify(crumInstance)}
-                    </Text>
                   </View>
                   <View style={styles.modalInput}>
                     <TextInput
@@ -107,6 +91,11 @@ class DisEditDeleteCrumForm extends React.Component {
                       type="text"
                     />
                   </View>
+                  <Text
+                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
+                  >
+                    {this.state.validationError}
+                  </Text>
                   <View style={styles.modalButtons}>
                     <TouchableOpacity
                       style={styles.btn}
@@ -118,8 +107,6 @@ class DisEditDeleteCrumForm extends React.Component {
                           },
                           user.id
                         )
-                        this.props.hideEditDeleteCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
                       <Text style={{color: '#19ae9f'}} title="EditDelete!">
@@ -136,24 +123,13 @@ class DisEditDeleteCrumForm extends React.Component {
                           },
                           user.id
                         )
-                        this.props.hideEditDeleteCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
                       <Text style={{color: '#19ae9f'}} title="EditDelete!">
                         collect
                       </Text>
                     </TouchableOpacity>
-                    {/* <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                {JSON.stringify(Object.keys(this.props))}
-              </Text> */}
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        hideEditDeleteCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
-                      }}
-                    >
+                    <TouchableOpacity style={styles.btn} onPress={() => {}}>
                       <Text style={{color: '#19ae9f'}} title="EditDelete!">
                         never mind
                       </Text>
@@ -227,20 +203,20 @@ const styles = StyleSheet.create({
     width: '100%',
     flexBasis: '80%',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    borderColor: 'gray',
-    borderWidth: 1
+    justifyContent: 'center'
+    // flexWrap: 'wrap',
+    // borderColor: 'gray',
+    // borderWidth: 1
   },
   modalButtons: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexBasis: '16%',
     display: 'flex',
-    flexDirection: 'row',
-    borderColor: 'gray',
-    borderWidth: 1
+    flexDirection: 'row'
+    // borderColor: 'gray',
+    // borderWidth: 1
   },
   btn: {
     display: 'flex',
@@ -259,9 +235,9 @@ const styles = StyleSheet.create({
   modalInput: {
     justifyContent: 'center',
     flexBasis: '16%',
-    display: 'flex',
-    borderColor: 'gray',
-    borderWidth: 1
+    display: 'flex'
+    // borderColor: 'gray',
+    // borderWidth: 1
   },
   input: {
     height: 60,

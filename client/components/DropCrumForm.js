@@ -24,7 +24,8 @@ class DisDropCrumForm extends React.Component {
   state = {
     modalVisible: true,
     message: '',
-    imgId: ''
+    imgId: '',
+    validationError: ''
   }
   setModalVisible(modalVisible) {
     this.setState({
@@ -37,8 +38,28 @@ class DisDropCrumForm extends React.Component {
     })
   }
   async handleDropCrum(crumInstance, userId, crumId) {
-    await this.props.dropCrumInstance(crumInstance, userId, crumId)
-    this.props.getSingleUser(userId)
+    this.setState({validationError: ''})
+    console.log(JSON.stringify(crumInstance))
+    console.log(JSON.stringify(crumId))
+    if (crumInstance.message === '')
+      this.setState({validationError: 'Please enter a message'})
+    else if (
+      crumInstance.latitude === undefined ||
+      crumInstance.longitude === undefined
+    )
+      this.setState({
+        validationError: 'Please wait until location data is loaded'
+      })
+    else if (crumId === '')
+      this.setState({
+        validationError: 'Please select a crum'
+      })
+    else {
+      await this.props.dropCrumInstance(crumInstance, userId, crumId)
+      this.props.getSingleUser(userId)
+      this.props.hideDropCrumForm()
+      this.setModalVisible(!this.state.modalVisible)
+    }
   }
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
@@ -55,13 +76,11 @@ class DisDropCrumForm extends React.Component {
           </Text>
         </TouchableOpacity> */}
         <Modal
-          // style={styles.root}
           style={{flex: 1}}
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            // this.handleOpenModel()
             Alert.alert('Modal closed')
           }}
         >
@@ -74,7 +93,6 @@ class DisDropCrumForm extends React.Component {
                       <TouchableOpacity
                         key={crum.id}
                         onPress={() => {
-                          console.log('you selected this crum')
                           this.setState({
                             imgId: crum.id
                           })
@@ -82,8 +100,12 @@ class DisDropCrumForm extends React.Component {
                       >
                         <Image
                           style={{width: 40, height: 40, margin: 6}}
-                          borderColor="gray"
-                          borderWidth={this.state.imgId === crum.id ? 2 : 0}
+                          borderColor={
+                            this.state.imgId === crum.id
+                              ? 'gray'
+                              : 'rgba(250,250,250,0)'
+                          }
+                          borderWidth={2}
                           borderRadius={3}
                           source={imageThumbnails[crum.name]}
                         />
@@ -102,20 +124,12 @@ class DisDropCrumForm extends React.Component {
                       autoComplete="message"
                       type="text"
                     />
-
-                    {/* <TextInput
-                  required
-                  id="tags"
-                  value={this.state.message}
-                  onChange={this.handleTypeMessage}
-                  textAlign="center"
-                  style={styles.input}
-                  placeholder="tags"
-                  autoComplete="message"
-                  type="text"
-                /> */}
                   </View>
-
+                  <Text
+                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
+                  >
+                    {this.state.validationError}
+                  </Text>
                   <View style={styles.modalButtons}>
                     <TouchableOpacity
                       style={styles.btnDrop}
@@ -129,8 +143,6 @@ class DisDropCrumForm extends React.Component {
                           user.id,
                           this.state.imgId
                         )
-                        this.props.hideDropCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
                       <Text style={{color: '#19ae9f'}} title="Drop!">
@@ -218,18 +230,20 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    borderColor: 'gray',
-    borderWidth: 1
+    flexWrap: 'wrap'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
   },
   modalButtons: {
     alignItems: 'center',
     justifyContent: 'space-between',
     flexBasis: '16%',
     display: 'flex',
-    flexDirection: 'row',
-    borderColor: 'gray',
-    borderWidth: 1
+    flexDirection: 'row'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
   },
   btnDrop: {
     display: 'flex',
@@ -248,9 +262,10 @@ const styles = StyleSheet.create({
   modalInput: {
     justifyContent: 'center',
     flexBasis: '16%',
-    display: 'flex',
-    borderColor: 'gray',
-    borderWidth: 1
+    display: 'flex'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
   },
   input: {
     height: 60,

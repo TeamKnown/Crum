@@ -103,7 +103,7 @@ class ViewCrumsModal extends React.Component {
             <View style={styles.modal}>
               <Text>m y c r u m s</Text>
               {crumInstances.map(crum => (
-                <View style={styles.instance}>
+                <View style={styles.instance} key={crum.id}>
                   <Image
                     style={{
                       width: 40,

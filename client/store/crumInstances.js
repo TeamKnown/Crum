@@ -26,19 +26,6 @@ export const putedCrumInstance = crumInstance => ({
   crumInstance: crumInstance
 })
 
-// thunks
-// export const fetchCrumInstances = () => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await devAxios.get('/api/cruminstances')
-
-//       dispatch(setCrumInstances(data))
-//     } catch (error) {
-//       console.error('GET Error')
-//     }
-//   }
-// }
-
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=407074&longitudeIdx=-740000
 export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {
@@ -72,12 +59,10 @@ export const postCrumInstance = (crumInstance, userId, crumId) => {
       const heading = await Location.getHeadingAsync()
       const headingInt = Math.floor(heading.magHeading)
       crumInstance.headingInt = headingInt
-      // console.log(crumInstance)
       let {data} = await devAxios.post(
         `/api/cruminstances?userId=${userId}&crumId=${crumId}&direction=front`,
         crumInstance
       )
-      // {data} = await devAxios.get(`/api/cruminstances/${data.id}`)
       dispatch(postedCrumInstance(data))
     } catch (error) {
       console.error('POST Error')
@@ -91,12 +76,10 @@ export const deleteCrumInstance = crumInstance => {
       const heading = await Location.getHeadingAsync()
       const headingInt = Math.floor(heading.magHeading)
       crumInstance.headingInt = headingInt
-      // console.log(crumInstance)
       let {data} = await devAxios.delete(
         `/api/cruminstances/${crumInstance.id}`,
         crumInstance
       )
-      // {data} = await devAxios.get(`/api/cruminstances/${data.id}`)
       dispatch(deletedCrumInstance(crumInstance))
     } catch (error) {
       console.error('POST Error')
@@ -110,12 +93,10 @@ export const putCrumInstance = crumInstance => {
       const heading = await Location.getHeadingAsync()
       const headingInt = Math.floor(heading.magHeading)
       crumInstance.headingInt = headingInt
-      // console.log(crumInstance)
       let {data} = await devAxios.put(
         `/api/cruminstances/${crumInstance.id}`,
         crumInstance
       )
-      // {data} = await devAxios.get(`/api/cruminstances/${data.id}`)
       dispatch(putedCrumInstance(data))
     } catch (error) {
       console.error('POST Error')
@@ -130,10 +111,15 @@ const crumInstancesReducer = (state = initialState, action) => {
     case ADD_CRUM_INSTANCE:
       return [...state, action.crumInstance]
     case DELETE_CRUM_INSTANCE:
-      let newState = state.filter(elm => elm.id !== +action.crumInstance.id)
-      return newState
+      let stateAfterDelete = state.filter(
+        elm => elm.id !== +action.crumInstance.id
+      )
+      return stateAfterDelete
     case EDIT_CRUM_INSTANCE:
-      return [...state]
+      let stateAfterEdit = state.map(elm =>
+        elm.id !== +action.crumInstance.id ? elm : action.crumInstance
+      )
+      return stateAfterEdit
     default:
       return state
   }

@@ -1,7 +1,4 @@
-// import {devAxios} from './devAxios'
 import * as Location from 'expo-location'
-
-// import fetchNearByCrumInstances from './crumInstances'
 
 let positionTracker = null
 const SUBSCRIBE_LOCATION = 'SUBSCRIBE_LOCATION'
@@ -28,9 +25,6 @@ export const getCurrentPosition = () => async dispatch => {
         longitude: location.coords.longitude
       })
     )
-    // dispatch(
-    //   fetchNearByCrumInstances()
-    // )
   }, 3000)
 }
 
