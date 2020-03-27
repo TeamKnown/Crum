@@ -28,6 +28,20 @@ class UserSettingsModal extends React.Component {
   state = {
     visible: false
   }
+  getiPhoneModel() {
+    if (
+      window.devicePixelRatio >= 3 &&
+      ((window.innerHeight == 368 && window.innerWidth == 207) ||
+        (window.innerHeight == 667 && window.innerWidth == 375) ||
+        (window.innerHeight == 736 && window.innerWidth == 414) ||
+        (window.innerHeight == 812 && window.innerWidth == 375) ||
+        (window.innerHeight >= 812 && window.innerWidth >= 375))
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
 
   setModalVisible(visible) {
     this.setState({
@@ -64,7 +78,43 @@ class UserSettingsModal extends React.Component {
             <View style={styles.modalContainer}>
               <View style={styles.modal}>
                 <Text>e d i t s e t t i n g s</Text>
-
+                <View>
+                  <View style={styles.device}>
+                    <Text style={{fontWeight: 'bold'}}>
+                      Recommended Device Setting:
+                    </Text>
+                    {this.getiPhoneModel() ? (
+                      <Text
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginTop: 16,
+                          fontSize: 40
+                        }}
+                      >
+                        Advanced
+                      </Text>
+                    ) : (
+                      <Text
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginTop: 16,
+                          fontSize: 40
+                        }}
+                      >
+                        Standard
+                      </Text>
+                    )}
+                  </View>
+                  <Text />
+                  <Text style={styles.info}>
+                    *AR functionality is only available on iPhone 6s or newer
+                  </Text>
+                  <Text style={styles.info}>
+                    *Upgrade to Advanced Mode if using iPhone X or newer
+                  </Text>
+                </View>
                 <TouchableOpacity
                   style={styles.btnDrop}
                   onPress={() => {
@@ -92,10 +142,6 @@ const styles = StyleSheet.create({
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     borderRadius: 10,
     marginTop: 100
   },
@@ -116,7 +162,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   },
   btnCrum: {
     width: '47%',
@@ -127,6 +177,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10
+  },
+  info: {
+    fontStyle: 'italic'
+  },
+  device: {
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
 

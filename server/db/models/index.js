@@ -1,6 +1,7 @@
 const User = require('./user')
 const Crum = require('./crum')
 const CrumInstance = require('./crumInstance')
+const CommentInstance = require('./CommentInstance')
 const {Op} = require('sequelize')
 /**
  * If we had any associations to make, this would be a great place to put them!
@@ -19,8 +20,20 @@ const {Op} = require('sequelize')
 CrumInstance.belongsTo(User)
 User.hasMany(CrumInstance)
 
+// CommentInstance.belongsTo(User)
+// User.hasMany(CommentInstance)
+
+CommentInstance.belongsTo(CrumInstance)
+CrumInstance.hasMany(CommentInstance)
+
 CrumInstance.belongsTo(Crum)
 Crum.hasMany(CrumInstance)
+
+const SCALER = 1000
+CrumInstance.addHook('beforeValidate', (crumInstance, options) => {
+  crumInstance.latitudeIdx = Math.floor(crumInstance.latitude * SCALER)
+  crumInstance.longitudeIdx = Math.floor(crumInstance.longitude * SCALER)
+})
 
 CrumInstance.prototype.findNear = async function(radium) {
   // console.log('here', this.longitudeIdx)
@@ -66,5 +79,6 @@ CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
 module.exports = {
   User,
   Crum,
-  CrumInstance
+  CrumInstance,
+  CommentInstance
 }

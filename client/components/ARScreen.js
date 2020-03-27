@@ -34,7 +34,6 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
-import * as Permissions from 'expo-permissions'
 
 // import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
@@ -62,19 +61,6 @@ class DisARScreen extends React.Component {
     editDeleteCrumFormVisible: false,
     crumClickedParsed: {},
     errorMessage: null
-  }
-  requestLocationPermission = async () => {
-    let {status} = await Permissions.askAsync(Permissions.LOCATION)
-    console.log('PERMISSION DENIED', status)
-    if (status !== 'granted') {
-      this.setState({
-        errorMessage: 'Permission to access location was denied'
-      })
-    } else {
-      this.props.subscribeToLocationData()
-      this.props.fetchCrums()
-      console.log('PERMISSION GRANTED', status)
-    }
   }
 
   // getiPhoneModel = () => {
@@ -105,13 +91,11 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
-    this.requestLocationPermission()
     THREE.suppressExpoWarnings(true)
-    // this.props.subscribeToLocationData()
-    // this.props.fetchCrums()
+    this.props.fetchCrums()
   }
   componentWillUnmount = () => {
-    this.props.unsubscribeToLocationData()
+    // this.props.unsubscribeToLocationData()
     THREE.suppressExpoWarnings(false)
   }
 
@@ -211,7 +195,7 @@ class DisARScreen extends React.Component {
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
       const addCrums = async () => {
-        console.log('Too ADD')
+        // console.log('Too ADD')
         // console.log(JSON.stringify(toAdd))
         for (const crumInstance of toAdd) {
           // console.log('crum:', JSON.stringify(crumInstance.crum))
@@ -339,12 +323,12 @@ const mapDispatch = dispatch => {
     getUser: () => {
       dispatch(me())
     },
-    subscribeToLocationData: () => {
-      dispatch(getCurrentPosition())
-    },
-    unsubscribeToLocationData: () => {
-      dispatch(stopTracking())
-    },
+    // subscribeToLocationData: () => {
+    //   dispatch(getCurrentPosition())
+    // },
+    // unsubscribeToLocationData: () => {
+    //   dispatch(stopTracking())
+    // },
     fetchCrums: () => {
       dispatch(fetchCrums())
     },

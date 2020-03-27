@@ -2,7 +2,12 @@
 
 const {green, red} = require('chalk')
 const db = require('../server/db')
-const {User, Crum, CrumInstance} = require('../server/db/models')
+const {
+  User,
+  Crum,
+  CrumInstance,
+  CommentInstance
+} = require('../server/db/models')
 
 const users = [
   {
@@ -164,6 +169,32 @@ const crumInstances = [
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
     longitude: -73.9743
+  },
+  {
+    message: 'April',
+    latitude: 40.7075,
+    longitude: -74.0056
+  },
+  {
+    message: 'April2',
+    latitude: 40.7075,
+    longitude: -74.0056
+  },
+  {
+    message: 'April3',
+    latitude: 40.7075,
+    longitude: -74.0056
+  },
+  {
+    message: 'April4',
+    latitude: 40.7075,
+    longitude: -74.0056
+  }
+]
+
+const commentInstances = [
+  {
+    message: 'yay'
   }
 ]
 const seed = async () => {
@@ -172,17 +203,31 @@ const seed = async () => {
     console.log('db synced!')
     await Promise.all(users.map(user => User.create(user)))
     await Promise.all(crums.map(crum => Crum.create(crum)))
+
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
     for (let i = 1; i < crumInstances.length + 1; i++) {
       let j = Math.floor(Math.random() * 19) + 1
-      let k = Math.floor(Math.random() * 9) + 1
+      // let k = Math.floor(Math.random() * 9) + 1
+      let k = Math.floor(Math.random() * 2) + 1
       let crumInstanceI = await CrumInstance.findByPk(i)
       let crumI = await Crum.findByPk(j)
       let userK = await User.findByPk(k)
       await crumInstanceI.setCrum(crumI)
       await crumInstanceI.setUser(userK)
+    }
+
+    await Promise.all(
+      commentInstances.map(commentInstance =>
+        CommentInstance.create(commentInstance)
+      )
+    )
+    for (let i = 1; i < commentInstances.length + 1; i++) {
+      let j = Math.floor(Math.random() * 4) + 1
+      let commentInstancesI = await CommentInstance.findByPk(i)
+      let crumInstanceI = await CrumInstance.findByPk(j)
+      await commentInstancesI.setCrumInstance(crumInstanceI)
     }
   } catch (error) {
     console.log(red(error))

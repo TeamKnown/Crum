@@ -28,14 +28,14 @@ class DisMapScreen extends Component {
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
   }
 
-  componentDidMount = () => {
-    this.props.fetchInitialData()
+  // componentDidMount = () => {
+  //   this.props.fetchInitialData()
 
-    // this.props.fetchNearByCrumInstances()
-  }
-  componentWillUnmount = () => {
-    this.props.unFetchInitialData()
-  }
+  //   // this.props.fetchNearByCrumInstances()
+  // }
+  // componentWillUnmount = () => {
+  //   this.props.unFetchInitialData()
+  // }
 
   // static getDerivedStateFromProps(props, state) {
   //   if (
