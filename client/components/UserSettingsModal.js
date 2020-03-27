@@ -100,7 +100,7 @@ class UserSettingsModal extends React.Component {
                           fontSize: 40
                         }}
                       >
-                        Advanced
+                        a d v a n c e d
                       </Text>
                     ) : (
                       <Text
@@ -111,7 +111,7 @@ class UserSettingsModal extends React.Component {
                           fontSize: 40
                         }}
                       >
-                        Standard
+                        s t a n d a r d
                       </Text>
                     )}
                   </View>
@@ -130,8 +130,8 @@ class UserSettingsModal extends React.Component {
                   selectedValue={this.state.device}
                   onValueChange={this.handleSelectMode}
                 >
-                  <Picker.Item label="Standard" value="standard" />
-                  <Picker.Item label="Advanced" value="advanced" />
+                  <Picker.Item label="s t a n d a r d" value="standard" />
+                  <Picker.Item label="a d v a n c e d" value="advanced" />
                 </Picker>
                 <TouchableOpacity
                   style={styles.btnDrop}
