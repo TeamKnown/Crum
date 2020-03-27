@@ -16,6 +16,7 @@ import {
   TextInput,
   TouchableOpacity,
   Modal,
+  Picker,
   TouchableHighlight,
   Alert
 } from 'react-native'
@@ -24,14 +25,35 @@ class UserSettingsModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSelectMode = this.handleSelectMode.bind(this)
   }
   state = {
-    visible: false
+    visible: false,
+    device: this.props.user.device
+  }
+  getiPhoneModel() {
+    if (
+      window.devicePixelRatio >= 3 &&
+      ((window.innerHeight == 368 && window.innerWidth == 207) ||
+        (window.innerHeight == 667 && window.innerWidth == 375) ||
+        (window.innerHeight == 736 && window.innerWidth == 414) ||
+        (window.innerHeight == 812 && window.innerWidth == 375) ||
+        (window.innerHeight >= 812 && window.innerWidth >= 375))
+    ) {
+      return true
+    } else {
+      return false
+    }
   }
 
   setModalVisible(visible) {
     this.setState({
       visible: visible
+    })
+  }
+  handleSelectMode(device) {
+    this.setState({
+      device: device
     })
   }
 
@@ -40,6 +62,7 @@ class UserSettingsModal extends React.Component {
   }
   render() {
     const {user} = this.props
+    console.log('device', user.device)
     return (
       <LinearGradient style={styles.btnCrum} colors={['#7c1e9f', '#bd7cde']}>
         <View>
@@ -63,11 +86,59 @@ class UserSettingsModal extends React.Component {
           >
             <View style={styles.modalContainer}>
               <View style={styles.modal}>
-                <Text>e d i t s e t t i n g s</Text>
+                <View style={styles.deviceContainer}>
+                  <View style={styles.device}>
+                    <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                      Recommended Device Setting:
+                    </Text>
+                    {this.getiPhoneModel() ? (
+                      <Text
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginTop: 16,
+                          fontSize: 40
+                        }}
+                      >
+                        a d v a n c e d
+                      </Text>
+                    ) : (
+                      <Text
+                        style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          marginTop: 16,
+                          fontSize: 40
+                        }}
+                      >
+                        s t a n d a r d
+                      </Text>
+                    )}
+                  </View>
+                  <Text />
+                  <Text style={styles.info}>
+                    *AR functionality is only available on iPhone 6s or newer
+                  </Text>
+                  <Text style={styles.info}>
+                    *Upgrade to Advanced Mode if using iPhone X or newer
+                  </Text>
+                </View>
 
+                <Picker
+                  style={styles.picker}
+                  itemStyle={styles.pickerItem}
+                  selectedValue={this.state.device}
+                  onValueChange={this.handleSelectMode}
+                >
+                  <Picker.Item label="s t a n d a r d" value="standard" />
+                  <Picker.Item label="a d v a n c e d" value="advanced" />
+                </Picker>
                 <TouchableOpacity
                   style={styles.btnDrop}
                   onPress={() => {
+                    this.handleSubmit(this.props.user.id, {
+                      device: this.state.device
+                    })
                     this.setModalVisible(!this.state.visible)
                   }}
                 >
@@ -88,14 +159,10 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     borderRadius: 10,
     marginTop: 100
   },
@@ -116,7 +183,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   },
   btnCrum: {
     width: '47%',
@@ -127,6 +198,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10
+  },
+  deviceContainer: {
+    flex: 1
+  },
+  device: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  info: {
+    fontStyle: 'italic'
+  },
+
+  picker: {
+    // flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    width: '100%'
+  },
+  pickerItem: {
+    height: 120
   }
 })
 

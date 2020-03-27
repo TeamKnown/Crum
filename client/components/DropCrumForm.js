@@ -84,6 +84,7 @@ class DisDropCrumForm extends React.Component {
 
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
+    console.log('device')
     // console.log('IPHONE MODEL', this.getiPhoneModel())
     // console.log('SCREEN PIXEL', window.devicePixelRatio)
     // console.log('SCREEN Height', window.innerHeight)
