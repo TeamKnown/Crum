@@ -6,7 +6,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
-      attributes: ['id', 'userName', 'email', 'type'],
+      attributes: ['id', 'userName', 'email', 'type', 'device'],
       include: [
         {
           model: CrumInstance
@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId, {
-      attributes: ['id', 'userName', 'email', 'type'],
+      attributes: ['id', 'userName', 'email', 'type', 'device'],
       include: [
         {
           model: CrumInstance
