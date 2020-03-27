@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderColor: '#7c1e9f',
     width: '90%',
-    height: '80%',
+    height: '70%',
     borderRadius: 10,
     marginTop: 100
   },
