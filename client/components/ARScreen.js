@@ -303,6 +303,7 @@ class DisARScreen extends React.Component {
                 hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
               />
             )}
+            {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
           </View>
         </View>
       </ImageBackground>

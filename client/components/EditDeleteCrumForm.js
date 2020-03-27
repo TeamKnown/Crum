@@ -42,7 +42,7 @@ class DisEditDeleteCrumForm extends React.Component {
   handleDeleteCrum(crumInstance, userId) {
     this.props.DeleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
-    this.setModalVisible(!this.state.modalVisible)
+    // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
     if (crumInstance.message === '')
@@ -50,7 +50,7 @@ class DisEditDeleteCrumForm extends React.Component {
     else {
       this.props.EditCrumInstance(crumInstance, userId)
       this.props.hideEditDeleteCrumForm()
-      this.setModalVisible(!this.state.modalVisible)
+      // this.setModalVisible(!this.state.modalVisible)
     }
   }
   render() {

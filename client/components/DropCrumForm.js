@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {SCALER} from './utils'
@@ -15,6 +16,8 @@ import {
 import {imageThumbnails} from '../../assets/'
 import {postCrumInstance, getSingleUser} from '../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+import {ActionConst} from 'react-native-router-flux'
+
 class DisDropCrumForm extends React.Component {
   constructor() {
     super()
@@ -55,14 +58,37 @@ class DisDropCrumForm extends React.Component {
         validationError: 'Please select a crum'
       })
     else {
+      // This is causing Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s, the componentWillUnmount method, in DisDropCrumForm (created by ConnectFunction)
+      // because this.props.dropCrumInstance(crumInstance, userId, crumId) takes time, and setState might happen when this component is unmounted
       await this.props.dropCrumInstance(crumInstance, userId, crumId)
-      this.props.getSingleUser(userId)
-      this.props.hideDropCrumForm()
-      this.setModalVisible(!this.state.modalVisible)
+      await this.props.getSingleUser(userId)
+      this.props.hideDropCrumForm() //
+      // this.setModalVisible(!this.state.modalVisible)   // removing this help remove the warning
     }
   }
+
+  getiPhoneModel() {
+    if (
+      window.devicePixelRatio >= 3 &&
+      ((window.innerHeight == 368 && window.innerWidth == 207) ||
+        (window.innerHeight == 667 && window.innerWidth == 375) ||
+        (window.innerHeight == 736 && window.innerWidth == 414) ||
+        (window.innerHeight == 812 && window.innerWidth == 375) ||
+        (window.innerHeight >= 812 && window.innerWidth >= 375))
+    ) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
+    // console.log('IPHONE MODEL', this.getiPhoneModel())
+    // console.log('SCREEN PIXEL', window.devicePixelRatio)
+    // console.log('SCREEN Height', window.innerHeight)
+    // console.log('SCREEN Width', window.innerWidth)
+    // console.log('SCREEN', Object.keys(window))
     return (
       <View style={styles.container}>
         {/* <TouchableOpacity

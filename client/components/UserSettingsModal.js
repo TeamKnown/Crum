@@ -2,6 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {updateUserThunk} from '../store/'
+import {LinearGradient} from 'expo-linear-gradient'
 // import {} from '../store/'
 
 import {
@@ -40,43 +41,45 @@ class UserSettingsModal extends React.Component {
   render() {
     const {user} = this.props
     return (
-      <View style={styles.btnCrum}>
-        <TouchableOpacity
-          onPress={() => {
-            this.setModalVisible(true)
-          }}
-        >
-          <Text style={{color: 'white'}} title="settings">
-            s e t t i n g s
-          </Text>
-        </TouchableOpacity>
-        <Modal
-          animationType="none"
-          transparent={false}
-          visible={this.state.visible}
-          onRequestClose={() => {
-            Alert.alert('Modal closed')
-          }}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              <Text>e d i t</Text>
-              <Text>u s e r</Text>
+      <LinearGradient style={styles.btnCrum} colors={['#7c1e9f', '#bd7cde']}>
+        <View>
+          <TouchableOpacity
+            onPress={() => {
+              this.setModalVisible(true)
+            }}
+          >
+            <Text style={{color: 'white'}} title="settings">
+              s e t t i n g s
+            </Text>
+          </TouchableOpacity>
 
-              <TouchableOpacity
-                style={styles.btnDrop}
-                onPress={() => {
-                  this.setModalVisible(!this.state.visible)
-                }}
-              >
-                <Text style={{color: '#19ae9f'}} title="edit">
-                  d o n e
-                </Text>
-              </TouchableOpacity>
+          <Modal
+            animationType="slide"
+            transparent={false}
+            visible={this.state.visible}
+            onRequestClose={() => {
+              Alert.alert('Modal closed')
+            }}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modal}>
+                <Text>e d i t s e t t i n g s</Text>
+
+                <TouchableOpacity
+                  style={styles.btnDrop}
+                  onPress={() => {
+                    this.setModalVisible(!this.state.visible)
+                  }}
+                >
+                  <Text style={{color: '#19ae9f'}} title="edit">
+                    u p d a t e
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-        </Modal>
-      </View>
+          </Modal>
+        </View>
+      </LinearGradient>
     )
   }
 }
@@ -85,8 +88,7 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey',
+    justifyContent: 'space-evenly',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
