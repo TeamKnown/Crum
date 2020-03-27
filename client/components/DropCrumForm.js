@@ -36,8 +36,9 @@ class DisDropCrumForm extends React.Component {
       message: event.nativeEvent.text
     })
   }
-  handleDropCrum(crumInstance, userId, crumId) {
-    this.props.dropCrumInstance(crumInstance, userId, crumId)
+  async handleDropCrum(crumInstance, userId, crumId) {
+    await this.props.dropCrumInstance(crumInstance, userId, crumId)
+    this.props.getSingleUser(userId)
   }
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
@@ -173,7 +174,9 @@ const mapDispatch = dispatch => {
   return {
     dropCrumInstance: (crumInstance, userId, crumId) => {
       dispatch(postCrumInstance(crumInstance, userId, crumId))
-      dispatch(getSingleUser(userId))
+    },
+    getSingleUser: id => {
+      dispatch(getSingleUser(id))
     }
   }
 }
