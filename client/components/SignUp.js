@@ -25,7 +25,7 @@ import {
 } from 'react-native-elements'
 import {connect} from 'react-redux'
 import {auth, me} from '../store/user'
-import UserProfile from './UserProfile'
+// import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from './DismissKeyBoard'
 const {width, height} = Dimensions.get('window')
