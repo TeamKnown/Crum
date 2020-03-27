@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {CrumInstance, Crum, User} = require('../db/models')
+const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 // const {adminOnly, selfOnly} = require('./utlis')
 module.exports = router
 
@@ -12,6 +12,9 @@ router.get('/', async (req, res, next) => {
         },
         {
           model: Crum
+        },
+        {
+          model: CommentInstance
         }
       ]
     })
@@ -40,6 +43,7 @@ router.post('/', async (req, res, next) => {
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
+    returnVal.CommentInstances = []
     if (newCrumInstance) {
       res.json(returnVal)
     }
@@ -73,6 +77,9 @@ router.get('/:id', async (req, res, next) => {
         },
         {
           model: User
+        },
+        {
+          model: CommentInstance
         }
       ]
     })
@@ -101,6 +108,9 @@ router.put('/:id', async (req, res, next) => {
         },
         {
           model: User
+        },
+        {
+          model: CommentInstance
         }
       ]
     })
@@ -120,6 +130,9 @@ router.get('/user/:id', async (req, res, next) => {
         },
         {
           model: Crum
+        },
+        {
+          model: CommentInstance
         }
       ],
       where: {
@@ -142,6 +155,9 @@ router.get('/near/:id', async (req, res, next) => {
       include: [
         {
           model: Crum
+        },
+        {
+          model: CommentInstance
         }
       ]
     })

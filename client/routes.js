@@ -6,6 +6,8 @@ import {HomeTabs, Signin} from './routes/homeStack'
 import {me, getCurrentPosition, stopTracking} from './store'
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
 import {Keyboard} from 'react-native'
+import * as Permissions from 'expo-permissions'
+import PermissionModal from '../client/components/PermissionModal'
 
 const DismissKeyBoard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -16,9 +18,29 @@ const DismissKeyBoard = ({children}) => (
  * COMPONENT
  */
 class disRoutes extends Component {
+  state = {
+    isGranted: true
+  }
+
+  requestLocationPermission = async () => {
+    let {status} = await Permissions.askAsync(Permissions.LOCATION)
+
+    if (status !== 'granted') {
+      this.setState({
+        isGranted: false
+      })
+    } else {
+      this.props.subscribeToLocationData()
+    }
+  }
+
+  closeModal = () => {
+    this.setState({isGranted: true})
+  }
+
   componentDidMount() {
+    this.requestLocationPermission()
     this.props.loadInitialData()
-    this.props.subscribeToLocationData()
   }
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
@@ -30,6 +52,11 @@ class disRoutes extends Component {
     return (
       <NavigationContainer>
         {isLoggedIn ? <HomeTabs /> : <Signin />}
+
+        <PermissionModal
+          isGranted={this.state.isGranted}
+          closeModal={this.closeModal}
+        />
       </NavigationContainer>
     )
   }

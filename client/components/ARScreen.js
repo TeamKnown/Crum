@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
-import * as Permissions from 'expo-permissions'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
@@ -35,6 +34,8 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+
+// import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
 // run this command:
 //npx react-native-clean-project clean-project-auto
@@ -45,29 +46,21 @@ import {createPlane} from './Crums.js'
 
 let scene
 class DisARScreen extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
+    this.state = {
+      longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
+      latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
+      crumInstances: [],
+      dropCrumFormVisible: false,
+      editDeleteCrumFormVisible: false,
+      crumClickedParsed: {},
+      errorMessage: null
+    }
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
   }
-
-  state = {
-    longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
-    latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
-    crumInstances: [],
-    dropCrumFormVisible: false,
-    editDeleteCrumFormVisible: false,
-    crumClickedParsed: {}
-  }
-  // requestLocationPermission = async () => {
-  //   if (Platform.OS === 'ios') {
-  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-  //     if (response === 'granted') {
-  //       this.props.subscribeToLocationData()
-  //     }
-  //   }
-  // }
 
   // getiPhoneModel = () => {
   //   function _getiPhoneModel() {
@@ -98,7 +91,6 @@ class DisARScreen extends React.Component {
   componentDidMount = () => {
     // this.getiPhoneModel()
     THREE.suppressExpoWarnings(true)
-    // this.props.subscribeToLocationData()
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
@@ -129,6 +121,9 @@ class DisARScreen extends React.Component {
     this.runHitTest()
   }
   hideDropCrumForm = () => {
+    // if (this.props.user.device === 'standard') {
+    //   return
+    // }
     this.setState({dropCrumFormVisible: false})
   }
   hideEditDeleteCrumForm = () => {
@@ -137,7 +132,7 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    AR.setWorldAlignment('gravityAndHeading')
+    // AR.setWorldAlignment('gravityAndHeading')
     // console.log('on contect create')
     // console.log(pixelRatio, width, height)
     this.renderer = new Renderer({gl, pixelRatio, width, height})
@@ -149,36 +144,7 @@ class DisARScreen extends React.Component {
     // console.log('end on contect create')
   }
 
-  // onResize = ({scale, width, height}) => {
-  //   this.camera.aspect = width / height
-  //   this.camera.updateProjectionMatrix()
-  //   this.renderer.setPixelRatio(scale)
-  //   this.renderer.setSize(width, height)
-  // }n
-
   onRender = delta => {
-    // console.log(
-    //   'on render ',
-    //   'scale,',
-    //   JSON.stringify(scene.scale),
-    //   JSON.stringify(this.camera.scale),
-    //   'width,',
-    //   JSON.stringify(this.camera.width),
-    //   'height,',
-    //   JSON.stringify(this.camera.height),
-    //   'matrix,',
-    //   JSON.stringify(scene.matrix),
-    //   JSON.stringify(this.camera.matrix),
-    //   'matrixWorld,',
-    //   JSON.stringify(scene.matrixWorld),
-    //   JSON.stringify(this.camera.matrixWorld),
-    //   'matrixAutoUpdate,',
-    //   JSON.stringify(scene.matrixAutoUpdate),
-    //   JSON.stringify(this.camera.matrixAutoUpdate),
-    //   'matrixWorldNeedsUpdate,',
-    //   JSON.stringify(scene.matrixWorldNeedsUpdate),
-    //   JSON.stringify(this.camera.matrixWorldNeedsUpdate))
-
     this.renderer.render(scene, this.camera)
   }
 
@@ -275,11 +241,16 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
+            {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
             <View style={{flex: 1, height: '100%', width: '100%'}}>
               <TouchableOpacity
                 disabled={false}
                 onPress={evt => {
-                  this.updateTouch(evt)
+                  if (this.props.user.devide === 'noAR') {
+                    this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
+                  } else {
+                    this.updateTouch(evt) // use this if your phone does support AR
+                  }
                 }}
                 activeOpacity={1.0}
                 style={{flex: 1}}
@@ -295,8 +266,9 @@ class DisARScreen extends React.Component {
               </TouchableOpacity>
             </View>
 
-            <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
-
+            {this.state.dropCrumFormVisible && (
+              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+            )}
             {this.state.editDeleteCrumFormVisible && (
               <EditDeleteCrumForm
                 crumInstance={
