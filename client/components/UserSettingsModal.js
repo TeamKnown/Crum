@@ -51,7 +51,7 @@ class UserSettingsModal extends React.Component {
           </Text>
         </TouchableOpacity>
         <Modal
-          animationType="none"
+          animationType="slide"
           transparent={false}
           visible={this.state.visible}
           onRequestClose={() => {
@@ -60,8 +60,7 @@ class UserSettingsModal extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text>e d i t</Text>
-              <Text>u s e r</Text>
+              <Text>e d i t s e t t i n g s</Text>
 
               <TouchableOpacity
                 style={styles.btnDrop}
@@ -85,8 +84,7 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey',
+    justifyContent: 'space-evenly',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',

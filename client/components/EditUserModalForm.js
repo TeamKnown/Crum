@@ -2,7 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {updateUserThunk} from '../store/'
-
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {
   Platform,
   Button,
@@ -77,8 +77,9 @@ class EditUserModalForm extends React.Component {
             }}
           />
         </TouchableOpacity>
+
         <Modal
-          animationType="none"
+          animationType="slide"
           transparent={false}
           visible={this.state.visible}
           onRequestClose={() => {
@@ -87,28 +88,37 @@ class EditUserModalForm extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text>e d i t</Text>
-              <Text>u s e r</Text>
-              <TextInput
-                id="userName"
-                name="userName"
-                value={this.state.userName}
-                onChange={this.handleTypeUser}
-                textAlign="center"
-                style={styles.input}
-                placeholder="u s e r n a m e"
-                type="text"
-              />
-              <TextInput
-                id="email"
-                name="email"
-                value={this.state.email}
-                onChange={this.handleTypeEmail}
-                textAlign="center"
-                style={styles.input}
-                placeholder="e m a i l"
-                type="text"
-              />
+              <View style={styles.inputForm}>
+                <Text style={styles.text_footer}>Username</Text>
+                <View style={styles.action}>
+                  <FontAwesome name="user-o" color="#05375a" size={20} />
+                  <TextInput
+                    id="userName"
+                    name="userName"
+                    value={this.state.userName}
+                    onChange={this.handleTypeUser}
+                    textAlign="center"
+                    style={styles.input}
+                    placeholder="u s e r n a m e"
+                    type="text"
+                  />
+                </View>
+
+                <Text style={styles.text_footer}>Email</Text>
+                <View style={styles.action}>
+                  <FontAwesome name="user-o" color="#05375a" size={20} />
+                  <TextInput
+                    id="email"
+                    name="email"
+                    value={this.state.email}
+                    onChange={this.handleTypeEmail}
+                    textAlign="center"
+                    style={styles.input}
+                    placeholder="e m a i l"
+                    type="text"
+                  />
+                </View>
+              </View>
               {/*<TextInput
                     required
                     id="password"
@@ -132,7 +142,7 @@ class EditUserModalForm extends React.Component {
                 }}
               >
                 <Text style={{color: '#19ae9f'}} title="edit">
-                  e d i t
+                  u p d a t e i n f o
                 </Text>
               </TouchableOpacity>
             </View>
@@ -147,15 +157,10 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'grey',
+    justifyContent: 'space-evenly',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     borderRadius: 10,
     marginTop: 100
   },
@@ -176,18 +181,37 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   },
   input: {
-    height: 60,
+    flex: 1,
     width: '90%',
-    borderRadius: 10,
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 2,
     alignItems: 'center',
-    padding: 8,
-    margin: 8
+    paddingLeft: '3%',
+    marginTop: '1%',
+    marginBottom: '1%'
+  },
+  inputForm: {
+    width: '90%',
+    backgroundColor: 'white'
+  },
+  text_footer: {
+    color: '#05375a',
+    fontSize: 18,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    width: '100%'
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: '2%',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: '2%'
   }
 })
 

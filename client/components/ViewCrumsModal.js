@@ -44,6 +44,10 @@ class ViewCrumsModal extends React.Component {
   }
 
   render() {
+    if (this.state.modalVisible) {
+      scrollYPos = this.state.screenHeight * 1
+      this.scroller.scrollTo({x: 0, y: scrollYPos})
+    }
     const {user, crums} = this.props
     // console.log('user', user)
     const {crumInstances} = this.props
@@ -93,7 +97,7 @@ class ViewCrumsModal extends React.Component {
           )}
         </TouchableOpacity>
         <Modal
-          animationType="none"
+          animationType="slide"
           transparent={false}
           visible={this.state.visible}
           onRequestClose={() => {
@@ -102,7 +106,11 @@ class ViewCrumsModal extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text>m y c r u m s</Text>
+              {!crumInstances.length ? (
+                <Text>n o c r u m s</Text>
+              ) : (
+                <Text>m y c r u m s</Text>
+              )}
               {crumInstances.map(crum => (
                 <View style={styles.instance} key={crum.id}>
                   <Image
@@ -117,6 +125,7 @@ class ViewCrumsModal extends React.Component {
                   <Text>{crum.message}</Text>
                 </View>
               ))}
+
               <TouchableOpacity
                 style={styles.btnDrop}
                 onPress={() => {
@@ -140,7 +149,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: 'grey',
     borderColor: '#7c1e9f',
     width: '90%',
     height: '70%',
