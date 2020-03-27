@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {HomeTabs, Signin} from './routes/homeStack'
 import {me, getCurrentPosition, stopTracking} from './store'
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
-import {Keyboard, Text, View, Linking, TouchableOpacity} from 'react-native'
+import {Keyboard} from 'react-native'
 import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
 
@@ -19,32 +19,22 @@ const DismissKeyBoard = ({children}) => (
  */
 class disRoutes extends Component {
   state = {
-    errorMessage: null,
-    isGranted: null
+    isGranted: true
   }
 
   requestLocationPermission = async () => {
-    let {status, expires} = await Permissions.askAsync(Permissions.LOCATION)
-    console.log('PERMISSION DENIED', status)
-    console.log('PERMIS.EXPIRES', expires)
+    let {status} = await Permissions.askAsync(Permissions.LOCATION)
+
     if (status !== 'granted') {
       this.setState({
-        errorMessage: 'Permission to access location was denied',
         isGranted: false
       })
-
-      // return <PermissionModal status={status}/>
     } else {
       this.props.subscribeToLocationData()
-      console.log('PERMISSION GRANTED', status)
     }
   }
 
-  // componentWillMount() {
-  //   this.requestLocationPermission()
-  // }
-
-  closeModal() {
+  closeModal = () => {
     this.setState({isGranted: true})
   }
 
@@ -54,30 +44,21 @@ class disRoutes extends Component {
   }
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
-    // console.log('UNMOUNTING THE ERROR MESSAGE')
   }
 
   render() {
     const {isLoggedIn} = this.props
-    console.log('UNMOUNTING THE ERROR MESSAGE', this.state.errorMessage)
 
-    // if (this.state.errorMessage) {
-    //   return (
-    //     <PermissionModal/>
-    //   )
-    // }
     return (
-      <PermissionModal
-        isGranted={this.state.isGranted}
-        // closeModal={this.closeModal}
-      />
-    )
+      <NavigationContainer>
+        {isLoggedIn ? <HomeTabs /> : <Signin />}
 
-    // return (
-    //   <NavigationContainer>
-    //     {isLoggedIn ? <HomeTabs /> : <Signin />}
-    //   </NavigationContainer>
-    // )
+        <PermissionModal
+          isGranted={this.state.isGranted}
+          closeModal={this.closeModal}
+        />
+      </NavigationContainer>
+    )
   }
 }
 
