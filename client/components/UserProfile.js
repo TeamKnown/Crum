@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     width: '47%',
     height: 60,
     backgroundColor: '#19ae9f',
-    textAlign: 'center',
+    // textAlign: 'center',   // causes error  Failed prop type: Invalid props.style key `textAlign` supplied to `LinearGradient`.
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
