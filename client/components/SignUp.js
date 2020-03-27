@@ -24,7 +24,7 @@ import {
   FormValidationMessage
 } from 'react-native-elements'
 import {connect} from 'react-redux'
-import {auth} from '../store/user'
+import {auth, me} from '../store/user'
 import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from './DismissKeyBoard'
@@ -42,6 +42,14 @@ class DisSignUpComponent extends React.Component {
       secureTextEntry_confirm: true,
       validationError: ''
     }
+  }
+
+  componentDidMount() {
+    const {navigation} = this.props
+    navigation.addListener('focus', () =>
+      // run function that updates the data on entering the screen
+      this.props.reset()
+    )
   }
 
   handleSignUp() {
@@ -379,7 +387,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (username, password) => dispatch(auth(username, password, 'signup'))
+    auth: (username, password) => dispatch(auth(username, password, 'signup')),
+    reset: () => dispatch(me())
   }
 }
 
