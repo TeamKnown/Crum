@@ -69,7 +69,7 @@ class disRoutes extends Component {
     return (
       <PermissionModal
         isGranted={this.state.isGranted}
-        closeModal={this.closeModal}
+        // closeModal={this.closeModal}
       />
     )
 
