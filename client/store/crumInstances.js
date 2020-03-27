@@ -1,9 +1,11 @@
+/* eslint-disable no-case-declarations */
 import {devAxios} from './devAxios'
 import {SCALER} from '../components/utils'
 import * as Location from 'expo-location'
 // action types
 export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
+export const ADD_COMMENT_INSTANCE = 'ADD_COMMENT_INSTANCE'
 export const DELETE_CRUM_INSTANCE = 'DELETE_CRUM_INSTANCE'
 export const EDIT_CRUM_INSTANCE = 'EDIT_CRUM_INSTANCE'
 
@@ -16,6 +18,12 @@ export const setCrumInstances = crumInstances => ({
 export const postedCrumInstance = crumInstance => ({
   type: ADD_CRUM_INSTANCE,
   crumInstance: crumInstance
+})
+
+export const postedCommentInstance = (commentInstance, crumInstanceId) => ({
+  type: ADD_COMMENT_INSTANCE,
+  commentInstance: commentInstance,
+  crumInstanceId: crumInstanceId
 })
 export const deletedCrumInstance = crumInstance => ({
   type: DELETE_CRUM_INSTANCE,
@@ -70,6 +78,20 @@ export const postCrumInstance = (crumInstance, userId, crumId) => {
   }
 }
 
+export const postCommentInstance = (commentInstance, crumInstanceId) => {
+  return async dispatch => {
+    try {
+      let {data} = await devAxios.post(
+        `/api/commentinstances?crumInstanceId=${crumInstanceId}`,
+        commentInstance
+      )
+      dispatch(postedCommentInstance(data, crumInstanceId))
+    } catch (error) {
+      console.error('POST Error')
+    }
+  }
+}
+
 export const deleteCrumInstance = crumInstance => {
   return async dispatch => {
     try {
@@ -109,6 +131,7 @@ const crumInstancesReducer = (state = initialState, action) => {
     case SET_CRUM_INSTANCES:
       return action.crumInstances
     case ADD_CRUM_INSTANCE:
+      console.log('ac', action.crumInstance)
       return [...state, action.crumInstance]
     case DELETE_CRUM_INSTANCE:
       let stateAfterDelete = state.filter(
@@ -120,6 +143,18 @@ const crumInstancesReducer = (state = initialState, action) => {
         elm.id !== +action.crumInstance.id ? elm : action.crumInstance
       )
       return stateAfterEdit
+    case ADD_COMMENT_INSTANCE:
+      let crumAfterComment = state.filter(
+        elm => elm.id === +action.crumInstanceId
+      )[0]
+      crumAfterComment.CommentInstances = [
+        ...crumAfterComment.CommentInstances,
+        action.commentInstance
+      ]
+      let stateAfterComment = state.map(elm =>
+        elm.id !== +action.crumInstanceId ? elm : crumAfterComment
+      )
+      return stateAfterComment
     default:
       return state
   }

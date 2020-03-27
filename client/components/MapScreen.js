@@ -205,12 +205,12 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
-    fetchInitialData: () => {
-      dispatch(getCurrentPosition())
-    },
-    unFetchInitialData: () => {
-      dispatch(stopTracking())
-    },
+    // fetchInitialData: () => {
+    //   dispatch(getCurrentPosition())
+    // },
+    // unFetchInitialData: () => {
+    //   dispatch(stopTracking())
+    // },
     fetchCrum: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     }

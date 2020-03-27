@@ -59,8 +59,8 @@ class DisDropCrumForm extends React.Component {
       })
     else {
       // This is causing Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s, the componentWillUnmount method, in DisDropCrumForm (created by ConnectFunction)
-      // because this.props.dropCrumInstance(crumInstance, userId, crumId) takes time, and setState might happen when this component is unmounted
-      await this.props.dropCrumInstance(crumInstance, userId, crumId)
+      // because this.props.postCrumInstance(crumInstance, userId, crumId) takes time, and setState might happen when this component is unmounted
+      await this.props.postCrumInstance(crumInstance, userId, crumId)
       await this.props.getSingleUser(userId)
       this.props.hideDropCrumForm() //
       // this.setModalVisible(!this.state.modalVisible)   // removing this help remove the warning
@@ -210,7 +210,7 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => {
   return {
-    dropCrumInstance: (crumInstance, userId, crumId) => {
+    postCrumInstance: (crumInstance, userId, crumId) => {
       dispatch(postCrumInstance(crumInstance, userId, crumId))
     },
     getSingleUser: id => {
