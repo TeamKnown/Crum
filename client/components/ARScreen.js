@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
-import * as Permissions from 'expo-permissions'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
@@ -35,6 +34,8 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+
+// import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
 // run this command:
 //npx react-native-clean-project clean-project-auto
@@ -58,16 +59,9 @@ class DisARScreen extends React.Component {
     crumInstances: [],
     dropCrumFormVisible: false,
     editDeleteCrumFormVisible: false,
-    crumClickedParsed: {}
+    crumClickedParsed: {},
+    errorMessage: null
   }
-  // requestLocationPermission = async () => {
-  //   if (Platform.OS === 'ios') {
-  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-  //     if (response === 'granted') {
-  //       this.props.subscribeToLocationData()
-  //     }
-  //   }
-  // }
 
   // getiPhoneModel = () => {
   //   function _getiPhoneModel() {
@@ -98,7 +92,6 @@ class DisARScreen extends React.Component {
   componentDidMount = () => {
     // this.getiPhoneModel()
     THREE.suppressExpoWarnings(true)
-    // this.props.subscribeToLocationData()
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
@@ -137,7 +130,7 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    AR.setWorldAlignment('gravityAndHeading')
+    // AR.setWorldAlignment('gravityAndHeading')
     // console.log('on contect create')
     // console.log(pixelRatio, width, height)
     this.renderer = new Renderer({gl, pixelRatio, width, height})
