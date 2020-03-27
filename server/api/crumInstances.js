@@ -39,10 +39,7 @@ router.post('/', async (req, res, next) => {
     newCrumInstance.user = user
     await newCrumInstance.save()
     await newCrumInstance.reload()
-    console.log('user crum count', user.dataValues.totalCrums)
     await user.userCrums()
-    console.log('user crum count', user.dataValues.totalCrums)
-    // console.log('dorp', user)
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
@@ -83,6 +80,26 @@ router.get('/:id', async (req, res, next) => {
         }
       ]
     })
+    res.json(crumInstance)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findByPk(req.params.id)
+    await crumInstance.destroy()
+    res.json({})
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findByPk(req.params.id)
+    await crumInstance.update(req.body)
     res.json(crumInstance)
   } catch (err) {
     next(err)

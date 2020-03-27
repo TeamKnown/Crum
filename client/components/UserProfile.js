@@ -27,14 +27,14 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount() {
-    console.log('user profile component did mount')
+    // console.log('user profile component did mount')
     this.props.getSingleUser(this.props.user.id)
     // this.props.getUserCrumInstances(this.props.user.id)
   }
 
   render() {
     const {user} = this.props
-    console.log('state', this.state)
+    // console.log('state', this.state)
     return (
       <View style={styles.main}>
         <View style={styles.topContainer}>

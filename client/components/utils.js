@@ -1,3 +1,4 @@
+import queryString from 'query-string'
 export const computePos = (crumInstance, locations) => {
   const z = // positive z means to the south, this should be correct
     (-(crumInstance.latitude - locations.latitude) * 6356000 * 3.14 * 2) / 360.0
@@ -13,6 +14,17 @@ export const computePos = (crumInstance, locations) => {
 }
 export const SCALER = 1000
 
-export const crumPlaneNamer = crumInstance => {
-  return 'Crum?id=' + crumInstance.id + '&name=' + crumInstance.crum.name
+export const crumInstanceNamer = crumInstance => {
+  return (
+    'crumInstanceId=' +
+    crumInstance.id +
+    '&curmId' +
+    crumInstance.crum.id +
+    '&curmName=' +
+    crumInstance.crum.name
+  )
+}
+
+export const crumInstanceParser = crumInstanceName => {
+  return queryString.parse(crumInstanceName)
 }

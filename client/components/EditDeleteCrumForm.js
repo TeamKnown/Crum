@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from './utils'
+import {SCALER, crumInstanceParser} from './utils'
 import {
   TextInput,
   View,
@@ -12,14 +12,20 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import {imageThumbnails} from '../../assets/'
-import {postCrumInstance, getSingleUser} from '../store/'
+import {images} from '../../assets/'
+import {
+  postCrumInstance,
+  putCrumInstance,
+  deleteCrumInstance,
+  getSingleUser
+} from '../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-class DisDropCrumForm extends React.Component {
+class DisEditDeleteCrumForm extends React.Component {
   constructor() {
     super()
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
-    this.handleDropCrum = this.handleDropCrum.bind(this)
+    this.handleDeleteCrum = this.handleDeleteCrum.bind(this)
+    this.handleEditCrum = this.handleEditCrum.bind(this)
   }
   state = {
     modalVisible: true,
@@ -36,26 +42,34 @@ class DisDropCrumForm extends React.Component {
       message: event.nativeEvent.text
     })
   }
-  handleDropCrum(crumInstance, userId, crumId) {
-    this.props.dropCrumInstance(crumInstance, userId, crumId)
+  handleDeleteCrum(crumInstance, userId) {
+    this.props.DeleteCrumInstance(crumInstance, userId)
+  }
+  handleEditCrum(crumInstance, userId) {
+    this.props.EditCrumInstance(crumInstance, userId)
   }
   render() {
-    const {locations, crums, user, hideDropCrumForm} = this.props
+    const {
+      locations,
+      crums,
+      user,
+      hideEditDeleteCrumForm,
+      crumInstance
+    } = this.props
+    // const crumClickedParsed = crumInstanceParser(this.props.crumClicked)
     return (
       <View style={styles.container}>
         {/* <TouchableOpacity
-          style={styles.btnDrop}
+          style={styles.btnEditDelete}
           onPress={() => {
             this.setModalVisible(true)
           }}
         >
-          <Text style={{color: '#19ae9f'}} title="Drop!">
+          <Text style={{color: '#19ae9f'}} title="EditDelete!">
             d r o p
           </Text>
         </TouchableOpacity> */}
         <Modal
-          // style={styles.root}
-          style={{flex: 1}}
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
@@ -69,25 +83,16 @@ class DisDropCrumForm extends React.Component {
               <View style={{flex: 1}}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngSelector}>
-                    {crums.map(crum => (
-                      <TouchableOpacity
-                        key={crum.id}
-                        onPress={() => {
-                          console.log('you selected this crum')
-                          this.setState({
-                            imgId: crum.id
-                          })
-                        }}
-                      >
-                        <Image
-                          style={{width: 40, height: 40, margin: 6}}
-                          borderColor="gray"
-                          borderWidth={this.state.imgId === crum.id ? 2 : 0}
-                          borderRadius={3}
-                          source={imageThumbnails[crum.name]}
-                        />
-                      </TouchableOpacity>
-                    ))}
+                    <Image
+                      style={{width: 320, height: 320, margin: 6}}
+                      // borderColor="gray"
+                      // borderWidth={this.state.imgId === crum.id ? 2 : 0}
+                      borderRadius={3}
+                      source={images[crumInstance.crum.name]}
+                    />
+                    <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                      {JSON.stringify(crumInstance)}
+                    </Text>
                   </View>
                   <View style={styles.modalInput}>
                     <TextInput
@@ -101,49 +106,55 @@ class DisDropCrumForm extends React.Component {
                       autoComplete="message"
                       type="text"
                     />
-
-                    {/* <TextInput
-                  required
-                  id="tags"
-                  value={this.state.message}
-                  onChange={this.handleTypeMessage}
-                  textAlign="center"
-                  style={styles.input}
-                  placeholder="tags"
-                  autoComplete="message"
-                  type="text"
-                /> */}
                   </View>
-
                   <View style={styles.modalButtons}>
                     <TouchableOpacity
-                      style={styles.btnDrop}
+                      style={styles.btn}
                       onPress={() => {
-                        this.handleDropCrum(
+                        this.handleEditCrum(
                           {
                             message: this.state.message,
-                            latitude: locations.latitude,
-                            longitude: locations.longitude
+                            id: crumInstance.id
                           },
-                          user.id,
-                          this.state.imgId
+                          user.id
                         )
-                        this.props.hideDropCrumForm()
+                        this.props.hideEditDeleteCrumForm()
                         this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
-                        drop
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                        edit
                       </Text>
                     </TouchableOpacity>
+
                     <TouchableOpacity
-                      style={styles.btnDrop}
+                      style={styles.btn}
                       onPress={() => {
-                        hideDropCrumForm()
+                        this.handleDeleteCrum(
+                          {
+                            id: crumInstance.id
+                          },
+                          user.id
+                        )
+                        this.props.hideEditDeleteCrumForm()
                         this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                        collect
+                      </Text>
+                    </TouchableOpacity>
+                    {/* <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                {JSON.stringify(Object.keys(this.props))}
+              </Text> */}
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        hideEditDeleteCrumForm()
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
                         never mind
                       </Text>
                     </TouchableOpacity>
@@ -171,20 +182,23 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => {
   return {
-    dropCrumInstance: (crumInstance, userId, crumId) => {
-      dispatch(postCrumInstance(crumInstance, userId, crumId))
+    EditCrumInstance: (crumInstance, userId) => {
+      dispatch(putCrumInstance(crumInstance))
+      dispatch(getSingleUser(userId))
+    },
+    DeleteCrumInstance: (crumInstance, userId) => {
+      dispatch(deleteCrumInstance(crumInstance))
       dispatch(getSingleUser(userId))
     }
   }
 }
 
-const DropCrumForm = connect(mapState, mapDispatch)(DisDropCrumForm)
+const EditDeleteCrumForm = connect(mapState, mapDispatch)(DisEditDeleteCrumForm)
 
-export default DropCrumForm
+export default EditDeleteCrumForm
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     display: 'flex',
     position: 'absolute',
     width: '100%',
@@ -228,7 +242,7 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1
   },
-  btnDrop: {
+  btn: {
     display: 'flex',
     height: 60,
     flex: 3,

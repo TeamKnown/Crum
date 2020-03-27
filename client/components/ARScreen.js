@@ -6,7 +6,12 @@ import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {computePos, SCALER, crumPlaneNamer} from './utils'
+import {
+  computePos,
+  SCALER,
+  crumInstanceNamer,
+  crumInstanceParser
+} from './utils'
 import {
   Platform,
   View,
@@ -22,9 +27,11 @@ import {
   stopTracking,
   fetchCrums,
   fetchNearByCrumInstances,
+  // fetchCrumInstanceDetail,
   me
 } from '../store/'
 import DropCrumForm from './DropCrumForm'
+import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
 // import {request, PERMISSIONS} from 'react-native-permissions'
@@ -34,13 +41,17 @@ class DisARScreen extends React.Component {
   constructor() {
     super()
     this.updateTouch = this.updateTouch.bind(this)
+    this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
+    this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
   }
 
   state = {
     longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
     latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
     crumInstances: [],
-    dropCrumFormVisible: false
+    dropCrumFormVisible: false,
+    editDeleteCrumFormVisible: false,
+    crumClickedParsed: {}
   }
   // requestLocationPermission = async () => {
   //   if (Platform.OS === 'ios') {
@@ -69,13 +80,20 @@ class DisARScreen extends React.Component {
     const intersects = this.raycaster.intersectObjects([scene], true)
     if (intersects.length > 0) {
       let crumClicked = intersects[intersects.length - 1].object.name
-      console.log('CRUM CLICKED: ', crumClicked)
+      let crumClickedParsed = crumInstanceParser(crumClicked)
+      this.setState({
+        editDeleteCrumFormVisible: true,
+        crumClickedParsed: crumClickedParsed
+      })
     } else {
       this.setState({dropCrumFormVisible: true})
     }
   }
   hideDropCrumForm = () => {
     this.setState({dropCrumFormVisible: false})
+  }
+  hideEditDeleteCrumForm = () => {
+    this.setState({editDeleteCrumFormVisible: false})
   }
 
   updateTouch = evt => {
@@ -134,7 +152,7 @@ class DisARScreen extends React.Component {
             images[crumInstance.crum.name],
             pos
           )
-          let planeName = crumPlaneNamer(crumInstance)
+          let planeName = crumInstanceNamer(crumInstance)
           plane.name = planeName
           scene.add(plane)
           let newObj = scene.getObjectByName(planeName)
@@ -144,7 +162,8 @@ class DisARScreen extends React.Component {
 
       const removeCrums = () => {
         for (const crumInstance of toRemove) {
-          let planeName = crumPlaneNamer(crumInstance)
+          // console.log('OLD CRUM TO REMOVE', JSON.stringify(crumInstance))
+          let planeName = crumInstanceNamer(crumInstance)
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
           console.log('REMOVED OLD CRUM', planeToRemove.name)
@@ -215,9 +234,20 @@ class DisARScreen extends React.Component {
               </TouchableOpacity>
             </View>
             {this.state.dropCrumFormVisible && (
-              <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} />
+              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+            )}
+            {this.state.editDeleteCrumFormVisible && (
+              <EditDeleteCrumForm
+                crumInstance={
+                  crumInstances.filter(
+                    i => i.id === +this.state.crumClickedParsed.crumInstanceId
+                  )[0]
+                }
+                hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
+              />
             )}
           </View>
+          {/* <Text>{JSON.stringify(crumInstances.map(i => i.id))}</Text> */}
         </View>
       </ImageBackground>
     )
@@ -251,6 +281,9 @@ const mapDispatch = dispatch => {
     fetchCrumInstances: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     }
+    // fetchCrumInstanceDetail: id => {
+    //   // dispatch(fetchCrumInstanceDetail(id))
+    // }
   }
 }
 
