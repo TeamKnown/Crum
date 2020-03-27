@@ -1,7 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
-import * as Permissions from 'expo-permissions'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
@@ -35,6 +34,9 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+import * as Permissions from 'expo-permissions'
+
+// import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
 // run this command:
 //npx react-native-clean-project clean-project-auto
@@ -58,16 +60,22 @@ class DisARScreen extends React.Component {
     crumInstances: [],
     dropCrumFormVisible: false,
     editDeleteCrumFormVisible: false,
-    crumClickedParsed: {}
+    crumClickedParsed: {},
+    errorMessage: null
   }
-  // requestLocationPermission = async () => {
-  //   if (Platform.OS === 'ios') {
-  //     let response = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-  //     if (response === 'granted') {
-  //       this.props.subscribeToLocationData()
-  //     }
-  //   }
-  // }
+  requestLocationPermission = async () => {
+    let {status} = await Permissions.askAsync(Permissions.LOCATION)
+    console.log('PERMISSION DENIED', status)
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied'
+      })
+    } else {
+      this.props.subscribeToLocationData()
+      this.props.fetchCrums()
+      console.log('PERMISSION GRANTED', status)
+    }
+  }
 
   // getiPhoneModel = () => {
   //   function _getiPhoneModel() {
@@ -97,9 +105,10 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
+    this.requestLocationPermission()
     THREE.suppressExpoWarnings(true)
-    this.props.subscribeToLocationData()
-    this.props.fetchCrums()
+    // this.props.subscribeToLocationData()
+    // this.props.fetchCrums()
   }
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
@@ -137,7 +146,7 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    AR.setWorldAlignment('gravityAndHeading')
+    // AR.setWorldAlignment('gravityAndHeading')
     // console.log('on contect create')
     // console.log(pixelRatio, width, height)
     this.renderer = new Renderer({gl, pixelRatio, width, height})
