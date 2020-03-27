@@ -46,21 +46,20 @@ import {createPlane} from './Crums.js'
 
 let scene
 class DisARScreen extends React.Component {
-  constructor() {
+  constructor(props) {
     super()
+    this.state = {
+      longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
+      latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
+      crumInstances: [],
+      dropCrumFormVisible: false,
+      editDeleteCrumFormVisible: false,
+      crumClickedParsed: {},
+      errorMessage: null
+    }
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
-  }
-
-  state = {
-    longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
-    latitudeIdx: undefined, // likewise, it is floor of (SCALER * latitude),
-    crumInstances: [],
-    dropCrumFormVisible: false,
-    editDeleteCrumFormVisible: false,
-    crumClickedParsed: {},
-    errorMessage: null
   }
 
   // getiPhoneModel = () => {
@@ -122,6 +121,9 @@ class DisARScreen extends React.Component {
     this.runHitTest()
   }
   hideDropCrumForm = () => {
+    // if (this.props.user.device === 'standard') {
+    //   return
+    // }
     this.setState({dropCrumFormVisible: false})
   }
   hideEditDeleteCrumForm = () => {
@@ -142,36 +144,7 @@ class DisARScreen extends React.Component {
     // console.log('end on contect create')
   }
 
-  // onResize = ({scale, width, height}) => {
-  //   this.camera.aspect = width / height
-  //   this.camera.updateProjectionMatrix()
-  //   this.renderer.setPixelRatio(scale)
-  //   this.renderer.setSize(width, height)
-  // }n
-
   onRender = delta => {
-    // console.log(
-    //   'on render ',
-    //   'scale,',
-    //   JSON.stringify(scene.scale),
-    //   JSON.stringify(this.camera.scale),
-    //   'width,',
-    //   JSON.stringify(this.camera.width),
-    //   'height,',
-    //   JSON.stringify(this.camera.height),
-    //   'matrix,',
-    //   JSON.stringify(scene.matrix),
-    //   JSON.stringify(this.camera.matrix),
-    //   'matrixWorld,',
-    //   JSON.stringify(scene.matrixWorld),
-    //   JSON.stringify(this.camera.matrixWorld),
-    //   'matrixAutoUpdate,',
-    //   JSON.stringify(scene.matrixAutoUpdate),
-    //   JSON.stringify(this.camera.matrixAutoUpdate),
-    //   'matrixWorldNeedsUpdate,',
-    //   JSON.stringify(scene.matrixWorldNeedsUpdate),
-    //   JSON.stringify(this.camera.matrixWorldNeedsUpdate))
-
     this.renderer.render(scene, this.camera)
   }
 
@@ -268,11 +241,16 @@ class DisARScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={{flex: 1}}>
+            {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
             <View style={{flex: 1, height: '100%', width: '100%'}}>
               <TouchableOpacity
                 disabled={false}
                 onPress={evt => {
-                  this.updateTouch(evt)
+                  if (this.props.user.devide === 'noAR') {
+                    this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
+                  } else {
+                    this.updateTouch(evt) // use this if your phone does support AR
+                  }
                 }}
                 activeOpacity={1.0}
                 style={{flex: 1}}
