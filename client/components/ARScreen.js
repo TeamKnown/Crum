@@ -1,6 +1,7 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
 import {AR} from 'expo'
+import * as Permissions from 'expo-permissions'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
 import {BackgroundTexture, Camera} from 'expo-three-ar'
