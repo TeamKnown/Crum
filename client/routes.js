@@ -5,7 +5,7 @@ import {NavigationContainer} from '@react-navigation/native'
 import {HomeTabs, Signin} from './routes/homeStack'
 import {me, getCurrentPosition, stopTracking} from './store'
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
-import {Keyboard} from 'react-native'
+import {Keyboard, View} from 'react-native'
 import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
 
@@ -48,17 +48,19 @@ class disRoutes extends Component {
 
   render() {
     const {isLoggedIn} = this.props
-
-    return (
-      <NavigationContainer>
-        {isLoggedIn ? <HomeTabs /> : <Signin />}
-
-        <PermissionModal
-          isGranted={this.state.isGranted}
-          closeModal={this.closeModal}
-        />
-      </NavigationContainer>
-    )
+    if (isLoggedIn) {
+      return <HomeTabs />
+    } else {
+      return (
+        <View style={{flex: 1}}>
+          <Signin />
+          <PermissionModal
+            isGranted={this.state.isGranted}
+            closeModal={this.closeModal}
+          />
+        </View>
+      )
+    }
   }
 }
 
