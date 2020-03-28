@@ -228,9 +228,30 @@ const crumInstances = [
     userId: 7
   },
   {
+    message: 'out for a walk',
+    latitude: 40.7053,
+    longitude: -74.0056,
+    crumId: 1,
+    userId: 8
+  },
+  {
+    message: 'going out for ice cream',
+    latitude: 40.6763,
+    longitude: -73.8752,
+    crumId: 16,
+    userId: 10
+  },
+  {
+    message: 'reading the new sutter cain',
+    latitude: 40.6812,
+    longitude: -73.9955,
+    crumId: 17,
+    userId: 9
+  },
+  {
     message: 'for the dads',
-    latitude: 40.7234,
-    longitude: -73.9832,
+    latitude: 40.7222,
+    longitude: -73.9539,
     crumId: 20,
     userId: 11
   }
