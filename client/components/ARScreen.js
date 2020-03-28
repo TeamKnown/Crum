@@ -34,6 +34,7 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+import * as Permissions from 'expo-permissions'
 
 // import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
@@ -55,7 +56,8 @@ class DisARScreen extends React.Component {
       dropCrumFormVisible: false,
       editDeleteCrumFormVisible: false,
       crumClickedParsed: {},
-      errorMessage: null
+      errorMessage: null,
+      isGranted: true
     }
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)

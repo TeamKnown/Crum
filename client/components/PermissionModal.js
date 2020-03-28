@@ -1,7 +1,14 @@
 import Modal from 'react-native-modal'
 
 import React from 'react'
-import {StyleSheet, Text, View, Linking, Button} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  Button,
+  TouchableOpacity
+} from 'react-native'
 
 export default function PermissionModal(props) {
   const goToSettings = () => {
@@ -10,20 +17,17 @@ export default function PermissionModal(props) {
 
   return (
     <View>
-      <Modal isVisible={!props.isGranted}>
+      <Modal
+        isVisible={!props.isGranted}
+        onBackdropPress={() => props.closeModal()}
+      >
         <View style={styles.content}>
           <Text style={styles.contentTitle}>
-            Hi 👋! Please change your location permissions if you'd like to use
-            our app!
+            Hi 👾! Would you like to allow "Crum" to access your location while
+            you are using the app?
           </Text>
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-              alignItems: 'center'
-            }}
-          >
+          <View style={styles.buttons}>
             <Button onPress={() => props.closeModal()} title="Close" />
             <Button onPress={() => goToSettings()} title="Settings" />
           </View>
@@ -36,15 +40,19 @@ export default function PermissionModal(props) {
 const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
-
-    padding: 22,
+    padding: 15,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 20,
     borderColor: 'rgba(0, 0, 0, 0.1)'
   },
   contentTitle: {
     fontSize: 20,
-    marginBottom: 12
+    marginBottom: '3%'
+  },
+  buttons: {
+    flexDirection: 'row',
+    // justifyContent: 'space-around',
+    alignItems: 'center'
   }
 })
