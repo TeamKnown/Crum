@@ -130,6 +130,7 @@ class UserSettingsModal extends React.Component {
                   selectedValue={this.state.device}
                   onValueChange={this.handleSelectMode}
                 >
+                  <Picker.Item label="n o A R" value="noAR" />
                   <Picker.Item label="s t a n d a r d" value="standard" />
                   <Picker.Item label="a d v a n c e d" value="advanced" />
                 </Picker>

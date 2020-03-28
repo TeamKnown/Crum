@@ -32,7 +32,7 @@ class DisSignInComponent extends React.Component {
     this.state = {
       check_textInputChange: false,
       password: '',
-      username: '',
+      userName: '',
       secureTextEntry: true,
       validationError: ''
     }
@@ -47,15 +47,15 @@ class DisSignInComponent extends React.Component {
   }
 
   handleSignIn() {
-    const {username, password, validationError} = this.state
+    const {userName, password, validationError} = this.state
     this.setState({validationError: ''})
 
-    if (username === '')
+    if (userName === '')
       this.setState({validationError: 'Please enter your username'})
     else if (password === '')
       this.setState({validationError: 'Please enter your password'})
     else {
-      this.props.auth(this.state.username, this.state.password)
+      this.props.auth(this.state.userName, this.state.password)
     }
   }
 
@@ -63,7 +63,7 @@ class DisSignInComponent extends React.Component {
     if (value.length > 4) {
       this.setState({
         check_textInputChange: true,
-        username: value
+        userName: value
       })
     } else {
       this.setState({
@@ -112,7 +112,7 @@ class DisSignInComponent extends React.Component {
                 <View style={styles.action}>
                   <FontAwesome name="user-o" color="#05375a" size={20} />
                   <TextInput
-                    placeholder="Your username..."
+                    placeholder="u s e r n a m e"
                     style={styles.textInput}
                     onChangeText={text => this.textInputChange(text)}
                   />
@@ -138,7 +138,7 @@ class DisSignInComponent extends React.Component {
                   <Feather name="lock" color="#05375a" size={20} />
                   {this.state.secureTextEntry ? (
                     <TextInput
-                      placeholder="Your password..."
+                      placeholder="p a s s w o r d"
                       secureTextEntry={true}
                       style={styles.textInput}
                       value={this.state.password}
@@ -309,7 +309,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (username, password) => dispatch(auth(username, password, 'login')),
+    auth: (userName, password) => dispatch(auth(userName, password, 'login')),
     reset: () => dispatch(me())
   }
 }

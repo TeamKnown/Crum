@@ -38,7 +38,7 @@ const User = db.define('user', {
     defaultValue: 'user'
   },
   device: {
-    type: Sequelize.ENUM(['old', 'standard', 'advanced']),
+    type: Sequelize.ENUM(['noAR', 'standard', 'advanced']),
     defaultValue: 'standard'
   },
   totalCrums: {
