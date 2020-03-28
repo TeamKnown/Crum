@@ -80,50 +80,62 @@ const users = [
 ]
 const crums = [
   {
+    id: 1,
     name: 'Dog',
     category: '2-Animal'
   },
   {
+    id: 2,
     name: 'BrainFog',
     category: '0-Emoji'
   },
   {
+    id: 3,
     name: 'JsHtmlCss',
     category: '3-Object'
   },
   {
+    id: 4,
     name: 'Breakmarker',
     category: '3-Object'
   },
   {
+    id: 5,
     name: 'LaughWithTear',
     category: '0-Emoji'
   },
   {
+    id: 6,
     name: 'Chocolates',
     category: '3-Object'
   },
   {
+    id: 7,
     name: 'LaughWithTeeth',
     category: '0-Emoji'
   },
   {
+    id: 8,
     name: 'CoolGuy',
     category: '0-Emoji'
   },
   {
+    id: 9,
     name: 'Mask',
     category: '3-Object'
   },
   {
+    id: 10,
     name: 'MusicNote',
     category: '4-Symbol'
   },
   {
+    id: 11,
     name: 'FourthOfJuly',
     category: '4-Symbol'
   },
   {
+    id: 12,
     name: 'Pinocchio',
     category: '0-Emoji'
   },
@@ -132,34 +144,42 @@ const crums = [
   //   category: '4-Symbol'
   // },
   {
+    id: 13,
     name: 'Ring',
     category: '3-Object'
   },
   {
+    id: 14,
     name: 'GreenFace',
     category: '0-Emoji'
   },
   {
+    id: 15,
     name: 'Sleepy',
     category: '0-Emoji'
   },
   {
+    id: 16,
     name: 'Halo',
     category: '0-Emoji'
   },
   {
+    id: 17,
     name: 'Smart',
     category: '0-Emoji'
   },
   {
+    id: 18,
     name: 'HandSanitizer',
     category: '3-Object'
   },
   {
+    id: 19,
     name: 'Stress',
     category: '0-Emoji'
   },
   {
+    id: 20,
     name: 'Dad',
     category: '1-Human'
   }
@@ -168,28 +188,36 @@ const crumInstances = [
   {
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
-    longitude: -73.9743
+    longitude: -73.9743,
+    crumId: 20,
+    userId: 11
   },
   {
-    message: 'April',
-    latitude: 40.7075,
-    longitude: -74.0056
+    message: 'Please no more...',
+    latitude: 40.7077,
+    longitude: -74.0112,
+    crumId: 14,
+    userId: 3
   },
   {
-    message: 'April2',
-    latitude: 40.7075,
-    longitude: -74.0056
+    message: 'Beautiful Day!',
+    latitude: 40.776,
+    longitude: -73.9689,
+    crumId: 8,
+    userId: 5
   },
   {
-    message: 'April3',
+    message: 'Where is everyone?',
     latitude: 40.7075,
-    longitude: -74.0056
-  },
-  {
-    message: 'April4',
-    latitude: 40.7075,
-    longitude: -74.0056
+    longitude: -74.0092,
+    crumId: 19,
+    userId: 2
   }
+  // {
+  //   message: 'April4',
+  //   latitude: 40.7053,
+  //   longitude: -74.0056
+  // }
 ]
 
 const commentInstances = [
@@ -207,28 +235,28 @@ const seed = async () => {
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
-    for (let i = 1; i < crumInstances.length + 1; i++) {
-      let j = Math.floor(Math.random() * 19) + 1
-      // let k = Math.floor(Math.random() * 9) + 1
-      let k = Math.floor(Math.random() * 2) + 1
-      let crumInstanceI = await CrumInstance.findByPk(i)
-      let crumI = await Crum.findByPk(j)
-      let userK = await User.findByPk(k)
-      await crumInstanceI.setCrum(crumI)
-      await crumInstanceI.setUser(userK)
-    }
+    // for (let i = 1; i < crumInstances.length + 1; i++) {
+    //   let j = Math.floor(Math.random() * 19) + 1
+    //   // let k = Math.floor(Math.random() * 9) + 1
+    //   let k = Math.floor(Math.random() * 2) + 1
+    //   let crumInstanceI = await CrumInstance.findByPk(i)
+    //   let crumI = await Crum.findByPk(j)
+    //   let userK = await User.findByPk(k)
+    //   await crumInstanceI.setCrum(crumI)
+    //   await crumInstanceI.setUser(userK)
+    // }
 
-    await Promise.all(
-      commentInstances.map(commentInstance =>
-        CommentInstance.create(commentInstance)
-      )
-    )
-    for (let i = 1; i < commentInstances.length + 1; i++) {
-      let j = Math.floor(Math.random() * 4) + 1
-      let commentInstancesI = await CommentInstance.findByPk(i)
-      let crumInstanceI = await CrumInstance.findByPk(j)
-      await commentInstancesI.setCrumInstance(crumInstanceI)
-    }
+    // await Promise.all(
+    //   commentInstances.map(commentInstance =>
+    //     CommentInstance.create(commentInstance)
+    //   )
+    // )
+    // for (let i = 1; i < commentInstances.length + 1; i++) {
+    //   let j = Math.floor(Math.random() * 4) + 1
+    //   let commentInstancesI = await CommentInstance.findByPk(i)
+    //   let crumInstanceI = await CrumInstance.findByPk(j)
+    //   await commentInstancesI.setCrumInstance(crumInstanceI)
+    // }
   } catch (error) {
     console.log(red(error))
   }
