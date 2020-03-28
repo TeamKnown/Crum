@@ -212,12 +212,21 @@ const crumInstances = [
     longitude: -74.0092,
     crumId: 19,
     userId: 2
+  },
+  {
+    message: 'What a show!',
+    latitude: 40.7213,
+    longitude: -73.9932,
+    crumId: 10,
+    userId: 4
+  },
+  {
+    message: 'hope you like chocolate',
+    latitude: 40.7053,
+    longitude: -74.0056,
+    crumId: 6,
+    userId: 7
   }
-  // {
-  //   message: 'April4',
-  //   latitude: 40.7053,
-  //   longitude: -74.0056
-  // }
 ]
 
 const commentInstances = [
