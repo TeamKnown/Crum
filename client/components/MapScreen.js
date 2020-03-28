@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import MapView, {Marker, Callout, Circle} from 'react-native-maps'
+import MapView, {Marker, Callout, Circle, Polyline} from 'react-native-maps'
 // import axios from 'axios'
 import {connect} from 'react-redux'
 import {fetchNearByCrumInstances} from '../store/crumInstances'
@@ -13,9 +13,9 @@ import {
   Image,
   SafeAreaView
 } from 'react-native'
-import {Actions} from 'react-native-router-flux' // New code
 import {SCALER} from './utils'
 import {images} from '../../assets/'
+import {CurrentLocationButton} from './CurrentLocationButton'
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
@@ -25,34 +25,14 @@ class DisMapScreen extends Component {
     // this.onCarouselItemChange = this.onCarouselItemChange.bind(this)
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
   }
-
-  // componentDidMount = () => {
-  //   this.props.fetchInitialData()
-
-  //   // this.props.fetchNearByCrumInstances()
-  // }
-  // componentWillUnmount = () => {
-  //   this.props.unFetchInitialData()
-  // }
-
-  // static getDerivedStateFromProps(props, state) {
-  //   if (
-  //     Number.isInteger(props.locations.longitudeIdx) &&
-  //     Number.isInteger(props.locations.latitudeIdx) &&
-  //     (props.locations.latitudeIdx !== state.latitudeIdx ||
-  //       props.locations.longitudeIdx !== state.longitudeIdx)
-  //   ) {
-  //     console.log('location changed!!!', props.locations)
-  //     props.fetchCrum(props.locations.latitudeIdx, props.locations.longitudeIdx)
-  //     return {
-  //       ...state,
-  //       latitudeIdx: props.locations.latitudeIdx,
-  //       longitudeIdx: props.locations.longitudeIdx
-  //     }
-  //   } else {
-  //     return state
-  //   }
-  // }
+  centerMap(locations) {
+    this._map.animateToRegion({
+      latitude: locations.latitude,
+      longitude: locations.longitude,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121
+    })
+  }
 
   onMarkerPressed = (location, index) => {
     this._map.animateToRegion({
@@ -86,19 +66,19 @@ class DisMapScreen extends Component {
     // console.log('THIS.PROPS.LOCATION:', locations)
     // console.log('THIS IS THE LAT', typeof locations.latitude)
     // console.log('THIS IS THE LONG', typeof locations.longitude)
-
-    return (
-      <SafeAreaView style={styles.container}>
-        {/* <Text
-          style={styles.welcome}
-          onPress={() => Actions.gray()} // New Code
-        >
-          Scarlet Screen
-        </Text> */}
-        {locations.longitude && locations.latitude ? (
+    if (locations.longitude && locations.latitude) {
+      return (
+        <SafeAreaView style={styles.container}>
+          <CurrentLocationButton
+            cb={() => {
+              this.centerMap(locations)
+            }}
+          />
           <MapView
             ref={map => (this._map = map)}
             showsUserLocation={true}
+            showsCompass={true}
+            rotateEnabled={false}
             style={styles.map}
             initialRegion={{
               latitude: locations.latitude,
@@ -136,24 +116,30 @@ class DisMapScreen extends Component {
               )
             })}
             <Text>{crumInstances.length}</Text>
+
+            <Polyline
+              coordinates={[{latitude: 37.8025259, longitude: -122.4351431}]}
+              strokeColor="red" // fallback for when `strokeColors` is not supported by the map-provider
+              strokeWidth={6}
+            />
           </MapView>
-        ) : (
-          <Text>Loading your current location....</Text>
-        )}
-        <Carousel
-          ref={c => {
-            this._carousel = c
-          }}
-          data={this.props.crumInstances}
-          containerCustomStyle={styles.carousel}
-          renderItem={this.renderCarouselItem}
-          sliderWidth={Dimensions.get('window').width}
-          itemWidth={300}
-          removeClippedSubviews={false}
-          onSnapToItem={index => this.onCarouselItemChange(index)}
-        />
-      </SafeAreaView>
-    )
+          <Carousel
+            ref={c => {
+              this._carousel = c
+            }}
+            data={this.props.crumInstances}
+            containerCustomStyle={styles.carousel}
+            renderItem={this.renderCarouselItem}
+            sliderWidth={Dimensions.get('window').width}
+            itemWidth={300}
+            removeClippedSubviews={false}
+            onSnapToItem={index => this.onCarouselItemChange(index)}
+          />
+        </SafeAreaView>
+      )
+    } else {
+      return <Text>Loading your current location....</Text>
+    }
   }
 }
 

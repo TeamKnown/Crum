@@ -39,7 +39,7 @@ function UserProfile(props) {
   useFocusEffect(
     React.useCallback(() => {
       props.getSingleUser(props.user.id)
-    }, [props.getSingleUser, props.user.id])
+    }, [props.user.id])
   )
 
   const {user} = props
