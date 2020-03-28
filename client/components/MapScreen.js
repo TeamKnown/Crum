@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   cardContainer: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    height: 185,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    height: 140,
     width: 300,
     padding: 24,
     borderRadius: 24,
@@ -179,8 +179,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cardImage: {
-    height: 180,
-    width: 180,
+    height: 100,
+    width: 100,
     bottom: 0
   },
   cardTitle: {
