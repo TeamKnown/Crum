@@ -25,7 +25,7 @@ const updateUser = user => ({
 const defaultUser = {
   id: 0,
   userName: 'Guest',
-  email: 'Shopper',
+  email: 'Email',
   googleId: null,
   type: 'user',
   address: '',
@@ -41,11 +41,10 @@ export const me = () => async dispatch => {
   }
 }
 
-export const auth = (email, password, method) => async dispatch => {
+export const auth = (userName, password, method) => async dispatch => {
   let res
   try {
-    email = email.toLowerCase()
-    res = await devAxios.post(`/auth/${method}`, {email, password})
+    res = await devAxios.post(`/auth/${method}`, {userName, password})
   } catch (authError) {
     return dispatch(getUser({error: authError}))
   }
