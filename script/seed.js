@@ -242,11 +242,18 @@ const crumInstances = [
     userId: 10
   },
   {
-    message: 'reading the new sutter cain',
+    message: 'reading the new sutter cane',
     latitude: 40.6812,
     longitude: -73.9955,
     crumId: 17,
     userId: 9
+  },
+  {
+    message: 'sandwich time',
+    latitude: 40.7269,
+    longitude: -73.8773,
+    crumId: 8,
+    userId: 6
   },
   {
     message: 'for the dads',
