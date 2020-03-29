@@ -69,16 +69,16 @@ class DisEditDeleteCrumForm extends React.Component {
     // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
-    if (!this.state.selfEditing) {
-      this.setState({selfEditing: true})
-      return
-    }
-    this.setState({selfEditing: false})
+    // if (!this.state.selfEditing) {
+    //   this.setState({selfEditing: true})
+    //   return
+    // }
+    // this.setState({selfEditing: false})
     if (crumInstance.message === '')
       this.setState({validationError: 'Message cannot be empty'})
     else {
       this.props.editCrumInstance(crumInstance, userId)
-      this.props.hideEditDeleteCrumForm()
+      // this.props.hideEditDeleteCrumForm()
       // this.setModalVisible(!this.state.modalVisible)
     }
   }
@@ -100,36 +100,25 @@ class DisEditDeleteCrumForm extends React.Component {
               <View style={{flex: 1}}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
-                    <ScrollView
-                      contentContainerStyle={{
-                        flex: 1,
-                        maxWidth: '60%',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                      }}
+                    <View
+                      // contentContainerStyle={styles.modalTitle}
+                      Style={styles.modalTitle}
                     >
                       <Text
                         style={{
-                          fontSize: 40,
-                          borderWidth: 4
+                          fontSize: 25
                         }}
                       >
                         {crumInstance.message}
                       </Text>
-                    </ScrollView>
-                    <Image
-                      style={{
-                        borderWidth: 4,
-                        flex: 1,
-                        flexShrink: 0,
-                        width: 160,
-                        height: 160
-                      }}
-                      // borderColor="gray"
-                      // borderWidth={2}
-                      borderRadius={3}
-                      source={images[crumInstance.crum.name]}
-                    />
+                    </View>
+                    <View style={styles.modalPng}>
+                      <Image
+                        style={styles.modalPng}
+                        borderRadius={3}
+                        source={images[crumInstance.crum.name]}
+                      />
+                    </View>
                   </View>
                   <View style={styles.modalComments}>
                     <ScrollView style={{flex: 1, width: '100%'}}>
@@ -325,10 +314,29 @@ const styles = StyleSheet.create({
     flexBasis: '40%',
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center'
     // flexWrap: 'wrap',
     // borderColor: 'gray',
-    // borderWidth: 1
+    borderWidth: 1
+  },
+  modalTitle: {
+    borderWidth: 1,
+    backgroundColor: 'red',
+    // flex: 1,
+    width: 160,
+    height: 160,
+    maxWidth: 160,
+    maxHeight: 160
+    // margin: 2
+  },
+  modalPng: {
+    borderWidth: 1,
+    flex: 1,
+    // flexShrink: 0,
+    maxWidth: 160,
+    maxHeight: 160,
+    width: 160,
+    height: 160
+    // margin: 2
   },
 
   modalComments: {
