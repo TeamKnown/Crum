@@ -35,6 +35,7 @@ import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
+import CamPermissionModal from './CamPermissionModal'
 
 // import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
@@ -59,6 +60,25 @@ class DisARScreen extends React.Component {
       errorMessage: null,
       isGranted: true
     }
+
+    this.requestCameraPermission = async () => {
+      let {status} = await Permissions.askAsync(Permissions.CAMERA)
+      console.log('STATUS', status)
+
+      if (status !== 'granted') {
+        this.setState({
+          isGranted: false
+        })
+      } else {
+        this.setState({isGranted: true})
+        // this.props.subscribeToLocationData()
+      }
+    }
+
+    this.closeModal = () => {
+      this.setState({isGranted: true})
+    }
+
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
@@ -92,6 +112,8 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
+    this.requestCameraPermission()
+
     THREE.suppressExpoWarnings(true)
     this.props.fetchCrums()
   }
@@ -232,6 +254,14 @@ class DisARScreen extends React.Component {
     // AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
+    if (this.state.isGranted === false) {
+      return (
+        <CamPermissionModal
+          isGranted={this.state.isGranted}
+          closeModal={this.closeModal}
+        />
+      )
+    }
     return (
       <ImageBackground
         source={require('../../public/background.png')}
