@@ -36,6 +36,7 @@ class DisMapScreen extends Component {
     }
     // this.onCarouselItemChange = this.onCarouselItemChange.bind(this)
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
+    this.getDirections = this.getDirections.bind(this)
   }
   mergeCoords = () => {
     const {desLatitude, desLongitude} = this.state
@@ -55,10 +56,10 @@ class DisMapScreen extends Component {
         `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=${GOOGLE_API_KEY}`
       )
       const respJson = await resp.json()
-      // const response = respJson.routes[0]
-      // const distanceTime = response.legs[0]
-      // const distance = distanceTime.distance.text
-      // const time = distanceTime.duration.text
+      const response = respJson.routes[0]
+      const distanceTime = response.legs[0]
+      const distance = distanceTime.distance.text
+      const time = distanceTime.duration.text
       const points = polyline.decode(
         respJson.routes[0].overview_polyline.points
       )
@@ -68,8 +69,8 @@ class DisMapScreen extends Component {
           longitude: point[1]
         }
       })
-      // console.log('mapview', respJson)
-      await this.setState({coords})
+
+      this.setState({coords, distance, time})
       console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
