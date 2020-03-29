@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blank Template",
-    "slug": "AwesomeAR",
+    "name": "Crum",
+    "slug": "crum",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": ["ios", "android", "web"],
@@ -20,6 +20,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "An augmented reality and social media application which allows users to drop crumbs and view nearby crumbs. Users can make comments on crums, or delete/edit crums dropped by themselves. "
   }
 }
