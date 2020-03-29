@@ -246,7 +246,7 @@ class DisARScreen extends React.Component {
               <TouchableOpacity
                 disabled={false}
                 onPress={evt => {
-                  if (this.props.user.device === 'noAR') {
+                  if (this.props.user.devide === 'noAR') {
                     this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
                   } else {
                     this.updateTouch(evt) // use this if your phone does support AR
@@ -265,7 +265,7 @@ class DisARScreen extends React.Component {
                 />
               </TouchableOpacity>
             </View>
-
+            {/* <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} /> */}
             {this.state.dropCrumFormVisible && (
               <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
             )}
