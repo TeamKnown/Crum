@@ -24,6 +24,8 @@ import {CurrentLocationButton} from './CurrentLocationButton'
 import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
 
+const {width, height} = Dimensions.get('screen')
+
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
@@ -36,6 +38,7 @@ class DisMapScreen extends Component {
     }
     // this.onCarouselItemChange = this.onCarouselItemChange.bind(this)
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
+    this.onMarkerPressdRoutes = this.onMarkerPressdRoutes.bind(this)
     this.getDirections = this.getDirections.bind(this)
   }
 
@@ -82,7 +85,7 @@ class DisMapScreen extends Component {
 
       this.setState({coords, distance, time})
 
-      console.log('this.state coords', this.state.coords)
+      // console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -106,10 +109,28 @@ class DisMapScreen extends Component {
         desLongitude: longitude
       },
 
-      this.mergeCoords()
+      this.mergeCoords
     )
   }
-
+  renderDistanceInfo() {
+    return (
+      <View
+        style={{
+          width: width - 80,
+          paddingTop: 15,
+          backgroundColor: 'rgba(0,0,0,0.1)',
+          justifyContent: 'flex-end'
+        }}
+      >
+        <Text style={{fontWeight: 'bold'}}>
+          Estimated Time: {this.state.time}
+        </Text>
+        <Text style={{fontWeight: 'bold'}}>
+          Estimated Distance: {this.state.distance}
+        </Text>
+      </View>
+    )
+  }
   //locate user button function
   centerMap(locations) {
     this._map.animateToRegion({
@@ -149,7 +170,6 @@ class DisMapScreen extends Component {
 
   render() {
     const {locations, crumInstances} = this.props
-    // console.log('CRUM INSTANCES MAP VIEW:', crumInstances)
 
     if (locations.longitude && locations.latitude) {
       return (
@@ -173,6 +193,9 @@ class DisMapScreen extends Component {
               longitudeDelta: 0.0121
             }}
           >
+            {this.state.time &&
+              this.state.distance &&
+              this.renderDistanceInfo()}
             <Circle
               center={locations}
               radius={1000}
@@ -205,10 +228,9 @@ class DisMapScreen extends Component {
               )
             })}
             <Text>{crumInstances.length}</Text>
-
             <Polyline
               strokeWidth={6}
-              strokeColor="#000"
+              strokeColor="#4A89F3"
               coordinates={this.state.coords}
             />
           </MapView>

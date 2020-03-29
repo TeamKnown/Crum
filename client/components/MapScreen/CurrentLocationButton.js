@@ -9,7 +9,7 @@ export const CurrentLocationButton = props => {
   const cb = props.cb
     ? props.cb
     : () => console.log('Callback function not passed to CurrentLactionButton')
-  const bottom = props.bottom ? props.bottom : 550
+  const bottom = props.bottom ? props.bottom : 565
   return (
     <View style={[styles.container, {top: HEIGHT - bottom}]}>
       <MaterialIcons
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     backgroundColor: '#fff',
-    left: WIDTH - 70,
+    left: WIDTH - 60,
     borderRadius: 50,
     shadowColor: '#000000',
     elevation: 7,
