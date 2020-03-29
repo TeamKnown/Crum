@@ -9,11 +9,13 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  SafeAreaView,
   Modal,
   Alert
 } from 'react-native'
 import {imageThumbnails} from '../../assets/'
 import {postCrumInstance, getSingleUser} from '../store/'
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import {ActionConst} from 'react-native-router-flux'
 
 class DisDropCrumForm extends React.Component {
@@ -23,9 +25,10 @@ class DisDropCrumForm extends React.Component {
     this.handleDropCrum = this.handleDropCrum.bind(this)
   }
   state = {
-    modalVisible: false,
+    modalVisible: true,
     message: '',
-    imgId: ''
+    imgId: '',
+    validationError: ''
   }
   setModalVisible(modalVisible) {
     this.setState({
@@ -80,15 +83,16 @@ class DisDropCrumForm extends React.Component {
   }
 
   render() {
+    const {locations, crums, user, hideDropCrumForm} = this.props
+    console.log('device')
     // console.log('IPHONE MODEL', this.getiPhoneModel())
     // console.log('SCREEN PIXEL', window.devicePixelRatio)
     // console.log('SCREEN Height', window.innerHeight)
     // console.log('SCREEN Width', window.innerWidth)
     // console.log('SCREEN', Object.keys(window))
-    const {locations, crums, user} = this.props
     return (
       <View style={styles.container}>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={styles.btnDrop}
           onPress={() => {
             this.setModalVisible(true)
@@ -97,73 +101,97 @@ class DisDropCrumForm extends React.Component {
           <Text style={{color: '#19ae9f'}} title="Drop!">
             d r o p
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <Modal
+          style={{flex: 1}}
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            // this.handleOpenModel()
             Alert.alert('Modal closed')
           }}
         >
-          <View style={styles.container}>
-            <View style={styles.modal}>
-              <TextInput
-                required
-                id="message"
-                value={this.state.message}
-                onChange={this.handleTypeMessage}
-                textAlign="center"
-                style={styles.input}
-                placeholder="m e s s a g e"
-                autoComplete="message"
-                type="text"
-              />
-              <View style={styles.pngSelector}>
-                {crums.map(crum => (
-                  <TouchableOpacity
-                    key={crum.id}
-                    onPress={() => {
-                      console.log('you selected this crum')
-                      this.setState({
-                        imgId: crum.id
-                      })
-                    }}
-                  >
-                    <Image
-                      style={{width: 40, height: 40, margin: 6}}
-                      borderColor="gray"
-                      borderWidth={this.state.imgId === crum.id ? 2 : 0}
-                      borderRadius={3}
-                      source={imageThumbnails[crum.name]}
+          <SafeAreaView style={{flex: 1}}>
+            <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
+              <View style={{flex: 1}}>
+                <View style={styles.modal}>
+                  <View style={styles.modalPngSelector}>
+                    {crums.map(crum => (
+                      <TouchableOpacity
+                        key={crum.id}
+                        onPress={() => {
+                          this.setState({
+                            imgId: crum.id
+                          })
+                        }}
+                      >
+                        <Image
+                          style={{width: 40, height: 40, margin: 6}}
+                          borderColor={
+                            this.state.imgId === crum.id
+                              ? 'gray'
+                              : 'rgba(250,250,250,0)'
+                          }
+                          borderWidth={2}
+                          borderRadius={3}
+                          source={imageThumbnails[crum.name]}
+                        />
+                      </TouchableOpacity>
+                    ))}
+                  </View>
+                  <View style={styles.modalInput}>
+                    <TextInput
+                      required
+                      id="message"
+                      value={this.state.message}
+                      onChange={this.handleTypeMessage}
+                      textAlign="center"
+                      style={styles.input}
+                      placeholder="m e s s a g e"
+                      autoComplete="message"
+                      type="text"
                     />
-                  </TouchableOpacity>
-                ))}
+                  </View>
+                  <Text
+                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
+                  >
+                    {this.state.validationError}
+                  </Text>
+                  <View style={styles.modalButtons}>
+                    <TouchableOpacity
+                      style={styles.btnDrop}
+                      onPress={() => {
+                        this.handleDropCrum(
+                          {
+                            message: this.state.message,
+                            latitude: locations.latitude,
+                            longitude: locations.longitude
+                          },
+                          user.id,
+                          this.state.imgId
+                        )
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                        drop
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.btnDrop}
+                      onPress={() => {
+                        hideDropCrumForm()
+                        this.setModalVisible(!this.state.modalVisible)
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="Drop!">
+                        never mind
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
               </View>
-
-              <TouchableOpacity
-                style={styles.btnDrop}
-                onPress={() => {
-                  this.handleDropCrum(
-                    {
-                      message: this.state.message,
-                      latitude: locations.latitude,
-                      longitude: locations.longitude
-                    },
-                    user.id,
-                    this.state.imgId
-                  )
-                  // this.props.hideDropCrumForm()
-                  this.setModalVisible(!this.state.modalVisible)
-                }}
-              >
-                <Text style={{color: '#19ae9f'}} title="Drop!">
-                  d r o p
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+            </KeyboardAwareScrollView>
+          </SafeAreaView>
         </Modal>
       </View>
     )
@@ -198,21 +226,19 @@ export default DropCrumForm
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
     flex: 1,
+    display: 'flex',
+    position: 'absolute',
     width: '100%',
-    height: '100%',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-    justifyContent: 'flex-end'
+    height: '100%'
   },
   modal: {
-    width: '90%',
-    height: '90%',
+    // height: '100%',
+    // position: 'relative',
+    display: 'flex',
+    width: '93%',
     flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(250,250,250,0.8)',
     borderColor: '#7c1e9f',
     alignSelf: 'center',
     shadowColor: 'grey',
@@ -220,38 +246,61 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     borderRadius: 10,
-    marginBottom: 30
+    marginBottom: '10%',
+    marginTop: '20%',
+    padding: 5
   },
-  pngSelector: {
-    width: '80%',
-    height: '50%',
+  modalPngSelector: {
+    display: 'flex',
+    width: '100%',
+    flexBasis: '80%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
     flexWrap: 'wrap'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
+  },
+  modalButtons: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexBasis: '16%',
+    display: 'flex',
+    flexDirection: 'row'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
   },
   btnDrop: {
+    display: 'flex',
     height: 60,
-    width: '90%',
+    flex: 3,
+    flexBasis: '30%',
     backgroundColor: 'white',
     borderColor: '#19ae9f',
     borderWidth: 2,
     textAlign: 'center',
     borderRadius: 10,
-    alignSelf: 'center',
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 30
+    margin: 5
+  },
+  modalInput: {
+    justifyContent: 'center',
+    flexBasis: '16%',
+    display: 'flex'
+    // borderColor: 'gray',
+    // borderRadius: 10,
+    // borderWidth: 1
   },
   input: {
     height: 60,
-    width: '90%',
     borderRadius: 10,
     borderColor: 'grey',
     backgroundColor: 'white',
     borderWidth: 2,
     alignItems: 'center',
-    padding: 8,
-    margin: 30
+    margin: 5
   }
 })

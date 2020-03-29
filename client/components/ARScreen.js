@@ -265,7 +265,7 @@ class DisARScreen extends React.Component {
                 />
               </TouchableOpacity>
             </View>
-
+            {/* <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} /> */}
             {this.state.dropCrumFormVisible && (
               <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
             )}
