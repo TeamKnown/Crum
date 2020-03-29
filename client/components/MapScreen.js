@@ -1,5 +1,11 @@
 import React, {Component} from 'react'
-import MapView, {Marker, Callout, Circle, Polyline} from 'react-native-maps'
+import MapView, {
+  PROVIDER_GOOGLE,
+  Marker,
+  Callout,
+  Circle,
+  Polyline
+} from 'react-native-maps'
 // import axios from 'axios'
 import {connect} from 'react-redux'
 import {fetchNearByCrumInstances} from '../store/crumInstances'
@@ -16,15 +22,82 @@ import {
 import {SCALER} from './utils'
 import {images} from '../../assets/'
 import {CurrentLocationButton} from './CurrentLocationButton'
+import {GOOGLE_API_KEY} from '../../secretDom'
+import polyline from '@mapbox/polyline'
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      markers: []
+      markers: [],
+      latitude: null,
+      longitude: null,
+      locations: [],
+      coords: []
     }
     // this.onCarouselItemChange = this.onCarouselItemChange.bind(this)
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
   }
+  mergeCoords = () => {
+    const {desLatitude, desLongitude} = this.state
+
+    const hasStartAndEnd =
+      this.props.locations.latitude !== null && desLatitude !== null
+
+    if (hasStartAndEnd) {
+      const concatStart = `${this.props.locations.latitude},${this.props.locations.longitude}`
+      const concatEnd = `${desLatitude},${desLongitude}`
+      this.getDirections(concatStart, concatEnd)
+    }
+  }
+  async getDirections(startLoc, desLoc) {
+    try {
+      const resp = await fetch(
+        `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=${GOOGLE_API_KEY}`
+      )
+      const respJson = await resp.json()
+      // const response = respJson.routes[0]
+      // const distanceTime = response.legs[0]
+      // const distance = distanceTime.distance.text
+      // const time = distanceTime.duration.text
+      const points = polyline.decode(
+        respJson.routes[0].overview_polyline.points
+      )
+      const coords = points.map(point => {
+        return {
+          latitude: point[0],
+          longitude: point[1]
+        }
+      })
+      // console.log('mapview', respJson)
+      await this.setState({coords})
+      console.log('this.state coords', this.state.coords)
+    } catch (error) {
+      console.log('Error: ', error)
+    }
+  }
+
+  onMarkerPress = crumInstance => {
+    let location = {
+      coords: {
+        latitude: crumInstance.latitude,
+        longitude: crumInstance.longitude
+      }
+    }
+
+    const {
+      coords: {latitude, longitude}
+    } = location
+    this.setState(
+      {
+        destination: location,
+        desLatitude: latitude,
+        desLongitude: longitude
+      },
+
+      this.mergeCoords()
+    )
+  }
+
   centerMap(locations) {
     this._map.animateToRegion({
       latitude: locations.latitude,
@@ -75,6 +148,7 @@ class DisMapScreen extends Component {
             }}
           />
           <MapView
+            provider={PROVIDER_GOOGLE}
             ref={map => (this._map = map)}
             showsUserLocation={true}
             showsCompass={true}
@@ -99,7 +173,7 @@ class DisMapScreen extends Component {
                   // eslint-disable-next-line no-return-assign
                   // eslint-disable-next-line react/no-direct-mutation-state
                   ref={ref => (this.state.markers[index] = ref)}
-                  onPress={() => this.onMarkerPressed(crum, index)}
+                  onPress={() => this.onMarkerPress(crum)}
                   coordinate={{
                     latitude: +crum.latitude,
                     longitude: +crum.longitude
@@ -118,9 +192,9 @@ class DisMapScreen extends Component {
             <Text>{crumInstances.length}</Text>
 
             <Polyline
-              coordinates={[{latitude: 37.8025259, longitude: -122.4351431}]}
-              strokeColor="red" // fallback for when `strokeColors` is not supported by the map-provider
               strokeWidth={6}
+              strokeColor="#000"
+              coordinates={this.state.coords}
             />
           </MapView>
           <Carousel
