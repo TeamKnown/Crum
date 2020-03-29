@@ -34,6 +34,8 @@ import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import {images, fonts} from '../../assets/'
 import {createPlane} from './Crums.js'
+import * as Permissions from 'expo-permissions'
+import CamPermissionModal from './CamPermissionModal'
 
 // import {Constants, Location, Permissions} from 'expo'
 // if you get error ativeModule.RNDeviceInfo is null
@@ -55,11 +57,31 @@ class DisARScreen extends React.Component {
       dropCrumFormVisible: false,
       editDeleteCrumFormVisible: false,
       crumClickedParsed: {},
-      errorMessage: null
+      errorMessage: null,
+      isGranted: true
     }
+
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
+  }
+
+  requestCameraPermission = async () => {
+    let {status} = await Permissions.askAsync(Permissions.CAMERA)
+    console.log('STATUS', status)
+
+    if (status !== 'granted') {
+      this.setState({
+        isGranted: false
+      })
+    } else {
+      this.setState({isGranted: true})
+      // this.props.subscribeToLocationData()
+    }
+  }
+
+  closeModal = () => {
+    this.setState({isGranted: true})
   }
 
   // getiPhoneModel = () => {
@@ -90,6 +112,8 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
+    this.requestCameraPermission()
+
     THREE.suppressExpoWarnings(true)
     this.props.fetchCrums()
   }
@@ -230,40 +254,64 @@ class DisARScreen extends React.Component {
     // AR.setWorldAlignment('gravityAndHeading') // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
-    return (
-      <ImageBackground
-        source={require('../../public/background.png')}
-        style={{
-          flex: 1,
-          width: null,
-          height: null
-        }}
-      >
-        <View style={styles.main}>
-          <View style={{flex: 1}}>
-            {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
-            <View style={{flex: 1, height: '100%', width: '100%'}}>
-              <TouchableOpacity
-                disabled={false}
-                onPress={evt => {
-                  if (this.props.user.device === 'noAR') {
-                    this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
-                  } else {
-                    this.updateTouch(evt) // use this if your phone does support AR
-                  }
-                }}
-                activeOpacity={1.0}
-                style={{flex: 1}}
-              >
-                <GraphicsView
+    if (this.state.isGranted === false) {
+      return (
+        <CamPermissionModal
+          isGranted={this.state.isGranted}
+          closeModal={this.closeModal}
+        />
+      )
+    } else {
+      return (
+        <ImageBackground
+          source={require('../../public/background.png')}
+          style={{
+            flex: 1,
+            width: null,
+            height: null
+          }}
+        >
+          <View style={styles.main}>
+            <View style={{flex: 1}}>
+              {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
+              <View style={{flex: 1, height: '100%', width: '100%'}}>
+                <TouchableOpacity
+                  disabled={false}
+                  onPress={evt => {
+                    if (this.props.user.device === 'noAR') {
+                      this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
+                    } else {
+                      this.updateTouch(evt) // use this if your phone does support AR
+                    }
+                  }}
+                  activeOpacity={1.0}
                   style={{flex: 1}}
-                  onContextCreate={this.onContextCreate}
-                  onRender={this.onRender}
-                  // onResize={this.onResize}
-                  isArEnabled
-                  isArCameraStateEnabled
+                >
+                  <GraphicsView
+                    style={{flex: 1}}
+                    onContextCreate={this.onContextCreate}
+                    onRender={this.onRender}
+                    // onResize={this.onResize}
+                    isArEnabled
+                    isArCameraStateEnabled
+                  />
+                </TouchableOpacity>
+              </View>
+
+              {this.state.dropCrumFormVisible && (
+                <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+              )}
+              {this.state.editDeleteCrumFormVisible && (
+                <EditDeleteCrumForm
+                  crumInstance={
+                    crumInstances.filter(
+                      i => i.id === +this.state.crumClickedParsed.crumInstanceId
+                    )[0]
+                  }
+                  hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
                 />
-              </TouchableOpacity>
+              )}
+              {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
             </View>
             {/* <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} /> */}
             {this.state.dropCrumFormVisible && (
@@ -281,9 +329,9 @@ class DisARScreen extends React.Component {
             )}
             {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
           </View>
-        </View>
-      </ImageBackground>
-    )
+        </ImageBackground>
+      )
+    }
   }
 }
 

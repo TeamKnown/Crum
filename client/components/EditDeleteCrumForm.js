@@ -51,15 +51,20 @@ class DisEditDeleteCrumForm extends React.Component {
   }
 
   handleTypeComment(event) {
-    console.log('typing ')
     this.setState({
       comment: event.nativeEvent.text
     })
   }
 
   handleAddComment(commentInstance, crumInstanceId) {
-    this.props.postCommentInstance(commentInstance, crumInstanceId)
-    this.setState({comment: ''})
+    if (this.state.comment === '')
+      this.setState({validationError: 'Comment cannot be empty'})
+    else {
+      this.props.postCommentInstance(commentInstance, crumInstanceId)
+      this.setState({validationError: ''})
+      this.setState({comment: ''})
+    }
+
     // this.props.hideEditDeleteCrumForm()
     // this.setModalVisible(!this.state.modalVisible)
   }
@@ -69,15 +74,17 @@ class DisEditDeleteCrumForm extends React.Component {
     // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
-    // if (!this.state.selfEditing) {
-    //   this.setState({selfEditing: true})
-    //   return
-    // }
-    // this.setState({selfEditing: false})
+    if (!this.state.selfEditing) {
+      this.setState({selfEditing: true})
+      return
+    }
+
     if (crumInstance.message === '')
       this.setState({validationError: 'Message cannot be empty'})
     else {
       this.props.editCrumInstance(crumInstance, userId)
+      this.setState({selfEditing: false})
+      this.setState({validationError: ''})
       // this.props.hideEditDeleteCrumForm()
       // this.setModalVisible(!this.state.modalVisible)
     }
@@ -100,17 +107,24 @@ class DisEditDeleteCrumForm extends React.Component {
               <View style={{flex: 1}}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
-                    <View
-                      // contentContainerStyle={styles.modalTitle}
-                      Style={styles.modalTitle}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 25
-                        }}
-                      >
-                        {crumInstance.message}
-                      </Text>
+                    <View style={styles.modalTitle}>
+                      <TextInput
+                        required
+                        multiline={true}
+                        id="message"
+                        editable={this.state.selfEditing}
+                        value={this.state.message}
+                        onChange={this.handleTypeMessage}
+                        textAlign="center"
+                        style={
+                          this.state.selfEditing
+                            ? styles.title
+                            : styles.disabledTitle
+                        }
+                        placeholder=""
+                        autoComplete="text"
+                        type="text"
+                      />
                     </View>
                     <View style={styles.modalPng}>
                       <Image
@@ -121,7 +135,12 @@ class DisEditDeleteCrumForm extends React.Component {
                     </View>
                   </View>
                   <View style={styles.modalComments}>
-                    <ScrollView style={{flex: 1, width: '100%'}}>
+                    <ScrollView
+                      style={{
+                        flex: 1,
+                        width: '100%'
+                      }}
+                    >
                       {crumInstance.CommentInstances.map(comment => (
                         <Text key={comment.id}>
                           {comment.message}
@@ -130,49 +149,19 @@ class DisEditDeleteCrumForm extends React.Component {
                       ))}
                     </ScrollView>
                   </View>
-                  {/* <View style={styles.ModalComments}> */}
-                  {/* <View style={styles.PngSelector}>
-                    <Image
-                      style={{width: 160, height: 160, margin: 6}}
-                      // borderColor="gray"
-                      // borderWidth={2}
-                      borderRadius={3}
-                      source={images[crumInstance.crum.name]}
-                    />
-                    {/* <Text>{JSON.stringify(crumInstance.message)}</Text>
-                    <Text>
-                      {JSON.stringify(
-                        crumInstance.CommentInstances.map(elm => elm.id)
-                      )}
-                    </Text> */}
 
                   <View style={styles.modalInput}>
                     <TextInput
                       required
-                      id="message"
-                      disabled={!self || !this.state.selfEditing}
-                      value={this.state.message}
-                      onChange={this.handleTypeMessage}
-                      textAlign="center"
-                      style={
-                        !self || !this.state.selfEditing
-                          ? styles.inputDisabled
-                          : styles.input
-                      }
-                      placeholder="m e s s a g e"
-                      autoComplete="text"
-                      type="text"
-                    />
-                    <TextInput
-                      required
                       id="comment"
-                      disabled={true}
-                      // disabled={!self || !this.state.selfEditing}
+                      // editable={false}
                       value={this.state.comment}
                       onChange={this.handleTypeComment}
                       textAlign="center"
-                      style={styles.disabledInput}
-                      placeholder="c o m m e n t"
+                      style={{
+                        color: 'black'
+                      }}
+                      placeholder="Leave your comment here"
                       autoComplete="text"
                       type="text"
                     />
@@ -183,6 +172,20 @@ class DisEditDeleteCrumForm extends React.Component {
                     {this.state.validationError}
                   </Text>
                   <View style={styles.modalButtons}>
+                    <TouchableOpacity
+                      style={styles.btn}
+                      onPress={() => {
+                        this.handleAddComment(
+                          {message: this.state.comment},
+                          crumInstance.id
+                        )
+                      }}
+                    >
+                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
+                        comment
+                      </Text>
+                    </TouchableOpacity>
+
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -201,6 +204,8 @@ class DisEditDeleteCrumForm extends React.Component {
                         </Text>
                       </TouchableOpacity>
                     )}
+                  </View>
+                  <View style={styles.modalButtons}>
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -218,19 +223,7 @@ class DisEditDeleteCrumForm extends React.Component {
                         </Text>
                       </TouchableOpacity>
                     )}
-                    <TouchableOpacity
-                      style={styles.btn}
-                      onPress={() => {
-                        this.handleAddComment(
-                          {message: this.state.comment},
-                          crumInstance.id
-                        )
-                      }}
-                    >
-                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                        comment
-                      </Text>
-                    </TouchableOpacity>
+
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
@@ -291,8 +284,6 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   modal: {
-    // height: '100%',
-    // position: 'relative',
     display: 'flex',
     width: '93%',
     flexDirection: 'column',
@@ -314,51 +305,71 @@ const styles = StyleSheet.create({
     flexBasis: '40%',
     flexDirection: 'row',
     alignItems: 'center',
-    // flexWrap: 'wrap',
-    // borderColor: 'gray',
-    borderWidth: 1
+    justifyContent: 'center',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10
   },
   modalTitle: {
-    borderWidth: 1,
-    backgroundColor: 'red',
-    // flex: 1,
-    width: 160,
-    height: 160,
-    maxWidth: 160,
-    maxHeight: 160
-    // margin: 2
-  },
-  modalPng: {
-    borderWidth: 1,
     flex: 1,
-    // flexShrink: 0,
+    minWidth: 160,
+    minHeight: 160,
+    maxWidth: 160,
+    maxHeight: 160,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flexWrap: 'wrap'
+  },
+  disabledTitle: {
+    minWidth: 160,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    fontSize: 28
+  },
+
+  title: {
+    minWidth: 160,
+    // minHeight: 160,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 28,
+    borderColor: 'black',
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    padding: 2
+  },
+
+  modalPng: {
+    flex: 1,
     maxWidth: 160,
     maxHeight: 160,
     width: 160,
     height: 160
-    // margin: 2
   },
 
   modalComments: {
     display: 'flex',
     width: '100%',
-    flexBasis: '40%',
-    flexDirection: 'column',
+    flexDirection: 'row',
+    flexBasis: '35%',
     alignItems: 'center',
     justifyContent: 'center',
-    // flexWrap: 'wrap',
-    borderColor: 'gray',
-    borderWidth: 1
-    // backgroundColor: 'red'
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
   },
   modalButtons: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexBasis: '16%',
     display: 'flex',
     flexDirection: 'row',
-    borderColor: 'gray',
-    borderWidth: 1
+    borderColor: 'gray'
   },
   btn: {
     display: 'flex',
@@ -376,20 +387,24 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     justifyContent: 'center',
-    flexBasis: '16%',
+    flexBasis: '6%',
     display: 'flex',
-    borderColor: 'gray',
-    borderWidth: 1
+    borderColor: 'white',
+    borderWidth: 1,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10
   },
 
   input: {
+    flex: 1,
     height: 60,
     borderRadius: 10,
     borderColor: 'grey',
     backgroundColor: 'white',
-    borderWidth: 2,
-    alignItems: 'center',
-    margin: 5
+    color: 'black',
+    // borderWidth: 2,
+    alignItems: 'center'
+    // margin: 5
   },
   inputDisabled: {
     justifyContent: 'center',
