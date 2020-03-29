@@ -11,35 +11,38 @@ import {createStackNavigator} from '@react-navigation/stack'
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import {Dimensions, View, TouchableOpacity} from 'react-native'
 import Animated from 'react-native-reanimated'
+import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
 
 const Tab = createMaterialTopTabNavigator()
 function HomeTabs() {
   const {height} = Dimensions.get('window')
   return (
-    <Tab.Navigator style={{paddingTop: height > 600 ? 30 : 10}}>
-      <Tab.Screen
-        name="Profile"
-        component={UserProfile}
-        options={{
-          tabBarLabel: 'Profile'
-        }}
-      />
-      <Tab.Screen
-        name="ARScreen"
-        component={ARScreen}
-        options={{
-          tabBarLabel: 'ARView'
-        }}
-      />
-      <Tab.Screen
-        name="MapScreen"
-        component={MapScreen}
-        options={{
-          tabBarLabel: 'MapView'
-        }}
-      />
-    </Tab.Navigator>
+    <NavigationContainer>
+      <Tab.Navigator style={{paddingTop: height > 600 ? 30 : 10}}>
+        <Tab.Screen
+          name="Profile"
+          component={UserProfile}
+          options={{
+            tabBarLabel: 'Profile'
+          }}
+        />
+        <Tab.Screen
+          name="ARScreen"
+          component={ARScreen}
+          options={{
+            tabBarLabel: 'ARView'
+          }}
+        />
+        <Tab.Screen
+          name="MapScreen"
+          component={MapScreen}
+          options={{
+            tabBarLabel: 'MapView'
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   )
 }
 
@@ -47,18 +50,20 @@ function HomeTabs() {
 const Stack = createStackNavigator()
 function Signin() {
   return (
-    <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen
-        name="SignIn"
-        component={SignIn}
-        options={{headerTransparent: true, title: ''}}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={SignUp}
-        options={{headerTransparent: true, title: ''}}
-      />
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="SignIn"
+          component={SignIn}
+          options={{headerTransparent: true, title: ''}}
+        />
+        <Stack.Screen
+          name="SignUp"
+          component={SignUp}
+          options={{headerTransparent: true, title: ''}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 export {Signin, HomeTabs}

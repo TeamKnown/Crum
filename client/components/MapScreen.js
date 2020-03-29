@@ -15,9 +15,7 @@ import {
 } from 'react-native'
 import {Actions} from 'react-native-router-flux' // New code
 import {SCALER} from './utils'
-function getRandomInt(min, max) {
-  return min + Math.random() * (max - min + 1)
-}
+import {images} from '../../assets/'
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
@@ -78,8 +76,7 @@ class DisMapScreen extends Component {
 
   renderCarouselItem = ({item}) => (
     <View style={styles.cardContainer}>
-      <Text style={styles.cardTitle}>{item.title}</Text>
-      <Image style={styles.cardImage} source={require('./breakmarker.png')} />
+      <Image style={styles.cardImage} source={images[item.crum.name]} />
     </View>
   )
 
@@ -173,8 +170,8 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   cardContainer: {
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    height: 100,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    height: 140,
     width: 300,
     padding: 24,
     borderRadius: 24,
@@ -182,7 +179,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   cardImage: {
-    height: 120,
+    height: 100,
     width: 100,
     bottom: 0
   },
@@ -204,12 +201,12 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
-    // fetchInitialData: () => {
-    //   dispatch(getCurrentPosition())
-    // },
-    // unFetchInitialData: () => {
-    //   dispatch(stopTracking())
-    // },
+    fetchInitialData: () => {
+      dispatch(getCurrentPosition())
+    },
+    unFetchInitialData: () => {
+      dispatch(stopTracking())
+    },
     fetchCrum: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     }
