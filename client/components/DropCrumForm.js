@@ -257,7 +257,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10
     // borderColor: 'gray',
     // borderRadius: 10,
     // borderWidth: 1
@@ -265,7 +269,7 @@ const styles = StyleSheet.create({
   modalButtons: {
     alignItems: 'center',
     justifyContent: 'space-between',
-    flexBasis: '16%',
+    // flexBasis: '16%',
     display: 'flex',
     flexDirection: 'row'
     // borderColor: 'gray',
@@ -288,19 +292,12 @@ const styles = StyleSheet.create({
   },
   modalInput: {
     justifyContent: 'center',
-    flexBasis: '16%',
-    display: 'flex'
-    // borderColor: 'gray',
-    // borderRadius: 10,
-    // borderWidth: 1
-  },
-  input: {
-    height: 60,
-    borderRadius: 10,
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    borderWidth: 2,
-    alignItems: 'center',
-    margin: 5
+    flexBasis: '6%',
+    display: 'flex',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10
   }
 })
