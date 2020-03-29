@@ -43,6 +43,8 @@
   "author": "Team Known",
   "license": "MIT",
   "dependencies": {
+    "@expo/vector-icons": "^10.0.6",
+    "@mapbox/polyline": "^1.1.0",
     "@react-native-community/masked-view": "^0.1.5",
     "@react-navigation/bottom-tabs": "^5.2.4",
     "@react-navigation/drawer": "^5.3.4",

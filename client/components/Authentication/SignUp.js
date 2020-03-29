@@ -24,10 +24,10 @@ import {
   FormValidationMessage
 } from 'react-native-elements'
 import {connect} from 'react-redux'
-import {auth, me} from '../store/user'
+import {auth, me} from '../../store/user'
 // import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
-import {DismissKeyBoard} from './DismissKeyBoard'
+import {DismissKeyBoard} from '../DismissKeyBoard'
 const {width, height} = Dimensions.get('window')
 
 class DisSignUpComponent extends React.Component {
@@ -98,7 +98,7 @@ class DisSignUpComponent extends React.Component {
 
     return (
       <ImageBackground
-        source={require('../../public/background.png')}
+        source={require('../../../assets/background.png')}
         style={{
           flex: 1
         }}

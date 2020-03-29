@@ -19,8 +19,10 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    },
-    "description": "An augmented reality and social media application which allows users to drop crumbs and view nearby crumbs. Users can make comments on crums, or delete/edit crums dropped by themselves. "
+      "description": "An augmented reality and social media application which allows users to drop crumbs and view nearby crumbs. Users can make comments on crums, or delete/edit crums dropped by themselves. ",
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fullstack.crum",
+      "config": {}
+    }
   }
 }
