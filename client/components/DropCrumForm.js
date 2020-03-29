@@ -146,7 +146,9 @@ class DisDropCrumForm extends React.Component {
                       value={this.state.message}
                       onChange={this.handleTypeMessage}
                       textAlign="center"
-                      style={styles.input}
+                      style={{
+                        color: 'black'
+                      }}
                       placeholder="m e s s a g e"
                       autoComplete="message"
                       type="text"

@@ -51,7 +51,6 @@ class DisEditDeleteCrumForm extends React.Component {
   }
 
   handleTypeComment(event) {
-    console.log('typing ')
     this.setState({
       comment: event.nativeEvent.text
     })
@@ -159,7 +158,9 @@ class DisEditDeleteCrumForm extends React.Component {
                       value={this.state.comment}
                       onChange={this.handleTypeComment}
                       textAlign="center"
-                      style={styles.disabledInput}
+                      style={{
+                        color: 'black'
+                      }}
                       placeholder="Leave your comment here"
                       autoComplete="text"
                       type="text"
@@ -283,8 +284,6 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   modal: {
-    // height: '100%',
-    // position: 'relative',
     display: 'flex',
     width: '93%',
     flexDirection: 'column',
@@ -307,7 +306,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    // flexWrap: 'wrap',
     borderColor: 'white',
     borderWidth: 1,
     borderTopRightRadius: 10,
@@ -326,7 +324,6 @@ const styles = StyleSheet.create({
   },
   disabledTitle: {
     minWidth: 160,
-    // minHeight: 160,
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -348,14 +345,11 @@ const styles = StyleSheet.create({
   },
 
   modalPng: {
-    // borderWidth: 1,
     flex: 1,
-    // flexShrink: 0,
     maxWidth: 160,
     maxHeight: 160,
     width: 160,
     height: 160
-    // margin: 2
   },
 
   modalComments: {
@@ -407,6 +401,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: 'grey',
     backgroundColor: 'white',
+    color: 'black',
     // borderWidth: 2,
     alignItems: 'center'
     // margin: 5
