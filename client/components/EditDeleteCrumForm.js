@@ -181,11 +181,11 @@ class DisEditDeleteCrumForm extends React.Component {
                         )
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                        comment
-                      </Text>
+                      <Text title="EditDelete!">comment</Text>
                     </TouchableOpacity>
 
+                    {/* </View>
+                  <View style={styles.modalButtons}> */}
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -199,13 +199,9 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                          edit
-                        </Text>
+                        <Text title="EditDelete!">edit</Text>
                       </TouchableOpacity>
                     )}
-                  </View>
-                  <View style={styles.modalButtons}>
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -218,21 +214,16 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                          collect
-                        </Text>
+                        <Text title="EditDelete!">collect</Text>
                       </TouchableOpacity>
                     )}
-
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
                         this.props.hideEditDeleteCrumForm()
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="EditDelete!">
-                        never mind
-                      </Text>
+                      <Text title="EditDelete!">never mind</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -278,31 +269,30 @@ export default EditDeleteCrumForm
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    position: 'absolute',
-    width: '100%',
-    height: '100%'
+    position: 'absolute'
   },
   modal: {
-    display: 'flex',
-    width: '93%',
-    flexDirection: 'column',
-    backgroundColor: 'rgba(250,250,250,0.8)',
-    borderColor: '#7c1e9f',
+    flex: 1,
     alignSelf: 'center',
+    alignContent: 'center',
+    width: '93%',
+    // backgroundColor: 'rgba(250,250,250,0.8)',
+    borderColor: '#7c1e9f',
     shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    justifyContent: 'space-between',
+    // shadowOffset: {width: 2, height: 2},
+    // shadowOpacity: 0.8,
+    // shadowRadius: 2,
     borderRadius: 10,
-    marginBottom: '10%',
+    marginBottom: '5%',
     marginTop: '20%',
     padding: 5
   },
   modalPngTitle: {
-    display: 'flex',
-    width: '100%',
-    flexBasis: '40%',
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    flex: 1,
+    minHeight: '45%',
+    maxHeight: '45%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -322,6 +312,13 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     flexWrap: 'wrap'
   },
+  modalPng: {
+    flex: 10,
+    maxWidth: 160,
+    maxHeight: 160,
+    width: 160,
+    height: 160
+  },
   disabledTitle: {
     minWidth: 160,
     display: 'flex',
@@ -332,7 +329,6 @@ const styles = StyleSheet.create({
 
   title: {
     minWidth: 160,
-    // minHeight: 160,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -344,28 +340,25 @@ const styles = StyleSheet.create({
     padding: 2
   },
 
-  modalPng: {
-    flex: 1,
-    maxWidth: 160,
-    maxHeight: 160,
-    width: 160,
-    height: 160
-  },
-
   modalComments: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    flex: 1,
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
-    flexBasis: '35%',
-    flexGrow: 1,
+    minHeight: '45%',
+    maxHeight: '45%',
+
     alignItems: 'flex-start',
-    // justifyContent: 'center',
     borderColor: 'white',
     borderWidth: 1,
     borderTopWidth: 0,
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    padding: 15
   },
   modalButtons: {
+    minHeight: '12%',
+    maxHeight: '12%',
     alignItems: 'center',
     justifyContent: 'space-between',
     display: 'flex',
@@ -373,46 +366,30 @@ const styles = StyleSheet.create({
     borderColor: 'gray'
   },
   btn: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
     display: 'flex',
-    height: 60,
+    height: '90%',
     flex: 3,
     flexBasis: '20%',
-    backgroundColor: 'white',
-    borderColor: '#19ae9f',
+    // backgroundColor: 'white',
+    borderColor: 'white',
     borderWidth: 2,
     textAlign: 'center',
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5
   },
   modalInput: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    flex: 1,
+    minHeight: '10%',
+    maxHeight: '10%',
     justifyContent: 'center',
-    flexBasis: '6%',
     display: 'flex',
     borderColor: 'white',
     borderWidth: 1,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
-  },
-
-  input: {
-    flex: 1,
-    height: 60,
-    borderRadius: 10,
-    borderColor: 'grey',
-    backgroundColor: 'white',
-    color: 'black',
-    // borderWidth: 2,
-    alignItems: 'center'
-    // margin: 5
-  },
-  inputDisabled: {
-    justifyContent: 'center',
-    flexBasis: '16%',
-    display: 'flex',
-    borderColor: 'red'
-    // borderWidth: 0,
-    // fontSize: 20
   }
 })
