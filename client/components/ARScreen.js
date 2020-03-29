@@ -68,7 +68,6 @@ class DisARScreen extends React.Component {
 
   requestCameraPermission = async () => {
     let {status} = await Permissions.askAsync(Permissions.CAMERA)
-    console.log('STATUS', status)
 
     if (status !== 'granted') {
       this.setState({
@@ -112,6 +111,7 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
+
     this.requestCameraPermission()
 
     THREE.suppressExpoWarnings(true)
@@ -119,6 +119,7 @@ class DisARScreen extends React.Component {
   }
   componentWillUnmount = () => {
     // this.props.unsubscribeToLocationData()
+
     THREE.suppressExpoWarnings(false)
   }
 

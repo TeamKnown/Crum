@@ -3,9 +3,9 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
 import UserProfile from '../components/UserProfile'
-import SignIn from '../components/SignIn'
-import SignUp from '../components/SignUp'
-import MapScreen from '../components/MapScreen'
+import SignIn from '../components/Authentication/SignIn'
+import SignUp from '../components/Authentication/SignUp'
+import MapScreen from '../components/MapScreen/MapScreen'
 import ARScreen from '../components/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
 import {createDrawerNavigator} from '@react-navigation/drawer'
@@ -19,7 +19,7 @@ function HomeTabs() {
   const {height} = Dimensions.get('window')
   return (
     <NavigationContainer>
-      <Tab.Navigator style={{paddingTop: height > 600 ? 30 : 10}}>
+      <Tab.Navigator lazy={true} style={{paddingTop: height > 600 ? 30 : 10}}>
         <Tab.Screen
           name="Profile"
           component={UserProfile}
@@ -51,7 +51,7 @@ const Stack = createStackNavigator()
 function Signin() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator>
         <Stack.Screen
           name="SignIn"
           component={SignIn}
