@@ -6,10 +6,9 @@ import MapView, {
   Circle,
   Polyline
 } from 'react-native-maps'
-// import axios from 'axios'
 import {connect} from 'react-redux'
-import {fetchNearByCrumInstances} from '../store/crumInstances'
-import {getCurrentPosition, stopTracking} from '../store/locations'
+import {fetchNearByCrumInstances} from '../../store/crumInstances'
+import {getCurrentPosition, stopTracking} from '../../store/locations'
 import Carousel from 'react-native-snap-carousel'
 import {
   StyleSheet,
@@ -19,11 +18,12 @@ import {
   Image,
   SafeAreaView
 } from 'react-native'
-import {SCALER} from './utils'
-import {images} from '../../assets/'
+import {SCALER} from '../utils'
+import {images} from '../../../assets'
 import {CurrentLocationButton} from './CurrentLocationButton'
-import {GOOGLE_API_KEY} from '../../secretDom'
+import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
+
 class DisMapScreen extends Component {
   constructor(props) {
     super(props)
@@ -38,6 +38,15 @@ class DisMapScreen extends Component {
     // this.renderCarouselItem = this.renderCarouselItem.bind(this)
     this.getDirections = this.getDirections.bind(this)
   }
+
+  componentDidMount() {
+    this.isMounted = true
+  }
+  componentWillUnmount() {
+    this.isMounted = false
+  }
+  //map routes functions
+
   mergeCoords = () => {
     const {desLatitude, desLongitude} = this.state
 
@@ -50,6 +59,7 @@ class DisMapScreen extends Component {
       this.getDirections(concatStart, concatEnd)
     }
   }
+
   async getDirections(startLoc, desLoc) {
     try {
       const resp = await fetch(
@@ -71,13 +81,14 @@ class DisMapScreen extends Component {
       })
 
       this.setState({coords, distance, time})
+
       console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
   }
 
-  onMarkerPress = crumInstance => {
+  onMarkerPressdRoutes = crumInstance => {
     let location = {
       coords: {
         latitude: crumInstance.latitude,
@@ -99,6 +110,7 @@ class DisMapScreen extends Component {
     )
   }
 
+  //locate user button function
   centerMap(locations) {
     this._map.animateToRegion({
       latitude: locations.latitude,
@@ -108,7 +120,8 @@ class DisMapScreen extends Component {
     })
   }
 
-  onMarkerPressed = (location, index) => {
+  //carousel functions
+  onMarkerPressedCarousel = (location, index) => {
     this._map.animateToRegion({
       latitude: location.latitude,
       longitude: location.longitude,
@@ -137,9 +150,7 @@ class DisMapScreen extends Component {
   render() {
     const {locations, crumInstances} = this.props
     // console.log('CRUM INSTANCES MAP VIEW:', crumInstances)
-    // console.log('THIS.PROPS.LOCATION:', locations)
-    // console.log('THIS IS THE LAT', typeof locations.latitude)
-    // console.log('THIS IS THE LONG', typeof locations.longitude)
+
     if (locations.longitude && locations.latitude) {
       return (
         <SafeAreaView style={styles.container}>
@@ -174,14 +185,17 @@ class DisMapScreen extends Component {
                   // eslint-disable-next-line no-return-assign
                   // eslint-disable-next-line react/no-direct-mutation-state
                   ref={ref => (this.state.markers[index] = ref)}
-                  onPress={() => this.onMarkerPress(crum)}
+                  onPress={() => {
+                    this.onMarkerPressdRoutes(crum)
+                    this.onMarkerPressedCarousel(crum, index)
+                  }}
                   coordinate={{
                     latitude: +crum.latitude,
                     longitude: +crum.longitude
                   }}
                 >
                   <Image
-                    source={require('../../assets/crumicon.png')}
+                    source={require('../../../assets/crumicon.png')}
                     style={{height: 30, width: 30}}
                   />
                   <Callout style={{width: 110, height: 20}}>
@@ -262,15 +276,15 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => {
   return {
-    fetchInitialData: () => {
-      dispatch(getCurrentPosition())
-    },
-    unFetchInitialData: () => {
-      dispatch(stopTracking())
-    },
-    fetchCrum: (latitudeIdx, longitudeIdx) => {
-      dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
-    }
+    // fetchInitialData: () => {
+    //   dispatch(getCurrentPosition())
+    // },
+    // unFetchInitialData: () => {
+    //   dispatch(stopTracking())
+    // },
+    // fetchCrum: (latitudeIdx, longitudeIdx) => {
+    //   dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
+    // }
   }
 }
 

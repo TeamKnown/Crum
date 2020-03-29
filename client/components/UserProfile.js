@@ -35,15 +35,22 @@ function UserProfile(props) {
   // handleSignOut() {
   //   this.props.logout()
   // }
+  let isMounted = true
 
   useFocusEffect(
     React.useCallback(() => {
-      props.getSingleUser(props.user.id)
+      if (isMounted) {
+        props.getSingleUser(props.user.id)
+      }
+
+      return () => {
+        isMounted = false
+      }
     }, [props.user.id])
   )
 
   const {user} = props
-  // console.log('state', props)
+
   return (
     <View style={styles.main}>
       <View style={styles.topContainer}>
