@@ -69,11 +69,11 @@ class DisEditDeleteCrumForm extends React.Component {
     // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
-    // if (!this.state.selfEditing) {
-    //   this.setState({selfEditing: true})
-    //   return
-    // }
-    // this.setState({selfEditing: false})
+    if (!this.state.selfEditing) {
+      this.setState({selfEditing: true})
+      return
+    }
+    this.setState({selfEditing: false})
     if (crumInstance.message === '')
       this.setState({validationError: 'Message cannot be empty'})
     else {
@@ -100,7 +100,7 @@ class DisEditDeleteCrumForm extends React.Component {
               <View style={{flex: 1}}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
-                    <View
+                    {/* <View
                       // contentContainerStyle={styles.modalTitle}
                       Style={styles.modalTitle}
                     >
@@ -111,6 +111,31 @@ class DisEditDeleteCrumForm extends React.Component {
                       >
                         {crumInstance.message}
                       </Text>
+                    </View> */}
+                    <View style={styles.modalTitle}>
+                      <TextInput
+                        required
+                        id="message"
+                        disabled={true}
+                        // disabled={!self || !this.state.selfEditing}
+                        value={this.state.message}
+                        onChange={this.handleTypeMessage}
+                        textAlign="center"
+                        style={
+                          this.state.selfEditing
+                            ? styles.title
+                            : styles.disabledTitle
+                        }
+                        placeholder=""
+                        autoComplete="text"
+                        type="text"
+                      />
+
+                      {/* <Image
+                        style={styles.modalPng}
+                        borderRadius={3}
+                        source={images[crumInstance.crum.name]}
+                      /> */}
                     </View>
                     <View style={styles.modalPng}>
                       <Image
@@ -147,22 +172,6 @@ class DisEditDeleteCrumForm extends React.Component {
                     </Text> */}
 
                   <View style={styles.modalInput}>
-                    <TextInput
-                      required
-                      id="message"
-                      disabled={!self || !this.state.selfEditing}
-                      value={this.state.message}
-                      onChange={this.handleTypeMessage}
-                      textAlign="center"
-                      style={
-                        !self || !this.state.selfEditing
-                          ? styles.inputDisabled
-                          : styles.input
-                      }
-                      placeholder="m e s s a g e"
-                      autoComplete="text"
-                      type="text"
-                    />
                     <TextInput
                       required
                       id="comment"
@@ -314,22 +323,31 @@ const styles = StyleSheet.create({
     flexBasis: '40%',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     // flexWrap: 'wrap',
-    // borderColor: 'gray',
-    borderWidth: 1
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 5
   },
   modalTitle: {
-    borderWidth: 1,
-    backgroundColor: 'red',
-    // flex: 1,
     width: 160,
     height: 160,
     maxWidth: 160,
-    maxHeight: 160
-    // margin: 2
+    maxHeight: 160,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
+  disabledTitle: {
+    fontSize: 28
+  },
+
+  title: {
+    fontSize: 28,
+    color: 'red'
+  },
+
   modalPng: {
-    borderWidth: 1,
+    // borderWidth: 1,
     flex: 1,
     // flexShrink: 0,
     maxWidth: 160,
@@ -345,10 +363,10 @@ const styles = StyleSheet.create({
     flexBasis: '40%',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
     // flexWrap: 'wrap',
-    borderColor: 'gray',
-    borderWidth: 1
+    // borderColor: 'gray',
+    // borderWidth: 1
     // backgroundColor: 'red'
   },
   modalButtons: {
