@@ -23,7 +23,7 @@ export default function PermissionModal(props) {
       >
         <View style={styles.content}>
           <Text style={styles.contentTitle}>
-            Hi 👾! Would you like to allow "Crum" to access your location while
+            Hi 🍞! Would you like to allow "Crum" to access your camera 📷 while
             you are using the app?
           </Text>
 
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.1)'
   },
   contentTitle: {
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: '3%'
   },
   buttons: {
