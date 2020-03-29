@@ -161,7 +161,7 @@ class DisDropCrumForm extends React.Component {
                   </Text>
                   <View style={styles.modalButtons}>
                     <TouchableOpacity
-                      style={styles.btnDrop}
+                      style={styles.btn}
                       onPress={() => {
                         this.handleDropCrum(
                           {
@@ -174,20 +174,16 @@ class DisDropCrumForm extends React.Component {
                         )
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
-                        drop
-                      </Text>
+                      <Text title="Drop!">drop</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={styles.btnDrop}
+                      style={styles.btn}
                       onPress={() => {
                         hideDropCrumForm()
                         this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
-                      <Text style={{color: '#19ae9f'}} title="Drop!">
-                        never mind
-                      </Text>
+                      <Text title="Drop!">never mind</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -235,27 +231,25 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   modal: {
-    // height: '100%',
-    // position: 'relative',
-    display: 'flex',
-    width: '93%',
-    flexDirection: 'column',
-    backgroundColor: 'rgba(250,250,250,0.8)',
-    borderColor: '#7c1e9f',
+    flex: 1,
     alignSelf: 'center',
+    alignContent: 'center',
+    width: '93%',
+    // backgroundColor: 'rgba(250,250,250,0.8)',
+    borderColor: '#7c1e9f',
     shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
+    justifyContent: 'space-between',
     borderRadius: 10,
-    marginBottom: '10%',
+    marginBottom: '5%',
     marginTop: '20%',
     padding: 5
   },
   modalPngSelector: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
     display: 'flex',
     width: '100%',
-    flexBasis: '80%',
+    minHeight: '90%',
+    maxHeight: '90%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -269,32 +263,34 @@ const styles = StyleSheet.create({
     // borderWidth: 1
   },
   modalButtons: {
+    minHeight: '12%',
+    maxHeight: '12%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    // flexBasis: '16%',
     display: 'flex',
-    flexDirection: 'row'
-    // borderColor: 'gray',
-    // borderRadius: 10,
-    // borderWidth: 1
+    flexDirection: 'row',
+    borderColor: 'gray'
   },
-  btnDrop: {
+  btn: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
     display: 'flex',
-    height: 60,
+    height: '90%',
     flex: 3,
-    flexBasis: '30%',
-    backgroundColor: 'white',
-    borderColor: '#19ae9f',
+    flexBasis: '20%',
+    // backgroundColor: 'white',
+    borderColor: 'white',
     borderWidth: 2,
     textAlign: 'center',
-    borderRadius: 10,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5
   },
   modalInput: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    minHeight: '10%',
+    maxHeight: '10%',
     justifyContent: 'center',
-    flexBasis: '6%',
     display: 'flex',
     borderColor: 'white',
     borderWidth: 1,
