@@ -112,7 +112,6 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
-    console.log('ARVIEW IS MOUNTED')
     this.requestCameraPermission()
 
     THREE.suppressExpoWarnings(true)
@@ -314,6 +313,21 @@ class DisARScreen extends React.Component {
               )}
               {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
             </View>
+            {/* <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} /> */}
+            {this.state.dropCrumFormVisible && (
+              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+            )}
+            {this.state.editDeleteCrumFormVisible && (
+              <EditDeleteCrumForm
+                crumInstance={
+                  crumInstances.filter(
+                    i => i.id === +this.state.crumClickedParsed.crumInstanceId
+                  )[0]
+                }
+                hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
+              />
+            )}
+            {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
           </View>
         </ImageBackground>
       )
