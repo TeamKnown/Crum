@@ -61,27 +61,27 @@ class DisARScreen extends React.Component {
       isGranted: true
     }
 
-    this.requestCameraPermission = async () => {
-      let {status} = await Permissions.askAsync(Permissions.CAMERA)
-      console.log('STATUS', status)
-
-      if (status !== 'granted') {
-        this.setState({
-          isGranted: false
-        })
-      } else {
-        this.setState({isGranted: true})
-        // this.props.subscribeToLocationData()
-      }
-    }
-
-    this.closeModal = () => {
-      this.setState({isGranted: true})
-    }
-
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
+  }
+
+  requestCameraPermission = async () => {
+    let {status} = await Permissions.askAsync(Permissions.CAMERA)
+    console.log('STATUS', status)
+
+    if (status !== 'granted') {
+      this.setState({
+        isGranted: false
+      })
+    } else {
+      this.setState({isGranted: true})
+      // this.props.subscribeToLocationData()
+    }
+  }
+
+  closeModal = () => {
+    this.setState({isGranted: true})
   }
 
   // getiPhoneModel = () => {
@@ -112,6 +112,7 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     // this.getiPhoneModel()
+    console.log('ARVIEW IS MOUNTED')
     this.requestCameraPermission()
 
     THREE.suppressExpoWarnings(true)
@@ -261,61 +262,62 @@ class DisARScreen extends React.Component {
           closeModal={this.closeModal}
         />
       )
-    }
-    return (
-      <ImageBackground
-        source={require('../../public/background.png')}
-        style={{
-          flex: 1,
-          width: null,
-          height: null
-        }}
-      >
-        <View style={styles.main}>
-          <View style={{flex: 1}}>
-            {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
-            <View style={{flex: 1, height: '100%', width: '100%'}}>
-              <TouchableOpacity
-                disabled={false}
-                onPress={evt => {
-                  if (this.props.user.device === 'noAR') {
-                    this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
-                  } else {
-                    this.updateTouch(evt) // use this if your phone does support AR
-                  }
-                }}
-                activeOpacity={1.0}
-                style={{flex: 1}}
-              >
-                <GraphicsView
+    } else {
+      return (
+        <ImageBackground
+          source={require('../../public/background.png')}
+          style={{
+            flex: 1,
+            width: null,
+            height: null
+          }}
+        >
+          <View style={styles.main}>
+            <View style={{flex: 1}}>
+              {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
+              <View style={{flex: 1, height: '100%', width: '100%'}}>
+                <TouchableOpacity
+                  disabled={false}
+                  onPress={evt => {
+                    if (this.props.user.device === 'noAR') {
+                      this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
+                    } else {
+                      this.updateTouch(evt) // use this if your phone does support AR
+                    }
+                  }}
+                  activeOpacity={1.0}
                   style={{flex: 1}}
-                  onContextCreate={this.onContextCreate}
-                  onRender={this.onRender}
-                  // onResize={this.onResize}
-                  isArEnabled
-                  isArCameraStateEnabled
-                />
-              </TouchableOpacity>
-            </View>
+                >
+                  <GraphicsView
+                    style={{flex: 1}}
+                    onContextCreate={this.onContextCreate}
+                    onRender={this.onRender}
+                    // onResize={this.onResize}
+                    isArEnabled
+                    isArCameraStateEnabled
+                  />
+                </TouchableOpacity>
+              </View>
 
-            {this.state.dropCrumFormVisible && (
-              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
-            )}
-            {this.state.editDeleteCrumFormVisible && (
-              <EditDeleteCrumForm
-                crumInstance={
-                  crumInstances.filter(
-                    i => i.id === +this.state.crumClickedParsed.crumInstanceId
-                  )[0]
-                }
-                hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
-              />
-            )}
-            {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
+              {this.state.dropCrumFormVisible && (
+                <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+              )}
+              {this.state.editDeleteCrumFormVisible && (
+                <EditDeleteCrumForm
+                  crumInstance={
+                    crumInstances.filter(
+                      i => i.id === +this.state.crumClickedParsed.crumInstanceId
+                    )[0]
+                  }
+                  hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
+                />
+              )}
+              {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
+            </View>
           </View>
-        </View>
-      </ImageBackground>
-    )
+        </ImageBackground>
+      )
+    }
   }
 }
 

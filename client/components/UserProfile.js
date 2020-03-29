@@ -38,6 +38,8 @@ function UserProfile(props) {
 
   useFocusEffect(
     React.useCallback(() => {
+      console.log('USER PROFILE IS MOUNTED')
+
       props.getSingleUser(props.user.id)
     }, [props.getSingleUser, props.user.id])
   )
