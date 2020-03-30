@@ -19,7 +19,7 @@ import {
   SafeAreaView
 } from 'react-native'
 import {SCALER} from '../utils'
-import {images, crumIcon} from '../../../assets'
+import {images, purpleCrumIcon} from '../../../assets'
 import {CurrentLocationButton} from './CurrentLocationButton'
 import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
@@ -217,7 +217,10 @@ class DisMapScreen extends Component {
                     longitude: +crum.longitude
                   }}
                 >
-                  <Image source={crumIcon} style={{height: 30, width: 30}} />
+                  <Image
+                    source={purpleCrumIcon}
+                    style={{height: 30, width: 30}}
+                  />
                   <Callout style={{width: 110, height: 20}}>
                     <Text>{crum.message}</Text>
                   </Callout>
