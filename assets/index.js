@@ -19,7 +19,18 @@ export const images = {
   Smart: require('./Crums/Smart.png'),
   HandSanitizer: require('./Crums/HandSanitizer.png'),
   Stress: require('./Crums/Stress.png'),
-  Dad: require('./Crums/dad2.png')
+  Dad: require('./Crums/dad2.png'),
+  ACBunny: require('./Crums/ACBunny.png'),
+  ACRaccoon: require('./Crums/ACRaccoon.png'),
+  ACBoy: require('./Crums/ACBoy.png'),
+  ACKid: require('./Crums/ACKid.png'),
+  DogDuo: require('./Crums/DogDuo.png'),
+  MinionDuo: require('./Crums/MinionDuo.png'),
+  MinionTrio: require('./Crums/MinionTrio.png'),
+  NoCigs: require('./Crums/NoCigs.png'),
+  SillyMinion: require('./Crums/SillyMinion.png'),
+  StareGru: require('./Crums/StareGru.png'),
+  SmirkMinion: require('./Crums/SmirkMinion.png')
 }
 
 export const imageThumbnails = {
@@ -43,7 +54,18 @@ export const imageThumbnails = {
   Smart: require('./CrumThumbnails/Smart.png'),
   HandSanitizer: require('./CrumThumbnails/HandSanitizer.png'),
   Stress: require('./CrumThumbnails/Stress.png'),
-  Dad: require('./CrumThumbnails/dad2.png')
+  Dad: require('./CrumThumbnails/dad2.png'),
+  ACBunny: require('./CrumThumbnails/ACBunny.png'),
+  ACRaccoon: require('./CrumThumbnails/ACRaccoon.png'),
+  ACBoy: require('./CrumThumbnails/ACBoy.png'),
+  ACKid: require('./CrumThumbnails/ACKid.png'),
+  DogDuo: require('./CrumThumbnails/DogDuo.png'),
+  MinionDuo: require('./CrumThumbnails/MinionDuo.png'),
+  MinionTrio: require('./CrumThumbnails/MinionTrio.png'),
+  NoCigs: require('./CrumThumbnails/NoCigs.png'),
+  SillyMinion: require('./CrumThumbnails/SillyMinion.png'),
+  StareGru: require('./CrumThumbnails/StareGru.png'),
+  SmirkMinion: require('./CrumThumbnails/SmirkMinion.png')
 }
 export const fonts = {
   font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
