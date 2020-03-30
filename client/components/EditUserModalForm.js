@@ -23,14 +23,12 @@ class EditUserModalForm extends React.Component {
     super(props)
     this.handleTypeUser = this.handleTypeUser.bind(this)
     this.handleTypeEmail = this.handleTypeEmail.bind(this)
-    // this.handleTypePassword= this.handleTypePassword.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   state = {
     visible: false,
     userName: this.props.user.userName,
     email: this.props.user.email
-    // password: this.props.user.password
   }
 
   setModalVisible(visible) {
@@ -49,11 +47,6 @@ class EditUserModalForm extends React.Component {
       email: event.nativeEvent.text
     })
   }
-  // handleTypePassword(event) {
-  //   this.setState({
-  //     password: event.nativeEvent.password
-  //   })
-  // }
 
   handleSubmit(userId, info) {
     this.props.editUser(userId, info)
@@ -69,12 +62,7 @@ class EditUserModalForm extends React.Component {
         >
           <Image
             source={require('../../public/editIcon3.png')}
-            style={{
-              width: 15,
-              height: 15,
-              marginBottom: '14%',
-              marginLeft: 7
-            }}
+            style={styles.editIcon}
           />
         </TouchableOpacity>
 
@@ -120,24 +108,13 @@ class EditUserModalForm extends React.Component {
                   />
                 </View>
               </View>
-              {/*<TextInput
-                    required
-                    id="password"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.handleTypePassword}
-                    textAlign="center"
-                    style={styles.input}
-                    placeholder='p a s s w o r d'
-                    type="password"
-                  />*/}
+
               <TouchableOpacity
                 style={styles.btnDrop}
                 onPress={() => {
                   this.handleSubmit(this.props.user.id, {
                     userName: this.state.userName,
                     email: this.state.email
-                    // password: this.state.password
                   })
                   this.setModalVisible(!this.state.visible)
                 }}
@@ -165,7 +142,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 100
   },
-
+  editIcon: {
+    width: 15,
+    height: 15,
+    marginBottom: '14%',
+    marginLeft: 7
+  },
   modalContainer: {
     flexDirection: 'column',
     alignItems: 'center',
