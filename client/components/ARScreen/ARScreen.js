@@ -37,15 +37,6 @@ import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
 
-// import {Constants, Location, Permissions} from 'expo'
-// if you get error ativeModule.RNDeviceInfo is null
-// run this command:
-//npx react-native-clean-project clean-project-auto
-// react-native link react-native-device-info
-// import DeviceInfo from 'react-native-device-info'
-// import {getUniqueId, getManufacturer} from 'react-native-device-info'
-// import {request, PERMISSIONS} from 'react-native-permissions'
-
 let scene
 class DisARScreen extends React.Component {
   constructor(props) {
@@ -76,7 +67,6 @@ class DisARScreen extends React.Component {
       })
     } else {
       this.setState({isGranted: true})
-      // this.props.subscribeToLocationData()
     }
   }
 
@@ -84,43 +74,16 @@ class DisARScreen extends React.Component {
     this.setState({isGranted: true})
   }
 
-  // getiPhoneModel = () => {
-  //   function _getiPhoneModel() {
-  //     if (
-  //       window.devicePixelRatio >= 3 &&
-  //       ((window.innerHeight == 368 && window.innerWidth == 207) ||
-  //         (window.innerHeight == 667 && window.innerWidth == 375) ||
-  //         (window.innerHeight == 736 && window.innerWidth == 414) ||
-  //         (window.innerHeight == 812 && window.innerWidth == 375) ||
-  //         (window.innerHeight >= 812 && window.innerWidth >= 375))
-  //     ) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   }
-  //   // const deviceInfo1 = 'getModel:  ' + DeviceInfo.getModel()
-  //   // console.log('IPHONE MODEL', deviceInfo1)
-  //   console.log('IPHONE MODEL', _getiPhoneModel())
-  //   console.log('SCREEN PIXEL', window.devicePixelRatio)
-  //   console.log('SCREEN Height', window.innerHeight)
-  //   console.log('SCREEN Width', window.innerWidth)
-  // }
-
   touch = new THREE.Vector2()
   raycaster = new THREE.Raycaster()
 
   componentDidMount = () => {
-    // this.getiPhoneModel()
-
     this.requestCameraPermission()
 
     THREE.suppressExpoWarnings(true)
     this.props.fetchCrums()
   }
   componentWillUnmount = () => {
-    // this.props.unsubscribeToLocationData()
-
     THREE.suppressExpoWarnings(false)
   }
 
@@ -158,16 +121,16 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    // AR.setWorldAlignment('gravityAndHeading')
-    // console.log('on contect create')
-    // console.log(pixelRatio, width, height)
+    if (this.props.user.device === 'advanced') {
+      AR.setWorldAlignment('gravityAndHeading')
+      // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
+    }
     this.renderer = new Renderer({gl, pixelRatio, width, height})
     scene = new THREE.Scene()
     scene.background = new BackgroundTexture(this.renderer)
     this.camera = new Camera(width, height, 0.01, 1000)
 
     scene.add(new THREE.AmbientLight(0xffffff))
-    // console.log('end on contect create')
   }
 
   onRender = delta => {
@@ -178,10 +141,6 @@ class DisARScreen extends React.Component {
   // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
   // when longitudeIdx or latitude in REDUX store changes, we update REACT state
   // we also requery the list of nearby crums
-  // this is subject to future optimization and code refactoring
-  // More at https://reactjs.org/docs/hooks-faq.html#how-to-memoize-calculations
-
-  // Warning: THREE.Matrix3: .getInverse() can't invert matrix, determinant is 0 without any object
   static getDerivedStateFromProps(props, state) {
     const toAdd = props.crumInstances.filter(
       crumInstance =>
@@ -194,12 +153,8 @@ class DisARScreen extends React.Component {
 
     if (scene !== undefined && (toAdd.length > 0 || toRemove.length > 0)) {
       const addCrums = async () => {
-        // console.log('Too ADD')
-        // console.log(JSON.stringify(toAdd))
         for (const crumInstance of toAdd) {
-          // console.log('crum:', JSON.stringify(crumInstance.crum))
           if (crumInstance.crum === null) continue
-          // console.log('crum continused:', JSON.stringify(crumInstance.crum))
           let pos = computePos(crumInstance, props.locations)
           let plane = await createPlane(
             0xffffff,
@@ -214,8 +169,6 @@ class DisARScreen extends React.Component {
       }
 
       const removeCrums = () => {
-        // console.log('Too DELETE')
-        // console.log(toRemove)
         for (const crumInstance of toRemove) {
           if (crumInstance.crum === null) continue
           let planeName = crumInstanceNamer(crumInstance)
@@ -252,10 +205,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {locations, crumInstances, crums} = this.props
-    if (this.props.user.device === 'advanced') {
-      AR.setWorldAlignment('gravityAndHeading')
-    } // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
+    const {crumInstances, user} = this.props
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     if (this.state.isGranted === false) {
@@ -278,7 +228,7 @@ class DisARScreen extends React.Component {
           <View style={styles.main}>
             <View style={{flex: 1}}>
               <View style={{flex: 1, height: '100%', width: '100%'}}>
-                {this.props.user.device !== 'noAR' ? (
+                {user.device !== 'noAR' ? (
                   <TouchableOpacity
                     onPress={evt => {
                       this.updateTouch(evt)

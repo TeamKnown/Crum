@@ -59,6 +59,7 @@ class ViewCrumsModal extends React.Component {
     const {user, crums} = this.props
     // console.log('user', user)
     const {crumInstances} = this.props
+    console.log('crumInstances', crumInstances)
     // console.log('userCrums', crumInstances)
     // console.log('IMAGES', imageThumbnails)
 
@@ -125,21 +126,23 @@ class ViewCrumsModal extends React.Component {
                 </Text>
               )}
               <ScrollView style={styles.scrollBox}>
-                {crumInstances.map(crum => (
-                  <View style={styles.instance} key={crum.id}>
-                    <Image
-                      source={imageThumbnails[crum.crum.name]}
-                      style={{
-                        width: 40,
-                        height: 40,
-                        margin: 6,
-                        borderColor: 'black',
-                        borderWidth: 2
-                      }}
-                    />
-                    <Text>{crum.message}</Text>
-                  </View>
-                ))}
+                {crumInstances &&
+                  crumInstances.length > 0 &&
+                  crumInstances.map(crum => (
+                    <View style={styles.instance} key={crum.id}>
+                      <Image
+                        source={imageThumbnails[crum.crum.name]}
+                        style={{
+                          width: 40,
+                          height: 40,
+                          margin: 6,
+                          borderColor: 'black',
+                          borderWidth: 2
+                        }}
+                      />
+                      <Text>{crum.message}</Text>
+                    </View>
+                  ))}
               </ScrollView>
               <TouchableOpacity
                 style={styles.btnDrop}

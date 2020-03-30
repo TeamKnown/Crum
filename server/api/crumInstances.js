@@ -24,17 +24,29 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+const computeLocation = (headingInt, latitude, longitude) => {
+  const headingRadian = (headingInt * 3.24) / 180
+  const rtnLatitude = latitude + (Math.cos(headingRadian) * 20) / 6356000
+  const rtnLongitude =
+    longitude +
+    (Math.sin(headingRadian) * 20) /
+      (6356000 * Math.cos((longitude * 2 * 3.14) / 360))
+  return {latitude: rtnLatitude, longitude: rtnLongitude}
+}
+
 router.post('/', async (req, res, next) => {
   try {
-    const headingRadian = (req.body.headingInt * 3.24) / 180
-    req.body.latitude =
-      req.body.latitude + (Math.cos(headingRadian) * 20) / 6356000
-    req.body.longitude =
-      req.body.longitude +
-      (Math.sin(headingRadian) * 20) /
-        (6356000 * Math.cos((req.body.longitude * 2 * 3.14) / 360))
+    const computedLocation = computeLocation(
+      req.body.headingInt,
+      req.body.latitude,
+      req.body.longitude
+    )
 
-    const newCrumInstance = await CrumInstance.create(req.body)
+    const newCrumInstance = await CrumInstance.create({
+      ...req.body,
+      latitude: computedLocation.latitude,
+      longitude: computedLocation.longitude
+    })
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
@@ -151,8 +163,6 @@ router.get('/user/:id', async (req, res, next) => {
 //http://localhost:19001/api/cruminstances/near/1?radium=1
 router.get('/near/:id', async (req, res, next) => {
   try {
-    // console.log(req.query.radium)
-    // const crumInstance = await CrumInstance.findByPk(req.params.id)
     const crumInstances = await crumInstance.findNear(+req.query.radium, {
       include: [
         {
