@@ -29,13 +29,8 @@ router.get('/:userId', async (req, res, next) => {
         }
       ]
     })
-    // console.log('server side ', user.dataValues.CrumInstances.length)
-    // console.log('server side ', user.dataValues.totalCrums)
-    // user.reload()
-    await user.userCrums()
-    // console.log('server side ', user.dataValues.totalCrums)
 
-    // console.log('server side ', user.dataValues.CrumInstance.length)
+    await user.userCrums()
     console.log('in get ', user.dataValues.totalCrums)
     res.json(user)
   } catch (error) {

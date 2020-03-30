@@ -350,16 +350,16 @@ const seed = async () => {
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
-    // for (let i = 1; i < crumInstances.length + 1; i++) {
-    //   let j = Math.floor(Math.random() * 19) + 1
-    //   // let k = Math.floor(Math.random() * 9) + 1
-    //   let k = Math.floor(Math.random() * 2) + 1
-    //   let crumInstanceI = await CrumInstance.findByPk(i)
-    //   let crumI = await Crum.findByPk(j)
-    //   let userK = await User.findByPk(k)
-    //   await crumInstanceI.setCrum(crumI)
-    //   await crumInstanceI.setUser(userK)
-    // }
+    for (let i = 1; i < crumInstances.length + 1; i++) {
+      let j = Math.floor(Math.random() * 19) + 1
+      // let k = Math.floor(Math.random() * 9) + 1
+      let k = Math.floor(Math.random() * 2) + 1
+      let crumInstanceI = await CrumInstance.findByPk(i)
+      let crumI = await Crum.findByPk(j)
+      let userK = await User.findByPk(k)
+      await crumInstanceI.setCrum(crumI)
+      await crumInstanceI.setUser(userK)
+    }
 
     // await Promise.all(
     //   commentInstances.map(commentInstance =>

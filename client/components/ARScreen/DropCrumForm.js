@@ -45,8 +45,6 @@ class DisDropCrumForm extends React.Component {
   }
   async handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
-    // console.log(JSON.stringify(crumInstance))
-    // console.log(JSON.stringify(crumId))
     if (crumInstance.message === '')
       this.setState({validationError: 'Please enter a message'})
     else if (
