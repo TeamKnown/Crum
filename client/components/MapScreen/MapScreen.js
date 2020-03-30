@@ -297,17 +297,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => {
-  return {
-    // fetchInitialData: () => {
-    //   dispatch(getCurrentPosition())
-    // },
-    // unFetchInitialData: () => {
-    //   dispatch(stopTracking())
-    // },
-    // fetchCrum: (latitudeIdx, longitudeIdx) => {
-    //   dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
-    // }
-  }
+  return {}
 }
 
 const MapScreen = connect(mapState, mapDispatch)(DisMapScreen)

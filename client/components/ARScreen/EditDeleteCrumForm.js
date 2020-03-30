@@ -13,13 +13,13 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
-import {images} from '../../assets/'
+import {images} from '../../../assets/'
 import {
   putCrumInstance,
   deleteCrumInstance,
   getSingleUser,
   postCommentInstance
-} from '../store/'
+} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 class DisEditDeleteCrumForm extends React.Component {
   constructor(props) {

@@ -13,8 +13,8 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import {imageThumbnails} from '../../assets/'
-import {postCrumInstance, getSingleUser} from '../store/'
+import {imageThumbnails} from '../../../assets/'
+import {postCrumInstance, getSingleUser} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 class DisDropCrumForm extends React.Component {

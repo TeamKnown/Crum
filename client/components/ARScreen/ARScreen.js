@@ -29,10 +29,10 @@ import {
   fetchNearByCrumInstances,
   // fetchCrumInstanceDetail,
   me
-} from '../store/'
+} from '../../store/'
 import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
-import {images, fonts} from '../../assets/'
+import {images, fonts} from '../../../assets/'
 import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
@@ -268,7 +268,7 @@ class DisARScreen extends React.Component {
     } else {
       return (
         <ImageBackground
-          source={require('../../public/background.png')}
+          source={require('../../../public/background.png')}
           style={{
             flex: 1,
             width: null,
