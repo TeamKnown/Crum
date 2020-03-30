@@ -250,9 +250,7 @@ class DisARScreen extends React.Component {
                     opacity={this.state.dropCrumFormVisible ? 0 : 1}
                   >
                     <TouchableOpacity
-                      style={{
-                        ...styles.btn
-                      }}
+                      style={styles.btn}
                       onPress={() => {
                         this.showDropCrumForm()
                       }}

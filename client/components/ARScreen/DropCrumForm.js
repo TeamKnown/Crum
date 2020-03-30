@@ -29,11 +29,6 @@ class DisDropCrumForm extends React.Component {
     imgId: '',
     validationError: ''
   }
-  // setModalVisible(modalVisible) {
-  //   this.setState({
-  //     modalVisible: modalVisible
-  //   })
-  // }
   handleTypeMessage(event) {
     this.setState({
       message: event.nativeEvent.text
