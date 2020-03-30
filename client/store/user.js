@@ -71,7 +71,6 @@ export const getSingleUser = id => {
   return async dispatch => {
     try {
       const {data} = await devAxios.get(`/api/users/${id}`)
-
       dispatch(getUser(data))
     } catch (error) {
       console.error(error)

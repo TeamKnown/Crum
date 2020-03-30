@@ -11,6 +11,7 @@ const {
 
 const users = [
   {
+    // id: 1,
     userName: 'Admin',
     email: 'admin@gmail.com',
     password: 'test1',
@@ -18,60 +19,70 @@ const users = [
     type: 'admin'
   },
   {
+    // id: 2,
     userName: 'Sharline',
     email: 'scroney1@state.tx.us',
     password: 'gFXBSSV1',
     salt: null
   },
   {
+    // id: 3,
     userName: 'MosheB',
     email: 'mbtham2@angelfire.com',
     password: 'JxmEPQKq0JW4',
     salt: null
   },
   {
+    // id: 4,
     userName: 'FMuffen',
     email: 'fmuffen3@japanpost.jp',
     password: 'NOFv1iBo',
     salt: null
   },
   {
+    // id: 5,
     userName: 'JKleis',
     email: 'jkleis4@google.fr',
     password: 'Drc5fO2',
     salt: null
   },
   {
+    // id: 6,
     userName: 'MCunniffe',
     email: 'mcunniffe5@who.int',
     password: 'vs99rzUHHP',
     salt: null
   },
   {
+    // id: 7,
     userName: 'AmelineA',
     email: 'aandrieu6@google.es',
     password: 'jHm15tU',
     salt: null
   },
   {
+    // id: 8,
     userName: 'CHeald',
     email: 'cheald7@meetup.com',
     password: 'aRlDbxDYsFD',
     salt: null
   },
   {
+    // id: 9,
     userName: 'EBirtwell',
     email: 'ebirtwell8@storify.com',
     password: 'M0oDOqBw4e',
     salt: null
   },
   {
+    // id: 10,
     userName: 'KCarlisle',
     email: 'kcarlisle9@fotki.com',
     password: 'NERY7QB2pRqy',
     salt: null
   },
   {
+    // id: 11,
     userName: 'dad',
     email: 'dad@gmail.com',
     password: 'yesDad',
@@ -80,62 +91,50 @@ const users = [
 ]
 const crums = [
   {
-    id: 1,
     name: 'Dog',
     category: '2-Animal'
   },
   {
-    id: 2,
     name: 'BrainFog',
     category: '0-Emoji'
   },
   {
-    id: 3,
     name: 'JsHtmlCss',
     category: '3-Object'
   },
   {
-    id: 4,
     name: 'Breakmarker',
     category: '3-Object'
   },
   {
-    id: 5,
     name: 'LaughWithTear',
     category: '0-Emoji'
   },
   {
-    id: 6,
     name: 'Chocolates',
     category: '3-Object'
   },
   {
-    id: 7,
     name: 'LaughWithTeeth',
     category: '0-Emoji'
   },
   {
-    id: 8,
     name: 'CoolGuy',
     category: '0-Emoji'
   },
   {
-    id: 9,
     name: 'Mask',
     category: '3-Object'
   },
   {
-    id: 10,
     name: 'MusicNote',
     category: '4-Symbol'
   },
   {
-    id: 11,
     name: 'FourthOfJuly',
     category: '4-Symbol'
   },
   {
-    id: 12,
     name: 'Pinocchio',
     category: '0-Emoji'
   },
@@ -144,97 +143,114 @@ const crums = [
   //   category: '4-Symbol'
   // },
   {
-    id: 13,
     name: 'Ring',
     category: '3-Object'
   },
   {
-    id: 14,
     name: 'GreenFace',
     category: '0-Emoji'
   },
   {
-    id: 15,
     name: 'Sleepy',
     category: '0-Emoji'
   },
   {
-    id: 16,
     name: 'Halo',
     category: '0-Emoji'
   },
   {
-    id: 17,
     name: 'Smart',
     category: '0-Emoji'
   },
   {
-    id: 18,
     name: 'HandSanitizer',
     category: '3-Object'
   },
   {
-    id: 19,
     name: 'Stress',
     category: '0-Emoji'
   },
   {
-    id: 20,
     name: 'Dad',
     category: '1-Human'
   },
   {
-    id: 21,
+    name: 'ThumbUp',
+    category: '4-Symbol'
+  },
+  {
+    name: 'ThumbDown',
+    category: '4-Symbol'
+  },
+  {
+    name: 'HandWashing',
+    category: '4-Symbol'
+  },
+  {
+    name: 'Cat',
+    category: '2-Animal'
+  },
+  {
+    name: 'Husky',
+    category: '2-Animal'
+  },
+  {
+    name: 'Amazed',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Flushed',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Shush',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Sideeye',
+    category: '0-Emoji'
+  },
+  {
     name: 'ACBunny',
     category: '4-AnimalCrossing'
   },
   {
-    id: 22,
     name: 'ACRaccoon',
     category: '4-AnimalCrossing'
   },
   {
-    id: 23,
     name: 'ACBoy',
     category: '4-AnimalCrossing'
   },
   {
-    id: 24,
     name: 'ACKid',
     category: '4-AnimalCrossing'
   },
   {
-    id: 25,
     name: 'DogDuo',
     category: '2-Animal'
   },
   {
-    id: 26,
     name: 'MinionDuo',
     category: '5-DespicableMe'
   },
   {
-    id: 27,
     name: 'MinionTrio',
     category: '5-DespicableMe'
   },
   {
-    id: 28,
     name: 'NoCigs',
     category: '3-Object'
   },
   {
-    id: 29,
     name: 'SillyMinion',
     category: '5-DespicableMe'
   },
   {
-    id: 30,
     name: 'StareGru',
     category: '5-DespicableMe'
   },
   {
-    id: 31,
     name: 'SmirkMinion',
     category: '5-DespicableMe'
   }
@@ -243,23 +259,23 @@ const crumInstances = [
   {
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
-    longitude: -73.9743,
-    crumId: 20,
-    userId: 11
+    longitude: -73.9743
+    // crumId: 20,
+    // userId: 11
   },
   {
     message: 'Please no more...',
     latitude: 40.7077,
-    longitude: -74.0112,
-    crumId: 14,
-    userId: 3
+    longitude: -74.0112
+    // crumId: 14,
+    // userId: 3
   },
   {
     message: 'Beautiful Day!',
     latitude: 40.776,
-    longitude: -73.9689,
-    crumId: 8,
-    userId: 5
+    longitude: -73.9689
+    // crumId: 8,
+    // userId: 5
   },
   {
     message: 'Where is everyone?',
@@ -271,51 +287,51 @@ const crumInstances = [
   {
     message: 'What a show!',
     latitude: 40.7213,
-    longitude: -73.9932,
-    crumId: 10,
-    userId: 4
+    longitude: -73.9932
+    // crumId: 10,
+    // userId: 4
   },
   {
     message: 'hope you like chocolate',
     latitude: 40.7053,
-    longitude: -74.0056,
-    crumId: 6,
-    userId: 7
+    longitude: -74.0056
+    // crumId: 6,
+    // userId: 7
   },
   {
     message: 'out for a walk',
     latitude: 40.7222,
-    longitude: -73.9539,
-    crumId: 1,
-    userId: 8
+    longitude: -73.9539
+    // crumId: 1,
+    // userId: 8
   },
   {
     message: 'going out for ice cream',
     latitude: 40.6763,
-    longitude: -73.8752,
-    crumId: 16,
-    userId: 10
+    longitude: -73.8752
+    // crumId: 16,
+    // userId: 10
   },
   {
     message: 'reading the new sutter cane',
     latitude: 40.6812,
-    longitude: -73.9955,
-    crumId: 17,
-    userId: 9
+    longitude: -73.9955
+    // crumId: 17,
+    // userId: 9
   },
   {
     message: 'sandwich time',
     latitude: 40.7269,
-    longitude: -73.8773,
-    crumId: 8,
-    userId: 6
+    longitude: -73.8773
+    // crumId: 8,
+    // userId: 6
   },
   {
     message: 'for the dads',
     latitude: 40.7235,
-    longitude: -73.9831,
-    crumId: 20,
-    userId: 11
+    longitude: -73.9831
+    // crumId: 20,
+    // userId: 11
   }
 ]
 
@@ -334,16 +350,16 @@ const seed = async () => {
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
-    // for (let i = 1; i < crumInstances.length + 1; i++) {
-    //   let j = Math.floor(Math.random() * 19) + 1
-    //   // let k = Math.floor(Math.random() * 9) + 1
-    //   let k = Math.floor(Math.random() * 2) + 1
-    //   let crumInstanceI = await CrumInstance.findByPk(i)
-    //   let crumI = await Crum.findByPk(j)
-    //   let userK = await User.findByPk(k)
-    //   await crumInstanceI.setCrum(crumI)
-    //   await crumInstanceI.setUser(userK)
-    // }
+    for (let i = 1; i < crumInstances.length + 1; i++) {
+      let j = Math.floor(Math.random() * 19) + 1
+      // let k = Math.floor(Math.random() * 9) + 1
+      let k = Math.floor(Math.random() * 2) + 1
+      let crumInstanceI = await CrumInstance.findByPk(i)
+      let crumI = await Crum.findByPk(j)
+      let userK = await User.findByPk(k)
+      await crumInstanceI.setCrum(crumI)
+      await crumInstanceI.setUser(userK)
+    }
 
     // await Promise.all(
     //   commentInstances.map(commentInstance =>

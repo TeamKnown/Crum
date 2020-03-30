@@ -9,7 +9,7 @@ import {
   Dimensions,
   SafeAreaView
 } from 'react-native'
-
+import {background} from '../../../assets/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
@@ -45,14 +45,14 @@ class DisSignUpComponent extends React.Component {
     const {username, password, passwordConfirm} = this.state
     this.setState({validationError: ''})
 
-    if (username === '')
+    if (userName === '')
       this.setState({validationError: 'Please enter your username'})
     else if (password === '')
       this.setState({validationError: 'Please enter your password'})
     else if (passwordConfirm === '' || passwordConfirm !== password)
       this.setState({validationError: 'Passwords must match'})
     else {
-      this.props.auth(this.state.username, this.state.password)
+      this.props.auth(this.state.userName, this.state.password)
     }
   }
 
@@ -81,7 +81,7 @@ class DisSignUpComponent extends React.Component {
 
     return (
       <ImageBackground
-        source={require('../../../assets/background.png')}
+        source={background}
         style={{
           flex: 1
         }}
@@ -106,7 +106,7 @@ class DisSignUpComponent extends React.Component {
                   <View style={styles.action}>
                     <FontAwesome name="user-o" color="#05375a" size={20} />
                     <TextInput
-                      placeholder="Your username..."
+                      placeholder="u s e r n a m e"
                       style={styles.textInput}
                       onChangeText={text => this.textInputChange(text)}
                     />
@@ -125,7 +125,7 @@ class DisSignUpComponent extends React.Component {
                     <Feather name="lock" color="#05375a" size={20} />
                     {this.state.secureTextEntry ? (
                       <TextInput
-                        placeholder="Your password..."
+                        placeholder="p a s s w o r d"
                         secureTextEntry={true}
                         style={styles.textInput}
                         value={this.state.password}
@@ -137,7 +137,7 @@ class DisSignUpComponent extends React.Component {
                       />
                     ) : (
                       <TextInput
-                        placeholder="Your password..."
+                        placeholder="p a s s w o r d"
                         style={styles.textInput}
                         value={this.state.password}
                         onChangeText={text =>
@@ -163,7 +163,7 @@ class DisSignUpComponent extends React.Component {
                     <Feather name="lock" color="#05375a" size={20} />
                     {this.state.secureTextEntryConfirm ? (
                       <TextInput
-                        placeholder="Confirm password..."
+                        placeholder="p a s s w o r d"
                         secureTextEntry={true}
                         style={styles.textInput}
                         value={this.state.passwordConfirm}
@@ -175,7 +175,7 @@ class DisSignUpComponent extends React.Component {
                       />
                     ) : (
                       <TextInput
-                        placeholder="Confirm password..."
+                        placeholder="p a s s w o r d"
                         style={styles.textInput}
                         value={this.state.passwordConfirm}
                         onChangeText={text =>
@@ -333,7 +333,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (username, password) => dispatch(auth(username, password, 'signup')),
+    auth: (userName, password) => dispatch(auth(userName, password, 'signup')),
     reset: () => dispatch(me())
   }
 }

@@ -24,7 +24,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <ImageBackground
-        source={require('../../public/background.png')}
+        source={require('../../assets/background.png')}
         style={{
           flex: 1,
           width: null,
@@ -34,7 +34,7 @@ export default class LoginScreen extends React.Component {
         <View style={styles.main}>
           <View style={styles.logo}>
             <Image
-              source={require('../../public/crum.png')}
+              source={require('../../assets/crum.png')}
               style={{width: '100%'}}
             />
           </View>

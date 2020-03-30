@@ -1,7 +1,7 @@
 /* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from './utils'
+import {SCALER} from '../utils'
 import {
   TextInput,
   View,
@@ -13,10 +13,9 @@ import {
   Modal,
   Alert
 } from 'react-native'
-import {imageThumbnails} from '../../assets/'
-import {postCrumInstance, getSingleUser} from '../store/'
+import {imageThumbnails} from '../../../assets/'
+import {postCrumInstance, getSingleUser} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
-import {ActionConst} from 'react-native-router-flux'
 
 class DisDropCrumForm extends React.Component {
   constructor() {
@@ -30,20 +29,13 @@ class DisDropCrumForm extends React.Component {
     imgId: '',
     validationError: ''
   }
-  setModalVisible(modalVisible) {
-    this.setState({
-      modalVisible: modalVisible
-    })
-  }
   handleTypeMessage(event) {
     this.setState({
       message: event.nativeEvent.text
     })
   }
-  async handleDropCrum(crumInstance, userId, crumId) {
+  handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
-    console.log(JSON.stringify(crumInstance))
-    console.log(JSON.stringify(crumId))
     if (crumInstance.message === '')
       this.setState({validationError: 'Please enter a message'})
     else if (
@@ -58,51 +50,17 @@ class DisDropCrumForm extends React.Component {
         validationError: 'Please select a crum'
       })
     else {
-      // This is causing Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s, the componentWillUnmount method, in DisDropCrumForm (created by ConnectFunction)
-      // because this.props.postCrumInstance(crumInstance, userId, crumId) takes time, and setState might happen when this component is unmounted
-      await this.props.postCrumInstance(crumInstance, userId, crumId)
-      await this.props.getSingleUser(userId)
-      this.props.hideDropCrumForm() //
-      // this.setModalVisible(!this.state.modalVisible)   // removing this help remove the warning
-    }
-  }
-
-  getiPhoneModel() {
-    if (
-      window.devicePixelRatio >= 3 &&
-      ((window.innerHeight == 368 && window.innerWidth == 207) ||
-        (window.innerHeight == 667 && window.innerWidth == 375) ||
-        (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight >= 812 && window.innerWidth >= 375))
-    ) {
-      return true
-    } else {
-      return false
+      this.props.postCrumInstance(crumInstance, userId, crumId)
+      this.props.hideDropCrumForm()
     }
   }
 
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
-    console.log('device')
-    // console.log('IPHONE MODEL', this.getiPhoneModel())
-    // console.log('SCREEN PIXEL', window.devicePixelRatio)
-    // console.log('SCREEN Height', window.innerHeight)
-    // console.log('SCREEN Width', window.innerWidth)
-    // console.log('SCREEN', Object.keys(window))
     return (
       <View style={styles.container}>
-        {/* <TouchableOpacity
-          style={styles.btnDrop}
-          onPress={() => {
-            this.setModalVisible(true)
-          }}
-        >
-          <Text style={{color: '#19ae9f'}} title="Drop!">
-            d r o p
-          </Text>
-        </TouchableOpacity> */}
         <Modal
-          style={{flex: 1}}
+          style={styles.root}
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
@@ -110,9 +68,9 @@ class DisDropCrumForm extends React.Component {
             Alert.alert('Modal closed')
           }}
         >
-          <SafeAreaView style={{flex: 1}}>
-            <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-              <View style={{flex: 1}}>
+          <SafeAreaView style={styles.root}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.root}>
+              <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngSelector}>
                     {crums.map(crum => (
@@ -153,9 +111,7 @@ class DisDropCrumForm extends React.Component {
                       type="text"
                     />
                   </View>
-                  <Text
-                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
-                  >
+                  <Text style={styles.validation}>
                     {this.state.validationError}
                   </Text>
                   <View style={styles.modalButtons}>
@@ -179,7 +135,6 @@ class DisDropCrumForm extends React.Component {
                       style={styles.btn}
                       onPress={() => {
                         hideDropCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
                       <Text title="Drop!">never mind</Text>
@@ -208,11 +163,9 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => {
   return {
-    postCrumInstance: (crumInstance, userId, crumId) => {
-      dispatch(postCrumInstance(crumInstance, userId, crumId))
-    },
-    getSingleUser: id => {
-      dispatch(getSingleUser(id))
+    postCrumInstance: async (crumInstance, userId, crumId) => {
+      await dispatch(postCrumInstance(crumInstance, userId, crumId))
+      await dispatch(getSingleUser(userId))
     }
   }
 }
@@ -222,6 +175,7 @@ const DropCrumForm = connect(mapState, mapDispatch)(DisDropCrumForm)
 export default DropCrumForm
 
 const styles = StyleSheet.create({
+  root: {flex: 1},
   container: {
     flex: 1,
     display: 'flex',
@@ -234,7 +188,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     width: '93%',
-    // backgroundColor: 'rgba(250,250,250,0.8)',
     borderColor: '#7c1e9f',
     shadowColor: 'grey',
     justifyContent: 'space-between',
@@ -257,9 +210,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10
-    // borderColor: 'gray',
-    // borderRadius: 10,
-    // borderWidth: 1
   },
   modalButtons: {
     minHeight: '12%',
@@ -276,7 +226,6 @@ const styles = StyleSheet.create({
     height: '90%',
     flex: 3,
     flexBasis: '20%',
-    // backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 2,
     textAlign: 'center',
@@ -296,5 +245,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
-  }
+  },
+  validation: {color: 'red', textAlign: 'left', marginLeft: 10}
 })

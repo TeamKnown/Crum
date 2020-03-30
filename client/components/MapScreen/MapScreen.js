@@ -19,7 +19,7 @@ import {
   SafeAreaView
 } from 'react-native'
 import {SCALER} from '../utils'
-import {images} from '../../../assets'
+import {images, purpleCrumIcon} from '../../../assets'
 import {CurrentLocationButton} from './CurrentLocationButton'
 import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
@@ -85,7 +85,7 @@ class DisMapScreen extends Component {
 
       this.setState({coords, distance, time})
 
-      console.log('this.state coords', this.state.coords)
+      // console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -218,7 +218,7 @@ class DisMapScreen extends Component {
                   }}
                 >
                   <Image
-                    source={require('../../../assets/crumicon.png')}
+                    source={purpleCrumIcon}
                     style={{height: 30, width: 30}}
                   />
                   <Callout style={{width: 110, height: 20}}>
@@ -297,17 +297,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => {
-  return {
-    // fetchInitialData: () => {
-    //   dispatch(getCurrentPosition())
-    // },
-    // unFetchInitialData: () => {
-    //   dispatch(stopTracking())
-    // },
-    // fetchCrum: (latitudeIdx, longitudeIdx) => {
-    //   dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
-    // }
-  }
+  return {}
 }
 
 const MapScreen = connect(mapState, mapDispatch)(DisMapScreen)

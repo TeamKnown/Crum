@@ -20,6 +20,15 @@ export const images = {
   HandSanitizer: require('./Crums/HandSanitizer.png'),
   Stress: require('./Crums/Stress.png'),
   Dad: require('./Crums/dad2.png'),
+  ThumbUp: require('./Crums/ThumbUp.png'),
+  ThumbDown: require('./Crums/ThumbDown.png'),
+  HandWashing: require('./Crums/HandWashing.png'),
+  Cat: require('./Crums/Cat.png'),
+  Husky: require('./Crums/Husky.png'),
+  Amazed: require('./Crums/Amazed.png'),
+  Flushed: require('./Crums/Flushed.png'),
+  Shush: require('./Crums/Shush.png'),
+  Sideeye: require('./Crums/Sideeye.png'),
   ACBunny: require('./Crums/ACBunny.png'),
   ACRaccoon: require('./Crums/ACRaccoon.png'),
   ACBoy: require('./Crums/ACBoy.png'),
@@ -55,6 +64,15 @@ export const imageThumbnails = {
   HandSanitizer: require('./CrumThumbnails/HandSanitizer.png'),
   Stress: require('./CrumThumbnails/Stress.png'),
   Dad: require('./CrumThumbnails/dad2.png'),
+  ThumbUp: require('./CrumThumbnails/ThumbUp.png'),
+  ThumbDown: require('./CrumThumbnails/ThumbDown.png'),
+  HandWashing: require('./CrumThumbnails/HandWashing.png'),
+  Cat: require('./CrumThumbnails/Cat.png'),
+  Husky: require('./CrumThumbnails/Husky.png'),
+  Amazed: require('./CrumThumbnails/Amazed.png'),
+  Flushed: require('./CrumThumbnails/Flushed.png'),
+  Shush: require('./CrumThumbnails/Shush.png'),
+  Sideeye: require('./CrumThumbnails/Sideeye.png'),
   ACBunny: require('./CrumThumbnails/ACBunny.png'),
   ACRaccoon: require('./CrumThumbnails/ACRaccoon.png'),
   ACBoy: require('./CrumThumbnails/ACBoy.png'),
@@ -67,6 +85,10 @@ export const imageThumbnails = {
   StareGru: require('./CrumThumbnails/StareGru.png'),
   SmirkMinion: require('./CrumThumbnails/SmirkMinion.png')
 }
-export const fonts = {
-  font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
-}
+
+export const background = require('./background.png')
+export const defaultProfile = require('./defaultProfile.png')
+export const editIcon = require('./editIcon.png')
+export const purpleCrumIcon = require('./purpleCrumIcon.png')
+export const icon = require('./icon.png')
+export const splash = require('./splash.png')

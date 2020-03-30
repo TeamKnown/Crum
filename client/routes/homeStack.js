@@ -1,4 +1,5 @@
 import * as React from 'react'
+import {useState, useEffect} from 'react'
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
@@ -6,7 +7,7 @@ import UserProfile from '../components/UserProfile'
 import SignIn from '../components/Authentication/SignIn'
 import SignUp from '../components/Authentication/SignUp'
 import MapScreen from '../components/MapScreen/MapScreen'
-import ARScreen from '../components/ARScreen'
+import ARScreen from '../components/ARScreen/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
 import {createDrawerNavigator} from '@react-navigation/drawer'
 import {Dimensions, View, TouchableOpacity} from 'react-native'
@@ -15,8 +16,10 @@ import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
 
 const Tab = createMaterialTopTabNavigator()
-function HomeTabs() {
+function HomeTabs(props) {
   const {height} = Dimensions.get('window')
+  const [user, setUser] = useState(props.user)
+
   return (
     <NavigationContainer>
       <Tab.Navigator lazy={true} style={{paddingTop: height > 600 ? 30 : 10}}>
@@ -66,4 +69,5 @@ function Signin() {
     </NavigationContainer>
   )
 }
+
 export {Signin, HomeTabs}

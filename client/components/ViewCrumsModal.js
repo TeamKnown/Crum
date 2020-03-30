@@ -45,9 +45,9 @@ class ViewCrumsModal extends React.Component {
   }
   getThumbnail(crumInst) {
     const current = this.props.crums.filter(each => each.id === crumInst.crumId)
-    console.log('CRUM INST', crumInst.crum.name)
+    // console.log('CRUM INST', crumInst.crum.name)
 
-    console.log('current', current[0])
+    // console.log('current', current[0])
     return current.name
   }
 
@@ -57,10 +57,7 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crums} = this.props
-    // console.log('user', user)
     const {crumInstances} = this.props
-    // console.log('userCrums', crumInstances)
-    // console.log('IMAGES', imageThumbnails)
 
     return (
       <View>
@@ -125,21 +122,23 @@ class ViewCrumsModal extends React.Component {
                 </Text>
               )}
               <ScrollView style={styles.scrollBox}>
-                {crumInstances.map(crum => (
-                  <View style={styles.instance} key={crum.id}>
-                    <Image
-                      source={imageThumbnails[crum.crum.name]}
-                      style={{
-                        width: 40,
-                        height: 40,
-                        margin: 6,
-                        borderColor: 'black',
-                        borderWidth: 2
-                      }}
-                    />
-                    <Text>{crum.message}</Text>
-                  </View>
-                ))}
+                {crumInstances &&
+                  crumInstances.length > 0 &&
+                  crumInstances.map(crum => (
+                    <View style={styles.instance} key={crum.id}>
+                      <Image
+                        source={imageThumbnails[crum.crum.name]}
+                        style={{
+                          width: 40,
+                          height: 40,
+                          margin: 6,
+                          borderColor: 'black',
+                          borderWidth: 2
+                        }}
+                      />
+                      <Text>{crum.message}</Text>
+                    </View>
+                  ))}
               </ScrollView>
               <TouchableOpacity
                 style={styles.btnDrop}

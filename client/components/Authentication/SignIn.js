@@ -20,6 +20,7 @@ import {connect} from 'react-redux'
 import {auth, me} from '../../store/user'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from '../DismissKeyBoard'
+import {background} from '../../../assets/'
 const {width, height} = Dimensions.get('window')
 
 class DisSignInComponent extends React.Component {
@@ -74,7 +75,7 @@ class DisSignInComponent extends React.Component {
 
     return (
       <ImageBackground
-        source={require('../../../assets/background.png')}
+        source={background}
         style={{
           flex: 1,
           width: null,

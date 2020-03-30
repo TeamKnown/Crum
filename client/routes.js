@@ -49,7 +49,7 @@ class disRoutes extends Component {
   render() {
     const {isLoggedIn} = this.props
     if (isLoggedIn) {
-      return <HomeTabs />
+      return <HomeTabs user={this.props.user} />
     } else {
       return (
         <View style={{flex: 1}}>
