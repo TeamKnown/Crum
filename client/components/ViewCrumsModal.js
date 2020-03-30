@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser, fetchUserCrumInstances} from '../store'
-import {images} from '../../assets/'
+import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
 import {
@@ -16,7 +16,8 @@ import {
   TouchableOpacity,
   Modal,
   TouchableHighlight,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native'
 
 class ViewCrumsModal extends React.Component {
@@ -42,6 +43,13 @@ class ViewCrumsModal extends React.Component {
       visible: visible
     })
   }
+  getThumbnail(crumInst) {
+    const current = this.props.crums.filter(each => each.id === crumInst.crumId)
+    console.log('CRUM INST', crumInst.crum.name)
+
+    console.log('current', current[0])
+    return current.name
+  }
 
   render() {
     if (this.state.modalVisible) {
@@ -52,6 +60,7 @@ class ViewCrumsModal extends React.Component {
     // console.log('user', user)
     const {crumInstances} = this.props
     // console.log('userCrums', crumInstances)
+    // console.log('IMAGES', imageThumbnails)
 
     return (
       <View>
@@ -107,25 +116,31 @@ class ViewCrumsModal extends React.Component {
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
               {!crumInstances.length ? (
-                <Text>n o c r u m s</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                  n o c r u m s
+                </Text>
               ) : (
-                <Text>m y c r u m s</Text>
+                <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                  My Crums:
+                </Text>
               )}
-              {crumInstances.map(crum => (
-                <View style={styles.instance} key={crum.id}>
-                  <Image
-                    style={{
-                      width: 40,
-                      height: 40,
-                      margin: 6,
-                      borderColor: 'black',
-                      borderWidth: 2
-                    }}
-                  />
-                  <Text>{crum.message}</Text>
-                </View>
-              ))}
-
+              <ScrollView style={styles.scrollBox}>
+                {crumInstances.map(crum => (
+                  <View style={styles.instance} key={crum.id}>
+                    <Image
+                      source={imageThumbnails[crum.crum.name]}
+                      style={{
+                        width: 40,
+                        height: 40,
+                        margin: 6,
+                        borderColor: 'black',
+                        borderWidth: 2
+                      }}
+                    />
+                    <Text>{crum.message}</Text>
+                  </View>
+                ))}
+              </ScrollView>
               <TouchableOpacity
                 style={styles.btnDrop}
                 onPress={() => {
@@ -148,24 +163,22 @@ const styles = StyleSheet.create({
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
+    width: '90%',
     justifyContent: 'space-evenly',
     borderColor: '#7c1e9f',
-    width: '90%',
     height: '70%',
-    shadowColor: 'grey',
-    shadowOffset: {width: 2, height: 2},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
     borderRadius: 10,
     marginTop: 100
   },
-
   modalContainer: {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
   },
-
+  scrollBox: {
+    width: '100%',
+    marginLeft: '5%'
+  },
   instance: {
     width: '90%',
     height: 60,
@@ -174,9 +187,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: 'white',
     borderRadius: 10,
-    margin: 8
+    margin: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   },
-
   btnDrop: {
     height: 60,
     width: '90%',
@@ -187,7 +203,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 8
+    marginTop: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   }
 })
 
