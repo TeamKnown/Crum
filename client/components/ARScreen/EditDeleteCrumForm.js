@@ -100,37 +100,6 @@ class DisEditDeleteCrumForm extends React.Component {
               <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
-                    <View style={styles.modalIcons}>
-                      {self && (
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.handleEditCrum(
-                              {
-                                message: this.state.message,
-                                id: crumInstance.id
-                              },
-                              user.id
-                            )
-                          }}
-                        >
-                          <Image source={editIcon} style={styles.icon} />
-                        </TouchableOpacity>
-                      )}
-                      {self && (
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.handleDeleteCrum(
-                              {
-                                id: crumInstance.id
-                              },
-                              user.id
-                            )
-                          }}
-                        >
-                          <Image source={deleteIcon} style={styles.icon} />
-                        </TouchableOpacity>
-                      )}
-                    </View>
                     <View style={styles.modalTitle}>
                       <TextInput
                         required
@@ -158,6 +127,38 @@ class DisEditDeleteCrumForm extends React.Component {
                       />
                     </View>
                   </View>
+                  <View style={styles.modalIcons}>
+                    {self && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.handleEditCrum(
+                            {
+                              message: this.state.message,
+                              id: crumInstance.id
+                            },
+                            user.id
+                          )
+                        }}
+                      >
+                        <Image source={editIcon} style={styles.icon} />
+                      </TouchableOpacity>
+                    )}
+                    {self && (
+                      <TouchableOpacity
+                        onPress={() => {
+                          this.handleDeleteCrum(
+                            {
+                              id: crumInstance.id
+                            },
+                            user.id
+                          )
+                        }}
+                      >
+                        <Image source={deleteIcon} style={styles.icon} />
+                      </TouchableOpacity>
+                    )}
+                  </View>
+
                   <View style={styles.modalComments}>
                     <ScrollView
                       style={{
@@ -289,10 +290,9 @@ const styles = StyleSheet.create({
   },
   modalIcons: {
     flex: 1,
-    minWidth: 15,
-    minHeight: 160,
-    maxWidth: 15,
-    maxHeight: 160,
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    minHeight: '1%',
+    maxHeight: '10%',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
