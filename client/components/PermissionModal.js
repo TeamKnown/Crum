@@ -16,7 +16,7 @@ export default function PermissionModal(props) {
   }
 
   return (
-    <View style={styles.container}>
+    <View>
       <Modal
         isVisible={!props.isGranted}
         onBackdropPress={() => props.closeModal()}
@@ -38,7 +38,6 @@ export default function PermissionModal(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {},
   content: {
     backgroundColor: 'white',
     padding: 15,
