@@ -131,7 +131,6 @@ const crumInstancesReducer = (state = initialState, action) => {
     case SET_CRUM_INSTANCES:
       return action.crumInstances
     case ADD_CRUM_INSTANCE:
-      console.log('ac', action.crumInstance)
       return [...state, action.crumInstance]
     case DELETE_CRUM_INSTANCE:
       let stateAfterDelete = state.filter(

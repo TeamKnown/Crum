@@ -14,7 +14,11 @@ import {
   Alert
 } from 'react-native'
 import {imageThumbnails} from '../../../assets/'
-import {postCrumInstance, getSingleUser} from '../../store/'
+import {
+  postCrumInstance,
+  getSingleUser,
+  fetchUserCrumInstances
+} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 class DisDropCrumForm extends React.Component {
@@ -41,8 +45,8 @@ class DisDropCrumForm extends React.Component {
   }
   async handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
-    console.log(JSON.stringify(crumInstance))
-    console.log(JSON.stringify(crumId))
+    // console.log(JSON.stringify(crumInstance))
+    // console.log(JSON.stringify(crumId))
     if (crumInstance.message === '')
       this.setState({validationError: 'Please enter a message'})
     else if (
@@ -57,8 +61,13 @@ class DisDropCrumForm extends React.Component {
         validationError: 'Please select a crum'
       })
     else {
+      console.log('post request: ')
       await this.props.postCrumInstance(crumInstance, userId, crumId)
+      console.log('get request: ')
+      await this.props.getUserCrumInstances(userId)
+      console.log('get request: ')
       await this.props.getSingleUser(userId)
+
       this.props.hideDropCrumForm() //
     }
   }
@@ -157,8 +166,8 @@ class DisDropCrumForm extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
-                      onPress={() => {
-                        hideDropCrumForm()
+                      onPress={async () => {
+                        await hideDropCrumForm()
                         this.setModalVisible(!this.state.modalVisible)
                       }}
                     >
@@ -193,6 +202,9 @@ const mapDispatch = dispatch => {
     },
     getSingleUser: id => {
       dispatch(getSingleUser(id))
+    },
+    getUserCrumInstances: id => {
+      dispatch(fetchUserCrumInstances(id))
     }
   }
 }

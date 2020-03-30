@@ -84,29 +84,6 @@ class DisARScreen extends React.Component {
     this.setState({isGranted: true})
   }
 
-  // getiPhoneModel = () => {
-  //   function _getiPhoneModel() {
-  //     if (
-  //       window.devicePixelRatio >= 3 &&
-  //       ((window.innerHeight == 368 && window.innerWidth == 207) ||
-  //         (window.innerHeight == 667 && window.innerWidth == 375) ||
-  //         (window.innerHeight == 736 && window.innerWidth == 414) ||
-  //         (window.innerHeight == 812 && window.innerWidth == 375) ||
-  //         (window.innerHeight >= 812 && window.innerWidth >= 375))
-  //     ) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   }
-  //   // const deviceInfo1 = 'getModel:  ' + DeviceInfo.getModel()
-  //   // console.log('IPHONE MODEL', deviceInfo1)
-  //   console.log('IPHONE MODEL', _getiPhoneModel())
-  //   console.log('SCREEN PIXEL', window.devicePixelRatio)
-  //   console.log('SCREEN Height', window.innerHeight)
-  //   console.log('SCREEN Width', window.innerWidth)
-  // }
-
   touch = new THREE.Vector2()
   raycaster = new THREE.Raycaster()
 
@@ -158,16 +135,15 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({loading: false})
-    // AR.setWorldAlignment('gravityAndHeading')
-    // console.log('on contect create')
-    // console.log(pixelRatio, width, height)
+    if (this.props.user.device === 'advanced') {
+      AR.setWorldAlignment('gravityAndHeading')
+    }
     this.renderer = new Renderer({gl, pixelRatio, width, height})
     scene = new THREE.Scene()
     scene.background = new BackgroundTexture(this.renderer)
     this.camera = new Camera(width, height, 0.01, 1000)
 
     scene.add(new THREE.AmbientLight(0xffffff))
-    // console.log('end on contect create')
   }
 
   onRender = delta => {
@@ -197,9 +173,7 @@ class DisARScreen extends React.Component {
         // console.log('Too ADD')
         // console.log(JSON.stringify(toAdd))
         for (const crumInstance of toAdd) {
-          // console.log('crum:', JSON.stringify(crumInstance.crum))
           if (crumInstance.crum === null) continue
-          // console.log('crum continused:', JSON.stringify(crumInstance.crum))
           let pos = computePos(crumInstance, props.locations)
           let plane = await createPlane(
             0xffffff,

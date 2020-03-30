@@ -71,7 +71,7 @@ export const getSingleUser = id => {
   return async dispatch => {
     try {
       const {data} = await devAxios.get(`/api/users/${id}`)
-
+      console.log('user: ', data.crumInstances.length)
       dispatch(getUser(data))
     } catch (error) {
       console.error(error)
@@ -84,7 +84,7 @@ export const updateUserThunk = (id, info) => {
     try {
       const {data} = await devAxios.put(`/api/users/${id}`, info)
 
-      dispatch(updateUser(data))
+      dispatch(updateUser(data.totalCrums))
     } catch (error) {
       console.error(error)
     }
@@ -101,6 +101,11 @@ export const updateUserThunk = (id, info) => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
+      console.log('getSingleUser', state.crumInstances && state.totalCrums)
+      console.log(
+        'getSingleUser',
+        action.user.crumInstances && action.user.totalCrums
+      )
       return action.user
     case REMOVE_USER:
       return defaultUser
