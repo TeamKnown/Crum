@@ -69,6 +69,7 @@ class DisMapScreen extends Component {
         `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=${GOOGLE_API_KEY}`
       )
       const respJson = await resp.json()
+      console.log('this.state coords', respJson)
       const response = respJson.routes[0]
       const distanceTime = response.legs[0]
       const distance = distanceTime.distance.text
@@ -84,8 +85,6 @@ class DisMapScreen extends Component {
       })
 
       this.setState({coords, distance, time})
-
-      // console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
