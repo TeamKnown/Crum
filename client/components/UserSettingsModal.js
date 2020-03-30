@@ -90,31 +90,13 @@ class UserSettingsModal extends React.Component {
               <View style={styles.modal}>
                 <View style={styles.deviceContainer}>
                   <View style={styles.device}>
-                    <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                    <Text style={styles.heading}>
                       Recommended Device Setting:
                     </Text>
                     {this.getiPhoneModel() ? (
-                      <Text
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: 16,
-                          fontSize: 40
-                        }}
-                      >
-                        a d v a n c e d
-                      </Text>
+                      <Text style={styles.type}>a d v a n c e d</Text>
                     ) : (
-                      <Text
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: 16,
-                          fontSize: 40
-                        }}
-                      >
-                        s t a n d a r d
-                      </Text>
+                      <Text style={styles.type}>s t a n d a r d</Text>
                     )}
                   </View>
                   <Text />
@@ -174,6 +156,18 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center'
+  },
+
+  heading: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+
+  type: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    fontSize: 40
   },
 
   btnDrop: {
