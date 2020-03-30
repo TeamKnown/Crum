@@ -28,7 +28,18 @@ export const images = {
   Amazed: require('./Crums/Amazed.png'),
   Flushed: require('./Crums/Flushed.png'),
   Shush: require('./Crums/Shush.png'),
-  Sideeye: require('./Crums/Sideeye.png')
+  Sideeye: require('./Crums/Sideeye.png'),
+  ACBunny: require('./Crums/ACBunny.png'),
+  ACRaccoon: require('./Crums/ACRaccoon.png'),
+  ACBoy: require('./Crums/ACBoy.png'),
+  ACKid: require('./Crums/ACKid.png'),
+  DogDuo: require('./Crums/DogDuo.png'),
+  MinionDuo: require('./Crums/MinionDuo.png'),
+  MinionTrio: require('./Crums/MinionTrio.png'),
+  NoCigs: require('./Crums/NoCigs.png'),
+  SillyMinion: require('./Crums/SillyMinion.png'),
+  StareGru: require('./Crums/StareGru.png'),
+  SmirkMinion: require('./Crums/SmirkMinion.png')
 }
 
 export const imageThumbnails = {
@@ -61,7 +72,18 @@ export const imageThumbnails = {
   Amazed: require('./CrumThumbnails/Amazed.png'),
   Flushed: require('./CrumThumbnails/Flushed.png'),
   Shush: require('./CrumThumbnails/Shush.png'),
-  Sideeye: require('./CrumThumbnails/Sideeye.png')
+  Sideeye: require('./CrumThumbnails/Sideeye.png'),
+  ACBunny: require('./CrumThumbnails/ACBunny.png'),
+  ACRaccoon: require('./CrumThumbnails/ACRaccoon.png'),
+  ACBoy: require('./CrumThumbnails/ACBoy.png'),
+  ACKid: require('./CrumThumbnails/ACKid.png'),
+  DogDuo: require('./CrumThumbnails/DogDuo.png'),
+  MinionDuo: require('./CrumThumbnails/MinionDuo.png'),
+  MinionTrio: require('./CrumThumbnails/MinionTrio.png'),
+  NoCigs: require('./CrumThumbnails/NoCigs.png'),
+  SillyMinion: require('./CrumThumbnails/SillyMinion.png'),
+  StareGru: require('./CrumThumbnails/StareGru.png'),
+  SmirkMinion: require('./CrumThumbnails/SmirkMinion.png')
 }
 export const fonts = {
   font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
