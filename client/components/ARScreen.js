@@ -63,6 +63,7 @@ class DisARScreen extends React.Component {
 
     this.updateTouch = this.updateTouch.bind(this)
     this.hideDropCrumForm = this.hideDropCrumForm.bind(this)
+    this.showDropCrumForm = this.showDropCrumForm.bind(this)
     this.hideEditDeleteCrumForm = this.hideEditDeleteCrumForm.bind(this)
   }
 
@@ -146,10 +147,10 @@ class DisARScreen extends React.Component {
     this.runHitTest()
   }
   hideDropCrumForm = () => {
-    // if (this.props.user.device === 'standard') {
-    //   return
-    // }
     this.setState({dropCrumFormVisible: false})
+  }
+  showDropCrumForm = () => {
+    this.setState({dropCrumFormVisible: true})
   }
   hideEditDeleteCrumForm = () => {
     this.setState({editDeleteCrumFormVisible: false})
@@ -277,25 +278,38 @@ class DisARScreen extends React.Component {
           <View style={styles.main}>
             <View style={{flex: 1}}>
               <View style={{flex: 1, height: '100%', width: '100%'}}>
-                <TouchableOpacity
-                  onPress={evt => {
-                    if (this.props.user.device === 'noAR') {
-                      this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
-                    } else {
-                      this.updateTouch(evt) // use this if your phone does support AR
-                    }
-                  }}
-                  activeOpacity={1.0}
-                  style={{flex: 1}}
-                >
-                  <GraphicsView
+                {this.props.user.device !== 'noAR' ? (
+                  <TouchableOpacity
+                    onPress={evt => {
+                      if (this.props.user.device === 'noAR') {
+                        this.setState({dropCrumFormVisible: true}) // use this if your phone does not support AR
+                      } else {
+                        this.updateTouch(evt) // use this if your phone does support AR
+                      }
+                    }}
+                    activeOpacity={1.0}
                     style={{flex: 1}}
-                    onContextCreate={this.onContextCreate}
-                    onRender={this.onRender}
-                    isArEnabled
-                    isArCameraStateEnabled
-                  />
-                </TouchableOpacity>
+                  >
+                    <GraphicsView
+                      style={{flex: 1}}
+                      onContextCreate={this.onContextCreate}
+                      onRender={this.onRender}
+                      isArEnabled
+                      isArCameraStateEnabled
+                    />
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.btn}
+                    onPress={() => {
+                      this.showDropCrumForm()
+                    }}
+                  >
+                    <Text style={{color: '#19ae9f'}} title="Drop!">
+                      d r o p
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
 
               {this.state.dropCrumFormVisible && (
@@ -364,5 +378,19 @@ const styles = StyleSheet.create({
   main: {
     height: '100%',
     width: '100%'
+  },
+  btn: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    alignSelf: 'center',
+    display: 'flex',
+    width: '80%',
+    height: '10%',
+    borderColor: 'black',
+    borderWidth: 2,
+    textAlign: 'center',
+    borderRadius: 20,
+    marginTop: 100,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 })
