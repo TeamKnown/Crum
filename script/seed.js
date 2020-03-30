@@ -200,57 +200,46 @@ const crums = [
     category: '0-Emoji'
   },
   {
-    id: 21,
     name: 'ACBunny',
     category: '4-AnimalCrossing'
   },
   {
-    id: 22,
     name: 'ACRaccoon',
     category: '4-AnimalCrossing'
   },
   {
-    id: 23,
     name: 'ACBoy',
     category: '4-AnimalCrossing'
   },
   {
-    id: 24,
     name: 'ACKid',
     category: '4-AnimalCrossing'
   },
   {
-    id: 25,
     name: 'DogDuo',
     category: '2-Animal'
   },
   {
-    id: 26,
     name: 'MinionDuo',
     category: '5-DespicableMe'
   },
   {
-    id: 27,
     name: 'MinionTrio',
     category: '5-DespicableMe'
   },
   {
-    id: 28,
     name: 'NoCigs',
     category: '3-Object'
   },
   {
-    id: 29,
     name: 'SillyMinion',
     category: '5-DespicableMe'
   },
   {
-    id: 30,
     name: 'StareGru',
     category: '5-DespicableMe'
   },
   {
-    id: 31,
     name: 'SmirkMinion',
     category: '5-DespicableMe'
   }
