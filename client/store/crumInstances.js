@@ -67,7 +67,6 @@ export const postCrumInstance = (crumInstance, userId, crumId) => {
       const heading = await Location.getHeadingAsync()
       const headingInt = Math.floor(heading.magHeading)
       crumInstance.headingInt = headingInt
-      console.log('DEBUG REDUX AXIOS postCrumInstance')
       let {data} = await devAxios.post(
         `/api/cruminstances?userId=${userId}&crumId=${crumId}&direction=front`,
         crumInstance

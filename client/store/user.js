@@ -70,7 +70,6 @@ export const logout = () => async dispatch => {
 export const getSingleUser = id => {
   return async dispatch => {
     try {
-      console.log('DEBUG REDUX AXIOS getSingleUser')
       const {data} = await devAxios.get(`/api/users/${id}`)
       dispatch(getUser(data))
     } catch (error) {

@@ -172,9 +172,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => {
   return {
     postCrumInstance: async (crumInstance, userId, crumId) => {
-      console.log('DEBUG REACT BEFORE DISPATCH postCrumInstance')
       await dispatch(postCrumInstance(crumInstance, userId, crumId))
-      console.log('DEBUG REACT BEFORE DISPATCH getSingleUser')
       await dispatch(getSingleUser(userId))
     }
   }
