@@ -25,22 +25,39 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+const computeLocation = (headingInt, latitude, longitude) => {
+  const headingRadian = (headingInt * 3.24) / 180
+  const rtnLatitude = latitude + (Math.cos(headingRadian) * 20) / 6356000
+  const rtnLongitude =
+    longitude +
+    (Math.sin(headingRadian) * 20) /
+      (6356000 * Math.cos((longitude * 2 * 3.14) / 360))
+  return {latitude: rtnLatitude, longitude: rtnLongitude}
+}
+
 router.post('/', async (req, res, next) => {
   try {
+    const computedLocation = computeLocation(
+      req.body.headingInt,
+      req.body.latitude,
+      req.body.longitude
+    )
     const newCrumInstance = await CrumInstance.create({
-      ...req.body
+      ...req.body,
+      latitude: computedLocation.latitude,
+      longitude: computedLocation.longitude
     })
 
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
     await newCrumInstance.setCrum(crum)
-    await user.reload()
-    await user.userCrums()
+
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
     returnVal.CommentInstances = []
+
     if (newCrumInstance) {
       res.json(returnVal)
     }
@@ -137,26 +154,6 @@ router.get('/user/:id', async (req, res, next) => {
       }
     })
     res.json(crumInstance)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// this post route takes one parameters: the id of the cruminstances
-//http://localhost:19001/api/cruminstances/near/1?radium=1
-router.get('/near/:id', async (req, res, next) => {
-  try {
-    const crumInstances = await crumInstance.findNear(+req.query.radium, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        }
-      ]
-    })
-    res.json(crumInstances)
   } catch (err) {
     next(err)
   }

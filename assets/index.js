@@ -85,6 +85,3 @@ export const imageThumbnails = {
   StareGru: require('./CrumThumbnails/StareGru.png'),
   SmirkMinion: require('./CrumThumbnails/SmirkMinion.png')
 }
-export const fonts = {
-  font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
-}
