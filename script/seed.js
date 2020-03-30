@@ -80,62 +80,50 @@ const users = [
 ]
 const crums = [
   {
-    id: 1,
     name: 'Dog',
     category: '2-Animal'
   },
   {
-    id: 2,
     name: 'BrainFog',
     category: '0-Emoji'
   },
   {
-    id: 3,
     name: 'JsHtmlCss',
     category: '3-Object'
   },
   {
-    id: 4,
     name: 'Breakmarker',
     category: '3-Object'
   },
   {
-    id: 5,
     name: 'LaughWithTear',
     category: '0-Emoji'
   },
   {
-    id: 6,
     name: 'Chocolates',
     category: '3-Object'
   },
   {
-    id: 7,
     name: 'LaughWithTeeth',
     category: '0-Emoji'
   },
   {
-    id: 8,
     name: 'CoolGuy',
     category: '0-Emoji'
   },
   {
-    id: 9,
     name: 'Mask',
     category: '3-Object'
   },
   {
-    id: 10,
     name: 'MusicNote',
     category: '4-Symbol'
   },
   {
-    id: 11,
     name: 'FourthOfJuly',
     category: '4-Symbol'
   },
   {
-    id: 12,
     name: 'Pinocchio',
     category: '0-Emoji'
   },
@@ -144,44 +132,72 @@ const crums = [
   //   category: '4-Symbol'
   // },
   {
-    id: 13,
     name: 'Ring',
     category: '3-Object'
   },
   {
-    id: 14,
     name: 'GreenFace',
     category: '0-Emoji'
   },
   {
-    id: 15,
     name: 'Sleepy',
     category: '0-Emoji'
   },
   {
-    id: 16,
     name: 'Halo',
     category: '0-Emoji'
   },
   {
-    id: 17,
     name: 'Smart',
     category: '0-Emoji'
   },
   {
-    id: 18,
     name: 'HandSanitizer',
     category: '3-Object'
   },
   {
-    id: 19,
     name: 'Stress',
     category: '0-Emoji'
   },
   {
-    id: 20,
     name: 'Dad',
     category: '1-Human'
+  },
+  {
+    name: 'ThumbUp',
+    category: '4-Symbol'
+  },
+  {
+    name: 'ThumbDown',
+    category: '4-Symbol'
+  },
+  {
+    name: 'HandWashing',
+    category: '4-Symbol'
+  },
+  {
+    name: 'Cat',
+    category: '2-Animal'
+  },
+  {
+    name: 'Husky',
+    category: '2-Animal'
+  },
+  {
+    name: 'Amazed',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Flushed',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Shush',
+    category: '0-Emoji'
+  },
+  {
+    name: 'Sideeye',
+    category: '0-Emoji'
   }
 ]
 const crumInstances = [

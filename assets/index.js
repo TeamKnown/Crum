@@ -19,7 +19,16 @@ export const images = {
   Smart: require('./Crums/Smart.png'),
   HandSanitizer: require('./Crums/HandSanitizer.png'),
   Stress: require('./Crums/Stress.png'),
-  Dad: require('./Crums/dad2.png')
+  Dad: require('./Crums/dad2.png'),
+  ThumbUp: require('./Crums/ThumbUp.png'),
+  ThumbDown: require('./Crums/ThumbDown.png'),
+  HandWashing: require('./Crums/HandWashing.png'),
+  Cat: require('./Crums/Cat.png'),
+  Husky: require('./Crums/Husky.png'),
+  Amazed: require('./Crums/Amazed.png'),
+  Flushed: require('./Crums/Flushed.png'),
+  Shush: require('./Crums/Shush.png'),
+  Sideeye: require('./Crums/Sideeye.png')
 }
 
 export const imageThumbnails = {
@@ -43,7 +52,16 @@ export const imageThumbnails = {
   Smart: require('./CrumThumbnails/Smart.png'),
   HandSanitizer: require('./CrumThumbnails/HandSanitizer.png'),
   Stress: require('./CrumThumbnails/Stress.png'),
-  Dad: require('./CrumThumbnails/dad2.png')
+  Dad: require('./CrumThumbnails/dad2.png'),
+  ThumbUp: require('./CrumThumbnails/ThumbUp.png'),
+  ThumbDown: require('./CrumThumbnails/ThumbDown.png'),
+  HandWashing: require('./CrumThumbnails/HandWashing.png'),
+  Cat: require('./CrumThumbnails/Cat.png'),
+  Husky: require('./CrumThumbnails/Husky.png'),
+  Amazed: require('./CrumThumbnails/Amazed.png'),
+  Flushed: require('./CrumThumbnails/Flushed.png'),
+  Shush: require('./CrumThumbnails/Shush.png'),
+  Sideeye: require('./CrumThumbnails/Sideeye.png')
 }
 export const fonts = {
   font1: require('../assets/three_fonts/neue_haas_unica_pro_medium.json')
