@@ -16,7 +16,7 @@ export default function PermissionModal(props) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Modal
         isVisible={!props.isGranted}
         onBackdropPress={() => props.closeModal()}
@@ -38,10 +38,11 @@ export default function PermissionModal(props) {
 }
 
 const styles = StyleSheet.create({
+  container: {},
   content: {
     backgroundColor: 'white',
     padding: 15,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 20,
     borderColor: 'rgba(0, 0, 0, 0.1)'
@@ -51,8 +52,8 @@ const styles = StyleSheet.create({
     marginBottom: '3%'
   },
   buttons: {
+    display: 'flex',
     flexDirection: 'row',
-    // justifyContent: 'space-around',
-    alignItems: 'center'
+    justifyContent: 'space-between'
   }
 })

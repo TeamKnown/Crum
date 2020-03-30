@@ -47,7 +47,7 @@ class DisSignInComponent extends React.Component {
   }
 
   handleSignIn() {
-    const {userName, password, validationError} = this.state
+    const {userName, password} = this.state
     this.setState({validationError: ''})
 
     if (userName === '')
@@ -60,7 +60,7 @@ class DisSignInComponent extends React.Component {
   }
 
   textInputChange(value) {
-    if (value.length > 4) {
+    if (value.length > 0) {
       this.setState({
         check_textInputChange: true,
         userName: value
