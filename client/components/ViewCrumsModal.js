@@ -128,7 +128,7 @@ class ViewCrumsModal extends React.Component {
                 {crumInstances.map(crum => (
                   <View style={styles.instance} key={crum.id}>
                     <Image
-                      source={imageThumbnails[crum.name]}
+                      source={imageThumbnails[crum.crum.name]}
                       style={{
                         width: 40,
                         height: 40,
