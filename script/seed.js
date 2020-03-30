@@ -11,6 +11,7 @@ const {
 
 const users = [
   {
+    id: 1,
     userName: 'Admin',
     email: 'admin@gmail.com',
     password: 'test1',
@@ -18,60 +19,70 @@ const users = [
     type: 'admin'
   },
   {
+    id: 2,
     userName: 'Sharline',
     email: 'scroney1@state.tx.us',
     password: 'gFXBSSV1',
     salt: null
   },
   {
+    id: 3,
     userName: 'MosheB',
     email: 'mbtham2@angelfire.com',
     password: 'JxmEPQKq0JW4',
     salt: null
   },
   {
+    id: 4,
     userName: 'FMuffen',
     email: 'fmuffen3@japanpost.jp',
     password: 'NOFv1iBo',
     salt: null
   },
   {
+    id: 5,
     userName: 'JKleis',
     email: 'jkleis4@google.fr',
     password: 'Drc5fO2',
     salt: null
   },
   {
+    id: 6,
     userName: 'MCunniffe',
     email: 'mcunniffe5@who.int',
     password: 'vs99rzUHHP',
     salt: null
   },
   {
+    id: 7,
     userName: 'AmelineA',
     email: 'aandrieu6@google.es',
     password: 'jHm15tU',
     salt: null
   },
   {
+    id: 8,
     userName: 'CHeald',
     email: 'cheald7@meetup.com',
     password: 'aRlDbxDYsFD',
     salt: null
   },
   {
+    id: 9,
     userName: 'EBirtwell',
     email: 'ebirtwell8@storify.com',
     password: 'M0oDOqBw4e',
     salt: null
   },
   {
+    id: 10,
     userName: 'KCarlisle',
     email: 'kcarlisle9@fotki.com',
     password: 'NERY7QB2pRqy',
     salt: null
   },
   {
+    id: 11,
     userName: 'dad',
     email: 'dad@gmail.com',
     password: 'yesDad',
