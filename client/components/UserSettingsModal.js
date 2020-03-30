@@ -180,7 +180,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: '#19ae9f',
     borderWidth: 2,
-    // textAlign: 'center',   // april's comment: causes error
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
