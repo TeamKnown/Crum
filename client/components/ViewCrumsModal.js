@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser, fetchUserCrumInstances} from '../store'
-import {images} from '../../assets/'
+import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
 import {
@@ -43,6 +43,13 @@ class ViewCrumsModal extends React.Component {
       visible: visible
     })
   }
+  getThumbnail(crumInst) {
+    const current = this.props.crums.filter(each => each.id === crumInst.crumId)
+    console.log('CRUM INST', crumInst.crum.name)
+
+    console.log('current', current[0])
+    return current.name
+  }
 
   render() {
     if (this.state.modalVisible) {
@@ -53,6 +60,7 @@ class ViewCrumsModal extends React.Component {
     // console.log('user', user)
     const {crumInstances} = this.props
     // console.log('userCrums', crumInstances)
+    // console.log('IMAGES', imageThumbnails)
 
     return (
       <View>
@@ -120,6 +128,7 @@ class ViewCrumsModal extends React.Component {
                 {crumInstances.map(crum => (
                   <View style={styles.instance} key={crum.id}>
                     <Image
+                      source={imageThumbnails[crum.crum.name]}
                       style={{
                         width: 40,
                         height: 40,
