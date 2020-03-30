@@ -73,7 +73,6 @@ class DisDropCrumForm extends React.Component {
       ((window.innerHeight == 368 && window.innerWidth == 207) ||
         (window.innerHeight == 667 && window.innerWidth == 375) ||
         (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight == 812 && window.innerWidth == 375) ||
         (window.innerHeight >= 812 && window.innerWidth >= 375))
     ) {
       return true
