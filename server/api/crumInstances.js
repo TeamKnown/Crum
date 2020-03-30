@@ -25,31 +25,12 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-const computeLocation = (headingInt, latitude, longitude) => {
-  const headingRadian = (headingInt * 3.24) / 180
-  const rtnLatitude = latitude + (Math.cos(headingRadian) * 20) / 6356000
-  const rtnLongitude =
-    longitude +
-    (Math.sin(headingRadian) * 20) /
-      (6356000 * Math.cos((longitude * 2 * 3.14) / 360))
-  return {latitude: rtnLatitude, longitude: rtnLongitude}
-}
-
 router.post('/', async (req, res, next) => {
   try {
-    const computedLocation = computeLocation(
-      req.body.headingInt,
-      req.body.latitude,
-      req.body.longitude
-    )
     const newCrumInstance = await CrumInstance.create({
       ...req.body
     })
-    // const newCrumInstance = await CrumInstance.create({
-    //   ...req.body,
-    //   latitude: computedLocation.latitude,
-    //   longitude: computedLocation.longitude
-    // })
+
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
