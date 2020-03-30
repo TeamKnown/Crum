@@ -244,9 +244,9 @@ const mapDispatch = dispatch => {
       dispatch(putCrumInstance(crumInstance))
       dispatch(getSingleUser(userId))
     },
-    deleteCrumInstance: (crumInstance, userId) => {
-      dispatch(deleteCrumInstance(crumInstance))
-      dispatch(getSingleUser(userId))
+    deleteCrumInstance: async (crumInstance, userId) => {
+      await dispatch(deleteCrumInstance(crumInstance))
+      await dispatch(getSingleUser(userId))
     },
     postCommentInstance: (commentInstance, userId, commentId) => {
       dispatch(postCommentInstance(commentInstance, userId, commentId))

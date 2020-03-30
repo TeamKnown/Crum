@@ -29,11 +29,11 @@ class DisDropCrumForm extends React.Component {
     imgId: '',
     validationError: ''
   }
-  setModalVisible(modalVisible) {
-    this.setState({
-      modalVisible: modalVisible
-    })
-  }
+  // setModalVisible(modalVisible) {
+  //   this.setState({
+  //     modalVisible: modalVisible
+  //   })
+  // }
   handleTypeMessage(event) {
     this.setState({
       message: event.nativeEvent.text
@@ -140,9 +140,8 @@ class DisDropCrumForm extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
-                      onPress={async () => {
-                        await hideDropCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
+                      onPress={() => {
+                        hideDropCrumForm()
                       }}
                     >
                       <Text title="Drop!">never mind</Text>
