@@ -57,7 +57,6 @@ router.post('/', async (req, res, next) => {
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
     returnVal.CommentInstances = []
-    console.log('in post, user totalCrums:', user.totalCrums)
     if (newCrumInstance) {
       res.json(returnVal)
     }

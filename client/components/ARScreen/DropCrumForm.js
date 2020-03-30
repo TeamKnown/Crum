@@ -14,11 +14,7 @@ import {
   Alert
 } from 'react-native'
 import {imageThumbnails} from '../../../assets/'
-import {
-  postCrumInstance,
-  getSingleUser,
-  fetchUserCrumInstances
-} from '../../store/'
+import {postCrumInstance, getSingleUser} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 class DisDropCrumForm extends React.Component {
@@ -43,7 +39,7 @@ class DisDropCrumForm extends React.Component {
       message: event.nativeEvent.text
     })
   }
-  async handleDropCrum(crumInstance, userId, crumId) {
+  handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
     if (crumInstance.message === '')
       this.setState({validationError: 'Please enter a message'})
@@ -59,28 +55,8 @@ class DisDropCrumForm extends React.Component {
         validationError: 'Please select a crum'
       })
     else {
-      console.log('post request: ')
-      await this.props.postCrumInstance(crumInstance, userId, crumId)
-      console.log('get request: ')
-      await this.props.getUserCrumInstances(userId)
-      console.log('get request: ')
-      await this.props.getSingleUser(userId)
-
-      this.props.hideDropCrumForm() //
-    }
-  }
-
-  getiPhoneModel() {
-    if (
-      window.devicePixelRatio >= 3 &&
-      ((window.innerHeight == 368 && window.innerWidth == 207) ||
-        (window.innerHeight == 667 && window.innerWidth == 375) ||
-        (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight >= 812 && window.innerWidth >= 375))
-    ) {
-      return true
-    } else {
-      return false
+      this.props.postCrumInstance(crumInstance, userId, crumId)
+      this.props.hideDropCrumForm()
     }
   }
 
@@ -195,14 +171,9 @@ const mapState = state => ({
 })
 const mapDispatch = dispatch => {
   return {
-    postCrumInstance: (crumInstance, userId, crumId) => {
-      dispatch(postCrumInstance(crumInstance, userId, crumId))
-    },
-    getSingleUser: id => {
-      dispatch(getSingleUser(id))
-    },
-    getUserCrumInstances: id => {
-      dispatch(fetchUserCrumInstances(id))
+    postCrumInstance: async (crumInstance, userId, crumId) => {
+      await dispatch(postCrumInstance(crumInstance, userId, crumId))
+      await dispatch(getSingleUser(userId))
     }
   }
 }

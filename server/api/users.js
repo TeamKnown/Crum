@@ -31,7 +31,6 @@ router.get('/:userId', async (req, res, next) => {
     })
 
     await user.userCrums()
-    console.log('in get ', user.dataValues.totalCrums)
     res.json(user)
   } catch (error) {
     next(error)
