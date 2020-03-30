@@ -12,7 +12,7 @@ import {
   SafeAreaView,
   ScrollView
 } from 'react-native'
-
+import {background} from '../../../assets/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
@@ -98,7 +98,7 @@ class DisSignUpComponent extends React.Component {
 
     return (
       <ImageBackground
-        source={require('../../../assets/background.png')}
+        source={background}
         style={{
           flex: 1
         }}

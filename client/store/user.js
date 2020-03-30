@@ -83,7 +83,7 @@ export const updateUserThunk = (id, info) => {
     try {
       const {data} = await devAxios.put(`/api/users/${id}`, info)
 
-      dispatch(updateUser(data.totalCrums))
+      dispatch(updateUser(data))
     } catch (error) {
       console.error(error)
     }
