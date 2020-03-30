@@ -3,6 +3,7 @@ const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 // const {adminOnly, selfOnly} = require('./utlis')
 module.exports = router
 
+// https://sequelize.org/master/manual/eager-loading.html no way to condense it
 router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll({
@@ -41,12 +42,14 @@ router.post('/', async (req, res, next) => {
       req.body.latitude,
       req.body.longitude
     )
-
     const newCrumInstance = await CrumInstance.create({
-      ...req.body,
-      latitude: computedLocation.latitude,
-      longitude: computedLocation.longitude
+      ...req.body
     })
+    // const newCrumInstance = await CrumInstance.create({
+    //   ...req.body,
+    //   latitude: computedLocation.latitude,
+    //   longitude: computedLocation.longitude
+    // })
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
