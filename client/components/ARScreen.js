@@ -274,7 +274,6 @@ class DisARScreen extends React.Component {
         >
           <View style={styles.main}>
             <View style={{flex: 1}}>
-              {/* <Text>{JSON.stringify(this.props.user)}</Text> */}
               <View style={{flex: 1, height: '100%', width: '100%'}}>
                 <TouchableOpacity
                   disabled={false}
@@ -292,7 +291,6 @@ class DisARScreen extends React.Component {
                     style={{flex: 1}}
                     onContextCreate={this.onContextCreate}
                     onRender={this.onRender}
-                    // onResize={this.onResize}
                     isArEnabled
                     isArCameraStateEnabled
                   />
@@ -312,9 +310,7 @@ class DisARScreen extends React.Component {
                   hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
                 />
               )}
-              {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
             </View>
-            {/* <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} /> */}
             {this.state.dropCrumFormVisible && (
               <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
             )}
@@ -328,7 +324,6 @@ class DisARScreen extends React.Component {
                 hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
               />
             )}
-            {/* <DropCrumForm hideDropCrumForm={this.props.hideDropCrumForm} /> */}
           </View>
         </ImageBackground>
       )
@@ -351,21 +346,12 @@ const mapDispatch = dispatch => {
     getUser: () => {
       dispatch(me())
     },
-    // subscribeToLocationData: () => {
-    //   dispatch(getCurrentPosition())
-    // },
-    // unsubscribeToLocationData: () => {
-    //   dispatch(stopTracking())
-    // },
     fetchCrums: () => {
       dispatch(fetchCrums())
     },
     fetchCrumInstances: (latitudeIdx, longitudeIdx) => {
       dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
     }
-    // fetchCrumInstanceDetail: id => {
-    //   // dispatch(fetchCrumInstanceDetail(id))
-    // }
   }
 }
 
