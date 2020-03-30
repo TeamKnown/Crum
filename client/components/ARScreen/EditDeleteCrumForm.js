@@ -13,7 +13,7 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
-import {images} from '../../../assets/'
+import {images, editIcon, deleteIcon} from '../../../assets/'
 import {
   putCrumInstance,
   deleteCrumInstance,
@@ -100,6 +100,37 @@ class DisEditDeleteCrumForm extends React.Component {
               <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
+                    <View style={styles.modalIcons}>
+                      {self && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.handleEditCrum(
+                              {
+                                message: this.state.message,
+                                id: crumInstance.id
+                              },
+                              user.id
+                            )
+                          }}
+                        >
+                          <Image source={editIcon} style={styles.icon} />
+                        </TouchableOpacity>
+                      )}
+                      {self && (
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.handleDeleteCrum(
+                              {
+                                id: crumInstance.id
+                              },
+                              user.id
+                            )
+                          }}
+                        >
+                          <Image source={deleteIcon} style={styles.icon} />
+                        </TouchableOpacity>
+                      )}
+                    </View>
                     <View style={styles.modalTitle}>
                       <TextInput
                         required
@@ -175,37 +206,6 @@ class DisEditDeleteCrumForm extends React.Component {
                       <Text title="EditDelete!">comment</Text>
                     </TouchableOpacity>
 
-                    {self && (
-                      <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => {
-                          this.handleEditCrum(
-                            {
-                              message: this.state.message,
-                              id: crumInstance.id
-                            },
-                            user.id
-                          )
-                        }}
-                      >
-                        <Text title="EditDelete!">edit</Text>
-                      </TouchableOpacity>
-                    )}
-                    {self && (
-                      <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => {
-                          this.handleDeleteCrum(
-                            {
-                              id: crumInstance.id
-                            },
-                            user.id
-                          )
-                        }}
-                      >
-                        <Text title="EditDelete!">collect</Text>
-                      </TouchableOpacity>
-                    )}
                     <TouchableOpacity
                       style={styles.btn}
                       onPress={() => {
@@ -287,6 +287,17 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 10,
     borderTopLeftRadius: 10
   },
+  modalIcons: {
+    flex: 1,
+    minWidth: 15,
+    minHeight: 160,
+    maxWidth: 15,
+    maxHeight: 160,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column',
+    flexWrap: 'wrap'
+  },
   modalTitle: {
     flex: 1,
     minWidth: 160,
@@ -364,6 +375,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    marginTop: 10,
+    marginBottom: 10
   },
   modalInput: {
     backgroundColor: 'rgba(250,250,250,0.8)',
