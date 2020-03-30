@@ -101,11 +101,11 @@ export const updateUserThunk = (id, info) => {
 export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
-      console.log('getSingleUser', state.crumInstances && state.totalCrums)
-      console.log(
-        'getSingleUser',
-        action.user.crumInstances && action.user.totalCrums
-      )
+      // console.log('getSingleUser', state.crumInstances && state.totalCrums)
+      // console.log(
+      //   'getSingleUser',
+      //   action.user.crumInstances && action.user.totalCrums
+      // )
       return action.user
     case REMOVE_USER:
       return defaultUser

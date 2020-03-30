@@ -35,23 +35,6 @@ CrumInstance.addHook('beforeValidate', (crumInstance, options) => {
   crumInstance.longitudeIdx = Math.floor(crumInstance.longitude * SCALER)
 })
 
-CrumInstance.prototype.findNear = async function(radium) {
-  // console.log('here', this.longitudeIdx)
-  const near = await CrumInstance.findAll({
-    where: {
-      latitudeIdx: {
-        [Op.lte]: this.latitudeIdx + radium,
-        [Op.gte]: this.latitudeIdx - radium
-      },
-      longitudeIdx: {
-        [Op.lte]: this.longitudeIdx + radium,
-        [Op.gte]: this.longitudeIdx - radium
-      }
-    }
-  })
-  return near
-}
-
 CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
   const near = await CrumInstance.findAll({
     include: [
