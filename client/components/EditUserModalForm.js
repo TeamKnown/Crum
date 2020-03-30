@@ -2,6 +2,7 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {updateUserThunk} from '../store/'
+import {editIcon} from '../../assets/'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {
   Platform,
@@ -61,8 +62,13 @@ class EditUserModalForm extends React.Component {
           }}
         >
           <Image
-            source={require('../../public/editIcon3.png')}
-            style={styles.editIcon}
+            source={editIcon}
+            style={{
+              width: 15,
+              height: 15,
+              marginBottom: '14%',
+              marginLeft: 7
+            }}
           />
         </TouchableOpacity>
 

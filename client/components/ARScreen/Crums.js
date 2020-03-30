@@ -1,4 +1,4 @@
-import {Renderer, THREE} from 'expo-three'
+import {THREE} from 'expo-three'
 import ExpoTHREE from 'expo-three'
 
 export const createPlane = async (color, imgUrl, orientation) => {

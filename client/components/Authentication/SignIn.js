@@ -15,22 +15,19 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage
-} from 'react-native-elements'
+
 import {connect} from 'react-redux'
 import {auth, me} from '../../store/user'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from '../DismissKeyBoard'
+import {background} from '../../../assets/'
 const {width, height} = Dimensions.get('window')
 
 class DisSignInComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      check_textInputChange: false,
+      checkTextInputChange: false,
       password: '',
       userName: '',
       secureTextEntry: true,
@@ -40,14 +37,11 @@ class DisSignInComponent extends React.Component {
 
   componentDidMount() {
     const {navigation} = this.props
-    navigation.addListener('focus', () =>
-      // run function that updates the data on entering the screen
-      this.props.reset()
-    )
+    navigation.addListener('focus', () => this.props.reset())
   }
 
   handleSignIn() {
-    const {userName, password, validationError} = this.state
+    const {userName, password} = this.state
     this.setState({validationError: ''})
 
     if (userName === '')
@@ -59,17 +53,15 @@ class DisSignInComponent extends React.Component {
     }
   }
 
-  textInputChange(value) {
-    if (value.length > 4) {
-      this.setState({
-        check_textInputChange: true,
-        userName: value
-      })
-    } else {
-      this.setState({
-        check_textInputChange: false
-      })
-    }
+  textInputChange(input) {
+    input.length > 0
+      ? this.setState({
+          checkTextInputChange: true,
+          userName: input
+        })
+      : this.setState({
+          checkTextInputChange: false
+        })
   }
 
   secureTextEntry() {
@@ -83,7 +75,7 @@ class DisSignInComponent extends React.Component {
 
     return (
       <ImageBackground
-        source={require('../../../assets/background.png')}
+        source={background}
         style={{
           flex: 1,
           width: null,
@@ -94,21 +86,18 @@ class DisSignInComponent extends React.Component {
           <DismissKeyBoard>
             <SafeAreaView style={styles.container}>
               <View style={styles.header}>
-                <Text style={styles.text_header}>crum</Text>
+                <Text style={styles.textHeader}>crum</Text>
               </View>
               <Animatable.View animation="fadeInUpBig" style={styles.footer}>
                 {error && error.response && (
-                  <Text style={{color: 'red', alignSelf: 'center'}}>
-                    {' '}
-                    {error.response.data}{' '}
-                  </Text>
+                  <Text style={styles.textError}>{error.response.data}</Text>
                 )}
 
-                <Text style={{color: 'red', textAlign: 'center'}}>
+                <Text style={styles.textError}>
                   {this.state.validationError}
                 </Text>
 
-                <Text style={styles.text_footer}>Username</Text>
+                <Text style={styles.textFooter}>Username</Text>
                 <View style={styles.action}>
                   <FontAwesome name="user-o" color="#05375a" size={20} />
                   <TextInput
@@ -117,21 +106,14 @@ class DisSignInComponent extends React.Component {
                     onChangeText={text => this.textInputChange(text)}
                   />
 
-                  {this.state.check_textInputChange ? (
+                  {this.state.checkTextInputChange ? (
                     <Animatable.View animation="bounceIn">
                       <Feather name="check-circle" color="green" size={20} />
                     </Animatable.View>
                   ) : null}
                 </View>
 
-                <Text
-                  style={[
-                    styles.text_footer,
-                    {
-                      marginTop: 35
-                    }
-                  ]}
-                >
+                <Text style={[styles.textFooter, styles.extraMarginTop]}>
                   Password
                 </Text>
                 <View style={styles.action}>
@@ -169,34 +151,18 @@ class DisSignInComponent extends React.Component {
                     )}
                   </TouchableOpacity>
                 </View>
-                <Text style={{color: '#19ae9f', marginTop: 15}}>
-                  Forgot password?
-                </Text>
+                <Text style={styles.forgotPw}>Forgot password?</Text>
 
                 <View style={styles.button}>
                   <TouchableOpacity
                     onPress={() => this.handleSignIn()}
-                    style={[
-                      styles.signIn,
-                      {
-                        borderColor: '#19ae9f',
-                        borderWidth: 1,
-                        marginTop: -30
-                      }
-                    ]}
+                    style={[styles.signIn, styles.signInExtras]}
                   >
                     <LinearGradient
                       colors={['#19ae9f', '#26decb']}
                       style={styles.signIn}
                     >
-                      <Text
-                        style={[
-                          styles.textSign,
-                          {
-                            color: 'white'
-                          }
-                        ]}
-                      >
+                      <Text style={[styles.textSign, styles.whiteText]}>
                         Sign In
                       </Text>
                     </LinearGradient>
@@ -204,23 +170,9 @@ class DisSignInComponent extends React.Component {
 
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate('SignUp')}
-                    style={[
-                      styles.signIn,
-                      {
-                        borderColor: '#19ae9f',
-                        borderWidth: 1,
-                        marginTop: '3%'
-                      }
-                    ]}
+                    style={[styles.signIn, styles.signUpExtras]}
                   >
-                    <Text
-                      style={
-                        ([styles.textSign],
-                        {
-                          color: '#19ae9f'
-                        })
-                      }
-                    >
+                    <Text style={[styles.textSign, styles.tealText]}>
                       Sign Up
                     </Text>
                   </TouchableOpacity>
@@ -234,7 +186,7 @@ class DisSignInComponent extends React.Component {
   }
 }
 
-var styles = StyleSheet.create({
+let styles = StyleSheet.create({
   container: {
     flex: 1,
     height: '100%',
@@ -258,16 +210,20 @@ var styles = StyleSheet.create({
     borderBottomLeftRadius: 40,
     borderBottomRightRadius: 40
   },
-  text_header: {
+  textHeader: {
     color: 'purple',
     fontWeight: 'bold',
     fontStyle: 'italic',
     fontSize: 90,
     fontFamily: 'FuturaBoldI'
   },
-  text_footer: {
+  textFooter: {
     color: '#05375a',
     fontSize: 18
+  },
+  textError: {
+    color: 'red',
+    alignSelf: 'center'
   },
   action: {
     flexDirection: 'row',
@@ -294,9 +250,32 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10
   },
+  signInExtras: {
+    borderColor: '#19ae9f',
+    borderWidth: 1,
+    marginTop: -30
+  },
+  signUpExtras: {
+    borderColor: '#19ae9f',
+    borderWidth: 1,
+    marginTop: 5
+  },
   textSign: {
     fontSize: 18,
     fontWeight: 'bold'
+  },
+  forgotPw: {
+    color: '#19ae9f',
+    marginTop: '3%'
+  },
+  extraMarginTop: {
+    marginTop: '8%'
+  },
+  whiteText: {
+    color: 'white'
+  },
+  tealText: {
+    color: '#19ae9f'
   }
 })
 
@@ -317,8 +296,5 @@ const mapDispatch = dispatch => {
 export default connect(mapState, mapDispatch)(DisSignInComponent)
 
 DisSignInComponent.propTypes = {
-  // name: PropTypes.string.isRequired,
-  // displayName: PropTypes.string.isRequired,
-  // handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }

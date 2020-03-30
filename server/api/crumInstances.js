@@ -3,6 +3,7 @@ const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 // const {adminOnly, selfOnly} = require('./utlis')
 module.exports = router
 
+// https://sequelize.org/master/manual/eager-loading.html no way to condense it
 router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll({
@@ -41,22 +42,22 @@ router.post('/', async (req, res, next) => {
       req.body.latitude,
       req.body.longitude
     )
-
     const newCrumInstance = await CrumInstance.create({
       ...req.body,
       latitude: computedLocation.latitude,
       longitude: computedLocation.longitude
     })
+
     const user = await User.findByPk(req.query.userId)
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
     await newCrumInstance.setCrum(crum)
-    await user.reload()
-    await user.userCrums()
+
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
     returnVal.CommentInstances = []
+
     if (newCrumInstance) {
       res.json(returnVal)
     }
@@ -153,26 +154,6 @@ router.get('/user/:id', async (req, res, next) => {
       }
     })
     res.json(crumInstance)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// this post route takes one parameters: the id of the cruminstances
-//http://localhost:19001/api/cruminstances/near/1?radium=1
-router.get('/near/:id', async (req, res, next) => {
-  try {
-    const crumInstances = await crumInstance.findNear(+req.query.radium, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        }
-      ]
-    })
-    res.json(crumInstances)
   } catch (err) {
     next(err)
   }

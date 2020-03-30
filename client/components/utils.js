@@ -1,4 +1,6 @@
 import queryString from 'query-string'
+import * as Device from 'expo-device'
+
 export const computePos = (crumInstance, locations) => {
   const z = // positive z means to the south, this should be correct
     (-(crumInstance.latitude - locations.latitude) * 6356000 * 3.14 * 2) / 360.0
@@ -27,4 +29,26 @@ export const crumInstanceNamer = crumInstance => {
 
 export const crumInstanceParser = crumInstanceName => {
   return queryString.parse(crumInstanceName)
+}
+
+export const checkIphoneModel = () => {
+  console.log(Device.modelName)
+  switch (Device.modelName) {
+    case 'iPhone 4':
+      return false
+    case 'iPhone 4s':
+      return false
+    case 'iPhone 5':
+      return false
+    case 'iPhone 5s':
+      return false
+    case 'iPhone 6':
+      return false
+    case 'iPhone 6 Plus':
+      return false
+    case 'iPhone SE':
+      return false
+    default:
+      return true
+  }
 }

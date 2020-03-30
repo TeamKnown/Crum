@@ -6,26 +6,18 @@ import {
   TextInput,
   TouchableOpacity,
   ImageBackground,
-  Image,
   Dimensions,
-  KeyboardAvoidingView,
-  SafeAreaView,
-  ScrollView
+  SafeAreaView
 } from 'react-native'
-
+import {background} from '../../../assets/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import {LinearGradient} from 'expo-linear-gradient'
 import * as Animatable from 'react-native-animatable'
-import {
-  FormLabel,
-  FormInput,
-  FormValidationMessage
-} from 'react-native-elements'
+
 import {connect} from 'react-redux'
 import {auth, me} from '../../store/user'
-// import UserProfile from './UserProfile'
 import PropTypes from 'prop-types'
 import {DismissKeyBoard} from '../DismissKeyBoard'
 const {width, height} = Dimensions.get('window')
@@ -34,50 +26,42 @@ class DisSignUpComponent extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      check_textInputChange: false,
-      userName: '',
+      checkTextInputChange: false,
+      username: '',
       password: '',
-      password_confirm: '',
+      passwordConfirm: '',
       secureTextEntry: true,
-      secureTextEntry_confirm: true,
+      secureTextEntryConfirm: true,
       validationError: ''
     }
   }
 
   componentDidMount() {
     const {navigation} = this.props
-    navigation.addListener('focus', () =>
-      // run function that updates the data on entering the screen
-      this.props.reset()
-    )
+    navigation.addListener('focus', () => this.props.reset())
   }
 
   handleSignUp() {
-    const {userName, password, password_confirm, validationError} = this.state
+    const {username, password, passwordConfirm} = this.state
     this.setState({validationError: ''})
 
     if (userName === '')
       this.setState({validationError: 'Please enter your username'})
     else if (password === '')
       this.setState({validationError: 'Please enter your password'})
-    else if (password_confirm === '' || password_confirm !== password)
+    else if (passwordConfirm === '' || passwordConfirm !== password)
       this.setState({validationError: 'Passwords must match'})
     else {
       this.props.auth(this.state.userName, this.state.password)
     }
   }
 
-  textInputChange(value) {
-    if (value.length !== 0) {
-      this.setState({
-        check_textInputChange: true,
-        userName: value
-      })
-    } else {
-      this.setState({
-        check_textInputChange: false
-      })
-    }
+  textInputChange(input) {
+    input.length > 0
+      ? this.setState({checkTextInputChange: true, username: input})
+      : this.setState({
+          checkTextInputChange: false
+        })
   }
 
   secureTextEntry() {
@@ -86,25 +70,23 @@ class DisSignUpComponent extends React.Component {
     })
   }
 
-  secureTextEntry_confirm() {
+  secureTextEntryConfirm() {
     this.setState({
-      secureTextEntry_confirm: !this.state.secureTextEntry_confirm
+      secureTextEntryConfirm: !this.state.secureTextEntryConfirm
     })
   }
 
   render() {
     const {error} = this.props
-    let diffPasswordError
 
     return (
       <ImageBackground
-        source={require('../../../assets/background.png')}
+        source={background}
         style={{
           flex: 1
         }}
       >
         <KeyboardAwareScrollView style={styles.container}>
-          {/* <ScrollView> */}
           <DismissKeyBoard>
             <SafeAreaView style={styles.container}>
               <View style={styles.container}>
@@ -113,18 +95,11 @@ class DisSignUpComponent extends React.Component {
                 </View>
                 <Animatable.View animation="fadeInUpBig" style={styles.footer}>
                   {error && error.response && (
-                    <Text style={{color: 'red', alignSelf: 'center'}}>
-                      {' '}
-                      {error.response.data}{' '}
-                    </Text>
+                    <Text style={styles.textError}>{error.response.data}</Text>
                   )}
 
-                  <Text style={{color: 'red', textAlign: 'center'}}>
+                  <Text style={styles.textError}>
                     {this.state.validationError}
-                  </Text>
-
-                  <Text style={{color: 'red', alignSelf: 'center'}}>
-                    {diffPasswordError}
                   </Text>
 
                   <Text style={styles.text_footer}>Username</Text>
@@ -136,22 +111,14 @@ class DisSignUpComponent extends React.Component {
                       onChangeText={text => this.textInputChange(text)}
                     />
 
-                    {this.state.check_textInputChange ? (
+                    {this.state.checkTextInputChange ? (
                       <Animatable.View animation="bounceIn">
                         <Feather name="check-circle" color="green" size={20} />
                       </Animatable.View>
                     ) : null}
                   </View>
 
-                  {/* password */}
-                  <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        marginTop: 35
-                      }
-                    ]}
-                  >
+                  <Text style={[styles.text_footer, styles.extraMarginTop]}>
                     Password
                   </Text>
                   <View style={styles.action}>
@@ -189,27 +156,20 @@ class DisSignUpComponent extends React.Component {
                     </TouchableOpacity>
                   </View>
 
-                  <Text
-                    style={[
-                      styles.text_footer,
-                      {
-                        marginTop: 35
-                      }
-                    ]}
-                  >
+                  <Text style={[styles.text_footer, styles.extraMarginTop]}>
                     Confirm Password
                   </Text>
                   <View style={styles.action}>
                     <Feather name="lock" color="#05375a" size={20} />
-                    {this.state.secureTextEntry_confirm ? (
+                    {this.state.secureTextEntryConfirm ? (
                       <TextInput
                         placeholder="p a s s w o r d"
                         secureTextEntry={true}
                         style={styles.textInput}
-                        value={this.state.password_confirm}
+                        value={this.state.passwordConfirm}
                         onChangeText={text =>
                           this.setState({
-                            password_confirm: text
+                            passwordConfirm: text
                           })
                         }
                       />
@@ -217,19 +177,19 @@ class DisSignUpComponent extends React.Component {
                       <TextInput
                         placeholder="p a s s w o r d"
                         style={styles.textInput}
-                        value={this.state.password_confirm}
+                        value={this.state.passwordConfirm}
                         onChangeText={text =>
                           this.setState({
-                            password_confirm: text
+                            passwordConfirm: text
                           })
                         }
                       />
                     )}
 
                     <TouchableOpacity
-                      onPress={() => this.secureTextEntry_confirm()}
+                      onPress={() => this.secureTextEntryConfirm()}
                     >
-                      {this.state.secureTextEntry_confirm ? (
+                      {this.state.secureTextEntryConfirm ? (
                         <Feather name="eye-off" color="gray" size={20} />
                       ) : (
                         <Feather name="eye" color="gray" size={20} />
@@ -240,28 +200,13 @@ class DisSignUpComponent extends React.Component {
                   <View style={styles.button}>
                     <TouchableOpacity
                       onPress={() => this.handleSignUp()}
-                      style={[
-                        styles.signIn,
-                        {
-                          borderColor: '#4dc2f8',
-                          borderWidth: 1
-                        }
-                      ]}
+                      style={[styles.signUp, styles.signUpExtras]}
                     >
                       <LinearGradient
                         colors={['#19ae9f', '#26decb']}
-                        style={styles.signIn}
+                        style={styles.signUp}
                       >
-                        <Text
-                          style={[
-                            styles.textSign,
-                            {
-                              color: 'white'
-                            }
-                          ]}
-                        >
-                          Sign Up
-                        </Text>
+                        <Text style={styles.textSign}>Sign Up</Text>
                       </LinearGradient>
                     </TouchableOpacity>
                   </View>
@@ -270,26 +215,12 @@ class DisSignUpComponent extends React.Component {
                     <Text style={styles.color_textPrivate}>
                       By signing up you agree to our
                     </Text>
-                    <Text
-                      style={[
-                        styles.color_textPrivate,
-                        {
-                          fontWeight: 'bold'
-                        }
-                      ]}
-                    >
+                    <Text style={[styles.color_textPrivate, styles.boldText]}>
                       {' '}
                       Terms of Service
                     </Text>
                     <Text style={styles.color_textPrivate}> and </Text>
-                    <Text
-                      style={[
-                        styles.color_textPrivate,
-                        {
-                          fontWeight: 'bold'
-                        }
-                      ]}
-                    >
+                    <Text style={[styles.color_textPrivate, styles.boldText]}>
                       Privacy Policy
                     </Text>
                   </View>
@@ -338,6 +269,10 @@ var styles = StyleSheet.create({
     color: '#05375a',
     fontSize: 18
   },
+  textError: {
+    color: 'red',
+    alignSelf: 'center'
+  },
   action: {
     flexDirection: 'row',
     marginTop: '2%',
@@ -356,16 +291,21 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: '7%'
   },
-  signIn: {
+  signUp: {
     width: '100%',
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10
   },
+  signUpExtras: {
+    borderColor: '#4dc2f8',
+    borderWidth: 1
+  },
   textSign: {
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'white'
   },
   textPrivate: {
     flexDirection: 'row',
@@ -375,6 +315,12 @@ var styles = StyleSheet.create({
   color_textPrivate: {
     color: 'gray',
     fontSize: 11
+  },
+  extraMarginTop: {
+    marginTop: '9%'
+  },
+  boldText: {
+    fontWeight: 'bold'
   }
 })
 
@@ -395,8 +341,5 @@ const mapDispatch = dispatch => {
 export default connect(mapState, mapDispatch)(DisSignUpComponent)
 
 DisSignUpComponent.propTypes = {
-  // name: PropTypes.string.isRequired,
-  // displayName: PropTypes.string.isRequired,
-  // handleSubmit: PropTypes.func.isRequired,
   error: PropTypes.object
 }
