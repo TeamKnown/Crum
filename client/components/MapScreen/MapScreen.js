@@ -85,7 +85,7 @@ class DisMapScreen extends Component {
 
       this.setState({coords, distance, time})
 
-      console.log('this.state coords', this.state.coords)
+      // console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -297,17 +297,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => {
-  return {
-    // fetchInitialData: () => {
-    //   dispatch(getCurrentPosition())
-    // },
-    // unFetchInitialData: () => {
-    //   dispatch(stopTracking())
-    // },
-    // fetchCrum: (latitudeIdx, longitudeIdx) => {
-    //   dispatch(fetchNearByCrumInstances(latitudeIdx, longitudeIdx))
-    // }
-  }
+  return {}
 }
 
 const MapScreen = connect(mapState, mapDispatch)(DisMapScreen)

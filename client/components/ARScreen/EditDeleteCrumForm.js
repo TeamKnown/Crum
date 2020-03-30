@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from './utils'
+import {SCALER} from '../utils'
 import {
   TextInput,
   View,
@@ -13,13 +13,13 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
-import {images} from '../../assets/'
+import {images} from '../../../assets/'
 import {
   putCrumInstance,
   deleteCrumInstance,
   getSingleUser,
   postCommentInstance
-} from '../store/'
+} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 class DisEditDeleteCrumForm extends React.Component {
   constructor(props) {
@@ -33,7 +33,6 @@ class DisEditDeleteCrumForm extends React.Component {
       modalVisible: true,
       message: props.crumInstance.message,
       comment: '',
-      imgId: '',
       validationError: '',
       selfEditing: false
     }
@@ -64,14 +63,10 @@ class DisEditDeleteCrumForm extends React.Component {
       this.setState({validationError: ''})
       this.setState({comment: ''})
     }
-
-    // this.props.hideEditDeleteCrumForm()
-    // this.setModalVisible(!this.state.modalVisible)
   }
   handleDeleteCrum(crumInstance, userId) {
     this.props.deleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
-    // this.setModalVisible(!this.state.modalVisible)
   }
   handleEditCrum(crumInstance, userId) {
     if (!this.state.selfEditing) {
@@ -85,8 +80,6 @@ class DisEditDeleteCrumForm extends React.Component {
       this.props.editCrumInstance(crumInstance, userId)
       this.setState({selfEditing: false})
       this.setState({validationError: ''})
-      // this.props.hideEditDeleteCrumForm()
-      // this.setModalVisible(!this.state.modalVisible)
     }
   }
   render() {
@@ -184,8 +177,6 @@ class DisEditDeleteCrumForm extends React.Component {
                       <Text title="EditDelete!">comment</Text>
                     </TouchableOpacity>
 
-                    {/* </View>
-                  <View style={styles.modalButtons}> */}
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -276,13 +267,9 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     width: '93%',
-    // backgroundColor: 'rgba(250,250,250,0.8)',
     borderColor: '#7c1e9f',
     shadowColor: 'grey',
     justifyContent: 'space-between',
-    // shadowOffset: {width: 2, height: 2},
-    // shadowOpacity: 0.8,
-    // shadowRadius: 2,
     borderRadius: 10,
     marginBottom: '5%',
     marginTop: '20%',
@@ -371,7 +358,6 @@ const styles = StyleSheet.create({
     height: '90%',
     flex: 3,
     flexBasis: '20%',
-    // backgroundColor: 'white',
     borderColor: 'white',
     borderWidth: 2,
     textAlign: 'center',

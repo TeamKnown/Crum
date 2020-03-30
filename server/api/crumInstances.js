@@ -39,11 +39,13 @@ router.post('/', async (req, res, next) => {
     const crum = await Crum.findByPk(req.query.crumId)
     await newCrumInstance.setUser(user)
     await newCrumInstance.setCrum(crum)
+    await user.reload()
     await user.userCrums()
     const returnVal = newCrumInstance.dataValues
     returnVal.crum = crum.dataValues
     returnVal.user = user.dataValues
     returnVal.CommentInstances = []
+    console.log('in post, user totalCrums:', user.totalCrums)
     if (newCrumInstance) {
       res.json(returnVal)
     }

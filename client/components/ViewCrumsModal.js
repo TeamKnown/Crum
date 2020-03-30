@@ -45,9 +45,9 @@ class ViewCrumsModal extends React.Component {
   }
   getThumbnail(crumInst) {
     const current = this.props.crums.filter(each => each.id === crumInst.crumId)
-    console.log('CRUM INST', crumInst.crum.name)
+    // console.log('CRUM INST', crumInst.crum.name)
 
-    console.log('current', current[0])
+    // console.log('current', current[0])
     return current.name
   }
 
