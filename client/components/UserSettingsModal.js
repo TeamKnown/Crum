@@ -33,7 +33,6 @@ class UserSettingsModal extends React.Component {
     device: this.props.user.device
   }
   getiPhoneModel() {
-    console.log(checkIphoneModel())
     return checkIphoneModel()
     // if (
     //   window.devicePixelRatio >= 3 &&
