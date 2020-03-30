@@ -198,6 +198,61 @@ const crums = [
   {
     name: 'Sideeye',
     category: '0-Emoji'
+  },
+  {
+    id: 21,
+    name: 'ACBunny',
+    category: '4-AnimalCrossing'
+  },
+  {
+    id: 22,
+    name: 'ACRaccoon',
+    category: '4-AnimalCrossing'
+  },
+  {
+    id: 23,
+    name: 'ACBoy',
+    category: '4-AnimalCrossing'
+  },
+  {
+    id: 24,
+    name: 'ACKid',
+    category: '4-AnimalCrossing'
+  },
+  {
+    id: 25,
+    name: 'DogDuo',
+    category: '2-Animal'
+  },
+  {
+    id: 26,
+    name: 'MinionDuo',
+    category: '5-DespicableMe'
+  },
+  {
+    id: 27,
+    name: 'MinionTrio',
+    category: '5-DespicableMe'
+  },
+  {
+    id: 28,
+    name: 'NoCigs',
+    category: '3-Object'
+  },
+  {
+    id: 29,
+    name: 'SillyMinion',
+    category: '5-DespicableMe'
+  },
+  {
+    id: 30,
+    name: 'StareGru',
+    category: '5-DespicableMe'
+  },
+  {
+    id: 31,
+    name: 'SmirkMinion',
+    category: '5-DespicableMe'
   }
 ]
 const crumInstances = [
@@ -245,8 +300,8 @@ const crumInstances = [
   },
   {
     message: 'out for a walk',
-    latitude: 40.7053,
-    longitude: -74.0056,
+    latitude: 40.7222,
+    longitude: -73.9539,
     crumId: 1,
     userId: 8
   },
@@ -273,8 +328,8 @@ const crumInstances = [
   },
   {
     message: 'for the dads',
-    latitude: 40.7222,
-    longitude: -73.9539,
+    latitude: 40.7235,
+    longitude: -73.9831,
     crumId: 20,
     userId: 11
   }
