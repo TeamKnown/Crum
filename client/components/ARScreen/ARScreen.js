@@ -18,28 +18,20 @@ import {
   StyleSheet,
   ImageBackground,
   Dimensions,
-  Vibration,
   Text,
   TouchableOpacity
 } from 'react-native'
-import {
-  getCurrentPosition,
-  stopTracking,
-  fetchCrums,
-  fetchNearByCrumInstances,
-  // fetchCrumInstanceDetail,
-  me
-} from '../../store/'
+import {fetchCrums, fetchNearByCrumInstances, me} from '../../store/'
 import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
-import {images, fonts} from '../../../assets/'
+import {images, background} from '../../../assets/'
 import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
 
 let scene
 class DisARScreen extends React.Component {
-  constructor(props) {
+  constructor() {
     super()
     this.state = {
       longitudeIdx: undefined, // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude)
@@ -217,27 +209,20 @@ class DisARScreen extends React.Component {
       )
     } else {
       return (
-        <ImageBackground
-          source={require('../../../public/background.png')}
-          style={{
-            flex: 1,
-            width: null,
-            height: null
-          }}
-        >
-          <View style={styles.main}>
-            <View style={{flex: 1}}>
-              <View style={{flex: 1, height: '100%', width: '100%'}}>
+        <ImageBackground source={background} style={styles.root}>
+          <View style={styles.root}>
+            <View style={styles.root}>
+              <View style={styles.root}>
                 {user.device !== 'noAR' ? (
                   <TouchableOpacity
                     onPress={evt => {
                       this.updateTouch(evt)
                     }}
                     activeOpacity={1.0}
-                    style={{flex: 1}}
+                    style={styles.root}
                   >
                     <GraphicsView
-                      style={{flex: 1}}
+                      style={styles.root}
                       onContextCreate={this.onContextCreate}
                       onRender={this.onRender}
                       isArEnabled
@@ -246,7 +231,7 @@ class DisARScreen extends React.Component {
                   </TouchableOpacity>
                 ) : (
                   <View
-                    style={{flex: 1}}
+                    style={styles.root}
                     opacity={this.state.dropCrumFormVisible ? 0 : 1}
                   >
                     <TouchableOpacity
@@ -331,10 +316,7 @@ const ARScreen = connect(mapState, mapDispatch)(DisARScreen)
 export default ARScreen
 
 const styles = StyleSheet.create({
-  main: {
-    height: '100%',
-    width: '100%'
-  },
+  root: {flex: 1},
   btn: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     alignSelf: 'center',

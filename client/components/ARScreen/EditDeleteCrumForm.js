@@ -95,9 +95,9 @@ class DisEditDeleteCrumForm extends React.Component {
             Alert.alert('Modal closed')
           }}
         >
-          <SafeAreaView style={{flex: 1}}>
-            <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-              <View style={{flex: 1}}>
+          <SafeAreaView style={styles.root}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.root}>
+              <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngTitle}>
                     <View style={styles.modalTitle}>
@@ -159,9 +159,7 @@ class DisEditDeleteCrumForm extends React.Component {
                       type="text"
                     />
                   </View>
-                  <Text
-                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
-                  >
+                  <Text style={styles.validation}>
                     {this.state.validationError}
                   </Text>
                   <View style={styles.modalButtons}>
@@ -259,6 +257,7 @@ const EditDeleteCrumForm = connect(mapState, mapDispatch)(DisEditDeleteCrumForm)
 export default EditDeleteCrumForm
 
 const styles = StyleSheet.create({
+  root: {flex: 1},
   container: {
     position: 'absolute'
   },
@@ -377,5 +376,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
-  }
+  },
+  validation: {color: 'red', textAlign: 'left', marginLeft: 10}
 })

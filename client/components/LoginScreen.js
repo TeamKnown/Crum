@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ImageBackground
 } from 'react-native'
+import {background, crum} from '../../assets/'
+
 import Expo from 'expo'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
@@ -24,7 +26,7 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <ImageBackground
-        source={require('../../public/background.png')}
+        source={background}
         style={{
           flex: 1,
           width: null,
@@ -33,10 +35,7 @@ export default class LoginScreen extends React.Component {
       >
         <View style={styles.main}>
           <View style={styles.logo}>
-            <Image
-              source={require('../../public/crum.png')}
-              style={{width: '100%'}}
-            />
+            <Image source={crum} style={{width: '100%'}} />
           </View>
           <View style={styles.container}>
             <TextInput
