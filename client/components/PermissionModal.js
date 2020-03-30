@@ -16,20 +16,32 @@ export default function PermissionModal(props) {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
       <Modal
         isVisible={!props.isGranted}
         onBackdropPress={() => props.closeModal()}
       >
         <View style={styles.content}>
           <Text style={styles.contentTitle}>
-            Hi 👾! Would you like to allow "Crum" to access your location while
-            you are using the app?
+            Hey 👾! Allow "Crum" to access your location while you are using the
+            app?
           </Text>
 
           <View style={styles.buttons}>
-            <Button onPress={() => props.closeModal()} title="Close" />
-            <Button onPress={() => goToSettings()} title="Settings" />
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => props.closeModal()}
+            >
+              <Text style={styles.btnText} title="Close">
+                Close
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.btn} onPress={() => goToSettings()}>
+              <Text style={styles.btnText} title="Settings">
+                Settings
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -43,16 +55,31 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderRadius: 20,
-    borderColor: 'rgba(0, 0, 0, 0.1)'
+    borderRadius: 20
   },
   contentTitle: {
-    fontSize: 20,
+    fontSize: 18,
     marginBottom: '3%'
   },
   buttons: {
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  btn: {
+    borderColor: '#19ae9f',
+    borderWidth: 2,
+    flex: 2,
+    textAlign: 'center',
+    borderRadius: 10,
+    alignItems: 'center',
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    padding: '3%',
+    margin: '2%'
+  },
+  btnText: {
+    fontSize: 16,
+    fontWeight: '500'
   }
 })
