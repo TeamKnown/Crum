@@ -57,11 +57,7 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crums} = this.props
-    // console.log('user', user)
     const {crumInstances} = this.props
-    console.log('crumInstances', crumInstances)
-    // console.log('userCrums', crumInstances)
-    // console.log('IMAGES', imageThumbnails)
 
     return (
       <View>
