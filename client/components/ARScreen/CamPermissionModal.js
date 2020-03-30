@@ -1,14 +1,7 @@
 import Modal from 'react-native-modal'
 
 import React from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  Linking,
-  Button,
-  TouchableOpacity
-} from 'react-native'
+import {StyleSheet, Text, View, Linking, Button} from 'react-native'
 
 export default function PermissionModal(props) {
   const goToSettings = () => {
@@ -52,7 +45,6 @@ const styles = StyleSheet.create({
   },
   buttons: {
     flexDirection: 'row',
-    // justifyContent: 'space-around',
     alignItems: 'center'
   }
 })

@@ -22,6 +22,7 @@ import {
   Alert
 } from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
+import {defaultProfile} from '../../assets/'
 function UserProfile(props) {
   // async componentDidMount() {
   //   const {navigation} = await this.props
@@ -55,7 +56,7 @@ function UserProfile(props) {
     <View style={styles.main}>
       <View style={styles.topContainer}>
         <Image
-          source={require('../../public/defaultProfile1.png')}
+          source={defaultProfile}
           style={{
             width: 220,
             height: 220,

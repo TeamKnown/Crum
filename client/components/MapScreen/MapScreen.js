@@ -19,7 +19,7 @@ import {
   SafeAreaView
 } from 'react-native'
 import {SCALER} from '../utils'
-import {images} from '../../../assets'
+import {images, purpleCrumIcon} from '../../../assets'
 import {CurrentLocationButton} from './CurrentLocationButton'
 import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
@@ -218,7 +218,7 @@ class DisMapScreen extends Component {
                   }}
                 >
                   <Image
-                    source={require('../../../assets/crumicon.png')}
+                    source={purpleCrumIcon}
                     style={{height: 30, width: 30}}
                   />
                   <Callout style={{width: 110, height: 20}}>

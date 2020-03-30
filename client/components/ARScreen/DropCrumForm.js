@@ -29,11 +29,6 @@ class DisDropCrumForm extends React.Component {
     imgId: '',
     validationError: ''
   }
-  setModalVisible(modalVisible) {
-    this.setState({
-      modalVisible: modalVisible
-    })
-  }
   handleTypeMessage(event) {
     this.setState({
       message: event.nativeEvent.text
@@ -65,7 +60,7 @@ class DisDropCrumForm extends React.Component {
     return (
       <View style={styles.container}>
         <Modal
-          style={{flex: 1}}
+          style={styles.root}
           animationType="fade"
           transparent={true}
           visible={this.state.modalVisible}
@@ -73,9 +68,9 @@ class DisDropCrumForm extends React.Component {
             Alert.alert('Modal closed')
           }}
         >
-          <SafeAreaView style={{flex: 1}}>
-            <KeyboardAwareScrollView contentContainerStyle={{flex: 1}}>
-              <View style={{flex: 1}}>
+          <SafeAreaView style={styles.root}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.root}>
+              <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngSelector}>
                     {crums.map(crum => (
@@ -116,9 +111,7 @@ class DisDropCrumForm extends React.Component {
                       type="text"
                     />
                   </View>
-                  <Text
-                    style={{color: 'red', textAlign: 'left', marginLeft: 10}}
-                  >
+                  <Text style={styles.validation}>
                     {this.state.validationError}
                   </Text>
                   <View style={styles.modalButtons}>
@@ -140,9 +133,8 @@ class DisDropCrumForm extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
-                      onPress={async () => {
-                        await hideDropCrumForm()
-                        this.setModalVisible(!this.state.modalVisible)
+                      onPress={() => {
+                        hideDropCrumForm()
                       }}
                     >
                       <Text title="Drop!">never mind</Text>
@@ -183,6 +175,7 @@ const DropCrumForm = connect(mapState, mapDispatch)(DisDropCrumForm)
 export default DropCrumForm
 
 const styles = StyleSheet.create({
+  root: {flex: 1},
   container: {
     flex: 1,
     display: 'flex',
@@ -252,5 +245,6 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
-  }
+  },
+  validation: {color: 'red', textAlign: 'left', marginLeft: 10}
 })
