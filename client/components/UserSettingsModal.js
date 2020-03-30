@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {updateUserThunk} from '../store/'
 import {LinearGradient} from 'expo-linear-gradient'
+import {checkIphoneModel} from './utils'
 // import {} from '../store/'
 
 import {
@@ -32,18 +33,20 @@ class UserSettingsModal extends React.Component {
     device: this.props.user.device
   }
   getiPhoneModel() {
-    if (
-      window.devicePixelRatio >= 3 &&
-      ((window.innerHeight == 368 && window.innerWidth == 207) ||
-        (window.innerHeight == 667 && window.innerWidth == 375) ||
-        (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight == 812 && window.innerWidth == 375) ||
-        (window.innerHeight >= 812 && window.innerWidth >= 375))
-    ) {
-      return true
-    } else {
-      return false
-    }
+    console.log(checkIphoneModel())
+    return checkIphoneModel()
+    // if (
+    //   window.devicePixelRatio >= 3 &&
+    //   ((window.innerHeight == 368 && window.innerWidth == 207) ||
+    //     (window.innerHeight == 667 && window.innerWidth == 375) ||
+    //     (window.innerHeight == 736 && window.innerWidth == 414) ||
+    //     (window.innerHeight == 812 && window.innerWidth == 375) ||
+    //     (window.innerHeight >= 812 && window.innerWidth >= 375))
+    // ) {
+    //   return true
+    // } else {
+    //   return false
+    // }
   }
 
   setModalVisible(visible) {
