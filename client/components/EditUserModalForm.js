@@ -61,15 +61,7 @@ class EditUserModalForm extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Image
-            source={editIcon}
-            style={{
-              width: 15,
-              height: 15,
-              marginBottom: '14%',
-              marginLeft: 7
-            }}
-          />
+          <Image source={editIcon} style={styles.editIcon} />
         </TouchableOpacity>
 
         <Modal
