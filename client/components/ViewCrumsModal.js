@@ -43,21 +43,13 @@ class ViewCrumsModal extends React.Component {
       visible: visible
     })
   }
-  getThumbnail(crumInst) {
-    const current = this.props.crums.filter(each => each.id === crumInst.crumId)
-    // console.log('CRUM INST', crumInst.crum.name)
-
-    // console.log('current', current[0])
-    return current.name
-  }
 
   render() {
     if (this.state.modalVisible) {
       scrollYPos = this.state.screenHeight * 1
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
-    const {user, crums} = this.props
-    const {crumInstances} = this.props
+    const {user, crumInstances, crums} = this.props
 
     return (
       <View>
@@ -68,38 +60,11 @@ class ViewCrumsModal extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginTop: 16,
-              fontWeight: 'bold'
-            }}
-          >
-            c r u m s d r o p p e d
-          </Text>
+          <Text style={styles.heading}>c r u m s d r o p p e d</Text>
           {user.id ? (
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16,
-                fontSize: 40
-              }}
-            >
-              {user.totalCrums}
-            </Text>
+            <Text style={styles.count}>{user.totalCrums}</Text>
           ) : (
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16,
-                fontSize: 40
-              }}
-            >
-              0
-            </Text>
+            <Text style={styles.count}>0</Text>
           )}
         </TouchableOpacity>
         <Modal
@@ -113,13 +78,9 @@ class ViewCrumsModal extends React.Component {
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
               {!crumInstances.length ? (
-                <Text style={{fontWeight: 'bold', fontSize: 16}}>
-                  n o c r u m s
-                </Text>
+                <Text style={styles.crumsTitle}>n o c r u m s</Text>
               ) : (
-                <Text style={{fontWeight: 'bold', fontSize: 16}}>
-                  My Crums:
-                </Text>
+                <Text style={styles.crumsTitle}>My Crums:</Text>
               )}
               <ScrollView style={styles.scrollBox}>
                 {crumInstances &&
@@ -128,13 +89,7 @@ class ViewCrumsModal extends React.Component {
                     <View style={styles.instance} key={crum.id}>
                       <Image
                         source={imageThumbnails[crum.crum.name]}
-                        style={{
-                          width: 40,
-                          height: 40,
-                          margin: 6,
-                          borderColor: 'black',
-                          borderWidth: 2
-                        }}
+                        style={styles.imageThumbs}
                       />
                       <Text>{crum.message}</Text>
                     </View>
@@ -159,6 +114,27 @@ class ViewCrumsModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  heading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    fontWeight: 'bold'
+  },
+  count: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    fontSize: 40
+  },
+  crumsTitle: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  imageThumbs: {
+    width: 40,
+    height: 40,
+    margin: 10
+  },
   modal: {
     flexDirection: 'column',
     alignItems: 'center',
