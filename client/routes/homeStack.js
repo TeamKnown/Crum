@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import * as React from 'react'
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
@@ -14,18 +15,19 @@ import {Dimensions} from 'react-native'
 
 import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
-const a = require('../../assets/crummap.png')
+
 const Tab = createMaterialTopTabNavigator()
-function HomeTabs(props) {
+function HomeTabs() {
   const {height} = Dimensions.get('window')
 
   return (
     <NavigationContainer>
       <Tab.Navigator
         lazy={true}
-        style={{paddingTop: height > 600 ? 30 : 5}}
+        activeColor="#e91e63"
         tabBarOptions={{
-          activeTintColor: '#e91e63',
+          tabStyle: {padding: height > 600 ? 30 : 15},
+
           showLabel: false,
           showIcon: true
         }}
@@ -35,8 +37,13 @@ function HomeTabs(props) {
           component={UserProfile}
           options={{
             tabBarLabel: '',
-            tabBarIcon: () => (
-              <MaterialCommunityIcons name="account" color="#ccc" size={26} />
+            style: {backgroundColor: 'powderblue'},
+            tabBarIcon: focused => (
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                color={focused.focused ? '#800080' : '#ccc'}
+                size={26}
+              />
             )
           }}
         />
@@ -45,8 +52,12 @@ function HomeTabs(props) {
           component={ARScreen}
           options={{
             tabBarLabel: '',
-            tabBarIcon: () => (
-              <MaterialCommunityIcons name="camera" color="#ccc" size={26} />
+            tabBarIcon: focused => (
+              <MaterialCommunityIcons
+                name="camera"
+                color={focused.focused ? '#800080' : '#ccc'}
+                size={26}
+              />
             )
           }}
         />
@@ -55,8 +66,12 @@ function HomeTabs(props) {
           component={MapScreen}
           options={{
             tabBarLabel: '',
-            tabBarIcon: () => (
-              <MaterialCommunityIcons name={a} color="#ccc" size={26} />
+            tabBarIcon: focused => (
+              <MaterialCommunityIcons
+                name="map-marker-radius"
+                color={focused.focused ? '#800080' : '#ccc'}
+                size={26}
+              />
             )
           }}
         />

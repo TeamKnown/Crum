@@ -60,6 +60,7 @@
     "connect-session-sequelize": "^6.1.1",
     "expo": "~36.0.0",
     "expo-asset": "~8.0.0",
+    "expo-device": "^2.1.0",
     "expo-gl": "^8.0.0",
     "expo-graphics": "^1.1.0",
     "expo-location": "^8.0.0",

@@ -30,25 +30,42 @@ export const crumInstanceNamer = crumInstance => {
 export const crumInstanceParser = crumInstanceName => {
   return queryString.parse(crumInstanceName)
 }
-
+// ipad pro - all models
+// ipad air 3rd gen
+// ipad mini 5th gen
+// ipad 5th gen
+// ipod touch 7th gen
+const iphoneModel = {
+  iPhone: 'noAR',
+  'iPhone 3G': 'noAR',
+  'iPhone 3GS': 'noAR',
+  'iPhone 4': 'noAR',
+  'iPhone 4S': 'noAR',
+  'iPhone 5': 'noAR',
+  'iPhone 5s': 'noAR',
+  'iPhone 5c': 'noAR',
+  'iPhone 6': 'noAR',
+  'iPhone 6 Plus': 'noAR',
+  'iPhone SE': 'noAR',
+  iPad: 'noAR',
+  'iPad 2': 'noAR',
+  'iPad Mini': 'noAR',
+  'iPad Mini 2': 'noAR',
+  'iPad Mini 3': 'noAR',
+  'iPad Mini 4': 'noAR',
+  'iPhone 6s': 'standard',
+  'iPhone 6s Plus': 'standard',
+  'iPhone 7': 'standard',
+  'iPhone 7 Plus': 'standard',
+  'iPhone 8': 'standard',
+  'iPhone 8 Plus': 'standard'
+}
 export const checkIphoneModel = () => {
-  console.log(Device.modelName)
-  switch (Device.modelName) {
-    case 'iPhone 4':
-      return false
-    case 'iPhone 4s':
-      return false
-    case 'iPhone 5':
-      return false
-    case 'iPhone 5s':
-      return false
-    case 'iPhone 6':
-      return false
-    case 'iPhone 6 Plus':
-      return false
-    case 'iPhone SE':
-      return false
-    default:
-      return true
+  if (Device.modelName === null) {
+    return 'noAr'
+  } else if (iphoneModel[Device.modelName]) {
+    return iphoneModel[Device.modelName]
+  } else {
+    return 'advanced'
   }
 }
