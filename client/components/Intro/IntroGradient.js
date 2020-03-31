@@ -7,26 +7,34 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 const slides = [
   {
     key: 'firstSlide',
-    title: 'This is Crum!',
+    title: 'DROP YOUR FIRST CRUM',
     text:
-      'React-native-app-intro-slider is easy to setup with a small footprint and no dependencies. And it comes with good default layouts!',
-    icon: 'ios-images',
+      'Head to the AR screen and tap anywhere to select your favorite Crum.\nWrite a message and drop!\nLook around... there it is!',
+    icon: 'ios-pin',
     colors: ['#63E2FF', '#B066FE']
   },
   {
     key: 'secondSlide',
-    title: 'Super customizable',
+    title: 'FOLLOW THE MAP',
     text:
-      'The component is also super customizable, so you can adapt it to cover your needs and wants.',
-    icon: 'ios-options',
+      'Use the map view to navigate your way to nearby Crums.\nTap on any crum to see exactly how far away it',
+    icon: 'ios-navigate',
     colors: ['#A3A1FF', '#3A3897']
   },
   {
     key: 'thirdSlide',
-    title: 'No need to buy me beer',
-    text: 'Usage is all free',
-    icon: 'ios-beer',
+    title: 'INTERACT',
+    text: 'Collect, edit, and comment on Crums as you wander around town!',
+    icon: 'ios-walk',
     colors: ['#29ABE2', '#4F00BC']
+  },
+  {
+    key: 'fourthSlide',
+    title: 'HAVE FUN !',
+    text:
+      'Enjoy the outdoors, have fun with it, and always be aware of your surroundings!\n- Crum 💜',
+    icon: 'ios-happy',
+    colors: ['teal', '#4F00BC']
   }
 ]
 
@@ -36,7 +44,7 @@ const _renderNextButton = () => {
       <Ionicons
         name="md-arrow-round-forward"
         color="rgba(255, 255, 255, .9)"
-        size={24}
+        size={30}
         style={{backgroundColor: 'transparent'}}
       />
     </View>
@@ -48,7 +56,7 @@ const _renderDoneButton = () => {
       <Ionicons
         name="md-checkmark"
         color="rgba(255, 255, 255, .9)"
-        size={24}
+        size={30}
         style={{backgroundColor: 'transparent'}}
       />
     </View>
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
   mainContent: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'center'
   },
   image: {
     width: 320,
@@ -103,6 +111,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     backgroundColor: 'transparent',
     textAlign: 'center',
+    marginBottom: '35%',
     paddingHorizontal: 16
   },
   title: {
@@ -110,7 +119,8 @@ const styles = StyleSheet.create({
     color: 'white',
     backgroundColor: 'transparent',
     textAlign: 'center',
-    marginBottom: 16
+    marginBottom: '3%',
+    marginTop: '5%'
   },
   buttonCircle: {
     width: 40,
