@@ -40,57 +40,37 @@ export const crumInstanceParser = crumInstanceName => {
 // ipad mini 5th gen
 // ipad 5th gen
 // ipod touch 7th gen
-
+const iphoneModel = {
+  iPhone: 'noAR',
+  'iPhone 3G': 'noAR',
+  'iPhone 3GS': 'noAR',
+  'iPhone 4': 'noAR',
+  'iPhone 4S': 'noAR',
+  'iPhone 5': 'noAR',
+  'iPhone 5s': 'noAR',
+  'iPhone 5c': 'noAR',
+  'iPhone 6': 'noAR',
+  'iPhone 6 Plus': 'noAR',
+  'iPhone SE': 'noAR',
+  iPad: 'noAR',
+  'iPad 2': 'noAR',
+  'iPad Mini': 'noAR',
+  'iPad Mini 2': 'noAR',
+  'iPad Mini 3': 'noAR',
+  'iPad Mini 4': 'noAR',
+  'iPhone 6s': 'standard',
+  'iPhone 6s Plus': 'standard',
+  'iPhone 7': 'standard',
+  'iPhone 7 Plus': 'standard',
+  'iPhone 8': 'standard',
+  'iPhone 8 Plus': 'standard'
+}
 export const checkIphoneModel = () => {
-  console.log(Device.modelName)
-  switch (Device.modelName) {
-    case 'iPhone':
-      return 'noAR'
-    case 'iPhone 3G':
-      return 'noAR'
-    case 'iPhone 3GS':
-      return 'noAR'
-    case 'iPhone 4':
-      return 'noAR'
-    case 'iPhone 4S':
-      return 'noAR'
-    case 'iPhone 5':
-      return 'noAR'
-    case 'iPhone 5s':
-      return 'noAR'
-    case 'iPhone 5c':
-      return 'noAR'
-    case 'iPhone 6':
-      return 'noAR'
-    case 'iPhone 6 Plus':
-      return 'noAR'
-    case 'iPhone SE':
-      return 'noAR'
-    case 'iPad':
-      return 'noAR'
-    case 'iPad 2':
-      return 'noAR'
-    case 'iPad Mini':
-      return 'noAR'
-    case 'iPad Mini 2':
-      return 'noAR'
-    case 'iPad Mini 3':
-      return 'noAR'
-    case 'iPad Mini 4':
-      return 'noAR'
-    case 'iPhone 6s':
-      return 'standard'
-    case 'iPhone 6s Plus':
-      return 'standard'
-    case 'iPhone 7':
-      return 'standard'
-    case 'iPhone 7 Plus':
-      return 'standard'
-    case 'iPhone 8':
-      return 'standard'
-    case 'iPhone 8 Plus':
-      return 'standard'
-    default:
-      return 'advanced'
+  if (Device.modelName === null) {
+    return 'noAr'
+  } else if (iphoneModel[Device.modelName]) {
+    return iphoneModel[Device.modelName]
+  } else {
+    return 'advanced'
   }
 }

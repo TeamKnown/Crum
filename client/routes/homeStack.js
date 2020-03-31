@@ -1,6 +1,7 @@
+/* eslint-disable react/display-name */
 import * as React from 'react'
-import {useState, useEffect} from 'react'
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs'
+
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
 import UserProfile from '../components/UserProfile'
@@ -9,39 +10,76 @@ import SignUp from '../components/Authentication/SignUp'
 import MapScreen from '../components/MapScreen/MapScreen'
 import ARScreen from '../components/ARScreen/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
-import {createDrawerNavigator} from '@react-navigation/drawer'
-import {Dimensions, View, TouchableOpacity} from 'react-native'
-import Animated from 'react-native-reanimated'
+
+import {Dimensions, Image} from 'react-native'
+
 import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
 
 const Tab = createMaterialTopTabNavigator()
-function HomeTabs(props) {
-  const {height} = Dimensions.get('window')
-  const [user, setUser] = useState(props.user)
-
+function HomeTabs() {
+  const {height} = Dimensions.get('screen')
+  console.log(height)
   return (
     <NavigationContainer>
-      <Tab.Navigator lazy={true} style={{paddingTop: height > 600 ? 30 : 10}}>
+      <Tab.Navigator
+        lazy={true}
+        tabBarOptions={{
+          tabStyle: {
+            padding: height > 890 ? 50 : 20,
+
+            height: height > 890 ? 90 : 60
+          },
+
+          showLabel: false,
+          showIcon: true
+        }}
+      >
         <Tab.Screen
           name="Profile"
           component={UserProfile}
           options={{
-            tabBarLabel: 'Profile'
+            tabBarLabel: '',
+            style: {backgroundColor: 'powderblue'},
+            tabBarIcon: focused => (
+              <MaterialCommunityIcons
+                name="account-circle-outline"
+                color={focused.focused ? '#800080' : '#ccc'}
+                size={26}
+              />
+            )
           }}
         />
         <Tab.Screen
           name="ARScreen"
           component={ARScreen}
           options={{
-            tabBarLabel: 'ARView'
+            tabBarLabel: '',
+            tabBarIcon: focused => (
+              <MaterialCommunityIcons
+                name="camera"
+                color={focused.focused ? '#800080' : '#ccc'}
+                size={26}
+              />
+            )
           }}
         />
         <Tab.Screen
           name="MapScreen"
           component={MapScreen}
           options={{
-            tabBarLabel: 'MapView'
+            tabBarLabel: '',
+            tabBarIcon: focused => (
+              <Image
+                source={require('../../assets/crummap.png')}
+                fadeDuration={0}
+                style={{
+                  width: 21,
+                  height: 21,
+                  tintColor: focused.focused ? '#800080' : '#ccc'
+                }}
+              />
+            )
           }}
         />
       </Tab.Navigator>
