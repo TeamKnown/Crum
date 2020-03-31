@@ -26,6 +26,8 @@ class disRoutes extends Component {
     let {status} = await Permissions.askAsync(Permissions.LOCATION)
 
     if (status !== 'granted') {
+      let {permissions} = await Permissions.askAsync(Permissions.LOCATION)
+      console.log(permissions)
       this.setState({
         isGranted: false
       })
