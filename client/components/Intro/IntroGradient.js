@@ -112,15 +112,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: '35%',
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    fontWeight: '500',
+    fontFamily: 'Helvetica-Oblique'
   },
   title: {
+    fontFamily: 'AvenirNext-Heavy',
     fontSize: 22,
     color: 'white',
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: '3%',
-    marginTop: '5%'
+    marginTop: '5%',
+    fontWeight: 'bold'
   },
   buttonCircle: {
     width: 40,
