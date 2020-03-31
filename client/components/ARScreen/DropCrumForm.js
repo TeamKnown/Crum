@@ -1,7 +1,8 @@
 /* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from '../utils'
+import {SCALER, userNameExists} from '../utils'
+
 import {
   TextInput,
   View,
@@ -21,11 +22,13 @@ class DisDropCrumForm extends React.Component {
   constructor() {
     super()
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
+    this.handleTypeRecipient = this.handleTypeRecipient.bind(this)
     this.handleDropCrum = this.handleDropCrum.bind(this)
   }
   state = {
     modalVisible: true,
     message: '',
+    recipient: '',
     imgId: '',
     validationError: ''
   }
@@ -34,7 +37,13 @@ class DisDropCrumForm extends React.Component {
       message: event.nativeEvent.text
     })
   }
-  handleDropCrum(crumInstance, userId, crumId) {
+
+  handleTypeRecipient(event) {
+    this.setState({
+      recipient: event.nativeEvent.text
+    })
+  }
+  async handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
     if (crumInstance.message === '')
       this.setState({validationError: 'Please enter a message'})
@@ -49,9 +58,21 @@ class DisDropCrumForm extends React.Component {
       this.setState({
         validationError: 'Please select a crum'
       })
-    else {
-      this.props.postCrumInstance(crumInstance, userId, crumId)
-      this.props.hideDropCrumForm()
+    else if (this.state.recipient === this.props.user.userName) {
+      this.setState({
+        validationError: 'Recipient cannot be self'
+      })
+    } else {
+      let recipientEmpty = this.state.recipient === ''
+      let recipientExists = await userNameExists(this.state.recipient)
+      if (recipientExists || recipientEmpty) {
+        this.props.postCrumInstance(crumInstance, userId, crumId)
+        this.props.hideDropCrumForm()
+      } else {
+        this.setState({
+          validationError: 'Recipient does not exist'
+        })
+      }
     }
   }
 
@@ -96,7 +117,7 @@ class DisDropCrumForm extends React.Component {
                       </TouchableOpacity>
                     ))}
                   </View>
-                  <View style={styles.modalInput}>
+                  <View style={styles.modalInputMessage}>
                     <TextInput
                       required
                       id="message"
@@ -106,8 +127,23 @@ class DisDropCrumForm extends React.Component {
                       style={{
                         color: 'black'
                       }}
-                      placeholder="m e s s a g e"
+                      placeholder="m e s s a g e *"
                       autoComplete="message"
+                      type="text"
+                    />
+                  </View>
+                  <View style={styles.modalInputRecipient}>
+                    <TextInput
+                      required
+                      id="recipient"
+                      value={this.state.recipient}
+                      onChange={this.handleTypeRecipient}
+                      textAlign="center"
+                      style={{
+                        color: 'black'
+                      }}
+                      placeholder="r e c i p i e n t"
+                      autoComplete="recipient"
                       type="text"
                     />
                   </View>
@@ -121,6 +157,7 @@ class DisDropCrumForm extends React.Component {
                         this.handleDropCrum(
                           {
                             message: this.state.message,
+                            recipient: this.state.recipient,
                             latitude: locations.latitude,
                             longitude: locations.longitude
                           },
@@ -200,8 +237,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(250,250,250,0.8)',
     display: 'flex',
     width: '100%',
-    minHeight: '90%',
-    maxHeight: '90%',
+    minHeight: '80%',
+    maxHeight: '80%',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
@@ -234,7 +271,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5
   },
-  modalInput: {
+  modalInputMessage: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    minHeight: '10%',
+    maxHeight: '10%',
+    justifyContent: 'center',
+    display: 'flex',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0
+  },
+  modalInputRecipient: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     minHeight: '10%',
     maxHeight: '10%',

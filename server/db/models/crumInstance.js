@@ -11,9 +11,6 @@ const CrumInstance = db.define('crumInstance', {
   longitude: {
     type: Sequelize.DECIMAL(10, 4)
   },
-  altitude: {
-    type: Sequelize.DECIMAL(10, 4)
-  },
   latitudeIdx: {
     type: Sequelize.INTEGER
   },
@@ -22,6 +19,10 @@ const CrumInstance = db.define('crumInstance', {
   },
   headingInt: {
     type: Sequelize.INTEGER
+  },
+  status: {
+    type: Sequelize.ENUM(['floating', 'collected']),
+    defaultValue: 'floating'
   }
 })
 

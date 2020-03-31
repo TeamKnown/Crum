@@ -1,6 +1,6 @@
 const router = require('express').Router()
+const {userOnly} = require('./utils')
 const {Crum} = require('../db/models')
-// const {adminOnly, selfOnly} = require('./utlis')
 module.exports = router
 
 router.get('/', async (req, res, next) => {

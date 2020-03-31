@@ -11,7 +11,6 @@ const {
 
 const users = [
   {
-    // id: 1,
     userName: 'Admin',
     email: 'admin@gmail.com',
     password: 'test1',
@@ -19,70 +18,60 @@ const users = [
     type: 'admin'
   },
   {
-    // id: 2,
     userName: 'Sharline',
     email: 'scroney1@state.tx.us',
     password: 'gFXBSSV1',
     salt: null
   },
   {
-    // id: 3,
     userName: 'MosheB',
     email: 'mbtham2@angelfire.com',
     password: 'JxmEPQKq0JW4',
     salt: null
   },
   {
-    // id: 4,
     userName: 'FMuffen',
     email: 'fmuffen3@japanpost.jp',
     password: 'NOFv1iBo',
     salt: null
   },
   {
-    // id: 5,
     userName: 'JKleis',
     email: 'jkleis4@google.fr',
     password: 'Drc5fO2',
     salt: null
   },
   {
-    // id: 6,
     userName: 'MCunniffe',
     email: 'mcunniffe5@who.int',
     password: 'vs99rzUHHP',
     salt: null
   },
   {
-    // id: 7,
     userName: 'AmelineA',
     email: 'aandrieu6@google.es',
     password: 'jHm15tU',
     salt: null
   },
   {
-    // id: 8,
     userName: 'CHeald',
     email: 'cheald7@meetup.com',
     password: 'aRlDbxDYsFD',
     salt: null
   },
   {
-    // id: 9,
     userName: 'EBirtwell',
     email: 'ebirtwell8@storify.com',
     password: 'M0oDOqBw4e',
     salt: null
   },
   {
-    // id: 10,
     userName: 'KCarlisle',
     email: 'kcarlisle9@fotki.com',
     password: 'NERY7QB2pRqy',
     salt: null
   },
   {
-    // id: 11,
     userName: 'dad',
     email: 'dad@gmail.com',
     password: 'yesDad',
@@ -260,22 +249,16 @@ const crumInstances = [
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
     longitude: -73.9743
-    // crumId: 20,
-    // userId: 11
   },
   {
     message: 'Please no more...',
     latitude: 40.7077,
     longitude: -74.0112
-    // crumId: 14,
-    // userId: 3
   },
   {
     message: 'Beautiful Day!',
     latitude: 40.776,
     longitude: -73.9689
-    // crumId: 8,
-    // userId: 5
   },
   {
     message: 'Where is everyone?',
@@ -288,8 +271,6 @@ const crumInstances = [
     message: 'What a show!',
     latitude: 40.7213,
     longitude: -73.9932
-    // crumId: 10,
-    // userId: 4
   },
   {
     message: 'hope you like chocolate',
@@ -302,44 +283,29 @@ const crumInstances = [
     message: 'out for a walk',
     latitude: 40.7222,
     longitude: -73.9539
-    // crumId: 1,
-    // userId: 8
   },
   {
     message: 'going out for ice cream',
     latitude: 40.6763,
     longitude: -73.8752
-    // crumId: 16,
-    // userId: 10
   },
   {
     message: 'reading the new sutter cane',
     latitude: 40.6812,
     longitude: -73.9955
-    // crumId: 17,
-    // userId: 9
   },
   {
     message: 'sandwich time',
     latitude: 40.7269,
     longitude: -73.8773
-    // crumId: 8,
-    // userId: 6
   },
   {
     message: 'for the dads',
     latitude: 40.7235,
     longitude: -73.9831
-    // crumId: 20,
-    // userId: 11
   }
 ]
 
-const commentInstances = [
-  {
-    message: 'yay'
-  }
-]
 const seed = async () => {
   try {
     await db.sync({force: true})
@@ -352,26 +318,16 @@ const seed = async () => {
     )
     for (let i = 1; i < crumInstances.length + 1; i++) {
       let j = Math.floor(Math.random() * 19) + 1
-      // let k = Math.floor(Math.random() * 9) + 1
+
       let k = Math.floor(Math.random() * 2) + 1
       let crumInstanceI = await CrumInstance.findByPk(i)
       let crumI = await Crum.findByPk(j)
       let userK = await User.findByPk(k)
+      let userKN = await User.findByPk(k + 1)
       await crumInstanceI.setCrum(crumI)
       await crumInstanceI.setUser(userK)
+      await crumInstanceI.setRecipient(userKN)
     }
-
-    // await Promise.all(
-    //   commentInstances.map(commentInstance =>
-    //     CommentInstance.create(commentInstance)
-    //   )
-    // )
-    // for (let i = 1; i < commentInstances.length + 1; i++) {
-    //   let j = Math.floor(Math.random() * 4) + 1
-    //   let commentInstancesI = await CommentInstance.findByPk(i)
-    //   let crumInstanceI = await CrumInstance.findByPk(j)
-    //   await commentInstancesI.setCrumInstance(crumInstanceI)
-    // }
   } catch (error) {
     console.log(red(error))
   }

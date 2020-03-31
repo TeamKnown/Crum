@@ -1,5 +1,4 @@
-import {THREE} from 'expo-three'
-import ExpoTHREE from 'expo-three'
+import ExpoTHREE, {THREE} from 'expo-three'
 
 export const createPlane = async (color, imgUrl, orientation) => {
   const geometry = new THREE.PlaneGeometry(2, 2)
