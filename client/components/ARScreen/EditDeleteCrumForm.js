@@ -18,6 +18,7 @@ import {
   putCrumInstance,
   deleteCrumInstance,
   getSingleUser,
+  collectCrumInstance,
   postCommentInstance
 } from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
@@ -68,6 +69,10 @@ class DisEditDeleteCrumForm extends React.Component {
     this.props.deleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
   }
+  handleCollectCrum(crumInstance, userId) {
+    this.props.collectCrumInstance(crumInstance, userId)
+    this.props.hideEditDeleteCrumForm()
+  }
   handleEditCrum(crumInstance, userId) {
     if (!this.state.selfEditing) {
       this.setState({selfEditing: true})
@@ -83,8 +88,9 @@ class DisEditDeleteCrumForm extends React.Component {
     }
   }
   render() {
-    const {user, hideEditDeleteCrumForm, crumInstance} = this.props
-    const self = user.id === +crumInstance.user.id
+    const {user, crumInstance} = this.props
+    const self = user.id === +crumInstance.userId
+    const isRecipient = user.id === +crumInstance.recipientId
     return (
       <View style={styles.container}>
         <Modal
@@ -147,7 +153,6 @@ class DisEditDeleteCrumForm extends React.Component {
                     <TextInput
                       required
                       id="comment"
-                      // editable={false}
                       value={this.state.comment}
                       onChange={this.handleTypeComment}
                       textAlign="center"
@@ -203,6 +208,22 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
+                        <Text title="EditDelete!">destroy</Text>
+                      </TouchableOpacity>
+                    )}
+
+                    {isRecipient && (
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          this.handleCollectCrum(
+                            {
+                              id: crumInstance.id
+                            },
+                            user.id
+                          )
+                        }}
+                      >
                         <Text title="EditDelete!">collect</Text>
                       </TouchableOpacity>
                     )}
@@ -246,6 +267,10 @@ const mapDispatch = dispatch => {
       await dispatch(deleteCrumInstance(crumInstance))
       await dispatch(getSingleUser(userId))
     },
+    collectCrumInstance: async (crumInstance, userId) => {
+      await dispatch(collectCrumInstance(crumInstance))
+    },
+
     postCommentInstance: (commentInstance, userId, commentId) => {
       dispatch(postCommentInstance(commentInstance, userId, commentId))
     }

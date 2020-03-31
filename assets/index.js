@@ -89,6 +89,7 @@ export const imageThumbnails = {
 export const background = require('./background.png')
 export const defaultProfile = require('./defaultProfile.png')
 export const editIcon = require('./editIcon.png')
+export const deleteIcon = require('./deleteIcon.png')
 export const purpleCrumIcon = require('./purpleCrumIcon.png')
 export const icon = require('./icon.png')
 export const splash = require('./splash.png')
