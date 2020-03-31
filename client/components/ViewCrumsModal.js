@@ -92,7 +92,10 @@ class ViewCrumsModal extends React.Component {
                         source={imageThumbnails[crum.crum.name]}
                         style={styles.imageThumbs}
                       />
-                      <Text>{crum.message}</Text>
+                      <View style={styles.instanceText}>
+                        <Text>{crum.message}</Text>
+                        <Text>Remaining: {crum.numLeft}</Text>
+                      </View>
                     </View>
                   ))}
               </ScrollView>

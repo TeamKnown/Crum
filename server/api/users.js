@@ -24,11 +24,11 @@ router.get('/exists/', async (req, res, next) => {
     const user = await User.findOne({
       where: {userName: req.query.userName}
     })
-    // if (user) {
-    //   res.json({exists: true})
-    // } else {
-    //   res.json({exists: false})
-    // }
+    if (user) {
+      res.json({exists: true})
+    } else {
+      res.json({exists: false})
+    }
   } catch (err) {
     next(err)
   }
@@ -51,6 +51,7 @@ router.get('/:id', async (req, res, next) => {
     })
 
     await user.userCrums()
+    // await user.crumsCollected()
     res.json(user)
   } catch (error) {
     next(error)

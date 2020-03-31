@@ -19,7 +19,6 @@ import {NavigationContainer} from '@react-navigation/native'
 const Tab = createMaterialTopTabNavigator()
 function HomeTabs() {
   const {height} = Dimensions.get('screen')
-  console.log(height)
   return (
     <NavigationContainer>
       <Tab.Navigator

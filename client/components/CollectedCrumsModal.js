@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser, fetchUserCrumInstances} from '../store'
+import {getSingleUser, fetchCollectedCrumInstances} from '../store'
 import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
@@ -30,12 +30,12 @@ class ViewCrumsModal extends React.Component {
   }
   componentDidMount() {
     this.props.getSingleUser(this.props.user.id)
-    this.props.getUserCrumInstances(this.props.user.id)
+    this.props.getCollectedCrumInstances(this.props.user.id)
   }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
-    await this.props.getUserCrumInstances(userId)
+    await this.props.getCollectedCrumInstances(userId)
   }
 
   setModalVisible(visible) {
@@ -50,7 +50,7 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-    console.log('crumInst', crumInstances)
+    console.log('crumInst', user.collectedCrums)
 
     return (
       <View>
@@ -64,7 +64,7 @@ class ViewCrumsModal extends React.Component {
           <Text style={styles.heading}>c r u m s</Text>
           <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{user.totalCrums}</Text>
+            <Text style={styles.count}>{user.collectedCrums}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
@@ -205,8 +205,8 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
-    getUserCrumInstances: userId => {
-      dispatch(fetchUserCrumInstances(userId))
+    getCollectedCrumInstances: userId => {
+      dispatch(fetchCollectedCrumInstances(userId))
     }
   }
 }
