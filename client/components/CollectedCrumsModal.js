@@ -50,6 +50,7 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
+    console.log('crumInst', crumInstances)
 
     return (
       <View>
@@ -61,7 +62,7 @@ class ViewCrumsModal extends React.Component {
           }}
         >
           <Text style={styles.heading}>c r u m s</Text>
-          <Text style={styles.heading}>d r o p p e d</Text>
+          <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
             <Text style={styles.count}>{user.totalCrums}</Text>
           ) : (
@@ -92,7 +93,10 @@ class ViewCrumsModal extends React.Component {
                         source={imageThumbnails[crum.crum.name]}
                         style={styles.imageThumbs}
                       />
-                      <Text>{crum.message}</Text>
+                      <View style={styles.instanceText}>
+                        <Text>{crum.message}</Text>
+                        <Text>From: {crum.user.userName}</Text>
+                      </View>
                     </View>
                   ))}
               </ScrollView>
@@ -168,6 +172,9 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2
+  },
+  instanceText: {
+    flexDirection: 'column'
   },
   btnDrop: {
     height: 60,

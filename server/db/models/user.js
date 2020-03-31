@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
 const db = require('../db')
+const {CrumInstance} = require('.')
 
 const User = db.define('user', {
   userName: {
@@ -41,6 +42,10 @@ const User = db.define('user', {
   totalCrums: {
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  collectedCrums: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 
@@ -55,8 +60,19 @@ User.prototype.correctPassword = function(candidatePwd) {
 
 User.prototype.userCrums = async function() {
   const crums = await this.getCrumInstances()
-  // console.log('crums', crums)
   this.totalCrums = crums.length
+  this.save()
+  return crums.length
+}
+
+User.prototype.crumsCollected = async function() {
+  const crums = await CrumInstance.findAll({
+    where: {
+      recipientId: this.id
+    }
+  })
+  console.log('crums', crums)
+  this.collectedCrums = crums.length
   this.save()
   return crums.length
 }

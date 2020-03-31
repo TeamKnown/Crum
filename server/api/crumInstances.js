@@ -4,7 +4,7 @@ const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 module.exports = router
 
 // https://sequelize.org/master/manual/eager-loading.html no way to condense it
-router.get('/', userOnly, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll(
       {
@@ -47,11 +47,11 @@ const computeLocation = (headingInt, latitude, longitude) => {
 }
 
 // POST /api/cruminstances?userId=11&crumId=21&direction=front
-router.post('/', userOnly, async (req, res, next) => {
-  if (req.user.id !== +req.query.userId) {
-    console.log('Do not drop on other user behalf')
-    res.sendStatus(404)
-  }
+router.post('/', async (req, res, next) => {
+  // if (req.user.id !== +req.query.userId) {
+  //   console.log('Do not drop on other user behalf')
+  //   res.sendStatus(404)
+  // }
   try {
     const computedLocation = computeLocation(
       req.body.headingInt,
@@ -91,7 +91,7 @@ router.post('/', userOnly, async (req, res, next) => {
 
 // this post route takes three parameters: radium, latitude and longitude
 // http://localhost:19001/api/cruminstances/nearme?radium=1000&latitudeIdx=40707&longitudeIdx=-74000
-router.get('/nearme', userOnly, async (req, res, next) => {
+router.get('/nearme', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findNearMe(
       +req.query.radium,
@@ -105,7 +105,7 @@ router.get('/nearme', userOnly, async (req, res, next) => {
 })
 
 //http://localhost:19001/api/cruminstances/66
-router.get('/:id', userOnly, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
       include: [
@@ -131,7 +131,7 @@ router.get('/:id', userOnly, async (req, res, next) => {
 })
 
 // DELETE /api/cruminstances/38
-router.delete('/:id', userOnly, async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
       include: [
@@ -148,7 +148,7 @@ router.delete('/:id', userOnly, async (req, res, next) => {
   }
 })
 // PUT /api/cruminstances/37
-router.put('/collect/:id', userOnly, async (req, res, next) => {
+router.put('/collect/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
       include: [
@@ -175,7 +175,7 @@ router.put('/collect/:id', userOnly, async (req, res, next) => {
   }
 })
 
-router.put('/:id', userOnly, async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
       include: [
@@ -202,7 +202,7 @@ router.put('/:id', userOnly, async (req, res, next) => {
   }
 })
 
-router.get('/user/:id', userOnly, async (req, res, next) => {
+router.get('/user/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
       include: [
@@ -223,6 +223,35 @@ router.get('/user/:id', userOnly, async (req, res, next) => {
       where: {
         userId: req.params.id
         // status: 'floating'
+      }
+    })
+    res.json(crumInstance)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/collect/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findAll({
+      include: [
+        {
+          model: User
+        },
+        {
+          model: Crum
+        },
+        {
+          model: CommentInstance
+        },
+        {
+          model: User,
+          as: 'recipient'
+        }
+      ],
+      where: {
+        recipientId: req.params.id,
+        status: 'collected'
       }
     })
     res.json(crumInstance)
