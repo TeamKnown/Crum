@@ -21,7 +21,6 @@ router.get('/', async (req, res, next) => {
 
 router.get('/exists/', async (req, res, next) => {
   try {
-    console.log('!!!')
     const user = await User.findOne({
       where: {userName: req.query.userName}
     })

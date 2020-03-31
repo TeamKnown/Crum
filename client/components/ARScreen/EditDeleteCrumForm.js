@@ -88,9 +88,9 @@ class DisEditDeleteCrumForm extends React.Component {
     }
   }
   render() {
-    const {user, hideEditDeleteCrumForm, crumInstance} = this.props
-    const self = user.id === +crumInstance.user.id
-    const isRecipient = user.id === +crumInstance.recipient.id
+    const {user, crumInstance} = this.props
+    const self = user.id === +crumInstance.userId
+    const isRecipient = user.id === +crumInstance.recipientId
     return (
       <View style={styles.container}>
         <Modal
@@ -153,7 +153,6 @@ class DisEditDeleteCrumForm extends React.Component {
                     <TextInput
                       required
                       id="comment"
-                      // editable={false}
                       value={this.state.comment}
                       onChange={this.handleTypeComment}
                       textAlign="center"
@@ -212,6 +211,7 @@ class DisEditDeleteCrumForm extends React.Component {
                         <Text title="EditDelete!">destroy</Text>
                       </TouchableOpacity>
                     )}
+
                     {isRecipient && (
                       <TouchableOpacity
                         style={styles.btn}

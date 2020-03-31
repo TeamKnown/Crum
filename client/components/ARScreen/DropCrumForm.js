@@ -1,8 +1,8 @@
 /* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from '../utils'
-import {devAxios} from '../../store/devAxios'
+import {SCALER, userNameExists} from '../utils'
+
 import {
   TextInput,
   View,
@@ -58,16 +58,14 @@ class DisDropCrumForm extends React.Component {
       this.setState({
         validationError: 'Please select a crum'
       })
-    else if (this.props.crumInstanceError) {
+    else if (this.state.recipient === this.props.user.userName) {
       this.setState({
-        validationError: this.props.crumInstanceError
+        validationError: 'Recipient cannot be self'
       })
     } else {
-      let {data} = await devAxios.get(
-        `/api/users/exists/?userName=${crumInstance.recipient}`
-      )
-      // console.log(data)
-      if (data.exists) {
+      let recipientEmpty = this.state.recipient === ''
+      let recipientExists = await userNameExists(this.state.recipient)
+      if (recipientExists || recipientEmpty) {
         this.props.postCrumInstance(crumInstance, userId, crumId)
         this.props.hideDropCrumForm()
       } else {

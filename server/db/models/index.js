@@ -38,6 +38,10 @@ CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
       },
       {
         model: CommentInstance
+      },
+      {
+        model: User,
+        as: 'recipient'
       }
     ],
     where: {

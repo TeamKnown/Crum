@@ -170,6 +170,7 @@ const crumInstancesReducer = (state = initialState, action) => {
       let stateAfterEdit = state.map(elm =>
         elm.id !== +action.crumInstance.id ? elm : action.crumInstance
       )
+
       return stateAfterEdit
     case ADD_COMMENT_INSTANCE:
       let crumAfterComment = state.filter(
@@ -182,6 +183,7 @@ const crumInstancesReducer = (state = initialState, action) => {
       let stateAfterComment = state.map(elm =>
         elm.id !== +action.crumInstanceId ? elm : crumAfterComment
       )
+
       return stateAfterComment
     default:
       return state

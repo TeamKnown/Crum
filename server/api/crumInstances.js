@@ -48,37 +48,36 @@ const computeLocation = (headingInt, latitude, longitude) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const recipient = await User.findOne({
-      where: {userName: req.body.recipient}
+    const computedLocation = computeLocation(
+      req.body.headingInt,
+      req.body.latitude,
+      req.body.longitude
+    )
+    const newCrumInstance = await CrumInstance.create({
+      ...req.body,
+      latitude: computedLocation.latitude,
+      longitude: computedLocation.longitude
     })
-    if (!recipient) {
-      res.status(401).send('Recipient not found')
-    } else {
-      const computedLocation = computeLocation(
-        req.body.headingInt,
-        req.body.latitude,
-        req.body.longitude
-      )
-      const newCrumInstance = await CrumInstance.create({
-        ...req.body,
-        latitude: computedLocation.latitude,
-        longitude: computedLocation.longitude
+    const user = await User.findByPk(req.query.userId)
+    await newCrumInstance.setUser(user)
+
+    const crum = await Crum.findByPk(req.query.crumId)
+    await newCrumInstance.setCrum(crum)
+
+    const returnVal = newCrumInstance.dataValues
+    returnVal.crum = crum.dataValues
+    returnVal.user = user.dataValues
+    returnVal.CommentInstances = []
+    if (req.body.recipient !== '') {
+      const recipient = await User.findOne({
+        where: {userName: req.body.recipient}
       })
-      const user = await User.findByPk(req.query.userId)
-      const crum = await Crum.findByPk(req.query.crumId)
-      await newCrumInstance.setUser(user)
-      await newCrumInstance.setCrum(crum)
       await newCrumInstance.setRecipient(recipient)
-
-      const returnVal = newCrumInstance.dataValues
-      returnVal.crum = crum.dataValues
-      returnVal.user = user.dataValues
       returnVal.recipient = recipient.dataValues
-      returnVal.CommentInstances = []
+    }
 
-      if (newCrumInstance) {
-        res.json(returnVal)
-      }
+    if (newCrumInstance) {
+      res.json(returnVal)
     }
   } catch (error) {
     next(error)

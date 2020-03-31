@@ -1,6 +1,11 @@
 import queryString from 'query-string'
 import * as Device from 'expo-device'
+import {devAxios} from '../store/devAxios'
 
+export const userNameExists = async userName => {
+  const {data} = await devAxios.get(`/api/users/exists/?userName=${userName}`)
+  return data.exists
+}
 export const computePos = (crumInstance, locations) => {
   const z = // positive z means to the south, this should be correct
     (-(crumInstance.latitude - locations.latitude) * 6356000 * 3.14 * 2) / 360.0
