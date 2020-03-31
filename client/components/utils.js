@@ -34,21 +34,41 @@ export const crumInstanceParser = crumInstanceName => {
 export const checkIphoneModel = () => {
   console.log(Device.modelName)
   switch (Device.modelName) {
+    case 'iPhone':
+      return 'noAR'
+    case 'iPhone 3G':
+      return 'noAR'
+    case 'iPhone 3GS':
+      return 'noAR'
     case 'iPhone 4':
-      return false
-    case 'iPhone 4s':
-      return false
+      return 'noAR'
+    case 'iPhone 4S':
+      return 'noAR'
     case 'iPhone 5':
-      return false
+      return 'noAR'
     case 'iPhone 5s':
-      return false
+      return 'noAR'
+    case 'iPhone 5c':
+      return 'noAR'
     case 'iPhone 6':
-      return false
+      return 'noAR'
     case 'iPhone 6 Plus':
-      return false
+      return 'noAR'
     case 'iPhone SE':
-      return false
+      return 'noAR'
+    case 'iPhone 6s':
+      return 'standard'
+    case 'iPhone 6s Plus':
+      return 'standard'
+    case 'iPhone 7':
+      return 'standard'
+    case 'iPhone 7 Plus':
+      return 'standard'
+    case 'iPhone 8':
+      return 'standard'
+    case 'iPhone 8 Plus':
+      return 'standard'
     default:
-      return true
+      return 'advanced'
   }
 }
