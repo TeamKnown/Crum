@@ -6,19 +6,30 @@ module.exports = router
 // https://sequelize.org/master/manual/eager-loading.html no way to condense it
 router.get('/', async (req, res, next) => {
   try {
-    const crumInstances = await CrumInstance.findAll({
-      include: [
-        {
-          model: User
-        },
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
+    const crumInstances = await CrumInstance.findAll(
+      {
+        include: [
+          {
+            model: User
+          },
+          {
+            model: Crum
+          },
+          {
+            model: CommentInstance
+          },
+          {
+            model: User,
+            as: 'recipient'
+          }
+        ]
+      },
+      {
+        where: {
+          status: 'floating'
         }
-      ]
-    })
+      }
+    )
     res.json(crumInstances)
   } catch (err) {
     next(err)
@@ -37,29 +48,37 @@ const computeLocation = (headingInt, latitude, longitude) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const computedLocation = computeLocation(
-      req.body.headingInt,
-      req.body.latitude,
-      req.body.longitude
-    )
-    const newCrumInstance = await CrumInstance.create({
-      ...req.body,
-      latitude: computedLocation.latitude,
-      longitude: computedLocation.longitude
+    const recipient = await User.findOne({
+      where: {userName: req.body.recipient}
     })
+    if (!recipient) {
+      res.status(401).send('Recipient not found')
+    } else {
+      const computedLocation = computeLocation(
+        req.body.headingInt,
+        req.body.latitude,
+        req.body.longitude
+      )
+      const newCrumInstance = await CrumInstance.create({
+        ...req.body,
+        latitude: computedLocation.latitude,
+        longitude: computedLocation.longitude
+      })
+      const user = await User.findByPk(req.query.userId)
+      const crum = await Crum.findByPk(req.query.crumId)
+      await newCrumInstance.setUser(user)
+      await newCrumInstance.setCrum(crum)
+      await newCrumInstance.setRecipient(recipient)
 
-    const user = await User.findByPk(req.query.userId)
-    const crum = await Crum.findByPk(req.query.crumId)
-    await newCrumInstance.setUser(user)
-    await newCrumInstance.setCrum(crum)
+      const returnVal = newCrumInstance.dataValues
+      returnVal.crum = crum.dataValues
+      returnVal.user = user.dataValues
+      returnVal.recipient = recipient.dataValues
+      returnVal.CommentInstances = []
 
-    const returnVal = newCrumInstance.dataValues
-    returnVal.crum = crum.dataValues
-    returnVal.user = user.dataValues
-    returnVal.CommentInstances = []
-
-    if (newCrumInstance) {
-      res.json(returnVal)
+      if (newCrumInstance) {
+        res.json(returnVal)
+      }
     }
   } catch (error) {
     next(error)
@@ -94,6 +113,10 @@ router.get('/:id', async (req, res, next) => {
         },
         {
           model: CommentInstance
+        },
+        {
+          model: User,
+          as: 'recipient'
         }
       ]
     })
@@ -113,6 +136,32 @@ router.delete('/:id', async (req, res, next) => {
   }
 })
 
+router.put('/collect/:id', async (req, res, next) => {
+  try {
+    const crumInstance = await CrumInstance.findByPk(req.params.id, {
+      include: [
+        {
+          model: Crum
+        },
+        {
+          model: User
+        },
+        {
+          model: CommentInstance
+        },
+        {
+          model: User,
+          as: 'recipient'
+        }
+      ]
+    })
+    await crumInstance.update({status: 'collected'})
+    res.json(crumInstance)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
@@ -125,6 +174,10 @@ router.put('/:id', async (req, res, next) => {
         },
         {
           model: CommentInstance
+        },
+        {
+          model: User,
+          as: 'recipient'
         }
       ]
     })
@@ -147,10 +200,15 @@ router.get('/user/:id', async (req, res, next) => {
         },
         {
           model: CommentInstance
+        },
+        {
+          model: User,
+          as: 'recipient'
         }
       ],
       where: {
-        userId: req.params.id
+        userId: req.params.id,
+        status: 'floating'
       }
     })
     res.json(crumInstance)

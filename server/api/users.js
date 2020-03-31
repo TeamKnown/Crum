@@ -19,6 +19,22 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/exists/', async (req, res, next) => {
+  try {
+    console.log('!!!')
+    const user = await User.findOne({
+      where: {userName: req.query.userName}
+    })
+    if (user) {
+      res.json({exists: true})
+    } else {
+      res.json({exists: false})
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:userId', async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId, {
