@@ -30,6 +30,11 @@ export const crumInstanceNamer = crumInstance => {
 export const crumInstanceParser = crumInstanceName => {
   return queryString.parse(crumInstanceName)
 }
+// ipad pro - all models
+// ipad air 3rd gen
+// ipad mini 5th gen
+// ipad 5th gen
+// ipod touch 7th gen
 
 export const checkIphoneModel = () => {
   console.log(Device.modelName)
@@ -55,6 +60,18 @@ export const checkIphoneModel = () => {
     case 'iPhone 6 Plus':
       return 'noAR'
     case 'iPhone SE':
+      return 'noAR'
+    case 'iPad':
+      return 'noAR'
+    case 'iPad 2':
+      return 'noAR'
+    case 'iPad Mini':
+      return 'noAR'
+    case 'iPad Mini 2':
+      return 'noAR'
+    case 'iPad Mini 3':
+      return 'noAR'
+    case 'iPad Mini 4':
       return 'noAR'
     case 'iPhone 6s':
       return 'standard'
