@@ -71,7 +71,6 @@ User.prototype.crumsCollected = async function() {
       recipientId: this.id
     }
   })
-  console.log('crums', crums)
   this.collectedCrums = crums.length
   this.save()
   return crums.length
