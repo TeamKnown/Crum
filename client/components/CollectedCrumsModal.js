@@ -50,7 +50,6 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-    console.log('crumInst', user.collectedCrums)
 
     return (
       <View>
@@ -64,7 +63,7 @@ class ViewCrumsModal extends React.Component {
           <Text style={styles.heading}>c r u m s</Text>
           <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{user.collectedCrums}</Text>
+            <Text style={styles.count}>{crumInstances.length}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
