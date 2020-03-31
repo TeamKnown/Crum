@@ -71,28 +71,8 @@ class DisDropCrumForm extends React.Component {
     }
   }
 
-  getiPhoneModel() {
-    if (
-      window.devicePixelRatio >= 3 &&
-      ((window.innerHeight == 368 && window.innerWidth == 207) ||
-        (window.innerHeight == 667 && window.innerWidth == 375) ||
-        (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight >= 812 && window.innerWidth >= 375))
-    ) {
-      return true
-    } else {
-      return false
-    }
-  }
-
   render() {
     const {locations, crums, user, hideDropCrumForm} = this.props
-    console.log('device')
-    // console.log('IPHONE MODEL', this.getiPhoneModel())
-    // console.log('SCREEN PIXEL', window.devicePixelRatio)
-    // console.log('SCREEN Height', window.innerHeight)
-    // console.log('SCREEN Width', window.innerWidth)
-    // console.log('SCREEN', Object.keys(window))
     return (
       <View style={styles.container}>
         {/* <TouchableOpacity

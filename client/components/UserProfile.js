@@ -55,54 +55,20 @@ function UserProfile(props) {
   return (
     <View style={styles.main}>
       <View style={styles.topContainer}>
-        <Image
-          source={defaultProfile}
-          style={{
-            width: 220,
-            height: 220,
-            marginRight: 10,
-            marginBottom: 12,
-            marginTop: '15%'
-          }}
-        />
+        <Image source={defaultProfile} style={styles.profilePic} />
       </View>
       <View style={styles.container}>
         <View style={styles.bottomContainer}>
           <View style={styles.editButtons}>
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16,
-                fontWeight: 'bold'
-              }}
-            >
-              u s e r n a m e
-            </Text>
+            <Text style={styles.heading}>u s e r n a m e</Text>
             <View>
               <EditUserModalForm />
             </View>
           </View>
           {user.id ? (
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16
-              }}
-            >
-              {user.userName}
-            </Text>
+            <Text style={styles.text}>{user.userName}</Text>
           ) : (
-            <Text
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginTop: 16
-              }}
-            >
-              P L A C E H O L D E R
-            </Text>
+            <Text style={styles.text}>P L A C E H O L D E R</Text>
           )}
           <ViewCrumsModal />
         </View>
@@ -140,6 +106,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  profilePic: {
+    width: 220,
+    height: 220,
+    marginRight: 10,
+    marginBottom: 12,
+    marginTop: '15%'
+  },
+  heading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    fontWeight: 'bold'
+  },
+  text: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16
+  },
   bottomContainer: {
     flex: 1,
     flexDirection: 'column',
@@ -162,7 +146,6 @@ const styles = StyleSheet.create({
     width: '47%',
     height: 60,
     backgroundColor: '#19ae9f',
-    // textAlign: 'center',   // causes error  Failed prop type: Invalid props.style key `textAlign` supplied to `LinearGradient`.
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
