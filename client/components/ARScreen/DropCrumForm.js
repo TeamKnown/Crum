@@ -2,7 +2,8 @@
 import {connect} from 'react-redux'
 import * as React from 'react'
 import {SCALER, userNameExists} from '../utils'
-
+import SwitchSelector from 'react-native-switch-selector'
+import NumericInput from 'react-native-numeric-input'
 import {
   TextInput,
   View,
@@ -12,17 +13,25 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Modal,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native'
 import {imageThumbnails} from '../../../assets/'
 import {postCrumInstance, getSingleUser} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
+
+const sendModeOptions = [
+  {label: 'to someone', value: 'to someone'},
+  {label: 'to all', value: 'to all'}
+]
 
 class DisDropCrumForm extends React.Component {
   constructor() {
     super()
     this.handleTypeMessage = this.handleTypeMessage.bind(this)
     this.handleTypeRecipient = this.handleTypeRecipient.bind(this)
+    this.handleTypeCount = this.handleTypeCount.bind(this)
+    this.handleTypeOption = this.handleTypeOption.bind(this)
     this.handleDropCrum = this.handleDropCrum.bind(this)
   }
   state = {
@@ -30,7 +39,9 @@ class DisDropCrumForm extends React.Component {
     message: '',
     recipient: '',
     imgId: '',
-    validationError: ''
+    validationError: '',
+    sendMode: 'to someone', // 'for all'
+    numLeft: 1 // 'for all'
   }
   handleTypeMessage(event) {
     this.setState({
@@ -43,6 +54,19 @@ class DisDropCrumForm extends React.Component {
       recipient: event.nativeEvent.text
     })
   }
+
+  handleTypeCount(event) {
+    this.setState({
+      numLeft: event
+    })
+  }
+
+  handleTypeOption(event) {
+    this.setState({
+      sendMode: event
+    })
+  }
+
   async handleDropCrum(crumInstance, userId, crumId) {
     this.setState({validationError: ''})
     if (crumInstance.message === '')
@@ -61,6 +85,13 @@ class DisDropCrumForm extends React.Component {
     else if (this.state.recipient === this.props.user.userName) {
       this.setState({
         validationError: 'Recipient cannot be self'
+      })
+    } else if (
+      this.state.recipient === '' &&
+      this.state.sendMode === 'to someone'
+    ) {
+      this.setState({
+        validationError: 'Recipient must be specified'
       })
     } else {
       let recipientEmpty = this.state.recipient === ''
@@ -94,29 +125,93 @@ class DisDropCrumForm extends React.Component {
               <View style={styles.root}>
                 <View style={styles.modal}>
                   <View style={styles.modalPngSelector}>
-                    {crums.map(crum => (
-                      <TouchableOpacity
-                        key={crum.id}
-                        onPress={() => {
-                          this.setState({
-                            imgId: crum.id
-                          })
+                    <ScrollView
+                      contentContainerStyle={{
+                        flexWrap: 'wrap',
+                        alignItems: 'stretch',
+                        flexDirection: 'row',
+                        paddingLeft: 7
+                      }}
+                      style={{
+                        flex: 1
+                      }}
+                    >
+                      {crums.map(crum => (
+                        <TouchableOpacity
+                          key={crum.id}
+                          onPress={() => {
+                            this.setState({
+                              imgId: crum.id
+                            })
+                          }}
+                        >
+                          <Image
+                            style={{width: 40, height: 40, margin: 6}}
+                            borderColor={
+                              this.state.imgId === crum.id
+                                ? 'gray'
+                                : 'rgba(250,250,250,0)'
+                            }
+                            borderWidth={2}
+                            borderRadius={3}
+                            source={imageThumbnails[crum.name]}
+                          />
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
+                  </View>
+                  <View style={styles.modalInputOptionSelector}>
+                    <SwitchSelector
+                      style={{margin: 10}}
+                      selectedColor="black"
+                      buttonColor="white"
+                      textColor="gray"
+                      backgroundColor="rgba(250,250,250,0)"
+                      options={sendModeOptions}
+                      initial={0}
+                      onPress={this.handleTypeOption}
+                    />
+                  </View>
+                  {this.state.sendMode === 'to someone' && (
+                    <View style={styles.modalInputRecipient}>
+                      <TextInput
+                        required
+                        id="recipient"
+                        value={this.state.recipient}
+                        onChange={this.handleTypeRecipient}
+                        textAlign="center"
+                        style={{
+                          color: 'black'
+                        }}
+                        placeholder="r e c i p i e n t"
+                        autoComplete="recipient"
+                        type="text"
+                      />
+                    </View>
+                  )}
+                  {this.state.sendMode === 'to all' && (
+                    <View style={styles.modalInputCount}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignSelf: 'center'
                         }}
                       >
-                        <Image
-                          style={{width: 40, height: 40, margin: 6}}
-                          borderColor={
-                            this.state.imgId === crum.id
-                              ? 'gray'
-                              : 'rgba(250,250,250,0)'
-                          }
-                          borderWidth={2}
-                          borderRadius={3}
-                          source={imageThumbnails[crum.name]}
+                        <NumericInput
+                          value={this.state.numLeft}
+                          totalHeight={35}
+                          totalWidth={170}
+                          rounded={true}
+                          minValue={1}
+                          maxValue={100}
+                          rightButtonBackgroundColor="rgba(255,255,255,0.5)"
+                          leftButtonBackgroundColor="rgba(255,255,255,0.5)"
+                          style={{margin: 10, borderWidth: 5}}
+                          onChange={this.handleTypeCount}
                         />
-                      </TouchableOpacity>
-                    ))}
-                  </View>
+                      </View>
+                    </View>
+                  )}
                   <View style={styles.modalInputMessage}>
                     <TextInput
                       required
@@ -132,21 +227,7 @@ class DisDropCrumForm extends React.Component {
                       type="text"
                     />
                   </View>
-                  <View style={styles.modalInputRecipient}>
-                    <TextInput
-                      required
-                      id="recipient"
-                      value={this.state.recipient}
-                      onChange={this.handleTypeRecipient}
-                      textAlign="center"
-                      style={{
-                        color: 'black'
-                      }}
-                      placeholder="r e c i p i e n t"
-                      autoComplete="recipient"
-                      type="text"
-                    />
-                  </View>
+
                   <Text style={styles.validation}>
                     {this.state.validationError}
                   </Text>
@@ -158,6 +239,7 @@ class DisDropCrumForm extends React.Component {
                           {
                             message: this.state.message,
                             recipient: this.state.recipient,
+                            numLeft: this.state.numLeft,
                             latitude: locations.latitude,
                             longitude: locations.longitude
                           },
@@ -237,12 +319,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(250,250,250,0.8)',
     display: 'flex',
     width: '100%',
-    minHeight: '80%',
-    maxHeight: '80%',
+    minHeight: '70%',
+    maxHeight: '70%',
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap',
     borderColor: 'white',
     borderWidth: 1,
     borderTopRightRadius: 10,
@@ -271,17 +352,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 5
   },
-  modalInputMessage: {
+  modalInputOptionSelector: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     minHeight: '10%',
     maxHeight: '10%',
     justifyContent: 'center',
     display: 'flex',
+    alignItems: 'center',
     borderColor: 'white',
     borderWidth: 1,
-    borderTopWidth: 0
+    borderTopWidth: 0,
+    borderBottomWidth: 0
   },
-  modalInputRecipient: {
+  modalInputMessage: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     minHeight: '10%',
     maxHeight: '10%',
@@ -292,6 +375,29 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
+  },
+  modalInputRecipient: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    minHeight: '10%',
+    maxHeight: '10%',
+    justifyContent: 'center',
+    display: 'flex',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
+  },
+  modalInputCount: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    minHeight: '10%',
+    maxHeight: '10%',
+    alignItems: 'stretch',
+    justifyContent: 'center',
+    display: 'flex',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomWidth: 0
   },
   validation: {color: 'red', textAlign: 'left', marginLeft: 10}
 })

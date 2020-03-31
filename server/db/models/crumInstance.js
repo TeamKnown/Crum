@@ -23,6 +23,10 @@ const CrumInstance = db.define('crumInstance', {
   status: {
     type: Sequelize.ENUM(['floating', 'collected']),
     defaultValue: 'floating'
+  },
+  numLeft: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1
   }
 })
 
