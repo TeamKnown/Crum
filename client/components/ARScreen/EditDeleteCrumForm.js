@@ -91,6 +91,7 @@ class DisEditDeleteCrumForm extends React.Component {
     const {user, crumInstance} = this.props
     const self = user.id === +crumInstance.userId
     const isRecipient = user.id === +crumInstance.recipientId
+    const isForAll = !crumInstance.recipientId
     return (
       <View style={styles.container}>
         <Modal
@@ -212,7 +213,7 @@ class DisEditDeleteCrumForm extends React.Component {
                       </TouchableOpacity>
                     )}
 
-                    {isRecipient && (
+                    {(isRecipient || isForAll) && (
                       <TouchableOpacity
                         style={styles.btn}
                         onPress={() => {
@@ -381,7 +382,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '90%',
     flex: 3,
-    flexBasis: '20%',
+    flexBasis: '15%',
     borderColor: 'white',
     borderWidth: 2,
     textAlign: 'center',
