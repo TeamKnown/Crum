@@ -1,6 +1,6 @@
 import * as React from 'react'
-import {useState, useEffect} from 'react'
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs'
+
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
 import UserProfile from '../components/UserProfile'
@@ -9,39 +9,55 @@ import SignUp from '../components/Authentication/SignUp'
 import MapScreen from '../components/MapScreen/MapScreen'
 import ARScreen from '../components/ARScreen/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
-import {createDrawerNavigator} from '@react-navigation/drawer'
-import {Dimensions, View, TouchableOpacity} from 'react-native'
-import Animated from 'react-native-reanimated'
+
+import {Dimensions} from 'react-native'
+
 import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
-
+const a = require('../../assets/crummap.png')
 const Tab = createMaterialTopTabNavigator()
 function HomeTabs(props) {
   const {height} = Dimensions.get('window')
-  const [user, setUser] = useState(props.user)
 
   return (
     <NavigationContainer>
-      <Tab.Navigator lazy={true} style={{paddingTop: height > 600 ? 30 : 10}}>
+      <Tab.Navigator
+        lazy={true}
+        style={{paddingTop: height > 600 ? 30 : 5}}
+        tabBarOptions={{
+          activeTintColor: '#e91e63',
+          showLabel: false,
+          showIcon: true
+        }}
+      >
         <Tab.Screen
           name="Profile"
           component={UserProfile}
           options={{
-            tabBarLabel: 'Profile'
+            tabBarLabel: '',
+            tabBarIcon: () => (
+              <MaterialCommunityIcons name="account" color="#ccc" size={26} />
+            )
           }}
         />
         <Tab.Screen
           name="ARScreen"
           component={ARScreen}
           options={{
-            tabBarLabel: 'ARView'
+            tabBarLabel: '',
+            tabBarIcon: () => (
+              <MaterialCommunityIcons name="camera" color="#ccc" size={26} />
+            )
           }}
         />
         <Tab.Screen
           name="MapScreen"
           component={MapScreen}
           options={{
-            tabBarLabel: 'MapView'
+            tabBarLabel: '',
+            tabBarIcon: () => (
+              <MaterialCommunityIcons name={a} color="#ccc" size={26} />
+            )
           }}
         />
       </Tab.Navigator>
