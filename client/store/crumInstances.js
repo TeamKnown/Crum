@@ -125,7 +125,7 @@ export const collectCrumInstance = crumInstance => {
         `/api/cruminstances/collect/${crumInstance.id}`,
         crumInstance
       )
-      dispatch(collectedCrumInstance(crumInstance))
+      dispatch(collectedCrumInstance(data))
     } catch (error) {
       console.error('POST Error')
     }
@@ -161,9 +161,13 @@ const crumInstancesReducer = (state = initialState, action) => {
       )
       return stateAfterDelete
     case COLLECT_CRUM_INSTANCE:
+      console.log('for free for all, things still there after collection')
+      console.log(state.map(elm => elm.message))
+      console.log(action.crumInstance.id)
       let stateAfterCollect = state.filter(
         elm => elm.id !== +action.crumInstance.id
       )
+      console.log(stateAfterCollect.map(elm => elm.message))
       return stateAfterCollect
 
     case EDIT_CRUM_INSTANCE:

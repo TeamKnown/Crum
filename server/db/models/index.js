@@ -52,7 +52,8 @@ CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
       longitudeIdx: {
         [Op.lte]: longitudeIdx + radium,
         [Op.gte]: longitudeIdx - radium
-      }
+      },
+      status: 'floating'
     }
   })
   return near

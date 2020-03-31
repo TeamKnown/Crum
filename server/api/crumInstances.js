@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 const router = require('express').Router()
 const {userOnly} = require('./utils')
 const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
@@ -150,26 +151,65 @@ router.delete('/:id', userOnly, async (req, res, next) => {
 // PUT /api/cruminstances/37
 router.put('/collect/:id', userOnly, async (req, res, next) => {
   try {
-    const crumInstance = await CrumInstance.findByPk(req.params.id, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: User
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient',
-          where: {id: req.user.id}
-        }
-      ]
-    })
-    await crumInstance.update({status: 'collected'})
-    res.json(crumInstance)
+    const crumInstance = await CrumInstance.findByPk(
+      req.params.id,
+      {
+        include: [
+          {
+            model: Crum
+          },
+          {
+            model: User
+          },
+          {
+            model: CommentInstance
+          },
+          {
+            model: User,
+            as: 'recipient'
+          }
+        ]
+      },
+      {where: {status: 'floating'}}
+    )
+    if (crumInstance.recipient && req.user.id !== crumInstance.recipient.id) {
+      res.sendStatus(404)
+    }
+    if (crumInstance.recipient) {
+      await crumInstance.update({status: 'collected'})
+      res.json(crumInstance)
+    }
+    if (!crumInstance.recipient && crumInstance.numLeft === 1) {
+      await crumInstance.update({status: 'collected'})
+      const recipient = await User.findByPk(req.user.id)
+      crumInstance.setRecipient(recipient)
+      crumInstance.reload()
+      res.json(crumInstance)
+    }
+    if (!crumInstance.recipient && crumInstance.numLeft > 1) {
+      const count = crumInstance.numLeft
+      await crumInstance.update({numLeft: count - 1})
+
+      crumInstance.reload()
+
+      let crumInstanceNew = await CrumInstance.create({
+        message: crumInstance.message,
+        status: 'collected',
+        numLeft: 1,
+        longitudeIdx: crumInstance.longitudeIdx,
+        latitudeIdx: crumInstance.latitudeIdx,
+        longitude: crumInstance.longitude,
+        latitude: crumInstance.latitude,
+        heading: crumInstance.heading,
+        fromId: crumInstance.id
+      })
+      await crumInstanceNew.save()
+      await crumInstanceNew.setCrum(await crumInstance.getCrum())
+      await crumInstanceNew.setUser(await crumInstance.getUser())
+      const recipient = await User.findByPk(req.user.id)
+      crumInstanceNew.setRecipient(recipient)
+      res.json({id: 0})
+    }
   } catch (err) {
     next(err)
   }
