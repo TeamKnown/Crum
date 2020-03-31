@@ -200,7 +200,8 @@ router.put('/collect/:id', userOnly, async (req, res, next) => {
         latitudeIdx: crumInstance.latitudeIdx,
         longitude: crumInstance.longitude,
         latitude: crumInstance.latitude,
-        heading: crumInstance.heading
+        heading: crumInstance.heading,
+        fromId: crumInstance.id
       })
       await crumInstanceNew.save()
       await crumInstanceNew.setCrum(await crumInstance.getCrum())

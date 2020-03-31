@@ -27,6 +27,9 @@ const CrumInstance = db.define('crumInstance', {
   numLeft: {
     type: Sequelize.INTEGER,
     defaultValue: 1
+  },
+  fromId: {
+    type: Sequelize.INTEGER
   }
 })
 
