@@ -151,7 +151,7 @@ class DisSignInComponent extends React.Component {
                     )}
                   </TouchableOpacity>
                 </View>
-                <Text style={styles.forgotPw}>Forgot password?</Text>
+                <Text style={styles.forgotPw} />
 
                 <View style={styles.button}>
                   <TouchableOpacity

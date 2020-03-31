@@ -11,22 +11,25 @@ import MapScreen from '../components/MapScreen/MapScreen'
 import ARScreen from '../components/ARScreen/ARScreen'
 import {createStackNavigator} from '@react-navigation/stack'
 
-import {Dimensions} from 'react-native'
+import {Dimensions, Image} from 'react-native'
 
 import {NavigationContainer} from '@react-navigation/native'
 //the home screens after users login
 
 const Tab = createMaterialTopTabNavigator()
 function HomeTabs() {
-  const {height} = Dimensions.get('window')
-
+  const {height} = Dimensions.get('screen')
+  console.log(height)
   return (
     <NavigationContainer>
       <Tab.Navigator
         lazy={true}
-        activeColor="#e91e63"
         tabBarOptions={{
-          tabStyle: {padding: height > 600 ? 30 : 15},
+          tabStyle: {
+            padding: height > 890 ? 50 : 20,
+
+            height: height > 890 ? 90 : 60
+          },
 
           showLabel: false,
           showIcon: true
@@ -67,10 +70,14 @@ function HomeTabs() {
           options={{
             tabBarLabel: '',
             tabBarIcon: focused => (
-              <MaterialCommunityIcons
-                name="map-marker-radius"
-                color={focused.focused ? '#800080' : '#ccc'}
-                size={26}
+              <Image
+                source={require('../../assets/crummap.png')}
+                fadeDuration={0}
+                style={{
+                  width: 21,
+                  height: 21,
+                  tintColor: focused.focused ? '#800080' : '#ccc'
+                }}
               />
             )
           }}
