@@ -45,14 +45,14 @@ class DisSignUpComponent extends React.Component {
     const {username, password, passwordConfirm} = this.state
     this.setState({validationError: ''})
 
-    if (userName === '')
+    if (username === '')
       this.setState({validationError: 'Please enter your username'})
     else if (password === '')
       this.setState({validationError: 'Please enter your password'})
     else if (passwordConfirm === '' || passwordConfirm !== password)
       this.setState({validationError: 'Passwords must match'})
     else {
-      this.props.auth(this.state.userName, this.state.password)
+      this.props.auth(this.state.username, this.state.password)
     }
   }
 
@@ -333,7 +333,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    auth: (userName, password) => dispatch(auth(userName, password, 'signup')),
+    auth: (username, password) => dispatch(auth(username, password, 'signup')),
     reset: () => dispatch(me())
   }
 }
