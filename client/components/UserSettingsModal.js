@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {getSingleUser} from '../store'
 import {updateUserThunk} from '../store/'
 import {LinearGradient} from 'expo-linear-gradient'
+import {checkIphoneModel} from './utils'
 // import {} from '../store/'
 
 import {
@@ -32,18 +33,7 @@ class UserSettingsModal extends React.Component {
     device: this.props.user.device
   }
   getiPhoneModel() {
-    if (
-      window.devicePixelRatio >= 3 &&
-      ((window.innerHeight == 368 && window.innerWidth == 207) ||
-        (window.innerHeight == 667 && window.innerWidth == 375) ||
-        (window.innerHeight == 736 && window.innerWidth == 414) ||
-        (window.innerHeight == 812 && window.innerWidth == 375) ||
-        (window.innerHeight >= 812 && window.innerWidth >= 375))
-    ) {
-      return true
-    } else {
-      return false
-    }
+    return checkIphoneModel()
   }
 
   setModalVisible(visible) {
@@ -88,31 +78,17 @@ class UserSettingsModal extends React.Component {
               <View style={styles.modal}>
                 <View style={styles.deviceContainer}>
                   <View style={styles.device}>
-                    <Text style={{fontWeight: 'bold', fontSize: 16}}>
+                    <Text style={styles.heading}>
                       Recommended Device Setting:
                     </Text>
-                    {this.getiPhoneModel() ? (
-                      <Text
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: 16,
-                          fontSize: 40
-                        }}
-                      >
-                        a d v a n c e d
-                      </Text>
-                    ) : (
-                      <Text
-                        style={{
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                          marginTop: 16,
-                          fontSize: 40
-                        }}
-                      >
-                        s t a n d a r d
-                      </Text>
+                    {this.getiPhoneModel() === 'noAR' && (
+                      <Text style={styles.type}>n o A R</Text>
+                    )}
+                    {this.getiPhoneModel() === 'standard' && (
+                      <Text style={styles.type}>s t a n d a r d</Text>
+                    )}
+                    {this.getiPhoneModel() === 'advanced' && (
+                      <Text style={styles.type}>a d v a n c e d</Text>
                     )}
                   </View>
                   <Text />
@@ -174,13 +150,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
 
+  heading: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+
+  type: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 16,
+    fontSize: 40
+  },
+
   btnDrop: {
     height: 60,
     width: '90%',
     backgroundColor: 'white',
     borderColor: '#19ae9f',
     borderWidth: 2,
-    // textAlign: 'center',   // april's comment: causes error
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',

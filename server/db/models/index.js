@@ -1,7 +1,7 @@
 const User = require('./user')
 const Crum = require('./crum')
 const CrumInstance = require('./crumInstance')
-const CommentInstance = require('./CommentInstance')
+const CommentInstance = require('./commentInstance')
 const {Op} = require('sequelize')
 
 CrumInstance.belongsTo(User)
