@@ -7,6 +7,7 @@ export const SET_CRUM_INSTANCES = 'SET_CRUM_INSTANCES'
 export const ADD_CRUM_INSTANCE = 'ADD_CRUM_INSTANCE'
 export const ADD_COMMENT_INSTANCE = 'ADD_COMMENT_INSTANCE'
 export const DELETE_CRUM_INSTANCE = 'DELETE_CRUM_INSTANCE'
+export const COLLECT_CRUM_INSTANCE = 'COLLECT_CRUM_INSTANCE'
 export const EDIT_CRUM_INSTANCE = 'EDIT_CRUM_INSTANCE'
 
 // action creator
@@ -27,6 +28,11 @@ export const postedCommentInstance = (commentInstance, crumInstanceId) => ({
 })
 export const deletedCrumInstance = crumInstance => ({
   type: DELETE_CRUM_INSTANCE,
+  crumInstance: crumInstance
+})
+
+export const collectedCrumInstance = crumInstance => ({
+  type: COLLECT_CRUM_INSTANCE,
   crumInstance: crumInstance
 })
 export const putedCrumInstance = crumInstance => ({
@@ -109,6 +115,23 @@ export const deleteCrumInstance = crumInstance => {
   }
 }
 
+export const collectCrumInstance = crumInstance => {
+  return async dispatch => {
+    try {
+      const heading = await Location.getHeadingAsync()
+      const headingInt = Math.floor(heading.magHeading)
+      crumInstance.headingInt = headingInt
+      let {data} = await devAxios.put(
+        `/api/cruminstances/collect/${crumInstance.id}`,
+        crumInstance
+      )
+      dispatch(collectedCrumInstance(crumInstance))
+    } catch (error) {
+      console.error('POST Error')
+    }
+  }
+}
+
 export const putCrumInstance = crumInstance => {
   return async dispatch => {
     try {
@@ -137,10 +160,17 @@ const crumInstancesReducer = (state = initialState, action) => {
         elm => elm.id !== +action.crumInstance.id
       )
       return stateAfterDelete
+    case COLLECT_CRUM_INSTANCE:
+      let stateAfterCollect = state.filter(
+        elm => elm.id !== +action.crumInstance.id
+      )
+      return stateAfterCollect
+
     case EDIT_CRUM_INSTANCE:
       let stateAfterEdit = state.map(elm =>
         elm.id !== +action.crumInstance.id ? elm : action.crumInstance
       )
+
       return stateAfterEdit
     case ADD_COMMENT_INSTANCE:
       let crumAfterComment = state.filter(
@@ -153,6 +183,7 @@ const crumInstancesReducer = (state = initialState, action) => {
       let stateAfterComment = state.map(elm =>
         elm.id !== +action.crumInstanceId ? elm : crumAfterComment
       )
+
       return stateAfterComment
     default:
       return state

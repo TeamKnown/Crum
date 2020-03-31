@@ -1,9 +1,10 @@
 const router = require('express').Router()
+const {userOnly} = require('./utils')
 const {CrumInstance, CommentInstance} = require('../db/models')
 module.exports = router
 
 // localhost:19001/api/commentinstances/
-router.get('/', async (req, res, next) => {
+router.get('/', userOnly, async (req, res, next) => {
   try {
     const commentInstances = await CommentInstance.findAll({
       include: [
