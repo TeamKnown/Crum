@@ -16,13 +16,16 @@ import {
   View,
   Dimensions,
   Image,
-  SafeAreaView
+  SafeAreaView,
+  Linking,
+  Button
 } from 'react-native'
 import {SCALER} from '../utils'
 import {images, purpleCrumIcon} from '../../../assets'
 import {CurrentLocationButton} from './CurrentLocationButton'
 import {GOOGLE_API_KEY} from '../../../secretDom'
 import polyline from '@mapbox/polyline'
+// import {Button} from 'react-native-paper'
 
 const {width, height} = Dimensions.get('screen')
 
@@ -69,6 +72,7 @@ class DisMapScreen extends Component {
         `https://maps.googleapis.com/maps/api/directions/json?origin=${startLoc}&destination=${desLoc}&key=${GOOGLE_API_KEY}`
       )
       const respJson = await resp.json()
+
       const response = respJson.routes[0]
       const distanceTime = response.legs[0]
       const distance = distanceTime.distance.text
@@ -84,8 +88,6 @@ class DisMapScreen extends Component {
       })
 
       this.setState({coords, distance, time})
-
-      // console.log('this.state coords', this.state.coords)
     } catch (error) {
       console.log('Error: ', error)
     }
@@ -114,14 +116,7 @@ class DisMapScreen extends Component {
   }
   renderDistanceInfo() {
     return (
-      <View
-        style={{
-          width: width - 80,
-          paddingTop: 15,
-          backgroundColor: 'rgba(0,0,0,0.1)',
-          justifyContent: 'flex-end'
-        }}
-      >
+      <View style={styles.route}>
         <Text style={{fontWeight: 'bold'}}>
           Estimated Time: {this.state.time}
         </Text>
@@ -184,6 +179,7 @@ class DisMapScreen extends Component {
             ref={map => (this._map = map)}
             showsUserLocation={true}
             showsCompass={true}
+            loadingEnabled={true}
             rotateEnabled={false}
             style={styles.map}
             initialRegion={{
@@ -227,7 +223,7 @@ class DisMapScreen extends Component {
                 </Marker>
               )
             })}
-            <Text>{crumInstances.length}</Text>
+
             <Polyline
               strokeWidth={6}
               strokeColor="#4A89F3"
@@ -241,7 +237,7 @@ class DisMapScreen extends Component {
             data={this.props.crumInstances}
             containerCustomStyle={styles.carousel}
             renderItem={this.renderCarouselItem}
-            sliderWidth={Dimensions.get('window').width}
+            sliderWidth={width}
             itemWidth={300}
             removeClippedSubviews={false}
             onSnapToItem={index => this.onCarouselItemChange(index)}
@@ -249,7 +245,19 @@ class DisMapScreen extends Component {
         </SafeAreaView>
       )
     } else {
-      return <Text>Loading your current location....</Text>
+      return (
+        <View style={styles.permission}>
+          <Text>
+            {`We need your permission 🥺 to access our awsome map feature in our application.\n Please go the the your phone setting and change it!`}
+          </Text>
+          <Button
+            title="Go To Setting"
+            onPress={() => {
+              Linking.openURL('app-settings:')
+            }}
+          />
+        </View>
+      )
     }
   }
 }
@@ -258,8 +266,22 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject
   },
+
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  route: {
+    width: width - 80,
+    paddingTop: 15,
+    backgroundColor: 'rgba(0,0,0,0.1)',
+    justifyContent: 'flex-end'
+  },
+  permission: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingTop: 20
   },
   carousel: {
     position: 'absolute',
