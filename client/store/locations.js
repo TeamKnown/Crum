@@ -1,5 +1,5 @@
 import * as Location from 'expo-location'
-
+import {SCALER} from '../components/utils'
 let positionTracker = null
 const SUBSCRIBE_LOCATION = 'SUBSCRIBE_LOCATION'
 const UNSUBSCRIBE_LOCATION = 'UNSUBSCRIBE_LOCATION'
@@ -33,7 +33,9 @@ const locationsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SUBSCRIBE_LOCATION:
       return {
-        ...action.position
+        ...action.position,
+        longitudeIdx: Math.floor(state.longitude * SCALER),
+        latitudeIdx: Math.floor(state.latitude * SCALER)
       }
     case UNSUBSCRIBE_LOCATION:
       clearInterval(positionTracker)

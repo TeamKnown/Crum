@@ -45,7 +45,10 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   return async dispatch => {
     try {
       const {data} = await devAxios.get(
-        `/api/cruminstances/nearme?radium=${SCALER}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
+        // i radium is 60 meters,
+        // for map radium can be 100
+        // for AR it need not be, it can be 2
+        `/api/cruminstances/nearme?radium=${100}&latitudeIdx=${latitudeIdx}&longitudeIdx=${longitudeIdx}`
       )
 
       dispatch(setCrumInstances(data))

@@ -94,9 +94,9 @@ class DisDropCrumForm extends React.Component {
         validationError: 'Recipient must be specified'
       })
     } else {
-      let recipientEmpty = this.state.recipient === ''
+      let toMany = this.state.sendMode === 'to many'
       let recipientExists = await userNameExists(this.state.recipient)
-      if (recipientExists || recipientEmpty) {
+      if (recipientExists || toMany) {
         this.props.postCrumInstance(crumInstance, userId, crumId)
         this.props.hideDropCrumForm()
       } else {
@@ -114,7 +114,7 @@ class DisDropCrumForm extends React.Component {
         <Modal
           style={styles.root}
           animationType="fade"
-          transparent={false}
+          transparent={this.props.transparent}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal closed')

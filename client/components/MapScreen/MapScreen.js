@@ -311,11 +311,7 @@ const styles = StyleSheet.create({
 
 const mapState = state => ({
   crumInstances: state.crumInstancesNearby,
-  locations: {
-    ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
-    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
-  }
+  locations: state.locations
 })
 
 const mapDispatch = dispatch => {
