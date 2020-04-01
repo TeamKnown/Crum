@@ -43,7 +43,7 @@ function HomeTabs() {
             tabBarIcon: focused => (
               <MaterialCommunityIcons
                 name="account-circle-outline"
-                color={focused.focused ? '#800080' : '#ccc'}
+                color={focused.focused ? '#7C1E9F' : '#ccc'}
                 size={26}
               />
             )
@@ -58,7 +58,7 @@ function HomeTabs() {
             tabBarIcon: focused => (
               <MaterialCommunityIcons
                 name="camera"
-                color={focused.focused ? '#800080' : '#ccc'}
+                color={focused.focused ? '#7C1E9F' : '#ccc'}
                 size={26}
               />
             )
@@ -76,7 +76,7 @@ function HomeTabs() {
                 style={{
                   width: 21,
                   height: 21,
-                  tintColor: focused.focused ? '#800080' : '#ccc'
+                  tintColor: focused.focused ? '#7C1E9F' : '#ccc'
                 }}
               />
             )
