@@ -31,6 +31,7 @@ import {images, imageThumbnails, background} from '../../../assets/'
 import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
+import {DataTexture} from 'three'
 
 let scene
 class DisARScreen extends React.Component {
@@ -44,6 +45,7 @@ class DisARScreen extends React.Component {
       editDeleteCrumFormVisible: false,
       crumClickedParsed: {},
       errorMessage: null,
+      contextCreated: false,
       isGranted: true
     }
 
@@ -115,7 +117,8 @@ class DisARScreen extends React.Component {
   }
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
-    this.setState({loading: false})
+    this.setState({contextCreated: true})
+    console.log('AR SCREEN GENERATED')
     if (this.props.user.device === 'advanced') {
       AR.setWorldAlignment('gravityAndHeading')
       // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
@@ -132,11 +135,10 @@ class DisARScreen extends React.Component {
     this.renderer.render(scene, this.camera)
   }
 
-  // longitudeIdx is the integer version of longitude it is the floor of (SCALER * longitude), likewise latitude is the floor of (SCALER * latitude)
-  // we get longitudeIdx and latitude from REDUX store, and store it in our REACT state
-  // when longitudeIdx or latitude in REDUX store changes, we update REACT state
-  // we also requery the list of nearby crums
   static getDerivedStateFromProps(props, state) {
+    if (!state.contextCreated) {
+      return state
+    }
     const toAdd = props.crumInstances.filter(
       crumInstance =>
         !state.crumInstances.map(item => item.id).includes(crumInstance.id)
@@ -160,6 +162,7 @@ class DisARScreen extends React.Component {
           plane.name = planeName
           scene.add(plane)
           let newObj = scene.getObjectByName(planeName)
+          console.log('NEW OBJECT ADDED: ', planeName)
         }
       }
 
@@ -169,6 +172,7 @@ class DisARScreen extends React.Component {
           let planeName = crumInstanceNamer(crumInstance)
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
+          console.log('OLD OBJECT REMOVED: ', planeName)
         }
       }
       addCrums()

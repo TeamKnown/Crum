@@ -245,70 +245,190 @@ const crums = [
   }
 ]
 const crumInstances = [
+  // {
+  //   message: 'Every Day is Fathers Day',
+  //   latitude: 40.7185,
+  //   longitude: -73.9743,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'Please no more...',
+  //   latitude: 40.7077,
+  //   longitude: -74.0112,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'Beautiful Day!',
+  //   latitude: 40.776,
+  //   longitude: -73.9689,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'Where is everyone?',
+  //   latitude: 40.7075,
+  //   longitude: -74.0092,
+  //   crumId: 19,
+  //   userId: 2
+  // },
+  // {
+  //   message: 'What a show!',
+  //   latitude: 40.7213,
+  //   longitude: -73.9932,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'hope you like chocolate',
+  //   latitude: 40.7053,
+  //   longitude: -74.0056
+  //   // crumId: 6,
+  //   // userId: 7
+  // },
+  // {
+  //   message: 'out for a walk',
+  //   latitude: 40.7222,
+  //   longitude: -73.9539,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'going out for ice cream',
+  //   latitude: 40.6763,
+  //   longitude: -73.8752,
+  //   status: 'collected'
+  // },
+  // {
+  //   message: 'reading the new sutter cane',
+  //   latitude: 40.6812,
+  //   longitude: -73.9955
+  // },
+  // {
+  //   message: 'sandwich time',
+  //   latitude: 40.7269,
+  //   longitude: -73.8773
+  // },
+  // {
+  //   message: 'for the dads',
+  //   latitude: 40.7235,
+  //   longitude: -73.9831
+  // },
   {
-    message: 'Every Day is Fathers Day',
-    latitude: 40.7185,
-    longitude: -73.9743,
-    status: 'collected'
-  },
-  {
-    message: 'Please no more...',
-    latitude: 40.7077,
-    longitude: -74.0112,
-    status: 'collected'
-  },
-  {
-    message: 'Beautiful Day!',
-    latitude: 40.776,
-    longitude: -73.9689,
-    status: 'collected'
-  },
-  {
-    message: 'Where is everyone?',
+    message: 'for april testing',
     latitude: 40.7075,
-    longitude: -74.0092,
-    crumId: 19,
-    userId: 2
+    longitude: -74.0057
   },
   {
-    message: 'What a show!',
-    latitude: 40.7213,
-    longitude: -73.9932,
-    status: 'collected'
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'hope you like chocolate',
-    latitude: 40.7053,
-    longitude: -74.0056
-    // crumId: 6,
-    // userId: 7
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'out for a walk',
-    latitude: 40.7222,
-    longitude: -73.9539,
-    status: 'collected'
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'going out for ice cream',
-    latitude: 40.6763,
-    longitude: -73.8752,
-    status: 'collected'
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'reading the new sutter cane',
-    latitude: 40.6812,
-    longitude: -73.9955
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'sandwich time',
-    latitude: 40.7269,
-    longitude: -73.8773
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   },
   {
-    message: 'for the dads',
-    latitude: 40.7235,
-    longitude: -73.9831
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
+  },
+  {
+    message: 'for april testing',
+    latitude: 40.7075,
+    longitude: -74.0057
   }
 ]
 
