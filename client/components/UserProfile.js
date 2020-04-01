@@ -4,6 +4,7 @@ import {getSingleUser, fetchUserCrumInstances} from '../store'
 import {logout} from '../store/user'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
+import CollectedCrumsModal from './CollectedCrumsModal'
 import UserSettingsModal from './UserSettingsModal'
 // import DeviceInfo from 'react-native-device-info'
 import {LinearGradient} from 'expo-linear-gradient'
@@ -70,7 +71,10 @@ function UserProfile(props) {
           ) : (
             <Text style={styles.text}>P L A C E H O L D E R</Text>
           )}
-          <ViewCrumsModal />
+          <View style={styles.crumCollections}>
+            <ViewCrumsModal />
+            <CollectedCrumsModal />
+          </View>
         </View>
         <View style={styles.buttons}>
           <LinearGradient
@@ -131,6 +135,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '90%',
     paddingBottom: '4%'
+  },
+  crumCollections: {
+    width: '85%',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   buttons: {
     width: '90%',

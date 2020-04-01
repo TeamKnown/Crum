@@ -67,6 +67,18 @@ export const fetchUserCrumInstances = userId => {
   }
 }
 
+export const fetchCollectedCrumInstances = userId => {
+  return async dispatch => {
+    try {
+      const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
+
+      dispatch(setCrumInstances(data))
+    } catch (error) {
+      console.error('GET Error')
+    }
+  }
+}
+
 export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
     try {
@@ -162,12 +174,12 @@ const crumInstancesReducer = (state = initialState, action) => {
       return stateAfterDelete
     case COLLECT_CRUM_INSTANCE:
       console.log('for free for all, things still there after collection')
-      console.log(state.map(elm => elm.message))
-      console.log(action.crumInstance.id)
+      // console.log(state.map(elm => elm.message))
+      // console.log(action.crumInstance.id)
       let stateAfterCollect = state.filter(
         elm => elm.id !== +action.crumInstance.id
       )
-      console.log(stateAfterCollect.map(elm => elm.message))
+      // console.log(stateAfterCollect.map(elm => elm.message))
       return stateAfterCollect
 
     case EDIT_CRUM_INSTANCE:

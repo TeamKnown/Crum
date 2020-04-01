@@ -248,17 +248,20 @@ const crumInstances = [
   {
     message: 'Every Day is Fathers Day',
     latitude: 40.7185,
-    longitude: -73.9743
+    longitude: -73.9743,
+    status: 'collected'
   },
   {
     message: 'Please no more...',
     latitude: 40.7077,
-    longitude: -74.0112
+    longitude: -74.0112,
+    status: 'collected'
   },
   {
     message: 'Beautiful Day!',
     latitude: 40.776,
-    longitude: -73.9689
+    longitude: -73.9689,
+    status: 'collected'
   },
   {
     message: 'Where is everyone?',
@@ -270,7 +273,8 @@ const crumInstances = [
   {
     message: 'What a show!',
     latitude: 40.7213,
-    longitude: -73.9932
+    longitude: -73.9932,
+    status: 'collected'
   },
   {
     message: 'hope you like chocolate',
@@ -282,12 +286,14 @@ const crumInstances = [
   {
     message: 'out for a walk',
     latitude: 40.7222,
-    longitude: -73.9539
+    longitude: -73.9539,
+    status: 'collected'
   },
   {
     message: 'going out for ice cream',
     latitude: 40.6763,
-    longitude: -73.8752
+    longitude: -73.8752,
+    status: 'collected'
   },
   {
     message: 'reading the new sutter cane',
@@ -323,7 +329,7 @@ const seed = async () => {
       let crumInstanceI = await CrumInstance.findByPk(i)
       let crumI = await Crum.findByPk(j)
       let userK = await User.findByPk(k)
-      let userKN = await User.findByPk(k + 1)
+      let userKN = await User.findByPk(1)
       await crumInstanceI.setCrum(crumI)
       await crumInstanceI.setUser(userK)
       await crumInstanceI.setRecipient(userKN)
