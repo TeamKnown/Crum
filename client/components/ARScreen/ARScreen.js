@@ -83,7 +83,7 @@ class DisARScreen extends React.Component {
     this.raycaster.setFromCamera(this.touch, this.camera)
     const intersects = this.raycaster.intersectObjects([scene], true)
     if (intersects.length > 0) {
-      let crumClicked = intersects[intersects.length - 1].object.name
+      let crumClicked = intersects[0].object.name
       let crumClickedParsed = crumInstanceParser(crumClicked)
       this.setState({
         editDeleteCrumFormVisible: true,

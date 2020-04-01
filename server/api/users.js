@@ -19,6 +19,21 @@ router.get('/', userOnly, async (req, res, next) => {
   }
 })
 
+router.get('/userCollectedThis/', userOnly, async (req, res, next) => {
+  try {
+    const crusInstance = await CrumInstance.findOne({
+      where: {recipientId: req.query.userId, fromId: req.query.crumInstanceId}
+    })
+    if (crusInstance) {
+      res.json({exists: true})
+    } else {
+      res.json({exists: false})
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/exists/', userOnly, async (req, res, next) => {
   try {
     const user = await User.findOne({

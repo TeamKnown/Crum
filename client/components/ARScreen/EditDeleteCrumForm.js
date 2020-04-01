@@ -1,6 +1,6 @@
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER} from '../utils'
+import {SCALER, userCollectedThis} from '../utils'
 import {
   TextInput,
   View,
@@ -69,9 +69,19 @@ class DisEditDeleteCrumForm extends React.Component {
     this.props.deleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
   }
-  handleCollectCrum(crumInstance, userId) {
-    this.props.collectCrumInstance(crumInstance, userId)
-    this.props.hideEditDeleteCrumForm()
+  async handleCollectCrum(crumInstance, userId) {
+    let recipientCollectedThis = await userCollectedThis(
+      this.props.user.id,
+      this.props.crumInstance.id
+    )
+    if (!recipientCollectedThis) {
+      this.props.collectCrumInstance(crumInstance, userId)
+      this.props.hideEditDeleteCrumForm()
+    } else {
+      this.setState({
+        validationError: 'Recipient already collected this one'
+      })
+    }
   }
   handleEditCrum(crumInstance, userId) {
     if (!this.state.selfEditing) {

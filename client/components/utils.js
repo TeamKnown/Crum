@@ -6,6 +6,14 @@ export const userNameExists = async userName => {
   const {data} = await devAxios.get(`/api/users/exists/?userName=${userName}`)
   return data.exists
 }
+
+export const userCollectedThis = async (userId, crumInstanceId) => {
+  const {data} = await devAxios.get(
+    `/api/users/userCollectedThis/?userId=${userId}&crumInstanceId=${crumInstanceId}`
+  )
+  return data.exists
+}
+
 export const computePos = (crumInstance, locations) => {
   const z = // positive z means to the south, this should be correct
     (-(crumInstance.latitude - locations.latitude) * 6356000 * 3.14 * 2) / 360.0
