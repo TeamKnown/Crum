@@ -108,6 +108,7 @@
     "react-native-router-flux": "^4.2.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
+    "react-native-selector": "^1.0.4",
     "react-native-snap-carousel": "^3.8.4",
     "react-native-switch-selector": "^2.0.3",
     "react-native-tab-view": "^2.13.0",
