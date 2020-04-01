@@ -22,7 +22,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const sendModeOptions = [
   {label: 'to someone', value: 'to someone'},
-  {label: 'to all', value: 'to all'}
+  {label: 'to many', value: 'to many'}
 ]
 
 class DisDropCrumForm extends React.Component {
@@ -189,7 +189,7 @@ class DisDropCrumForm extends React.Component {
                       />
                     </View>
                   )}
-                  {this.state.sendMode === 'to all' && (
+                  {this.state.sendMode === 'to many' && (
                     <View style={styles.modalInputCount}>
                       <View
                         style={{
@@ -277,7 +277,7 @@ const mapState = state => ({
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),
     latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   },
-  crumInstances: state.crumInstances,
+  crumInstances: state.crumInstancesNearby,
   crums: state.crums
 })
 const mapDispatch = dispatch => {

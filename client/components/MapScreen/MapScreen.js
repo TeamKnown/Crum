@@ -7,7 +7,7 @@ import MapView, {
   Polyline
 } from 'react-native-maps'
 import {connect} from 'react-redux'
-import {fetchNearByCrumInstances} from '../../store/crumInstances'
+import {fetchNearByCrumInstances} from '../../store/crumInstancesNearby'
 import {getCurrentPosition, stopTracking} from '../../store/locations'
 import Carousel from 'react-native-snap-carousel'
 import {
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
 })
 
 const mapState = state => ({
-  crumInstances: state.crumInstances,
+  crumInstances: state.crumInstancesNearby,
   locations: {
     ...state.locations,
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),

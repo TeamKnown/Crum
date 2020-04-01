@@ -55,29 +55,31 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   }
 }
 
-export const fetchUserCrumInstances = userId => {
-  return async dispatch => {
-    try {
-      const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
+// //!!!new version is named  fetchUserDroppedCrumInstances
+// export const fetchUserCrumInstances = userId => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
 
-      dispatch(setCrumInstances(data))
-    } catch (error) {
-      console.error('GET Error')
-    }
-  }
-}
+//       dispatch(setCrumInstances(data))
+//     } catch (error) {
+//       console.error('GET Error')
+//     }
+//   }
+// }
 
-export const fetchCollectedCrumInstances = userId => {
-  return async dispatch => {
-    try {
-      const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
+// //!!!new version is named  fetchUserCollectedCrumInstances
+// export const fetchCollectedCrumInstances = userId => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
 
-      dispatch(setCrumInstances(data))
-    } catch (error) {
-      console.error('GET Error')
-    }
-  }
-}
+//       dispatch(setCrumInstances(data))
+//     } catch (error) {
+//       console.error('GET Error')
+//     }
+//   }
+// }
 
 export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
@@ -161,7 +163,7 @@ export const putCrumInstance = crumInstance => {
   }
 }
 const initialState = []
-const crumInstancesReducer = (state = initialState, action) => {
+const crumInstancesNearbyReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CRUM_INSTANCES:
       return action.crumInstances
@@ -173,13 +175,9 @@ const crumInstancesReducer = (state = initialState, action) => {
       )
       return stateAfterDelete
     case COLLECT_CRUM_INSTANCE:
-      console.log('for free for all, things still there after collection')
-      // console.log(state.map(elm => elm.message))
-      // console.log(action.crumInstance.id)
       let stateAfterCollect = state.filter(
         elm => elm.id !== +action.crumInstance.id
       )
-      // console.log(stateAfterCollect.map(elm => elm.message))
       return stateAfterCollect
 
     case EDIT_CRUM_INSTANCE:
@@ -205,4 +203,4 @@ const crumInstancesReducer = (state = initialState, action) => {
       return state
   }
 }
-export default crumInstancesReducer
+export default crumInstancesNearbyReducer

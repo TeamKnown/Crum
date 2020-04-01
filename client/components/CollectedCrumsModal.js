@@ -1,6 +1,10 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser, fetchCollectedCrumInstances} from '../store'
+import {
+  getSingleUser,
+  fetchCollectedCrumInstances,
+  fetchUserCollectedCrumInstances
+} from '../store'
 import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
@@ -19,7 +23,7 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
-import crumInstancesReducer from '../store/crumInstances'
+// import crumInstancesReducer from '../store/crumInstances'
 
 class CollectedCrumsModal extends React.Component {
   constructor(props) {
@@ -65,7 +69,7 @@ class CollectedCrumsModal extends React.Component {
           <Text style={styles.heading}>c r u m s</Text>
           <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{total.length}</Text>
+            <Text style={styles.count}>{user.collectedCrums}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
@@ -203,7 +207,7 @@ const mapState = state => {
   return {
     user: state.user,
     crums: state.crums,
-    crumInstances: state.crumInstances
+    crumInstances: state.crumInstancesCollected
   }
 }
 
@@ -211,7 +215,8 @@ const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
     getCollectedCrumInstances: userId => {
-      dispatch(fetchCollectedCrumInstances(userId))
+      // dispatch(fetchCollectedCrumInstances(userId))
+      dispatch(fetchUserCollectedCrumInstances(userId))
     }
   }
 }
