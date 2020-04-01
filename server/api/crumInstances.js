@@ -34,10 +34,6 @@ const computeLocation = (headingInt, latitude, longitude) => {
 
 // POST /api/cruminstances?userId=11&crumId=21&direction=front
 router.post('/', async (req, res, next) => {
-  // if (req.user.id !== +req.query.userId) {
-  //   console.log('Do not drop on other user behalf')
-  //   res.sendStatus(404)
-  // }
   try {
     const computedLocation = computeLocation(
       req.body.headingInt,
@@ -134,14 +130,14 @@ router.put('/collect/:id', async (req, res, next) => {
     }
     if (crumInstance.recipient) {
       await crumInstance.update({status: 'collected'})
-      res.json(crumInstance)
+      res.json({collected: crumInstance.id})
     }
     if (!crumInstance.recipient && crumInstance.numLeft === 1) {
       await crumInstance.update({status: 'collected'})
       const recipient = await User.findByPk(req.user.id)
       crumInstance.setRecipient(recipient)
       crumInstance.reload()
-      res.json(crumInstance)
+      res.json({collected: crumInstance.id})
     }
     if (!crumInstance.recipient && crumInstance.numLeft > 1) {
       const count = crumInstance.numLeft
@@ -165,7 +161,7 @@ router.put('/collect/:id', async (req, res, next) => {
       await crumInstanceNew.setUser(await crumInstance.getUser())
       const recipient = await User.findByPk(req.user.id)
       crumInstanceNew.setRecipient(recipient)
-      res.json({id: 0})
+      res.json({collected: crumInstanceNew.id, remaining: crumInstance.id})
     }
   } catch (err) {
     next(err)
@@ -175,22 +171,10 @@ router.put('/collect/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: User,
-          where: {id: req.user.id}
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ]
+      include: {all: true},
+      where: {
+        userId: req.params.id
+      }
     })
     await crumInstance.update(req.body)
     res.json(crumInstance)
@@ -205,7 +189,6 @@ router.get('/user/:id', async (req, res, next) => {
       include: {all: true},
       where: {
         userId: req.params.id
-        // status: 'floating'
       }
     })
     res.json(crumInstance)

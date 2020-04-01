@@ -256,11 +256,9 @@ class DisARScreen extends React.Component {
                 />
               )}
             </View>
+
             {this.state.dropCrumFormVisible && (
-              <DropCrumForm
-                hideDropCrumForm={this.hideDropCrumForm}
-                transparent={true}
-              />
+              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
             )}
             {this.state.editDeleteCrumFormVisible && (
               <EditDeleteCrumForm

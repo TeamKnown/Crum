@@ -102,7 +102,13 @@ class ViewCrumsModal extends React.Component {
                         ) : (
                           <Text>{crum.message}</Text>
                         )}
-                        <Text>Remaining: {crum.numLeft}</Text>
+                        {crum.status === 'floating' && (
+                          <Text>Remaining: {crum.numLeft}</Text>
+                        )}
+                        {crum.status === 'collected' && (
+                          <Text>Collected by: {crum.recipient.userName}</Text>
+                        )}
+                        {/* <Text>Dropped at: {crum.createdAt}</Text> */}
                       </View>
                     </View>
                   ))}
@@ -210,7 +216,6 @@ const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
     getUserCrumInstances: userId => {
-      // dispatch(fetchUserCrumInstances(userId))
       dispatch(fetchUserDroppedCrumInstances(userId))
     }
   }
