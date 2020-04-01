@@ -10,6 +10,7 @@ User.hasMany(CrumInstance)
 User.hasMany(CrumInstance, {
   foreignKey: 'recipientId'
 })
+
 CrumInstance.belongsTo(User, {
   as: 'recipient',
   foreignKey: 'recipientId'
