@@ -273,11 +273,7 @@ class DisDropCrumForm extends React.Component {
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
   user: state.user,
-  locations: {
-    ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
-    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
-  },
+  locations: state.locations,
   crumInstances: state.crumInstancesNearby,
   crums: state.crums
 })

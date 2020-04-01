@@ -79,7 +79,7 @@ class DisEditDeleteCrumForm extends React.Component {
       this.props.hideEditDeleteCrumForm()
     } else {
       this.setState({
-        validationError: 'Recipient already collected this one'
+        validationError: 'You already collected this one'
       })
     }
   }
@@ -260,11 +260,7 @@ class DisEditDeleteCrumForm extends React.Component {
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
   user: state.user,
-  locations: {
-    ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
-    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
-  },
+  locations: state.locations,
   crumInstances: state.crumInstancesNearby,
   crums: state.crums
 })

@@ -9,21 +9,7 @@ router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll(
       {
-        include: [
-          {
-            model: User
-          },
-          {
-            model: Crum
-          },
-          {
-            model: CommentInstance
-          },
-          {
-            model: User,
-            as: 'recipient'
-          }
-        ]
+        include: {all: true}
       },
       {
         where: {
@@ -49,10 +35,6 @@ const computeLocation = (headingInt, latitude, longitude) => {
 
 // POST /api/cruminstances?userId=11&crumId=21&direction=front
 router.post('/', async (req, res, next) => {
-  // if (req.user.id !== +req.query.userId) {
-  //   console.log('Do not drop on other user behalf')
-  //   res.sendStatus(404)
-  // }
   try {
     const computedLocation = computeLocation(
       req.body.headingInt,
@@ -109,21 +91,7 @@ router.get('/nearme', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: User
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ]
+      include: {all: true}
     })
     res.json(crumInstance)
   } catch (err) {
@@ -154,21 +122,7 @@ router.put('/collect/:id', async (req, res, next) => {
     const crumInstance = await CrumInstance.findByPk(
       req.params.id,
       {
-        include: [
-          {
-            model: Crum
-          },
-          {
-            model: User
-          },
-          {
-            model: CommentInstance
-          },
-          {
-            model: User,
-            as: 'recipient'
-          }
-        ]
+        include: {all: true}
       },
       {where: {status: 'floating'}}
     )
@@ -218,22 +172,10 @@ router.put('/collect/:id', async (req, res, next) => {
 router.put('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: User,
-          where: {id: req.user.id}
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ]
+      include: {all: true},
+      where: {
+        userId: req.params.id
+      }
     })
     await crumInstance.update(req.body)
     res.json(crumInstance)
@@ -245,24 +187,9 @@ router.put('/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
-      include: [
-        {
-          model: User
-        },
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ],
+      include: {all: true},
       where: {
         userId: req.params.id
-        // status: 'floating'
       }
     })
     res.json(crumInstance)
@@ -274,21 +201,7 @@ router.get('/user/:id', async (req, res, next) => {
 router.get('/collect/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
-      include: [
-        {
-          model: User
-        },
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ],
+      include: {all: true},
       where: {
         recipientId: req.params.id,
         status: 'collected'
