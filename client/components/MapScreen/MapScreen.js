@@ -191,7 +191,7 @@ class DisMapScreen extends Component {
               this.renderDistanceInfo()}
 
             {this.props.crumInstances.map((crum, index) => {
-              let color = crum.recipientId === user.id ? '#26DECB' : '#BD7CDE'
+              let color = crum.recipientId === user.id ? '#26DECB' : '#7C1E9F'
               return (
                 <Marker
                   key={crum.id}
