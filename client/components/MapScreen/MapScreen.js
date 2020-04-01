@@ -164,8 +164,8 @@ class DisMapScreen extends Component {
   )
 
   render() {
-    const {locations, crumInstances} = this.props
-
+    const {locations, crumInstances, user} = this.props
+    console.log('Map View ', crumInstances, 'and user', user)
     if (locations.longitude && locations.latitude) {
       return (
         <SafeAreaView style={styles.container}>
@@ -192,11 +192,7 @@ class DisMapScreen extends Component {
             {this.state.time &&
               this.state.distance &&
               this.renderDistanceInfo()}
-            <Circle
-              center={locations}
-              radius={1000}
-              fillColor="rgba(200,300,200,0.5)"
-            />
+
             {this.props.crumInstances.map((crum, index) => {
               return (
                 <Marker
@@ -213,7 +209,14 @@ class DisMapScreen extends Component {
                     longitude: +crum.longitude
                   }}
                 >
-                  <Image source={purpleCrumIcon} style={styles.markerimg} />
+                  <Image
+                    source={purpleCrumIcon}
+                    style={{
+                      height: 30,
+                      width: 30,
+                      tintColor: crum.recipientId === user.id ? '#26DECB' : null
+                    }}
+                  />
                   <Callout style={styles.callout}>
                     <Text>{crum.message}</Text>
                   </Callout>
@@ -313,6 +316,7 @@ const styles = StyleSheet.create({
 })
 
 const mapState = state => ({
+  user: state.user,
   crumInstances: state.crumInstancesNearby,
   locations: state.locations
 })
