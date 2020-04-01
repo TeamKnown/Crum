@@ -1,7 +1,14 @@
 import Modal from 'react-native-modal'
 
 import React from 'react'
-import {StyleSheet, Text, View, Linking, Button} from 'react-native'
+import {
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  TouchableOpacity,
+  Button
+} from 'react-native'
 
 export default function PermissionModal(props) {
   const goToSettings = () => {

@@ -5,9 +5,12 @@ import {NavigationContainer} from '@react-navigation/native'
 import {HomeTabs, Signin} from './routes/homeStack'
 import {me, getCurrentPosition, stopTracking} from './store'
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
-import {Keyboard, View} from 'react-native'
+import {Keyboard, View, StyleSheet} from 'react-native'
 import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
+
+import IntroImages from './components/Intro/IntroImages'
+import IntroGradient from './components/Intro/IntroGradient'
 
 const DismissKeyBoard = ({children}) => (
   <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -19,9 +22,19 @@ const DismissKeyBoard = ({children}) => (
  */
 class disRoutes extends Component {
   state = {
-    isGranted: true
+    isGranted: true,
+    show_Main_App: false
   }
 
+  // Intro slides stuff
+  onDoneAllSlides = () => {
+    this.setState({show_Main_App: true})
+  }
+  onSkipSlides = () => {
+    this.setState({show_Main_App: true})
+  }
+
+  // Permission modal stuff
   requestLocationPermission = async () => {
     let {status} = await Permissions.askAsync(Permissions.LOCATION)
 
@@ -44,23 +57,35 @@ class disRoutes extends Component {
     this.requestLocationPermission()
     this.props.loadInitialData()
   }
+
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
   }
 
   render() {
     const {isLoggedIn} = this.props
-    if (isLoggedIn) {
-      return <HomeTabs user={this.props.user} />
+
+    if (this.state.show_Main_App) {
+      if (isLoggedIn) {
+        return <HomeTabs user={this.props.user} />
+      } else {
+        return (
+          <View style={{flex: 1}}>
+            <Signin />
+            <PermissionModal
+              isGranted={this.state.isGranted}
+              closeModal={this.closeModal}
+            />
+          </View>
+        )
+      }
+      // Otherwise not logged in, show the intro slides
     } else {
       return (
-        <View style={{flex: 1}}>
-          <Signin />
-          <PermissionModal
-            isGranted={this.state.isGranted}
-            closeModal={this.closeModal}
-          />
-        </View>
+        <IntroGradient
+          onDone={() => this.onDoneAllSlides()}
+          onSkip={() => this.onSkipSlides()}
+        />
       )
     }
   }
