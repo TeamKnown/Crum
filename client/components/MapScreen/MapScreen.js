@@ -117,7 +117,7 @@ class DisMapScreen extends Component {
   renderDistanceInfo() {
     return (
       <View style={styles.route}>
-        <Text style={{fontWeight: 'bold'}}>
+        <Text style={styles.ETA}>
           Estimated Distance: {this.state.distance}
         </Text>
       </View>
@@ -246,7 +246,7 @@ class DisMapScreen extends Component {
       return (
         <View style={styles.permission}>
           <Text>
-            {`We need your permission 🥺 to access our awsome map feature in our application.\n Please go the the your phone setting and change it!`}
+            {`We need your permission to use location features in this application.\n Please update your phone settings to get the most out of Crum`}
           </Text>
           <Button
             title="Go To Setting"
@@ -275,10 +275,16 @@ const styles = StyleSheet.create({
     tintColor: 'yellow'
   },
   route: {
-    width: width - 80,
+    flexDirection: 'column',
+    width: '100%',
     paddingTop: 15,
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    justifyContent: 'flex-end'
+    backgroundColor: 'rgba(0,0,0,0.8)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  ETA: {
+    fontWeight: 'bold',
+    color: 'white'
   },
   permission: {
     backgroundColor: 'white',

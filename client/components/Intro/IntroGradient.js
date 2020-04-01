@@ -3,23 +3,24 @@ import {StyleSheet, View, Text} from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import {LinearGradient} from 'expo-linear-gradient'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import {MaterialCommunityIcons} from 'react-native-vector-icons'
 
 const slides = [
   {
     key: 'firstSlide',
     title: 'DROP A CRUM',
     text:
-      'Head to the <camera> tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!',
+      'Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!',
     icon: 'ios-pin',
-    colors: ['#63E2FF', '#B066FE']
+    colors: ['#19ae9f', '#4272a0']
   },
   {
     key: 'secondSlide',
     title: 'FOLLOW THE MAP',
     text:
-      'Use the <map> tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there',
+      'Use the Map tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there',
     icon: 'ios-navigate',
-    colors: ['#A3A1FF', '#3A3897']
+    colors: ['#2a969f', '#535a9f']
   },
   {
     key: 'thirdSlide',
@@ -27,15 +28,15 @@ const slides = [
     text:
       'Drop, collect, and comment on Crums as you wander around town.\n\n Every Crum has a limit on how many times it can be collected, so get to it before someone else does!',
     icon: 'ios-walk',
-    colors: ['#29ABE2', '#4F00BC']
+    colors: ['#4272a0', '#6c379f']
   },
   {
     key: 'fourthSlide',
     title: 'ENJOY',
     text:
-      'Have fun exploring! \n\nNo matter where you are, there could be Crums all around you! \n- Crum ',
+      'Have fun exploring! \n\nNo matter where you are, there could be Crums all around you!',
     icon: 'ios-happy',
-    colors: ['teal', '#4F00BC']
+    colors: ['#535a9f', '#7C1E9F']
   }
 ]
 
