@@ -11,7 +11,7 @@ const slides = [
     key: 'firstSlide',
     title: 'DROP A CRUM',
     text:
-      'Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!',
+      'Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!\n\n Old phone? No problem. We support devices that aren’t AR-equipped. Go to Settings to accomodate your device',
     icon: 'ios-pin',
     colors: ['#19ae9f', '#4272a0']
   },
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     backgroundColor: 'transparent',
     textAlign: 'center',
-    marginBottom: '35%',
+    marginBottom: '15%',
     paddingHorizontal: 16,
     fontWeight: '500',
     fontFamily: 'Helvetica-Oblique',
