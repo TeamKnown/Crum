@@ -144,6 +144,13 @@ class DisEditDeleteCrumForm extends React.Component {
                       />
                     </View>
                   </View>
+                  <View style={styles.modalSubTitle}>
+                    {crumInstance.recipientId ? (
+                      <Text>This crum is for the special someone</Text>
+                    ) : (
+                      <Text>{`Numbers Left: ${crumInstance.numLeft}`}</Text>
+                    )}
+                  </View>
                   <View style={styles.modalComments}>
                     <ScrollView
                       style={{
@@ -151,12 +158,18 @@ class DisEditDeleteCrumForm extends React.Component {
                         width: '100%'
                       }}
                     >
-                      {crumInstance.CommentInstances.map(comment => (
-                        <Text key={comment.id}>
-                          {comment.message}
-                          {'\n'}
+                      {crumInstance.CommentInstances.length > 0 ? (
+                        crumInstance.CommentInstances.map(comment => (
+                          <Text key={comment.id}>
+                            {comment.message}
+                            {'\n'}
+                          </Text>
+                        ))
+                      ) : (
+                        <Text>
+                          No one has commented on this crum, add one now!
                         </Text>
-                      ))}
+                      )}
                     </ScrollView>
                   </View>
 
@@ -275,9 +288,7 @@ const mapDispatch = dispatch => {
       await dispatch(getSingleUser(userId))
     },
     collectCrumInstance: async (crumInstance, userId) => {
-      console.log('put request action dispatched')
       await dispatch(collectCrumInstance(crumInstance))
-      console.log('get request action dispatched')
       await dispatch(getSingleUser(userId))
     },
 
@@ -361,14 +372,30 @@ const styles = StyleSheet.create({
     padding: 2
   },
 
+  modalSubTitle: {
+    backgroundColor: 'rgba(250,250,250,0.8)',
+    flex: 1,
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    minHeight: '15%',
+    maxHeight: '15%',
+
+    alignItems: 'flex-start',
+    borderColor: 'white',
+    borderWidth: 1,
+    borderTopWidth: 0,
+    padding: 15
+  },
+
   modalComments: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     flex: 1,
     display: 'flex',
     width: '100%',
     flexDirection: 'row',
-    minHeight: '45%',
-    maxHeight: '45%',
+    minHeight: '30%',
+    maxHeight: '30%',
 
     alignItems: 'flex-start',
     borderColor: 'white',

@@ -131,14 +131,14 @@ router.put('/collect/:id', async (req, res, next) => {
     }
     if (crumInstance.recipient) {
       await crumInstance.update({status: 'collected'})
-      res.json(crumInstance)
+      res.json({collected: crumInstance.id})
     }
     if (!crumInstance.recipient && crumInstance.numLeft === 1) {
       await crumInstance.update({status: 'collected'})
       const recipient = await User.findByPk(req.user.id)
       crumInstance.setRecipient(recipient)
       crumInstance.reload()
-      res.json(crumInstance)
+      res.json({collected: crumInstance.id})
     }
     if (!crumInstance.recipient && crumInstance.numLeft > 1) {
       const count = crumInstance.numLeft
@@ -162,7 +162,7 @@ router.put('/collect/:id', async (req, res, next) => {
       await crumInstanceNew.setUser(await crumInstance.getUser())
       const recipient = await User.findByPk(req.user.id)
       crumInstanceNew.setRecipient(recipient)
-      res.json({id: 0})
+      res.json({collected: crumInstanceNew.id, remaining: crumInstance.id})
     }
   } catch (err) {
     next(err)

@@ -33,7 +33,8 @@ export const deletedCrumInstance = crumInstance => ({
 
 export const collectedCrumInstance = crumInstance => ({
   type: COLLECT_CRUM_INSTANCE,
-  crumInstance: crumInstance
+  crumInstanceCollectedId: crumInstance.collected,
+  crumInstanceRemainingId: crumInstance.remaining
 })
 export const putedCrumInstance = crumInstance => ({
   type: EDIT_CRUM_INSTANCE,
@@ -178,9 +179,13 @@ const crumInstancesNearbyReducer = (state = initialState, action) => {
       )
       return stateAfterDelete
     case COLLECT_CRUM_INSTANCE:
-      let stateAfterCollect = state.filter(
-        elm => elm.id !== +action.crumInstance.id
-      )
+      let stateAfterCollect = state
+        .filter(elm => elm.id !== +action.crumInstanceCollectedId)
+        .map(elm =>
+          elm.id === +action.crumInstanceRemainingId
+            ? {...elm, numLeft: elm.numLeft - 1}
+            : elm
+        )
       return stateAfterCollect
 
     case EDIT_CRUM_INSTANCE:
