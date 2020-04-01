@@ -93,7 +93,11 @@ class ViewCrumsModal extends React.Component {
                         style={styles.imageThumbs}
                       />
                       <View style={styles.instanceText}>
-                        <Text>{crum.message}</Text>
+                        {crum.message.length >= 30 ? (
+                          <Text>{crum.message.slice(0, 30)}...</Text>
+                        ) : (
+                          <Text>{crum.message}</Text>
+                        )}
                         <Text>Remaining: {crum.numLeft}</Text>
                       </View>
                     </View>

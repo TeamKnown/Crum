@@ -50,7 +50,7 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-
+    const total = crumInstances.length
     return (
       <View>
         <TouchableOpacity
@@ -63,7 +63,7 @@ class ViewCrumsModal extends React.Component {
           <Text style={styles.heading}>c r u m s</Text>
           <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{crumInstances.length}</Text>
+            <Text style={styles.count}>{total}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
@@ -93,7 +93,11 @@ class ViewCrumsModal extends React.Component {
                         style={styles.imageThumbs}
                       />
                       <View style={styles.instanceText}>
-                        <Text>{crum.message}</Text>
+                        {crum.message.length >= 30 ? (
+                          <Text>{crum.message.slice(0, 30)}...</Text>
+                        ) : (
+                          <Text>{crum.message}</Text>
+                        )}
                         <Text>From: {crum.user.userName}</Text>
                       </View>
                     </View>
