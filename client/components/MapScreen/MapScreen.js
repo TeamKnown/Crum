@@ -118,9 +118,6 @@ class DisMapScreen extends Component {
     return (
       <View style={styles.route}>
         <Text style={{fontWeight: 'bold'}}>
-          Estimated Time: {this.state.time}
-        </Text>
-        <Text style={{fontWeight: 'bold'}}>
           Estimated Distance: {this.state.distance}
         </Text>
       </View>
@@ -165,7 +162,7 @@ class DisMapScreen extends Component {
 
   render() {
     const {locations, crumInstances, user} = this.props
-    console.log('Map View ', crumInstances, 'and user', user)
+
     if (locations.longitude && locations.latitude) {
       return (
         <SafeAreaView style={styles.container}>
@@ -194,6 +191,7 @@ class DisMapScreen extends Component {
               this.renderDistanceInfo()}
 
             {this.props.crumInstances.map((crum, index) => {
+              let color = crum.recipientId === user.id ? '#26DECB' : '#BD7CDE'
               return (
                 <Marker
                   key={crum.id}
@@ -214,7 +212,7 @@ class DisMapScreen extends Component {
                     style={{
                       height: 30,
                       width: 30,
-                      tintColor: crum.recipientId === user.id ? '#26DECB' : null
+                      tintColor: color
                     }}
                   />
                   <Callout style={styles.callout}>
