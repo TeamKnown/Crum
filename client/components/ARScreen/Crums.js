@@ -10,6 +10,7 @@ export const createPlane = async (color, imgUrl, orientation) => {
     transparent: true
   })
   const plane = new THREE.Mesh(geometry, material)
+  plane.material.side = THREE.DoubleSide
   plane.position.z = orientation.z
   plane.position.x = orientation.x
   plane.position.y = orientation.y

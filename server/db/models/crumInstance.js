@@ -28,6 +28,10 @@ const CrumInstance = db.define('crumInstance', {
     type: Sequelize.INTEGER,
     defaultValue: 1
   },
+  numDropped: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1
+  },
   fromId: {
     type: Sequelize.INTEGER
   }

@@ -200,12 +200,8 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {user, locations} = this.props
-    const crumInstances = this.props.crumInstances.filter(
-      crumInstance =>
-        Math.abs(crumInstance.longitudeIdx - locations.longitudeIdx) <= 3 &&
-        Math.abs(crumInstance.latitudeIdx - locations.latitudeIdx) <= 3
-    )
+    const {user} = this.props
+    const crumInstances = this.props.crumInstances
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     if (this.state.isGranted === false) {
@@ -282,9 +278,17 @@ const mapState = state => ({
   user: state.user,
   locations: state.locations,
   crumInstances: state.crumInstancesNearby
-  // .filter(
-  //   crumInstance => crumInstance.longitudeIdx === state.longitudeIdx
-  // )
+    .filter(
+      crumInstance =>
+        Math.abs(crumInstance.longitudeIdx - state.locations.longitudeIdx) <=
+          3 &&
+        Math.abs(crumInstance.latitudeIdx - state.locations.latitudeIdx) <= 3
+    )
+    .filter(
+      crumInstance =>
+        crumInstance.recipientId === state.user.id ||
+        crumInstance.recipientId === null
+    )
 })
 const mapDispatch = dispatch => {
   return {
