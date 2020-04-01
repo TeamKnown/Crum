@@ -114,7 +114,7 @@ class DisDropCrumForm extends React.Component {
         <Modal
           style={styles.root}
           animationType="fade"
-          transparent={true}
+          transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal closed')

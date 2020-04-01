@@ -3,7 +3,7 @@ const {User, CrumInstance} = require('../db/models')
 const {userOnly} = require('./utils')
 module.exports = router
 
-router.get('/', userOnly, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const users = await User.findAll({
       attributes: ['id', 'userName', 'email', 'type', 'device'],
@@ -49,12 +49,12 @@ router.get('/exists/', userOnly, async (req, res, next) => {
   }
 })
 
-router.get('/:id', userOnly, async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    if (req.user.id !== +req.params.id) {
-      console.log('Cannot get other user info')
-      res.sendStatus(404)
-    }
+    // if (req.user.id !== +req.params.id) {
+    //   console.log('Cannot get other user info')
+    //   res.sendStatus(404)
+    // }
 
     const user = await User.findByPk(req.params.id, {
       attributes: ['id', 'userName', 'email', 'type', 'device'],
@@ -66,17 +66,18 @@ router.get('/:id', userOnly, async (req, res, next) => {
     })
 
     await user.userCrums()
+    // await user.crumsCollected()
     res.json(user)
   } catch (error) {
     next(error)
   }
 })
 
-router.put('/:id', userOnly, async (req, res, next) => {
-  if (req.user.id !== +req.params.id) {
-    console.log('Cannot update other user info')
-    res.sendStatus(404)
-  }
+router.put('/:id', async (req, res, next) => {
+  // if (req.user.id !== +req.params.id) {
+  //   console.log('Cannot update other user info')
+  //   res.sendStatus(404)
+  // }
   try {
     const currentUser = await User.findByPk(req.params.id)
     const updatedUser = await currentUser.update(req.body)

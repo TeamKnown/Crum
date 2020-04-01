@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser, fetchUserCrumInstances} from '../store'
+import {getSingleUser, fetchCollectedCrumInstances} from '../store'
 import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
@@ -19,8 +19,9 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
+import crumInstancesReducer from '../store/crumInstances'
 
-class ViewCrumsModal extends React.Component {
+class CollectedCrumsModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleGetCrum = this.handleGetCrum.bind(this)
@@ -30,12 +31,12 @@ class ViewCrumsModal extends React.Component {
   }
   componentDidMount() {
     this.props.getSingleUser(this.props.user.id)
-    this.props.getUserCrumInstances(this.props.user.id)
+    this.props.getCollectedCrumInstances(this.props.user.id)
   }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
-    await this.props.getUserCrumInstances(userId)
+    await this.props.getCollectedCrumInstances(userId)
   }
 
   setModalVisible(visible) {
@@ -50,7 +51,8 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-
+    // console.log('INST', crumInstances[0])
+    const total = crumInstances.filter(each => each.recipientId === user.id)
     return (
       <View>
         <TouchableOpacity
@@ -61,9 +63,9 @@ class ViewCrumsModal extends React.Component {
           }}
         >
           <Text style={styles.heading}>c r u m s</Text>
-          <Text style={styles.heading}>d r o p p e d</Text>
+          <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{user.totalCrums}</Text>
+            <Text style={styles.count}>{total.length}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
@@ -98,7 +100,7 @@ class ViewCrumsModal extends React.Component {
                         ) : (
                           <Text>{crum.message}</Text>
                         )}
-                        <Text>Remaining: {crum.numLeft}</Text>
+                        <Text>From: {crum.user.userName}</Text>
                       </View>
                     </View>
                   ))}
@@ -176,6 +178,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2
   },
+  instanceText: {
+    flexDirection: 'column'
+  },
   btnDrop: {
     height: 60,
     width: '90%',
@@ -205,10 +210,10 @@ const mapState = state => {
 const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
-    getUserCrumInstances: userId => {
-      dispatch(fetchUserCrumInstances(userId))
+    getCollectedCrumInstances: userId => {
+      dispatch(fetchCollectedCrumInstances(userId))
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(ViewCrumsModal)
+export default connect(mapState, mapDispatch)(CollectedCrumsModal)
