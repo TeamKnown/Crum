@@ -3,7 +3,8 @@ import {StyleSheet, View, Text} from 'react-native'
 import AppIntroSlider from 'react-native-app-intro-slider'
 import {LinearGradient} from 'expo-linear-gradient'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import {MaterialCommunityIcons} from 'react-native-vector-icons'
+import {toggleShowSlidesAgain} from '../../store/user'
+import {connect} from 'react-redux'
 
 const slides = [
   {
@@ -65,7 +66,20 @@ const _renderDoneButton = () => {
   )
 }
 
-const IntroGradient = props => {
+const _renderDontShowAgainButton = () => {
+  return (
+    <View style={styles.buttonCircle}>
+      <Ionicons
+        name="md-checkmark"
+        color="rgba(255, 255, 255, .9)"
+        size={30}
+        style={{backgroundColor: 'transparent'}}
+      />
+    </View>
+  )
+}
+
+const DisIntroGradient = props => {
   const renderItem = ({item, dimensions}) => (
     <LinearGradient
       style={[styles.mainContent, dimensions]}
@@ -116,7 +130,8 @@ const styles = StyleSheet.create({
     marginBottom: '35%',
     paddingHorizontal: 16,
     fontWeight: '500',
-    fontFamily: 'Helvetica-Oblique'
+    fontFamily: 'Helvetica-Oblique',
+    padding: '5%'
   },
   title: {
     fontFamily: 'AvenirNext-Heavy',
@@ -138,4 +153,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default IntroGradient
+const mapState = state => {
+  return {
+    user: state.user
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    toggleShowSlidesAgain: id => dispatch(toggleShowSlidesAgain(id))
+  }
+}
+
+export default connect(mapState, mapDispatch)(DisIntroGradient)

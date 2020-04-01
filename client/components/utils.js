@@ -3,17 +3,19 @@ import * as Device from 'expo-device'
 import {devAxios} from '../store/devAxios'
 
 export const howLongAgo = date => {
-  const minutesPassed = (Date.now() - Date.parse(date)) / 60000
+  const minutesPassed = Math.floor((Date.now() - Date.parse(date)) / 60000)
   if (minutesPassed < 60) {
-    return `${Math.floor(minutesPassed)} minutes ago`
+    return minutesPassed <= 1
+      ? `${minutesPassed} minute ago`
+      : `${minutesPassed} minutes ago`
   }
-  const hoursPassed = minutesPassed / 60
+  const hoursPassed = Math.floor(minutesPassed / 60)
   if (hoursPassed < 24) {
-    return `${Math.floor(hoursPassed)} hours ago`
+    return hoursPassed === 1 ? `1 hour ago` : `${hoursPassed} hours ago`
   }
-  const daysPassed = hoursPassed / 24
+  const daysPassed = Math.floor(hoursPassed / 24)
   if (daysPassed < 24) {
-    return `${Math.floor(daysPassed)} days ago`
+    return daysPassed === 1 ? 'a day ago' : `${daysPassed} days ago`
   }
 }
 

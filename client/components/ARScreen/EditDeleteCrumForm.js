@@ -148,11 +148,11 @@ class DisEditDeleteCrumForm extends React.Component {
                   </View>
                   <View style={styles.modalComments}>
                     {crumInstance.recipientId ? (
-                      <Text>This crum is for the special someone</Text>
+                      <Text style={styles.subtitle}>Just for you</Text>
                     ) : (
                       <Text
                         style={styles.subtitle}
-                      >{`Numbers Left: ${crumInstance.numLeft}`}</Text>
+                      >{`Number Left: ${crumInstance.numLeft} / ${crumInstance.numDropped}`}</Text>
                     )}
                     <Text
                       style={styles.subtitle}
@@ -209,6 +209,21 @@ class DisEditDeleteCrumForm extends React.Component {
                       <Text title="EditDelete!">comment</Text>
                     </TouchableOpacity>
 
+                    {(isRecipient || isForAll) && (
+                      <TouchableOpacity
+                        style={styles.btn}
+                        onPress={() => {
+                          this.handleCollectCrum(
+                            {
+                              id: crumInstance.id
+                            },
+                            user.id
+                          )
+                        }}
+                      >
+                        <Text title="EditDelete!">collect</Text>
+                      </TouchableOpacity>
+                    )}
                     {self && (
                       <TouchableOpacity
                         style={styles.btn}
@@ -237,23 +252,7 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text title="EditDelete!">destroy</Text>
-                      </TouchableOpacity>
-                    )}
-
-                    {(isRecipient || isForAll) && (
-                      <TouchableOpacity
-                        style={styles.btn}
-                        onPress={() => {
-                          this.handleCollectCrum(
-                            {
-                              id: crumInstance.id
-                            },
-                            user.id
-                          )
-                        }}
-                      >
-                        <Text title="EditDelete!">collect</Text>
+                        <Text title="EditDelete!">delete</Text>
                       </TouchableOpacity>
                     )}
                     <TouchableOpacity
@@ -262,7 +261,7 @@ class DisEditDeleteCrumForm extends React.Component {
                         this.props.hideEditDeleteCrumForm()
                       }}
                     >
-                      <Text title="EditDelete!">never mind</Text>
+                      <Text title="EditDelete!">back</Text>
                     </TouchableOpacity>
                   </View>
                 </View>

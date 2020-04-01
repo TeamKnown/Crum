@@ -8,6 +8,7 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler'
 import {Keyboard, View, StyleSheet} from 'react-native'
 import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
+import {toggleShowSlidesAgain} from '../client/store/user'
 
 import IntroImages from './components/Intro/IntroImages'
 import IntroGradient from './components/Intro/IntroGradient'
@@ -28,10 +29,12 @@ class disRoutes extends Component {
 
   // Intro slides stuff
   onDoneAllSlides = () => {
-    this.setState({show_Main_App: true})
+    // this.setState({show_Main_App: true})
+    this.props.toggleShowSlidesAgain(this.props.user.id)
   }
   onSkipSlides = () => {
-    this.setState({show_Main_App: true})
+    // this.setState({show_Main_App: true})
+    this.props.toggleShowSlidesAgain(this.props.user.id)
   }
 
   // Permission modal stuff
@@ -60,34 +63,35 @@ class disRoutes extends Component {
 
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
+    console.log('ROUTE IS UNMOUNTED')
   }
 
   render() {
-    const {isLoggedIn} = this.props
-
-    if (this.state.show_Main_App) {
-      if (isLoggedIn) {
-        return <HomeTabs user={this.props.user} />
+    const {isLoggedIn, user, showSlidesAgain} = this.props
+    console.log('USER HERE', user)
+    if (isLoggedIn) {
+      if (user.showSlidesAgain !== 'true') {
+        return <HomeTabs />
       } else {
         return (
-          <View style={{flex: 1}}>
-            <Signin />
-            <PermissionModal
-              isGranted={this.state.isGranted}
-              closeModal={this.closeModal}
-            />
-          </View>
+          <IntroGradient
+            onDone={() => this.onDoneAllSlides()}
+            onSkip={() => this.onSkipSlides()}
+          />
         )
       }
-      // Otherwise not logged in, show the intro slides
     } else {
       return (
-        <IntroGradient
-          onDone={() => this.onDoneAllSlides()}
-          onSkip={() => this.onSkipSlides()}
-        />
+        <View style={{flex: 1}}>
+          <Signin />
+          <PermissionModal
+            isGranted={this.state.isGranted}
+            closeModal={this.closeModal}
+          />
+        </View>
       )
     }
+    // Otherwise not logged in, show the intro slides
   }
 }
 
@@ -111,6 +115,9 @@ const mapDispatch = dispatch => {
     },
     unsubscribeToLocationData: () => {
       dispatch(stopTracking())
+    },
+    toggleShowSlidesAgain: id => {
+      dispatch(toggleShowSlidesAgain(id))
     }
   }
 }

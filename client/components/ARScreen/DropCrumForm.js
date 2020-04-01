@@ -40,7 +40,7 @@ class DisDropCrumForm extends React.Component {
       imgId: '',
       validationError: '',
       sendMode: 'to someone', // 'for all'
-      numLeft: 1 // 'for all'
+      num: 1 // 'for all'
     }
   }
 
@@ -58,7 +58,7 @@ class DisDropCrumForm extends React.Component {
 
   handleTypeCount(event) {
     this.setState({
-      numLeft: event
+      num: event
     })
   }
 
@@ -199,7 +199,7 @@ class DisDropCrumForm extends React.Component {
                         }}
                       >
                         <NumericInput
-                          value={this.state.numLeft}
+                          value={this.state.num}
                           totalHeight={35}
                           totalWidth={170}
                           rounded={true}
@@ -240,7 +240,8 @@ class DisDropCrumForm extends React.Component {
                           {
                             message: this.state.message,
                             recipient: this.state.recipient,
-                            numLeft: this.state.numLeft,
+                            numLeft: this.state.num,
+                            numDropped: this.state.num,
                             latitude: locations.latitude,
                             longitude: locations.longitude
                           },
