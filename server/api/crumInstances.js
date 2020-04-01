@@ -4,26 +4,11 @@ const {userOnly} = require('./utils')
 const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 module.exports = router
 
-// https://sequelize.org/master/manual/eager-loading.html no way to condense it
 router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll(
       {
-        include: [
-          {
-            model: User
-          },
-          {
-            model: Crum
-          },
-          {
-            model: CommentInstance
-          },
-          {
-            model: User,
-            as: 'recipient'
-          }
-        ]
+        include: {all: true}
       },
       {
         where: {
@@ -109,21 +94,7 @@ router.get('/nearme', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findByPk(req.params.id, {
-      include: [
-        {
-          model: Crum
-        },
-        {
-          model: User
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ]
+      include: {all: true}
     })
     res.json(crumInstance)
   } catch (err) {
@@ -154,21 +125,7 @@ router.put('/collect/:id', async (req, res, next) => {
     const crumInstance = await CrumInstance.findByPk(
       req.params.id,
       {
-        include: [
-          {
-            model: Crum
-          },
-          {
-            model: User
-          },
-          {
-            model: CommentInstance
-          },
-          {
-            model: User,
-            as: 'recipient'
-          }
-        ]
+        include: {all: true}
       },
       {where: {status: 'floating'}}
     )
@@ -245,21 +202,7 @@ router.put('/:id', async (req, res, next) => {
 router.get('/user/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
-      include: [
-        {
-          model: User
-        },
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ],
+      include: {all: true},
       where: {
         userId: req.params.id
         // status: 'floating'
@@ -274,21 +217,7 @@ router.get('/user/:id', async (req, res, next) => {
 router.get('/collect/:id', async (req, res, next) => {
   try {
     const crumInstance = await CrumInstance.findAll({
-      include: [
-        {
-          model: User
-        },
-        {
-          model: Crum
-        },
-        {
-          model: CommentInstance
-        },
-        {
-          model: User,
-          as: 'recipient'
-        }
-      ],
+      include: {all: true},
       where: {
         recipientId: req.params.id,
         status: 'collected'
