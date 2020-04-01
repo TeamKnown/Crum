@@ -19,6 +19,7 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
+import crumInstancesReducer from '../store/crumInstances'
 
 class ViewCrumsModal extends React.Component {
   constructor(props) {
@@ -50,7 +51,8 @@ class ViewCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-    const total = crumInstances.length
+    // console.log('INST', crumInstances[0])
+    const total = crumInstances.filter(each => each.recipientId === user.id)
     return (
       <View>
         <TouchableOpacity
@@ -63,7 +65,7 @@ class ViewCrumsModal extends React.Component {
           <Text style={styles.heading}>c r u m s</Text>
           <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{total}</Text>
+            <Text style={styles.count}>{total.length}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
