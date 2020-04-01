@@ -94,7 +94,7 @@ class ViewCrumsModal extends React.Component {
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length >= 30 ? (
-                          <Text>{crum.message.slice(0, 30)}...</Text>
+                          <Text>{crum.message.slice(0, 28)}...</Text>
                         ) : (
                           <Text>{crum.message}</Text>
                         )}
