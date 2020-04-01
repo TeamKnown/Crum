@@ -166,8 +166,6 @@ const initialState = []
 const crumInstancesNearbyReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CRUM_INSTANCES:
-      console.log('OLD SHARED REDUCER: SET_CRUM_INSTANCES')
-      console.log(action.crumInstances.map(elm => elm.message))
       return action.crumInstances
     case ADD_CRUM_INSTANCE:
       return [...state, action.crumInstance]
@@ -177,13 +175,9 @@ const crumInstancesNearbyReducer = (state = initialState, action) => {
       )
       return stateAfterDelete
     case COLLECT_CRUM_INSTANCE:
-      console.log('for free for all, things still there after collection')
-      // console.log(state.map(elm => elm.message))
-      // console.log(action.crumInstance.id)
       let stateAfterCollect = state.filter(
         elm => elm.id !== +action.crumInstance.id
       )
-      // console.log(stateAfterCollect.map(elm => elm.message))
       return stateAfterCollect
 
     case EDIT_CRUM_INSTANCE:

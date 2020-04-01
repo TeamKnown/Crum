@@ -66,7 +66,7 @@ router.get('/:id', async (req, res, next) => {
     })
 
     await user.userCrums()
-    // await user.crumsCollected()
+    await user.crumsCollected()
     res.json(user)
   } catch (error) {
     next(error)

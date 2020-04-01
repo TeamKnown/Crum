@@ -279,7 +279,10 @@ const mapDispatch = dispatch => {
       await dispatch(getSingleUser(userId))
     },
     collectCrumInstance: async (crumInstance, userId) => {
+      console.log('put request action dispatched')
       await dispatch(collectCrumInstance(crumInstance))
+      console.log('get request action dispatched')
+      await dispatch(getSingleUser(userId))
     },
 
     postCommentInstance: (commentInstance, userId, commentId) => {

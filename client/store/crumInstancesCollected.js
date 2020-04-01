@@ -22,8 +22,6 @@ const initialState = []
 const crumInstancesCollectedReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_USER_COLLECTED_CRUM_INSTANCES:
-      console.log('NEW REDUCER: SET_USER_COLLECTED_CRUM_INSTANCES')
-      console.log(action.crumInstances.map(elm => elm.message))
       return action.crumInstances
     default:
       return state

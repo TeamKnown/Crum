@@ -59,6 +59,24 @@ CrumInstance.findNearMe = async function(radium, latitudeIdx, longitudeIdx) {
   return near
 }
 
+User.prototype.userCrums = async function() {
+  const crums = await this.getCrumInstances()
+  this.totalCrums = crums.length
+  this.save()
+  return crums.length
+}
+
+User.prototype.crumsCollected = async function() {
+  const crums = await CrumInstance.findAll({
+    where: {
+      recipientId: this.id
+    }
+  })
+  this.collectedCrums = crums.length
+  this.save()
+  return crums.length
+}
+
 module.exports = {
   User,
   Crum,

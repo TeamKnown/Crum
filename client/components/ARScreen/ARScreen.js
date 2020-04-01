@@ -279,7 +279,7 @@ const mapState = state => ({
     longitudeIdx: Math.floor(state.locations.longitude * SCALER),
     latitudeIdx: Math.floor(state.locations.latitude * SCALER)
   },
-  crumInstances: state.crumInstances
+  crumInstances: state.crumInstancesNearby
 })
 const mapDispatch = dispatch => {
   return {
