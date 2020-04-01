@@ -1,6 +1,10 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser, fetchCollectedCrumInstances} from '../store'
+import {
+  getSingleUser,
+  fetchCollectedCrumInstances,
+  fetchUserCollectedCrumInstances
+} from '../store'
 import {imageThumbnails} from '../../assets/'
 // import {} from '../store/'
 
@@ -203,7 +207,7 @@ const mapState = state => {
   return {
     user: state.user,
     crums: state.crums,
-    crumInstances: state.crumInstances
+    crumInstances: state.crumInstancesCollected
   }
 }
 
@@ -211,7 +215,8 @@ const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
     getCollectedCrumInstances: userId => {
-      dispatch(fetchCollectedCrumInstances(userId))
+      // dispatch(fetchCollectedCrumInstances(userId))
+      dispatch(fetchUserCollectedCrumInstances(userId))
     }
   }
 }

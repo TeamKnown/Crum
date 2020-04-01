@@ -55,29 +55,31 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   }
 }
 
-export const fetchUserCrumInstances = userId => {
-  return async dispatch => {
-    try {
-      const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
+// //!!!new version is named  fetchUserDroppedCrumInstances
+// export const fetchUserCrumInstances = userId => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
 
-      dispatch(setCrumInstances(data))
-    } catch (error) {
-      console.error('GET Error')
-    }
-  }
-}
+//       dispatch(setCrumInstances(data))
+//     } catch (error) {
+//       console.error('GET Error')
+//     }
+//   }
+// }
 
-export const fetchCollectedCrumInstances = userId => {
-  return async dispatch => {
-    try {
-      const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
+// //!!!new version is named  fetchUserCollectedCrumInstances
+// export const fetchCollectedCrumInstances = userId => {
+//   return async dispatch => {
+//     try {
+//       const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
 
-      dispatch(setCrumInstances(data))
-    } catch (error) {
-      console.error('GET Error')
-    }
-  }
-}
+//       dispatch(setCrumInstances(data))
+//     } catch (error) {
+//       console.error('GET Error')
+//     }
+//   }
+// }
 
 export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
@@ -161,9 +163,11 @@ export const putCrumInstance = crumInstance => {
   }
 }
 const initialState = []
-const crumInstancesReducer = (state = initialState, action) => {
+const crumInstancesNearbyReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_CRUM_INSTANCES:
+      console.log('OLD SHARED REDUCER: SET_CRUM_INSTANCES')
+      console.log(action.crumInstances.map(elm => elm.message))
       return action.crumInstances
     case ADD_CRUM_INSTANCE:
       return [...state, action.crumInstance]
@@ -205,4 +209,4 @@ const crumInstancesReducer = (state = initialState, action) => {
       return state
   }
 }
-export default crumInstancesReducer
+export default crumInstancesNearbyReducer
