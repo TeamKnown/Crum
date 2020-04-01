@@ -33,16 +33,17 @@ class DisDropCrumForm extends React.Component {
     this.handleTypeCount = this.handleTypeCount.bind(this)
     this.handleTypeOption = this.handleTypeOption.bind(this)
     this.handleDropCrum = this.handleDropCrum.bind(this)
+    this.state = {
+      modalVisible: true,
+      message: '',
+      recipient: '',
+      imgId: '',
+      validationError: '',
+      sendMode: 'to someone', // 'for all'
+      numLeft: 1 // 'for all'
+    }
   }
-  state = {
-    modalVisible: true,
-    message: '',
-    recipient: '',
-    imgId: '',
-    validationError: '',
-    sendMode: 'to someone', // 'for all'
-    numLeft: 1 // 'for all'
-  }
+
   handleTypeMessage(event) {
     this.setState({
       message: event.nativeEvent.text
@@ -114,7 +115,7 @@ class DisDropCrumForm extends React.Component {
         <Modal
           style={styles.root}
           animationType="fade"
-          transparent={this.props.transparent}
+          transparent={!this.props.opaque}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             Alert.alert('Modal closed')
