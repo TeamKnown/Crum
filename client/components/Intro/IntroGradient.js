@@ -7,9 +7,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 const slides = [
   {
     key: 'firstSlide',
-    title: 'DROP YOUR FIRST CRUM',
+    title: 'DROP A CRUM',
     text:
-      'Head to the AR screen and tap anywhere to select your favorite Crum.\nWrite a message and drop!\nLook around... there it is!',
+      'Head to the <camera> tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!',
     icon: 'ios-pin',
     colors: ['#63E2FF', '#B066FE']
   },
@@ -17,22 +17,23 @@ const slides = [
     key: 'secondSlide',
     title: 'FOLLOW THE MAP',
     text:
-      'Use the map view to navigate your way to nearby Crums.\nTap on any crum to see exactly how far away it',
+      'Use the <map> tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there',
     icon: 'ios-navigate',
     colors: ['#A3A1FF', '#3A3897']
   },
   {
     key: 'thirdSlide',
     title: 'INTERACT',
-    text: 'Collect, edit, and comment on Crums as you wander around town!',
+    text:
+      'Drop, collect, and comment on Crums as you wander around town.\n\n Every Crum has a limit on how many times it can be collected, so get to it before someone else does!',
     icon: 'ios-walk',
     colors: ['#29ABE2', '#4F00BC']
   },
   {
     key: 'fourthSlide',
-    title: 'HAVE FUN !',
+    title: 'ENJOY',
     text:
-      'Enjoy the outdoors, have fun with it, and always be aware of your surroundings!\n- Crum 💜',
+      'Have fun exploring! \n\nNo matter where you are, there could be Crums all around you! \n- Crum ',
     icon: 'ios-happy',
     colors: ['teal', '#4F00BC']
   }
