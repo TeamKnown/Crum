@@ -49,6 +49,7 @@ function HomeTabs() {
             )
           }}
         />
+
         <Tab.Screen
           name="ARScreen"
           component={ARScreen}

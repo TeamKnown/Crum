@@ -26,8 +26,7 @@ import {
 import {fetchCrums, fetchNearByCrumInstances, me} from '../../store/'
 import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
-import NoARScreen from './NoARScreen'
-import {images, imageThumbnails, background} from '../../../assets/'
+import {imageThumbnails, background} from '../../../assets/'
 import {createPlane} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
@@ -200,7 +199,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {crumInstances, user} = this.props
+    const {crumInstances, user, crums} = this.props
     if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
 
     if (this.state.isGranted === false) {
@@ -212,30 +211,46 @@ class DisARScreen extends React.Component {
       )
     } else {
       return (
-        <ImageBackground source={background} style={styles.root}>
-          <View style={styles.root}>
-            <View style={styles.root}>
-              <View style={styles.root}>
-                {user.device !== 'noAR' ? (
-                  <TouchableOpacity
-                    onPress={evt => {
-                      this.updateTouch(evt)
-                    }}
-                    activeOpacity={1.0}
-                    style={styles.root}
-                  >
-                    <GraphicsView
-                      style={styles.root}
-                      onContextCreate={this.onContextCreate}
-                      onRender={this.onRender}
-                      isArEnabled
-                      isArCameraStateEnabled
-                    />
-                  </TouchableOpacity>
-                ) : (
-                  <NoARScreen />
-                )}
-              </View>
+        <View style={styles.container}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modal}>
+              <Text style={styles.crumsTitle}>Nearby Crums:</Text>
+              <ScrollView style={styles.scrollBox}>
+                {crumInstances &&
+                  crumInstances.length > 0 &&
+                  crumInstances.map(crum => (
+                    <View style={styles.instance} key={crum.id}>
+                      <Image
+                        source={imageThumbnails[crum.crum.name]}
+                        style={styles.imageThumbs}
+                      />
+                      <View style={styles.instanceText}>
+                        {crum.message.length > 24 ? (
+                          <Text>{crum.message.slice(0, 24)}...</Text>
+                        ) : (
+                          <Text>{crum.message}</Text>
+                        )}
+                        <Text>By: {crum.user.userName}</Text>
+                      </View>
+                    </View>
+                  ))}
+              </ScrollView>
+
+              <TouchableOpacity
+                style={styles.btnDrop}
+                onPress={() => {
+                  this.showDropCrumForm()
+                }}
+              >
+                <Text
+                  style={{
+                    color: '#19ae9f'
+                  }}
+                  title="Drop!"
+                >
+                  d r o p n e w c r u m
+                </Text>
+              </TouchableOpacity>
 
               {this.state.dropCrumFormVisible && (
                 <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
@@ -251,21 +266,8 @@ class DisARScreen extends React.Component {
                 />
               )}
             </View>
-            {this.state.dropCrumFormVisible && (
-              <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
-            )}
-            {this.state.editDeleteCrumFormVisible && (
-              <EditDeleteCrumForm
-                crumInstance={
-                  crumInstances.filter(
-                    i => i.id === +this.state.crumClickedParsed.crumInstanceId
-                  )[0]
-                }
-                hideEditDeleteCrumForm={this.hideEditDeleteCrumForm}
-              />
-            )}
           </View>
-        </ImageBackground>
+        </View>
       )
     }
   }
@@ -295,9 +297,9 @@ const mapDispatch = dispatch => {
   }
 }
 
-const ARScreen = connect(mapState, mapDispatch)(DisARScreen)
+const NoARScreen = connect(mapState, mapDispatch)(DisARScreen)
 
-export default ARScreen
+export default NoARScreen
 
 const styles = StyleSheet.create({
   root: {
@@ -308,5 +310,64 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     margin: 10
+  },
+  modal: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '90%',
+    justifyContent: 'space-between',
+    borderColor: '#7c1e9f',
+    borderRadius: 10,
+    marginTop: 100
+  },
+  container: {
+    paddingBottom: '16%'
+  },
+  modalContainer: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: '4%'
+  },
+  crumsTitle: {
+    fontWeight: 'bold',
+    fontSize: 16
+  },
+  scrollBox: {
+    width: '100%',
+    marginLeft: '5%'
+  },
+  instance: {
+    width: '90%',
+    height: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    margin: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
+  },
+  instanceText: {
+    flexDirection: 'column'
+  },
+  btnDrop: {
+    height: 60,
+    width: '90%',
+    backgroundColor: 'white',
+    borderColor: '#19ae9f',
+    borderWidth: 2,
+    textAlign: 'center',
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 8,
+    shadowColor: 'grey',
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 2
   }
 })

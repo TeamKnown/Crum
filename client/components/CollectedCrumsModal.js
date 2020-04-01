@@ -21,7 +21,7 @@ import {
 } from 'react-native'
 import crumInstancesReducer from '../store/crumInstances'
 
-class ViewCrumsModal extends React.Component {
+class CollectedCrumsModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleGetCrum = this.handleGetCrum.bind(this)
@@ -216,4 +216,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(ViewCrumsModal)
+export default connect(mapState, mapDispatch)(CollectedCrumsModal)
