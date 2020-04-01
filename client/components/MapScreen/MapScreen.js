@@ -118,9 +118,6 @@ class DisMapScreen extends Component {
     return (
       <View style={styles.route}>
         <Text style={{fontWeight: 'bold'}}>
-          Estimated Time: {this.state.time}
-        </Text>
-        <Text style={{fontWeight: 'bold'}}>
           Estimated Distance: {this.state.distance}
         </Text>
       </View>
@@ -164,7 +161,7 @@ class DisMapScreen extends Component {
   )
 
   render() {
-    const {locations, crumInstances} = this.props
+    const {locations, crumInstances, user} = this.props
 
     if (locations.longitude && locations.latitude) {
       return (
@@ -192,12 +189,9 @@ class DisMapScreen extends Component {
             {this.state.time &&
               this.state.distance &&
               this.renderDistanceInfo()}
-            <Circle
-              center={locations}
-              radius={1000}
-              fillColor="rgba(200,300,200,0.5)"
-            />
+
             {this.props.crumInstances.map((crum, index) => {
+              let color = crum.recipientId === user.id ? '#26DECB' : '#BD7CDE'
               return (
                 <Marker
                   key={crum.id}
@@ -215,9 +209,13 @@ class DisMapScreen extends Component {
                 >
                   <Image
                     source={purpleCrumIcon}
-                    style={{height: 30, width: 30}}
+                    style={{
+                      height: 30,
+                      width: 30,
+                      tintColor: color
+                    }}
                   />
-                  <Callout style={{width: 110, height: 20}}>
+                  <Callout style={styles.callout}>
                     <Text>{crum.message}</Text>
                   </Callout>
                 </Marker>
@@ -270,6 +268,12 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject
   },
+  callout: {width: 200, height: 20},
+  markerimg: {
+    height: 30,
+    width: 30,
+    tintColor: 'yellow'
+  },
   route: {
     width: width - 80,
     paddingTop: 15,
@@ -310,6 +314,7 @@ const styles = StyleSheet.create({
 })
 
 const mapState = state => ({
+  user: state.user,
   crumInstances: state.crumInstancesNearby,
   locations: state.locations
 })

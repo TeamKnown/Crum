@@ -4,7 +4,6 @@ const {userOnly} = require('./utils')
 const {CrumInstance, Crum, User, CommentInstance} = require('../db/models')
 module.exports = router
 
-// https://sequelize.org/master/manual/eager-loading.html no way to condense it
 router.get('/', async (req, res, next) => {
   try {
     const crumInstances = await CrumInstance.findAll(
