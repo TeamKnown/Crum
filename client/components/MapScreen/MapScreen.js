@@ -213,11 +213,8 @@ class DisMapScreen extends Component {
                     longitude: +crum.longitude
                   }}
                 >
-                  <Image
-                    source={purpleCrumIcon}
-                    style={{height: 30, width: 30}}
-                  />
-                  <Callout style={{width: 110, height: 20}}>
+                  <Image source={purpleCrumIcon} style={styles.markerimg} />
+                  <Callout style={styles.callout}>
                     <Text>{crum.message}</Text>
                   </Callout>
                 </Marker>
@@ -269,6 +266,12 @@ const styles = StyleSheet.create({
 
   map: {
     ...StyleSheet.absoluteFillObject
+  },
+  callout: {width: 200, height: 20},
+  markerimg: {
+    height: 30,
+    width: 30,
+    tintColor: 'yellow'
   },
   route: {
     width: width - 80,
