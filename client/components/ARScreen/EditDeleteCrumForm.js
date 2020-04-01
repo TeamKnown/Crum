@@ -1,6 +1,7 @@
+/* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER, userCollectedThis} from '../utils'
+import {SCALER, userCollectedThis, howLongAgo} from '../utils'
 import {
   TextInput,
   View,
@@ -102,6 +103,7 @@ class DisEditDeleteCrumForm extends React.Component {
     const self = user.id === +crumInstance.userId
     const isRecipient = user.id === +crumInstance.recipientId
     const isForAll = !crumInstance.recipientId
+    let timePassed = howLongAgo(crumInstance.createdAt)
     return (
       <View style={styles.container}>
         <Modal
@@ -133,7 +135,7 @@ class DisEditDeleteCrumForm extends React.Component {
                         }
                         placeholder=""
                         autoComplete="text"
-                        type="text"
+                        s
                       />
                     </View>
                     <View style={styles.modalPng}>
@@ -144,14 +146,18 @@ class DisEditDeleteCrumForm extends React.Component {
                       />
                     </View>
                   </View>
-                  <View style={styles.modalSubTitle}>
+                  <View style={styles.modalComments}>
                     {crumInstance.recipientId ? (
                       <Text>This crum is for the special someone</Text>
                     ) : (
-                      <Text>{`Numbers Left: ${crumInstance.numLeft}`}</Text>
+                      <Text
+                        style={styles.subtitle}
+                      >{`Numbers Left: ${crumInstance.numLeft}`}</Text>
                     )}
-                  </View>
-                  <View style={styles.modalComments}>
+                    <Text
+                      style={styles.subtitle}
+                    >{`Dropped ${timePassed}`}</Text>
+                    <Text style={styles.subtitle}>Comments:</Text>
                     <ScrollView
                       style={{
                         flex: 1,
@@ -159,12 +165,11 @@ class DisEditDeleteCrumForm extends React.Component {
                       }}
                     >
                       {crumInstance.CommentInstances.length > 0 ? (
-                        crumInstance.CommentInstances.map(comment => (
-                          <Text key={comment.id}>
-                            {comment.message}
-                            {'\n'}
-                          </Text>
-                        ))
+                        <View>
+                          {crumInstance.CommentInstances.map(comment => (
+                            <Text key={comment.id}>{comment.message}</Text>
+                          ))}
+                        </View>
                       ) : (
                         <Text>
                           No one has commented on this crum, add one now!
@@ -354,6 +359,7 @@ const styles = StyleSheet.create({
   disabledTitle: {
     minWidth: 160,
     display: 'flex',
+    fontWeight: 'bold',
     flexDirection: 'row',
     alignItems: 'center',
     fontSize: 28
@@ -365,6 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 28,
+
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 1,
@@ -372,30 +379,14 @@ const styles = StyleSheet.create({
     padding: 2
   },
 
-  modalSubTitle: {
-    backgroundColor: 'rgba(250,250,250,0.8)',
-    flex: 1,
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    minHeight: '15%',
-    maxHeight: '15%',
-
-    alignItems: 'flex-start',
-    borderColor: 'white',
-    borderWidth: 1,
-    borderTopWidth: 0,
-    padding: 15
-  },
-
   modalComments: {
     backgroundColor: 'rgba(250,250,250,0.8)',
     flex: 1,
     display: 'flex',
     width: '100%',
-    flexDirection: 'row',
-    minHeight: '30%',
-    maxHeight: '30%',
+    flexDirection: 'column',
+    minHeight: '45%',
+    maxHeight: '45%',
 
     alignItems: 'flex-start',
     borderColor: 'white',
@@ -439,5 +430,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
   },
-  validation: {color: 'red', textAlign: 'left', marginLeft: 10}
+  validation: {color: 'red', textAlign: 'left', marginLeft: 10},
+  subtitle: {fontSize: 18, fontWeight: 'bold'}
 })

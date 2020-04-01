@@ -59,32 +59,6 @@ export const fetchNearByCrumInstances = (latitudeIdx, longitudeIdx) => {
   }
 }
 
-// //!!!new version is named  fetchUserDroppedCrumInstances
-// export const fetchUserCrumInstances = userId => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await devAxios.get(`/api/cruminstances/user/${userId}`)
-
-//       dispatch(setCrumInstances(data))
-//     } catch (error) {
-//       console.error('GET Error')
-//     }
-//   }
-// }
-
-// //!!!new version is named  fetchUserCollectedCrumInstances
-// export const fetchCollectedCrumInstances = userId => {
-//   return async dispatch => {
-//     try {
-//       const {data} = await devAxios.get(`/api/cruminstances/collect/${userId}`)
-
-//       dispatch(setCrumInstances(data))
-//     } catch (error) {
-//       console.error('GET Error')
-//     }
-//   }
-// }
-
 export const postCrumInstance = (crumInstance, userId, crumId) => {
   return async dispatch => {
     try {
