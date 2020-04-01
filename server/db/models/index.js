@@ -69,7 +69,8 @@ User.prototype.userCrums = async function() {
 User.prototype.crumsCollected = async function() {
   const crums = await CrumInstance.findAll({
     where: {
-      recipientId: this.id
+      recipientId: this.id,
+      status: 'collected'
     }
   })
   this.collectedCrums = crums.length

@@ -199,8 +199,12 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {crumInstances, user, crums} = this.props
-    if (Platform.OS !== 'ios') return <div>AR only supports IOS device</div>
+    const {locations} = this.props
+    const crumInstances = this.props.crumInstances.filter(
+      crumInstance =>
+        Math.abs(crumInstance.longitudeIdx - locations.longitudeIdx) <= 2 &&
+        Math.abs(crumInstance.latitudeIdx - locations.latitudeIdx) <= 2
+    )
 
     if (this.state.isGranted === false) {
       return (
@@ -253,7 +257,10 @@ class DisARScreen extends React.Component {
               </TouchableOpacity>
 
               {this.state.dropCrumFormVisible && (
-                <DropCrumForm hideDropCrumForm={this.hideDropCrumForm} />
+                <DropCrumForm
+                  hideDropCrumForm={this.hideDropCrumForm}
+                  transparent={false}
+                />
               )}
               {this.state.editDeleteCrumFormVisible && (
                 <EditDeleteCrumForm
@@ -276,11 +283,7 @@ class DisARScreen extends React.Component {
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
   user: state.user,
-  locations: {
-    ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
-    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
-  },
+  locations: state.locations,
   crumInstances: state.crumInstancesNearby
 })
 const mapDispatch = dispatch => {
