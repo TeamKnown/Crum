@@ -199,12 +199,7 @@ class DisARScreen extends React.Component {
     }
   }
   render() {
-    const {locations} = this.props
-    const crumInstances = this.props.crumInstances.filter(
-      crumInstance =>
-        Math.abs(crumInstance.longitudeIdx - locations.longitudeIdx) <= 2 &&
-        Math.abs(crumInstance.latitudeIdx - locations.latitudeIdx) <= 2
-    )
+    const crumInstances = this.props.crumInstances
 
     if (this.state.isGranted === false) {
       return (
@@ -285,6 +280,17 @@ const mapState = state => ({
   user: state.user,
   locations: state.locations,
   crumInstances: state.crumInstancesNearby
+    .filter(
+      crumInstance =>
+        Math.abs(crumInstance.longitudeIdx - state.locations.longitudeIdx) <=
+          3 &&
+        Math.abs(crumInstance.latitudeIdx - state.locations.latitudeIdx) <= 3
+    )
+    .filter(
+      crumInstance =>
+        crumInstance.recipientId === state.user.id ||
+        crumInstance.recipientId === null
+    )
 })
 const mapDispatch = dispatch => {
   return {
