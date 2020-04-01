@@ -1,6 +1,7 @@
+/* eslint-disable complexity */
 import {connect} from 'react-redux'
 import * as React from 'react'
-import {SCALER, userCollectedThis} from '../utils'
+import {SCALER, userCollectedThis, howLongAgo} from '../utils'
 import {
   TextInput,
   View,
@@ -79,7 +80,7 @@ class DisEditDeleteCrumForm extends React.Component {
       this.props.hideEditDeleteCrumForm()
     } else {
       this.setState({
-        validationError: 'Recipient already collected this one'
+        validationError: 'You already collected this one'
       })
     }
   }
@@ -102,6 +103,7 @@ class DisEditDeleteCrumForm extends React.Component {
     const self = user.id === +crumInstance.userId
     const isRecipient = user.id === +crumInstance.recipientId
     const isForAll = !crumInstance.recipientId
+    let timePassed = howLongAgo(crumInstance.createdAt)
     return (
       <View style={styles.container}>
         <Modal
@@ -133,7 +135,7 @@ class DisEditDeleteCrumForm extends React.Component {
                         }
                         placeholder=""
                         autoComplete="text"
-                        type="text"
+                        s
                       />
                     </View>
                     <View style={styles.modalPng}>
@@ -145,18 +147,34 @@ class DisEditDeleteCrumForm extends React.Component {
                     </View>
                   </View>
                   <View style={styles.modalComments}>
+                    {crumInstance.recipientId ? (
+                      <Text>This crum is for the special someone</Text>
+                    ) : (
+                      <Text
+                        style={styles.subtitle}
+                      >{`Numbers Left: ${crumInstance.numLeft}`}</Text>
+                    )}
+                    <Text
+                      style={styles.subtitle}
+                    >{`Dropped ${timePassed}`}</Text>
+                    <Text style={styles.subtitle}>Comments:</Text>
                     <ScrollView
                       style={{
                         flex: 1,
                         width: '100%'
                       }}
                     >
-                      {crumInstance.CommentInstances.map(comment => (
-                        <Text key={comment.id}>
-                          {comment.message}
-                          {'\n'}
+                      {crumInstance.CommentInstances.length > 0 ? (
+                        <View>
+                          {crumInstance.CommentInstances.map(comment => (
+                            <Text key={comment.id}>{comment.message}</Text>
+                          ))}
+                        </View>
+                      ) : (
+                        <Text>
+                          No one has commented on this crum, add one now!
                         </Text>
-                      ))}
+                      )}
                     </ScrollView>
                   </View>
 
@@ -260,11 +278,7 @@ class DisEditDeleteCrumForm extends React.Component {
 const mapState = state => ({
   isLoggedIn: !!state.user.id,
   user: state.user,
-  locations: {
-    ...state.locations,
-    longitudeIdx: Math.floor(state.locations.longitude * SCALER),
-    latitudeIdx: Math.floor(state.locations.latitude * SCALER)
-  },
+  locations: state.locations,
   crumInstances: state.crumInstancesNearby,
   crums: state.crums
 })
@@ -279,9 +293,7 @@ const mapDispatch = dispatch => {
       await dispatch(getSingleUser(userId))
     },
     collectCrumInstance: async (crumInstance, userId) => {
-      console.log('put request action dispatched')
       await dispatch(collectCrumInstance(crumInstance))
-      console.log('get request action dispatched')
       await dispatch(getSingleUser(userId))
     },
 
@@ -347,6 +359,7 @@ const styles = StyleSheet.create({
   disabledTitle: {
     minWidth: 160,
     display: 'flex',
+    fontWeight: 'bold',
     flexDirection: 'row',
     alignItems: 'center',
     fontSize: 28
@@ -358,6 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 28,
+
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 1,
@@ -370,7 +384,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     width: '100%',
-    flexDirection: 'row',
+    flexDirection: 'column',
     minHeight: '45%',
     maxHeight: '45%',
 
@@ -416,5 +430,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10
   },
-  validation: {color: 'red', textAlign: 'left', marginLeft: 10}
+  validation: {color: 'red', textAlign: 'left', marginLeft: 10},
+  subtitle: {fontSize: 18, fontWeight: 'bold'}
 })

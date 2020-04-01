@@ -2,6 +2,21 @@ import queryString from 'query-string'
 import * as Device from 'expo-device'
 import {devAxios} from '../store/devAxios'
 
+export const howLongAgo = date => {
+  const minutesPassed = (Date.now() - Date.parse(date)) / 60000
+  if (minutesPassed < 60) {
+    return `${Math.floor(minutesPassed)} minutes ago`
+  }
+  const hoursPassed = minutesPassed / 60
+  if (hoursPassed < 24) {
+    return `${Math.floor(hoursPassed)} hours ago`
+  }
+  const daysPassed = hoursPassed / 24
+  if (daysPassed < 24) {
+    return `${Math.floor(daysPassed)} days ago`
+  }
+}
+
 export const userNameExists = async userName => {
   const {data} = await devAxios.get(`/api/users/exists/?userName=${userName}`)
   return data.exists
