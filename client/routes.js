@@ -29,11 +29,11 @@ class disRoutes extends Component {
 
   // Intro slides stuff
   onDoneAllSlides = () => {
-    this.setState({show_Main_App: true})
+    // this.setState({show_Main_App: true})
     this.props.toggleShowSlidesAgain(this.props.user.id)
   }
   onSkipSlides = () => {
-    this.setState({show_Main_App: true})
+    // this.setState({show_Main_App: true})
     this.props.toggleShowSlidesAgain(this.props.user.id)
   }
 
@@ -70,8 +70,7 @@ class disRoutes extends Component {
     const {isLoggedIn, user, showSlidesAgain} = this.props
     console.log('USER HERE', user)
     if (isLoggedIn) {
-      // if (showSlidesAgain !== 'true') {
-      if (this.state.show_Main_App) {
+      if (user.showSlidesAgain !== 'true') {
         return <HomeTabs />
       } else {
         return (
