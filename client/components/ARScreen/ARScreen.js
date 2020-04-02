@@ -28,7 +28,6 @@ import {images, background} from '../../../assets/'
 import {createPlane, createPlaneOutline} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
-import {DataTexture} from 'three'
 
 let scene
 class DisARScreen extends React.Component {
@@ -73,12 +72,7 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     this.requestCameraPermission()
-
-    THREE.suppressExpoWarnings(true)
     this.props.fetchCrums()
-  }
-  componentWillUnmount = () => {
-    THREE.suppressExpoWarnings(false)
   }
 
   runHitTest = () => {

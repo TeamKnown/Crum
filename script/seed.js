@@ -71,10 +71,59 @@ const users = [
     password: 'NERY7QB2pRqy',
     salt: null
   },
+
   {
-    userName: 'dad',
+    userName: 'Peter',
+    email: 'Peter@gmail.com',
+    password: 'Peter',
+    salt: null
+  },
+  {
+    userName: 'Mark',
+    email: 'Mark@gmail.com',
+    password: 'Mark',
+    salt: null
+  },
+  {
+    userName: 'Thomas',
+    email: 'Thomas@gmail.com',
+    password: 'Thomas',
+    salt: null
+  },
+  {
+    userName: 'April',
+    email: 'April@gmail.com',
+    password: 'April',
+    salt: null
+  },
+  {
+    userName: 'Dad',
     email: 'dad@gmail.com',
     password: 'yesDad',
+    salt: null
+  },
+  {
+    userName: 'Mom',
+    email: 'mom@gmail.com',
+    password: 'yesMom',
+    salt: null
+  },
+  {
+    userName: 'grandpa',
+    email: 'grandpa@gmail.com',
+    password: 'yesGrandpa',
+    salt: null
+  },
+  {
+    userName: 'grandma',
+    email: 'grandma@gmail.com',
+    password: 'yesGrandma',
+    salt: null
+  },
+  {
+    userName: 'Baby',
+    email: 'Baby@gmail.com',
+    password: 'yesBaby',
     salt: null
   }
 ]
@@ -313,31 +362,11 @@ const crumInstances = [
   {
     message: 'for april testing',
     latitude: 40.70756,
-    longitude: -74.0057
+    longitude: -74.00579
   },
   {
     message: 'for april testing',
     latitude: 40.70755,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.70754,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.70751,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.70752,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.70753,
     longitude: -74.0057
   }
 ]
@@ -355,11 +384,11 @@ const seed = async () => {
     for (let i = 1; i < crumInstances.length + 1; i++) {
       let j = Math.floor(Math.random() * 19) + 1
 
-      let k = Math.floor(Math.random() * 2) + 1
+      let k = Math.floor(Math.random() * 2) + 8
       let crumInstanceI = await CrumInstance.findByPk(i)
       let crumI = await Crum.findByPk(j)
       let userK = await User.findByPk(k)
-      let userKN = await User.findByPk(1)
+      let userKN = await User.findByPk(13)
       await crumInstanceI.setCrum(crumI)
       await crumInstanceI.setUser(userK)
       await crumInstanceI.setRecipient(userKN)

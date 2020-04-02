@@ -70,6 +70,7 @@ class DisEditDeleteCrumForm extends React.Component {
     this.props.deleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
   }
+
   async handleCollectCrum(crumInstance, userId) {
     let recipientCollectedThis = await userCollectedThis(
       this.props.user.id,
@@ -77,13 +78,14 @@ class DisEditDeleteCrumForm extends React.Component {
     )
     if (!recipientCollectedThis) {
       this.props.collectCrumInstance(crumInstance, userId)
-      this.props.hideEditDeleteCrumForm()
+      crumInstance.numLeft === 1 && this.props.hideEditDeleteCrumForm()
     } else {
       this.setState({
         validationError: 'You already collected this one'
       })
     }
   }
+
   handleEditCrum(crumInstance, userId) {
     if (!this.state.selfEditing) {
       this.setState({selfEditing: true})

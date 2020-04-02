@@ -9,7 +9,7 @@ import {AppLoading, SplashScreen} from 'expo'
 import {Asset} from 'expo-asset'
 import {Ionicons} from '@expo/vector-icons'
 import useLinking from './client/routes/useLinking'
-
+console.disableYellowBox = true
 const styles = StyleSheet.create({
   boldText: {
     fontSize: 30,

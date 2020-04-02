@@ -7,9 +7,7 @@ export const createPlane = async (imgUrl, position) => {
   })
   const material = new THREE.MeshStandardMaterial({
     map: texture,
-    transparent: true,
-    border: 'red' // does nothing
-    // color: 'red'  // turn the whole thing red
+    transparent: true
   })
   const plane = new THREE.Mesh(geometry, material)
   plane.material.side = THREE.DoubleSide

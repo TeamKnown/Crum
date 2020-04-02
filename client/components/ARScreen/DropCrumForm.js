@@ -239,9 +239,18 @@ class DisDropCrumForm extends React.Component {
                         this.handleDropCrum(
                           {
                             message: this.state.message,
-                            recipient: this.state.recipient,
-                            numLeft: this.state.num,
-                            numDropped: this.state.num,
+                            recipient:
+                              this.state.sendMode === 'secret crum'
+                                ? this.state.recipient
+                                : '',
+                            numLeft:
+                              this.state.sendMode === 'secret crum'
+                                ? 1
+                                : this.state.num,
+                            numDropped:
+                              this.state.sendMode === 'secret crum'
+                                ? 1
+                                : this.state.num,
                             latitude: locations.latitude,
                             longitude: locations.longitude
                           },

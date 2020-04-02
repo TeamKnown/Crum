@@ -6,10 +6,10 @@ const CrumInstance = db.define('crumInstance', {
     type: Sequelize.TEXT
   },
   latitude: {
-    type: Sequelize.DECIMAL(10, 5)
+    type: Sequelize.DECIMAL(10, 6)
   },
   longitude: {
-    type: Sequelize.DECIMAL(10, 5)
+    type: Sequelize.DECIMAL(10, 6)
   },
   latitudeIdx: {
     type: Sequelize.INTEGER
