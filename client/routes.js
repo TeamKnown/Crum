@@ -10,7 +10,6 @@ import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
 import {toggleShowSlidesAgain} from '../client/store/user'
 
-import IntroImages from './components/Intro/IntroImages'
 import IntroGradient from './components/Intro/IntroGradient'
 
 const DismissKeyBoard = ({children}) => (
