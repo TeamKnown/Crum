@@ -1,13 +1,11 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {
-  getSingleUser,
-  fetchUserCrumInstances,
-  fetchUserDroppedCrumInstances
-} from '../store'
-import {imageThumbnails} from '../../assets/'
-// import {} from '../store/'
+// import {
+//   getSingleUser,
+//   fetchUserCrumInstances,
 
+// } from '../store'
+import {imageThumbnails} from '../../assets/'
 import {
   Platform,
   Button,
@@ -32,10 +30,10 @@ class ViewCrumsModal extends React.Component {
   state = {
     visible: false
   }
-  componentDidMount() {
-    this.props.getSingleUser(this.props.user.id)
-    this.props.getUserCrumInstances(this.props.user.id)
-  }
+  // componentDidMount() {
+  //   this.props.getSingleUser(this.props.user.id)
+
+  // }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
@@ -212,13 +210,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    getSingleUser: id => dispatch(getSingleUser(id)),
-    getUserCrumInstances: userId => {
-      dispatch(fetchUserDroppedCrumInstances(userId))
-    }
-  }
-}
+// const mapDispatch = dispatch => {
+//   return {
+//     getSingleUser: id => dispatch(getSingleUser(id))
+//   }
+// }
 
-export default connect(mapState, mapDispatch)(ViewCrumsModal)
+export default connect(mapState)(ViewCrumsModal)

@@ -70,6 +70,7 @@ class DisEditDeleteCrumForm extends React.Component {
     this.props.deleteCrumInstance(crumInstance, userId)
     this.props.hideEditDeleteCrumForm()
   }
+
   async handleCollectCrum(crumInstance, userId) {
     let recipientCollectedThis = await userCollectedThis(
       this.props.user.id,
@@ -77,13 +78,17 @@ class DisEditDeleteCrumForm extends React.Component {
     )
     if (!recipientCollectedThis) {
       this.props.collectCrumInstance(crumInstance, userId)
-      this.props.hideEditDeleteCrumForm()
+      if (this.props.crumInstance.numLeft === 1) {
+        // console.log('crumInstance.numLeft === 1', this.props.crumInstance.numLeft)
+        this.props.hideEditDeleteCrumForm()
+      }
     } else {
       this.setState({
         validationError: 'You already collected this one'
       })
     }
   }
+
   handleEditCrum(crumInstance, userId) {
     if (!this.state.selfEditing) {
       this.setState({selfEditing: true})
@@ -147,9 +152,15 @@ class DisEditDeleteCrumForm extends React.Component {
                     </View>
                   </View>
                   <View style={styles.modalComments}>
-                    {crumInstance.recipientId ? (
-                      <Text style={styles.subtitle}>Just for you</Text>
-                    ) : (
+                    {crumInstance.recipientId &&
+                      crumInstance.recipientId === this.props.user.id && (
+                        <Text style={styles.subtitle}>Just for you</Text>
+                      )}
+                    {crumInstance.recipientId &&
+                      crumInstance.userId === this.props.user.id && (
+                        <Text style={styles.subtitle}>Just for them</Text>
+                      )}
+                    {!crumInstance.recipientId && (
                       <Text
                         style={styles.subtitle}
                       >{`Number Left: ${crumInstance.numLeft} / ${crumInstance.numDropped}`}</Text>

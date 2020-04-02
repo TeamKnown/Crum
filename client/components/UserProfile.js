@@ -1,6 +1,10 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser, fetchUserCrumInstances} from '../store'
+import {
+  getSingleUser,
+  fetchUserDroppedCrumInstances,
+  fetchUserCollectedCrumInstances
+} from '../store'
 import {logout} from '../store/user'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
@@ -25,29 +29,12 @@ import {
 import {useFocusEffect} from '@react-navigation/native'
 import {defaultProfile} from '../../assets/'
 function UserProfile(props) {
-  // async componentDidMount() {
-  //   const {navigation} = await this.props
-  //   navigation.addListener('focus', () =>
-  //     // run function that updates the data on entering the screen
-  //     this.props.getSingleUser(this.props.user.id),
-  //     this.props.fetchUserCrumInstances(this.props.user.id)
-  //   )
-  // }
-
-  // handleSignOut() {
-  //   this.props.logout()
-  // }
-  let isMounted = true
-
   useFocusEffect(
     React.useCallback(() => {
-      if (isMounted) {
-        props.getSingleUser(props.user.id)
-      }
-
-      return () => {
-        isMounted = false
-      }
+      props.getSingleUser(props.user.id)
+      props.getCollectedCrumInstances(props.user.id)
+      props.getUserCrumInstances(props.user.id)
+      return () => {}
     }, [props.user.id])
   )
 
@@ -177,7 +164,6 @@ const styles = StyleSheet.create({
 const mapState = state => {
   return {
     user: state.user
-    // totalCrums: state.user.totalCrums
   }
 }
 
@@ -185,8 +171,11 @@ const mapDispatch = dispatch => {
   return {
     getSingleUser: id => dispatch(getSingleUser(id)),
     logout: () => dispatch(logout()),
+    getCollectedCrumInstances: userId => {
+      dispatch(fetchUserCollectedCrumInstances(userId))
+    },
     getUserCrumInstances: userId => {
-      dispatch(fetchUserCrumInstances(userId))
+      dispatch(fetchUserDroppedCrumInstances(userId))
     }
   }
 }

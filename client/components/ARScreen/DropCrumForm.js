@@ -21,8 +21,8 @@ import {postCrumInstance, getSingleUser} from '../../store/'
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view'
 
 const sendModeOptions = [
-  {label: 'to someone', value: 'to someone'},
-  {label: 'to many', value: 'to many'}
+  {label: 'secret crum', value: 'secret crum'},
+  {label: 'public crum', value: 'public crum'}
 ]
 
 class DisDropCrumForm extends React.Component {
@@ -39,7 +39,7 @@ class DisDropCrumForm extends React.Component {
       recipient: '',
       imgId: '',
       validationError: '',
-      sendMode: 'to someone', // 'for all'
+      sendMode: 'secret crum', // 'for all'
       num: 1 // 'for all'
     }
   }
@@ -89,13 +89,13 @@ class DisDropCrumForm extends React.Component {
       })
     } else if (
       this.state.recipient === '' &&
-      this.state.sendMode === 'to someone'
+      this.state.sendMode === 'secret crum'
     ) {
       this.setState({
         validationError: 'Recipient must be specified'
       })
     } else {
-      let toMany = this.state.sendMode === 'to many'
+      let toMany = this.state.sendMode === 'public crum'
       let recipientExists = await userNameExists(this.state.recipient)
       if (recipientExists || toMany) {
         this.props.postCrumInstance(crumInstance, userId, crumId)
@@ -173,7 +173,7 @@ class DisDropCrumForm extends React.Component {
                       onPress={this.handleTypeOption}
                     />
                   </View>
-                  {this.state.sendMode === 'to someone' && (
+                  {this.state.sendMode === 'secret crum' && (
                     <View style={styles.modalInputRecipient}>
                       <TextInput
                         required
@@ -190,7 +190,7 @@ class DisDropCrumForm extends React.Component {
                       />
                     </View>
                   )}
-                  {this.state.sendMode === 'to many' && (
+                  {this.state.sendMode === 'public crum' && (
                     <View style={styles.modalInputCount}>
                       <View
                         style={{
@@ -239,9 +239,18 @@ class DisDropCrumForm extends React.Component {
                         this.handleDropCrum(
                           {
                             message: this.state.message,
-                            recipient: this.state.recipient,
-                            numLeft: this.state.num,
-                            numDropped: this.state.num,
+                            recipient:
+                              this.state.sendMode === 'secret crum'
+                                ? this.state.recipient
+                                : '',
+                            numLeft:
+                              this.state.sendMode === 'secret crum'
+                                ? 1
+                                : this.state.num,
+                            numDropped:
+                              this.state.sendMode === 'secret crum'
+                                ? 1
+                                : this.state.num,
                             latitude: locations.latitude,
                             longitude: locations.longitude
                           },

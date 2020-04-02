@@ -8,30 +8,26 @@ import {connect} from 'react-redux'
 import * as React from 'react'
 import {
   computePos,
-  SCALER,
   crumInstanceNamer,
+  outlineInstanceNamer,
   crumInstanceParser
 } from '../utils'
 import {
   Platform,
   View,
   StyleSheet,
-  Image,
   ImageBackground,
   Dimensions,
-  ScrollView,
-  Text,
   TouchableOpacity
 } from 'react-native'
 import {fetchCrums, fetchNearByCrumInstances, me} from '../../store/'
 import DropCrumForm from './DropCrumForm'
 import EditDeleteCrumForm from './EditDeleteCrumForm'
 import NoARScreen from './NoARScreen'
-import {images, imageThumbnails, background} from '../../../assets/'
-import {createPlane} from './Crums.js'
+import {images, background} from '../../../assets/'
+import {createPlane, createPlaneOutline} from './Crums.js'
 import * as Permissions from 'expo-permissions'
 import CamPermissionModal from './CamPermissionModal'
-import {DataTexture} from 'three'
 
 let scene
 class DisARScreen extends React.Component {
@@ -76,12 +72,7 @@ class DisARScreen extends React.Component {
 
   componentDidMount = () => {
     this.requestCameraPermission()
-
-    THREE.suppressExpoWarnings(true)
     this.props.fetchCrums()
-  }
-  componentWillUnmount = () => {
-    THREE.suppressExpoWarnings(false)
   }
 
   runHitTest = () => {
@@ -153,16 +144,29 @@ class DisARScreen extends React.Component {
         for (const crumInstance of toAdd) {
           if (crumInstance.crum === null) continue
           let pos = computePos(crumInstance, props.locations)
-          let plane = await createPlane(
-            0xffffff,
-            images[crumInstance.crum.name],
-            pos
-          )
+          let plane = await createPlane(images[crumInstance.crum.name], pos)
           let planeName = crumInstanceNamer(crumInstance)
           plane.name = planeName
           scene.add(plane)
-          let newObj = scene.getObjectByName(planeName)
           console.log('NEW OBJECT ADDED: ', planeName)
+          console.log(crumInstance.recipientId, props.user.id)
+          if (crumInstance.recipientId === props.user.id) {
+            let planeOutline = await createPlaneOutline(0xbd7cde, pos)
+            let outlineName = outlineInstanceNamer(crumInstance)
+            planeOutline.name = outlineName
+            scene.add(planeOutline)
+            console.log('NEW OUTLINE ADDED: ', outlineName)
+          }
+          if (
+            crumInstance.userId === props.user.id &&
+            crumInstance.recipientId !== null
+          ) {
+            let planeOutline = await createPlaneOutline(0x26decb, pos)
+            let outlineName = outlineInstanceNamer(crumInstance)
+            planeOutline.name = outlineName
+            scene.add(planeOutline)
+            console.log('NEW OUTLINE ADDED: ', outlineName)
+          }
         }
       }
 
@@ -173,6 +177,16 @@ class DisARScreen extends React.Component {
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
           console.log('OLD OBJECT REMOVED: ', planeName)
+          if (
+            crumInstance.recipientId === props.user.id ||
+            (crumInstance.userId === props.user.id &&
+              crumInstance.recipientId !== null)
+          ) {
+            let outlineName = outlineInstanceNamer(crumInstance)
+            let outlineToRemove = scene.getObjectByName(outlineName)
+            scene.remove(outlineToRemove)
+            console.log('OLD OBJECT REMOVED: ', outlineName)
+          }
         }
       }
       addCrums()
@@ -291,6 +305,7 @@ const mapState = state => ({
     .filter(
       crumInstance =>
         crumInstance.recipientId === state.user.id ||
+        crumInstance.userId === state.user.id ||
         crumInstance.recipientId === null
     )
 })

@@ -71,10 +71,59 @@ const users = [
     password: 'NERY7QB2pRqy',
     salt: null
   },
+
   {
-    userName: 'dad',
+    userName: 'Peter',
+    email: 'Peter@gmail.com',
+    password: 'Peter',
+    salt: null
+  },
+  {
+    userName: 'Mark',
+    email: 'Mark@gmail.com',
+    password: 'Mark',
+    salt: null
+  },
+  {
+    userName: 'Thomas',
+    email: 'Thomas@gmail.com',
+    password: 'Thomas',
+    salt: null
+  },
+  {
+    userName: 'April',
+    email: 'April@gmail.com',
+    password: 'April',
+    salt: null
+  },
+  {
+    userName: 'Dad',
     email: 'dad@gmail.com',
     password: 'yesDad',
+    salt: null
+  },
+  {
+    userName: 'Mom',
+    email: 'mom@gmail.com',
+    password: 'yesMom',
+    salt: null
+  },
+  {
+    userName: 'grandpa',
+    email: 'grandpa@gmail.com',
+    password: 'yesGrandpa',
+    salt: null
+  },
+  {
+    userName: 'grandma',
+    email: 'grandma@gmail.com',
+    password: 'yesGrandma',
+    salt: null
+  },
+  {
+    userName: 'Baby',
+    email: 'Baby@gmail.com',
+    password: 'yesBaby',
     salt: null
   }
 ]
@@ -245,189 +294,79 @@ const crums = [
   }
 ]
 const crumInstances = [
-  // {
-  //   message: 'Every Day is Fathers Day',
-  //   latitude: 40.7185,
-  //   longitude: -73.9743,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'Please no more...',
-  //   latitude: 40.7077,
-  //   longitude: -74.0112,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'Beautiful Day!',
-  //   latitude: 40.776,
-  //   longitude: -73.9689,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'Where is everyone?',
-  //   latitude: 40.7075,
-  //   longitude: -74.0092,
-  //   crumId: 19,
-  //   userId: 2
-  // },
-  // {
-  //   message: 'What a show!',
-  //   latitude: 40.7213,
-  //   longitude: -73.9932,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'hope you like chocolate',
-  //   latitude: 40.7053,
-  //   longitude: -74.0056
-  //   // crumId: 6,
-  //   // userId: 7
-  // },
-  // {
-  //   message: 'out for a walk',
-  //   latitude: 40.7222,
-  //   longitude: -73.9539,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'going out for ice cream',
-  //   latitude: 40.6763,
-  //   longitude: -73.8752,
-  //   status: 'collected'
-  // },
-  // {
-  //   message: 'reading the new sutter cane',
-  //   latitude: 40.6812,
-  //   longitude: -73.9955
-  // },
-  // {
-  //   message: 'sandwich time',
-  //   latitude: 40.7269,
-  //   longitude: -73.8773
-  // },
-  // {
-  //   message: 'for the dads',
-  //   latitude: 40.7235,
-  //   longitude: -73.9831
-  // },
   {
-    message: 'for april testing',
+    message: 'Every Day is Fathers Day',
+    latitude: 40.7185,
+    longitude: -73.9743,
+    status: 'collected'
+  },
+  {
+    message: 'Please no more...',
+    latitude: 40.7077,
+    longitude: -74.0112,
+    status: 'collected'
+  },
+  {
+    message: 'Beautiful Day!',
+    latitude: 40.776,
+    longitude: -73.9689,
+    status: 'collected'
+  },
+  {
+    message: 'Where is everyone?',
     latitude: 40.7075,
-    longitude: -74.0057
+    longitude: -74.0092,
+    crumId: 19,
+    userId: 2
+  },
+  {
+    message: 'What a show!',
+    latitude: 40.7213,
+    longitude: -73.9932,
+    status: 'collected'
+  },
+  {
+    message: 'hope you like chocolate',
+    latitude: 40.7053,
+    longitude: -74.0056
+    // crumId: 6,
+    // userId: 7
+  },
+  {
+    message: 'out for a walk',
+    latitude: 40.7222,
+    longitude: -73.9539,
+    status: 'collected'
+  },
+  {
+    message: 'going out for ice cream',
+    latitude: 40.6763,
+    longitude: -73.8752,
+    status: 'collected'
+  },
+  {
+    message: 'reading the new sutter cane',
+    latitude: 40.6812,
+    longitude: -73.9955
+  },
+  {
+    message: 'sandwich time',
+    latitude: 40.7269,
+    longitude: -73.8773
+  },
+  {
+    message: 'for the dads',
+    latitude: 40.72357,
+    longitude: -73.9831
   },
   {
     message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
+    latitude: 40.70756,
+    longitude: -74.00579
   },
   {
     message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
-    longitude: -74.0057
-  },
-  {
-    message: 'for april testing',
-    latitude: 40.7075,
+    latitude: 40.70755,
     longitude: -74.0057
   }
 ]
@@ -445,11 +384,11 @@ const seed = async () => {
     for (let i = 1; i < crumInstances.length + 1; i++) {
       let j = Math.floor(Math.random() * 19) + 1
 
-      let k = Math.floor(Math.random() * 2) + 1
+      let k = Math.floor(Math.random() * 2) + 8
       let crumInstanceI = await CrumInstance.findByPk(i)
       let crumI = await Crum.findByPk(j)
       let userK = await User.findByPk(k)
-      let userKN = await User.findByPk(1)
+      let userKN = await User.findByPk(13)
       await crumInstanceI.setCrum(crumI)
       await crumInstanceI.setUser(userK)
       await crumInstanceI.setRecipient(userKN)

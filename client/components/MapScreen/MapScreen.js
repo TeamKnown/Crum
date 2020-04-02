@@ -321,7 +321,12 @@ const styles = StyleSheet.create({
 
 const mapState = state => ({
   user: state.user,
-  crumInstances: state.crumInstancesNearby,
+  crumInstances: state.crumInstancesNearby.filter(
+    crumInstance =>
+      crumInstance.recipientId === state.user.id ||
+      crumInstance.userId === state.user.id ||
+      crumInstance.recipientId === null
+  ),
   locations: state.locations
 })
 

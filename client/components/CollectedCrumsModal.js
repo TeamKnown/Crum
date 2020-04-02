@@ -1,12 +1,11 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {
-  getSingleUser,
-  fetchCollectedCrumInstances,
-  fetchUserCollectedCrumInstances
-} from '../store'
+// import {
+//   getSingleUser,
+//   fetchCollectedCrumInstances,
+
+// } from '../store'
 import {imageThumbnails} from '../../assets/'
-// import {} from '../store/'
 
 import {
   Platform,
@@ -33,10 +32,10 @@ class CollectedCrumsModal extends React.Component {
   state = {
     visible: false
   }
-  componentDidMount() {
-    this.props.getSingleUser(this.props.user.id)
-    this.props.getCollectedCrumInstances(this.props.user.id)
-  }
+  // componentDidMount() {
+  //   this.props.getSingleUser(this.props.user.id)
+
+  // }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
@@ -211,14 +210,10 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    getSingleUser: id => dispatch(getSingleUser(id)),
-    getCollectedCrumInstances: userId => {
-      // dispatch(fetchCollectedCrumInstances(userId))
-      dispatch(fetchUserCollectedCrumInstances(userId))
-    }
-  }
-}
+// const mapDispatch = dispatch => {
+//   return {
+//     getSingleUser: id => dispatch(getSingleUser(id))
+//   }
+// }
 
-export default connect(mapState, mapDispatch)(CollectedCrumsModal)
+export default connect(mapState)(CollectedCrumsModal)

@@ -289,6 +289,7 @@ const mapState = state => ({
     .filter(
       crumInstance =>
         crumInstance.recipientId === state.user.id ||
+        crumInstance.userId === state.user.id ||
         crumInstance.recipientId === null
     )
 })

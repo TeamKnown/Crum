@@ -68,7 +68,6 @@ class disRoutes extends Component {
 
   render() {
     const {isLoggedIn, user, showSlidesAgain} = this.props
-    console.log('USER HERE', user)
     if (isLoggedIn) {
       if (user.showSlidesAgain !== 'true') {
         return <HomeTabs />
