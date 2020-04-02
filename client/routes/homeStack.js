@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 import * as React from 'react'
 
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
 import UserProfile from '../components/UserProfile'
