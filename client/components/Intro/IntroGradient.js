@@ -34,7 +34,7 @@ const slides = [
     key: 'fourthSlide',
     title: 'ENJOY',
     text:
-      'Have fun exploring and always be aware of\n your surroundings.\n\nWherever you are, you never know what Crum\nwill be waiting around the corner!',
+      'Have fun exploring and always be aware of\n your surroundings.\n\nWherever you are, there just might be waiting around the corner!',
     icon: 'ios-happy',
     colors: ['#535a9f', '#7C1E9F']
   }
