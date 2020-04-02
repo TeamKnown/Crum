@@ -53,7 +53,20 @@ export const crumInstanceNamer = crumInstance => {
     '&curmId' +
     crumInstance.crum.id +
     '&curmName=' +
-    crumInstance.crum.name
+    crumInstance.crum.name +
+    '&type=crum'
+  )
+}
+
+export const outlineInstanceNamer = crumInstance => {
+  return (
+    'crumInstanceId=' +
+    crumInstance.id +
+    '&curmId' +
+    crumInstance.crum.id +
+    '&curmName=' +
+    crumInstance.crum.name +
+    '&type=outline'
   )
 }
 
