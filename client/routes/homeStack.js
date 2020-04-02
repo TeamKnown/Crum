@@ -3,7 +3,7 @@ import * as React from 'react'
 
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import {MaterialCommunityIcons} from 'react-native-vector-icons'
-import UserProfile from '../components/UserProfile'
+import UserProfile from '../components/UserScreen/UserProfile'
 import SignIn from '../components/Authentication/SignIn'
 import SignUp from '../components/Authentication/SignUp'
 import MapScreen from '../components/MapScreen/MapScreen'

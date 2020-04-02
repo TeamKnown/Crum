@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {BASE_URL} from '../../secretDom'
 
-// console.log(Object.keys(process.env))
 export const devAxios = axios.create({
   // ngrok can publish your local host http://localhost:19001
   // to a public link http://*******/.ngrok.io'

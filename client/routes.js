@@ -41,7 +41,7 @@ class disRoutes extends Component {
 
     if (status !== 'granted') {
       let {permissions} = await Permissions.askAsync(Permissions.LOCATION)
-      console.log(permissions)
+
       this.setState({
         isGranted: false
       })
@@ -61,7 +61,6 @@ class disRoutes extends Component {
 
   componentWillUnmount = () => {
     this.props.unsubscribeToLocationData()
-    console.log('ROUTE IS UNMOUNTED')
   }
 
   render() {
