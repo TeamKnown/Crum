@@ -46,6 +46,10 @@ const User = db.define('user', {
   collectedCrums: {
     type: Sequelize.INTEGER,
     defaultValue: 0
+  },
+  showSlidesAgain: {
+    type: Sequelize.ENUM(['true', 'false']),
+    defaultValue: 'true'
   }
 })
 

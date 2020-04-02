@@ -8,6 +8,7 @@ import {NavigationActions} from 'react-navigation'
 const GET_USER = 'GET_USER'
 const REMOVE_USER = 'REMOVE_USER'
 const UPDATE_USER = 'UPDATE_USER'
+const TOGGLE_SHOWSLIDES = 'TOGGLE_SHOWSLIDES'
 
 /**
  * ACTION CREATORS
@@ -18,6 +19,7 @@ const updateUser = user => ({
   type: UPDATE_USER,
   user
 })
+const toggleShowSlides = user => ({type: TOGGLE_SHOWSLIDES, user})
 
 /**
  * THUNK CREATORS
@@ -31,7 +33,8 @@ const defaultUser = {
   type: 'user',
   address: '',
   zip: '',
-  phone: ''
+  phone: '',
+  showSlidesAgain: 'true'
 }
 export const me = () => async dispatch => {
   try {
@@ -91,6 +94,20 @@ export const updateUserThunk = (id, info) => {
   }
 }
 
+export const toggleShowSlidesAgain = id => {
+  return async dispatch => {
+    try {
+      const {data} = await devAxios.put(`/api/users/${id}`, {
+        showSlidesAgain: 'false'
+      })
+
+      dispatch(toggleShowSlides(data))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+}
+
 /**
  * INITIAL STATE
  */
@@ -105,6 +122,8 @@ export default function(state = defaultUser, action) {
     case REMOVE_USER:
       return defaultUser
     case UPDATE_USER:
+      return action.user
+    case TOGGLE_SHOWSLIDES:
       return action.user
     default:
       return state
