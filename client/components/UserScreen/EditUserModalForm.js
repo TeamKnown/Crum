@@ -1,8 +1,8 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser} from '../store'
-import {updateUserThunk} from '../store/'
-import {editIcon} from '../../assets/'
+import {getSingleUser} from '../../store'
+import {updateUserThunk} from '../../store'
+import {editIcon} from '../../../assets'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import {
   Platform,

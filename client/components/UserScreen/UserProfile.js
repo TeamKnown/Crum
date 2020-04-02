@@ -4,8 +4,8 @@ import {
   getSingleUser,
   fetchUserDroppedCrumInstances,
   fetchUserCollectedCrumInstances
-} from '../store'
-import {logout} from '../store/user'
+} from '../../store'
+import {logout} from '../../store/user'
 import EditUserModalForm from './EditUserModalForm'
 import ViewCrumsModal from './ViewCrumsModal'
 import CollectedCrumsModal from './CollectedCrumsModal'
@@ -27,7 +27,7 @@ import {
   Alert
 } from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
-import {defaultProfile} from '../../assets/'
+import {defaultProfile} from '../../../assets'
 function UserProfile(props) {
   useFocusEffect(
     React.useCallback(() => {

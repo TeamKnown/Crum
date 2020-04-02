@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 //   fetchUserCrumInstances,
 
 // } from '../store'
-import {imageThumbnails} from '../../assets/'
+import {imageThumbnails} from '../../../assets'
 import {
   Platform,
   Button,
