@@ -16,8 +16,7 @@ export default function PermissionModal(props) {
       >
         <View style={styles.content}>
           <Text style={styles.contentTitle}>
-            Hey 👾! Allow "Crum" to access your location while you are using the
-            app?
+            Hey 👾! Can Crum access your location while you are using the app?
           </Text>
 
           <View style={styles.buttons}>
