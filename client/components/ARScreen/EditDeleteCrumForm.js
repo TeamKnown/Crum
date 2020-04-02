@@ -78,7 +78,10 @@ class DisEditDeleteCrumForm extends React.Component {
     )
     if (!recipientCollectedThis) {
       this.props.collectCrumInstance(crumInstance, userId)
-      crumInstance.numLeft === 1 && this.props.hideEditDeleteCrumForm()
+      if (this.props.crumInstance.numLeft === 1) {
+        // console.log('crumInstance.numLeft === 1', this.props.crumInstance.numLeft)
+        this.props.hideEditDeleteCrumForm()
+      }
     } else {
       this.setState({
         validationError: 'You already collected this one'
