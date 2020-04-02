@@ -51,11 +51,6 @@ router.get('/exists/', userOnly, async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    // if (req.user.id !== +req.params.id) {
-    //   console.log('Cannot get other user info')
-    //   res.sendStatus(404)
-    // }
-
     const user = await User.findByPk(req.params.id, {
       attributes: ['id', 'userName', 'email', 'type', 'device'],
       include: [
@@ -74,10 +69,6 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
-  // if (req.user.id !== +req.params.id) {
-  //   console.log('Cannot update other user info')
-  //   res.sendStatus(404)
-  // }
   try {
     const currentUser = await User.findByPk(req.params.id)
     const updatedUser = await currentUser.update(req.body)

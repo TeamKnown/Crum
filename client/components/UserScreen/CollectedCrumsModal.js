@@ -54,7 +54,7 @@ class CollectedCrumsModal extends React.Component {
       this.scroller.scrollTo({x: 0, y: scrollYPos})
     }
     const {user, crumInstances, crums} = this.props
-    // console.log('INST', crumInstances[0])
+
     const total = crumInstances.filter(each => each.recipientId === user.id)
     return (
       <View>

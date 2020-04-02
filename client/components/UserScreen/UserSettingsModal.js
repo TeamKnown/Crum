@@ -52,7 +52,7 @@ class UserSettingsModal extends React.Component {
   }
   render() {
     const {user} = this.props
-    // console.log('device', user.device)
+
     return (
       <LinearGradient style={styles.btnCrum} colors={['#7c1e9f', '#bd7cde']}>
         <View>
