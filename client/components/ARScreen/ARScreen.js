@@ -109,7 +109,7 @@ class DisARScreen extends React.Component {
 
   onContextCreate = async ({gl, pixelRatio, width, height}) => {
     this.setState({contextCreated: true})
-    console.log('AR SCREEN GENERATED')
+
     if (this.props.user.device === 'advanced') {
       AR.setWorldAlignment('gravityAndHeading')
       // The coordinate system's y-axis is parallel to gravity, its x- and z-axes are oriented to compass heading, and its origin is the initial position of the device. z:1 means 1 meter South, x:1 means 1 meter east. other options are alignmentCamera and gravity
@@ -148,14 +148,12 @@ class DisARScreen extends React.Component {
           let planeName = crumInstanceNamer(crumInstance)
           plane.name = planeName
           scene.add(plane)
-          console.log('NEW OBJECT ADDED: ', planeName)
-          console.log(crumInstance.recipientId, props.user.id)
+
           if (crumInstance.recipientId === props.user.id) {
             let planeOutline = await createPlaneOutline(0xbd7cde, pos)
             let outlineName = outlineInstanceNamer(crumInstance)
             planeOutline.name = outlineName
             scene.add(planeOutline)
-            console.log('NEW OUTLINE ADDED: ', outlineName)
           }
           if (
             crumInstance.userId === props.user.id &&
@@ -165,7 +163,6 @@ class DisARScreen extends React.Component {
             let outlineName = outlineInstanceNamer(crumInstance)
             planeOutline.name = outlineName
             scene.add(planeOutline)
-            console.log('NEW OUTLINE ADDED: ', outlineName)
           }
         }
       }
@@ -176,7 +173,7 @@ class DisARScreen extends React.Component {
           let planeName = crumInstanceNamer(crumInstance)
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
-          console.log('OLD OBJECT REMOVED: ', planeName)
+
           if (
             crumInstance.recipientId === props.user.id ||
             (crumInstance.userId === props.user.id &&
@@ -185,7 +182,6 @@ class DisARScreen extends React.Component {
             let outlineName = outlineInstanceNamer(crumInstance)
             let outlineToRemove = scene.getObjectByName(outlineName)
             scene.remove(outlineToRemove)
-            console.log('OLD OBJECT REMOVED: ', outlineName)
           }
         }
       }

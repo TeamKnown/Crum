@@ -21,13 +21,12 @@ router.post('/login', async (req, res, next) => {
 router.post('/signup', async (req, res, next) => {
   try {
     const checkUser = await User.findOne({where: {userName: req.body.userName}})
-    // console.log(checkUser.dataValues)
+
     if (checkUser) {
       res.status(401).send('User already exists')
     } else {
       const user = await User.create(req.body)
-      console.log(req.body)
-      console.log(user.dataValues)
+
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {

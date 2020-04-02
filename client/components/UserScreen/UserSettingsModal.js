@@ -1,9 +1,9 @@
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {getSingleUser} from '../store'
-import {updateUserThunk} from '../store/'
+import {getSingleUser} from '../../store'
+import {updateUserThunk} from '../../store'
 import {LinearGradient} from 'expo-linear-gradient'
-import {checkIphoneModel} from './utils'
+import {checkIphoneModel} from '../utils'
 // import {} from '../store/'
 
 import {
@@ -52,7 +52,7 @@ class UserSettingsModal extends React.Component {
   }
   render() {
     const {user} = this.props
-    // console.log('device', user.device)
+
     return (
       <LinearGradient style={styles.btnCrum} colors={['#7c1e9f', '#bd7cde']}>
         <View>

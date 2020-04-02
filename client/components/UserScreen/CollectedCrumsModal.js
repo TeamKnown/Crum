@@ -2,10 +2,11 @@ import * as React from 'react'
 import {connect} from 'react-redux'
 // import {
 //   getSingleUser,
-//   fetchUserCrumInstances,
+//   fetchCollectedCrumInstances,
 
 // } from '../store'
-import {imageThumbnails} from '../../assets/'
+import {imageThumbnails} from '../../../assets'
+
 import {
   Platform,
   Button,
@@ -21,8 +22,9 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
+// import crumInstancesReducer from '../store/crumInstances'
 
-class ViewCrumsModal extends React.Component {
+class CollectedCrumsModal extends React.Component {
   constructor(props) {
     super(props)
     this.handleGetCrum = this.handleGetCrum.bind(this)
@@ -37,7 +39,7 @@ class ViewCrumsModal extends React.Component {
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
-    await this.props.getUserCrumInstances(userId)
+    await this.props.getCollectedCrumInstances(userId)
   }
 
   setModalVisible(visible) {
@@ -53,6 +55,7 @@ class ViewCrumsModal extends React.Component {
     }
     const {user, crumInstances, crums} = this.props
 
+    const total = crumInstances.filter(each => each.recipientId === user.id)
     return (
       <View>
         <TouchableOpacity
@@ -63,9 +66,9 @@ class ViewCrumsModal extends React.Component {
           }}
         >
           <Text style={styles.heading}>c r u m s</Text>
-          <Text style={styles.heading}>d r o p p e d</Text>
+          <Text style={styles.heading}>c o l l e c t e d</Text>
           {user.id ? (
-            <Text style={styles.count}>{user.totalCrums}</Text>
+            <Text style={styles.count}>{user.collectedCrums}</Text>
           ) : (
             <Text style={styles.count}>0</Text>
           )}
@@ -100,13 +103,7 @@ class ViewCrumsModal extends React.Component {
                         ) : (
                           <Text>{crum.message}</Text>
                         )}
-                        {crum.status === 'floating' && (
-                          <Text>Remaining: {crum.numLeft}</Text>
-                        )}
-                        {crum.status === 'collected' && (
-                          <Text>Collected by: {crum.recipient.userName}</Text>
-                        )}
-                        {/* <Text>Dropped at: {crum.createdAt}</Text> */}
+                        <Text>From: {crum.user.userName}</Text>
                       </View>
                     </View>
                   ))}
@@ -184,6 +181,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2
   },
+  instanceText: {
+    flexDirection: 'column'
+  },
   btnDrop: {
     height: 60,
     width: '90%',
@@ -206,7 +206,7 @@ const mapState = state => {
   return {
     user: state.user,
     crums: state.crums,
-    crumInstances: state.crumInstancesDropped
+    crumInstances: state.crumInstancesCollected
   }
 }
 
@@ -216,4 +216,4 @@ const mapState = state => {
 //   }
 // }
 
-export default connect(mapState)(ViewCrumsModal)
+export default connect(mapState)(CollectedCrumsModal)
