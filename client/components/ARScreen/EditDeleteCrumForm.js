@@ -152,9 +152,15 @@ class DisEditDeleteCrumForm extends React.Component {
                     </View>
                   </View>
                   <View style={styles.modalComments}>
-                    {crumInstance.recipientId ? (
-                      <Text style={styles.subtitle}>Just for you</Text>
-                    ) : (
+                    {crumInstance.recipientId &&
+                      crumInstance.recipientId === this.props.user.id && (
+                        <Text style={styles.subtitle}>Just for you</Text>
+                      )}
+                    {crumInstance.recipientId &&
+                      crumInstance.userId === this.props.user.id && (
+                        <Text style={styles.subtitle}>Just for them</Text>
+                      )}
+                    {!crumInstance.recipientId && (
                       <Text
                         style={styles.subtitle}
                       >{`Number Left: ${crumInstance.numLeft} / ${crumInstance.numDropped}`}</Text>

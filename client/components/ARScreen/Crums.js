@@ -18,10 +18,10 @@ export const createPlane = async (imgUrl, position) => {
   return plane
 }
 
-export const createPlaneOutline = async position => {
+export const createPlaneOutline = (color, position) => {
   const geometry = new THREE.RingGeometry(1.3, 1.4, 32)
   var outlineMaterial = new THREE.MeshBasicMaterial({
-    color: 0xbd7cde
+    color: color
   })
   const plane = new THREE.Mesh(geometry, outlineMaterial)
   plane.material.side = THREE.DoubleSide

@@ -149,8 +149,19 @@ class DisARScreen extends React.Component {
           plane.name = planeName
           scene.add(plane)
           console.log('NEW OBJECT ADDED: ', planeName)
-          if (crumInstance.recipientId !== null) {
-            let planeOutline = await createPlaneOutline(pos)
+          console.log(crumInstance.recipientId, props.user.id)
+          if (crumInstance.recipientId === props.user.id) {
+            let planeOutline = await createPlaneOutline(0xbd7cde, pos)
+            let outlineName = outlineInstanceNamer(crumInstance)
+            planeOutline.name = outlineName
+            scene.add(planeOutline)
+            console.log('NEW OUTLINE ADDED: ', outlineName)
+          }
+          if (
+            crumInstance.userId === props.user.id &&
+            crumInstance.recipientId !== null
+          ) {
+            let planeOutline = await createPlaneOutline(0x26decb, pos)
             let outlineName = outlineInstanceNamer(crumInstance)
             planeOutline.name = outlineName
             scene.add(planeOutline)
@@ -166,7 +177,11 @@ class DisARScreen extends React.Component {
           let planeToRemove = scene.getObjectByName(planeName)
           scene.remove(planeToRemove)
           console.log('OLD OBJECT REMOVED: ', planeName)
-          if (crumInstance.recipientId !== null) {
+          if (
+            crumInstance.recipientId === props.user.id ||
+            (crumInstance.userId === props.user.id &&
+              crumInstance.recipientId !== null)
+          ) {
             let outlineName = outlineInstanceNamer(crumInstance)
             let outlineToRemove = scene.getObjectByName(outlineName)
             scene.remove(outlineToRemove)
@@ -290,6 +305,7 @@ const mapState = state => ({
     .filter(
       crumInstance =>
         crumInstance.recipientId === state.user.id ||
+        crumInstance.userId === state.user.id ||
         crumInstance.recipientId === null
     )
 })
