@@ -363,6 +363,71 @@ const crumInstances = [
     longitude: -73.9527930003
   },
   {
+    message: 'for april testing',
+    latitude: 40.70755,
+    longitude: -74.0057
+  },
+  {
+    message:
+      'You are in Times Square! This is a major commercial intersection, tourist destination, entertainment center, and a bustling neighborhood of Midtown Manhattan. \nFun Fact: Roughly 350,000 pedestrians pass through on a typical day!',
+    latitude: 40.758,
+    longitude: 73.9855
+  },
+  {
+    message:
+      'This is the State of Liberty! This colossal neoclassical sculpture residing on Liberty Island came to exist as a gift from the people of France. It has since then become one of America’s most well-known and iconic symbols. Lady Liberty has undergone some updates and changes over the 130+ years of existance.\nFun Fact: Lady Liberty was supposed to have a sister statue and lighthouse in Egypt!',
+    latitude: 40.6892,
+    longitude: 74.0445
+  },
+  {
+    message:
+      'Welcome to the Empire State Building! This enormous building totals to 103 stories tall (1,250 feet!). This work of art took only one year and 45 days to build, but consumed seven million man-hours. It was actually constructed during a race to create the world’s tallest building!\nFun Fact: Once, a woman actually survived a 75-story plunge in one of the building’s elevators, but luckily the amount of severed elevator cable at the bottom cushioned the blow... talk about luck!',
+    latitude: 40.7484,
+    longitude: 73.9857
+  },
+  {
+    message:
+      'We are at The Metropolitan Museum of Art! Often called "the Met", it is the largest art museum in the entire United States. With 17 curatorial departments, 2.2 million square feet, and more than 2 million works in its permanent collections, the Met contains more treasures than most visitors will ever be able to see in a lifetime.\nFun Fact: Hard to image, but the Met was not always this enormous. This institution was originally located in a much smaller building at 681 Fifth Avenue!',
+    latitude: 40.7794,
+    longitude: 73.9632
+  },
+  {
+    message:
+      'This is DUMBO! No... not the elephant, but short for Down Under the Manhattan Bridge Overpass. What used to be full of warehouse buildings, is not a trendy Brooklyn neighborhood of cobblestone streets, independent boutiques, high-end resturants and trendy cafes. Head on over to Jane’s Carousel at Brooklyn Bridge Park for an unforgettable view of the Manhattan skyline.',
+    latitude: 40.7033,
+    longitude: 73.9881
+  },
+  {
+    message:
+      'We are at the Brooklyn Bridge! This bridge is a hybrid cable-stayed and suspension bridge, spanning the East River between the boroughs of Manhattan and Brooklyn. At the time of creation, it’s 486m long span easily made it the longest suspension beidge in the world.\nFun Fact: The infamously corrupt William M. "Boss" Tweed, was a very influential contributor to the Brooklyn Bridge project. He facilitated $65,000 in bribes to New York’s aldermen in order to win their backing of a $1.5 million bond issue!',
+    latitude: 40.7061,
+    longitude: 73.9969
+  },
+  {
+    message:
+      'This is Prospect Park! This urban park is situated between the neighborhoods of Park Slope, Propsect Heights and Flatbush. Prospect Park is the second largest public park in Brooklyn, right behind Maine Park.\nFun Fact: There are at least 18 species of fish and more than 200 species of birds throughout the park!',
+    latitude: 40.6602,
+    longitude: 73.969
+  },
+  {
+    message:
+      'You are at the Brooklyn Botanic Garden! This urban botanic garden was founded in 1910. Their goal is to connect people to the world of plants, fostering delight and curiousity while inspiring an appreciation and sense of stewardship of the environment.\nFun Fact: Before the intense development of NYC, this beautiful garden actually used to be an ash dump!',
+    latitude: 40.6694,
+    longitude: 73.9624
+  },
+  {
+    message:
+      'We are at Coney Island! Locals and tourists alike crowd this beach, the Wonder Wheel, and Luna Park. You’ll find street performers, seasonal events, and of course the July 4th hot-dog eating contest right here!\nFun Fact: Up to 2 MILLION people used to visit this beach each day! The borough president had to embark on a expansion project to deal with this congestion!',
+    latitude: 40.5721,
+    longitude: 73.9793
+  },
+  {
+    message:
+      'This is The Unisphere and the Panorama of NYC! Thisgiant globe is often refered to as the symbol of Queens. Located at the center of Flushing Meadows Park, it is a popular hangout spot for locals. You can visit the Queens Museum of Art right next door!',
+    latitude: 40.7464,
+    longitude: 73.844819
+  },
+  {
     latitude: 40.8110419997,
     longitude: -73.9414040002
   },

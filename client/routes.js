@@ -9,7 +9,6 @@ import {Keyboard, View, StyleSheet} from 'react-native'
 import * as Permissions from 'expo-permissions'
 import PermissionModal from '../client/components/PermissionModal'
 import {toggleShowSlidesAgain} from '../client/store/user'
-
 import IntroGradient from './components/Intro/IntroGradient'
 
 const DismissKeyBoard = ({children}) => (
