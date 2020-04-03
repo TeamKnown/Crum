@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     paddingBottom: '4%'
   },
   crumCollections: {
-    width: '85%',
+    width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-between'
   },

@@ -63,7 +63,7 @@ class UserSettingsModal extends React.Component {
             }}
           >
             <Text style={styles.settings} title="settings">
-              s e t t i n g s
+              settings
             </Text>
           </TouchableOpacity>
 
@@ -83,13 +83,13 @@ class UserSettingsModal extends React.Component {
                       Recommended Device Setting:
                     </Text>
                     {this.getiPhoneModel() === 'noAR' && (
-                      <Text style={styles.type}>n o A R</Text>
+                      <Text style={styles.type}>no AR</Text>
                     )}
                     {this.getiPhoneModel() === 'standard' && (
-                      <Text style={styles.type}>s t a n d a r d</Text>
+                      <Text style={styles.type}>standard</Text>
                     )}
                     {this.getiPhoneModel() === 'advanced' && (
-                      <Text style={styles.type}>a d v a n c e d</Text>
+                      <Text style={styles.type}>advanced</Text>
                     )}
                   </View>
                   <Text />
@@ -121,7 +121,7 @@ class UserSettingsModal extends React.Component {
                   }}
                 >
                   <Text style={styles.update} title="edit">
-                    u p d a t e
+                    update
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -157,18 +157,21 @@ const styles = StyleSheet.create({
   },
   settings: {
     color: 'white',
-    fontFamily: 'APompadourBold'
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   },
   update: {
     color: '#19ae9f',
-    fontFamily: 'APompadourBold'
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   },
   type: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
     fontFamily: 'APompadour',
-    fontSize: 40
+    fontSize: 40,
+    letterSpacing: 7
   },
 
   btnDrop: {
@@ -204,7 +207,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   info: {
-    fontStyle: 'italic',
     fontFamily: 'APompadour',
     textAlign: 'center'
   },
@@ -216,7 +218,8 @@ const styles = StyleSheet.create({
   },
   pickerItem: {
     height: 120,
-    fontFamily: 'APompadourBold'
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })
 

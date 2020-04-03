@@ -216,7 +216,7 @@ class DisMapScreen extends Component {
                     }}
                   />
                   <Callout style={styles.callout}>
-                    <Text>{crum.message}</Text>
+                    <Text style={styles.text}>{crum.message}</Text>
                   </Callout>
                 </Marker>
               )
@@ -284,7 +284,8 @@ const styles = StyleSheet.create({
   },
   ETA: {
     fontWeight: 'bold',
-    color: 'white'
+    color: 'white',
+    fontFamily: 'APompadourBold'
   },
   permission: {
     backgroundColor: 'white',
@@ -316,6 +317,9 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 22,
     alignSelf: 'center'
+  },
+  text: {
+    fontFamily: 'APompadour'
   }
 })
 

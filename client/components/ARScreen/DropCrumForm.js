@@ -182,7 +182,8 @@ class DisDropCrumForm extends React.Component {
                         onChange={this.handleTypeRecipient}
                         textAlign="center"
                         style={{
-                          color: 'black'
+                          color: 'black',
+                          fontFamily: 'APompadour'
                         }}
                         placeholder="r e c i p i e n t"
                         autoComplete="recipient"
@@ -221,7 +222,8 @@ class DisDropCrumForm extends React.Component {
                       onChange={this.handleTypeMessage}
                       textAlign="center"
                       style={{
-                        color: 'black'
+                        color: 'black',
+                        fontFamily: 'APompadour'
                       }}
                       placeholder="m e s s a g e *"
                       autoComplete="message"
@@ -259,7 +261,9 @@ class DisDropCrumForm extends React.Component {
                         )
                       }}
                     >
-                      <Text title="Drop!">drop</Text>
+                      <Text style={styles.button} title="Drop!">
+                        drop
+                      </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={styles.btn}
@@ -267,7 +271,9 @@ class DisDropCrumForm extends React.Component {
                         hideDropCrumForm()
                       }}
                     >
-                      <Text title="Drop!">never mind</Text>
+                      <Text style={styles.button} title="Drop!">
+                        back
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -351,13 +357,18 @@ const styles = StyleSheet.create({
     height: '90%',
     flex: 3,
     flexBasis: '20%',
-    borderColor: 'white',
+    borderColor: '#19ae9f',
     borderWidth: 2,
     textAlign: 'center',
-    borderRadius: 20,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5
+  },
+  button: {
+    fontFamily: 'APompadourBold',
+    color: '#19ae9f',
+    letterSpacing: 4
   },
   modalInputOptionSelector: {
     backgroundColor: 'rgba(250,250,250,0.8)',
@@ -405,6 +416,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderTopWidth: 0,
     borderBottomWidth: 0
+  },
+  each: {
+    fontFamily: 'APompadour'
   },
   validation: {color: 'red', textAlign: 'left', marginLeft: 10}
 })

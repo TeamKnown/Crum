@@ -54,8 +54,8 @@ class CollectedCrumsModal extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text style={styles.heading}>c r u m s</Text>
-          <Text style={styles.heading}>c o l l e c t e d</Text>
+          <Text style={styles.heading}>crums</Text>
+          <Text style={styles.heading}>collected</Text>
           {user.id ? (
             <Text style={styles.count}>{user.collectedCrums}</Text>
           ) : (
@@ -73,7 +73,7 @@ class CollectedCrumsModal extends React.Component {
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
               {!crumInstances.length ? (
-                <Text style={styles.crumsTitle}>n o c r u m s</Text>
+                <Text style={styles.noCrums}>no crums</Text>
               ) : (
                 <Text style={styles.crumsTitle}>My Crums:</Text>
               )}
@@ -88,11 +88,15 @@ class CollectedCrumsModal extends React.Component {
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length > 24 ? (
-                          <Text>{crum.message.slice(0, 24)}...</Text>
+                          <Text style={styles.each}>
+                            {crum.message.slice(0, 24)}...
+                          </Text>
                         ) : (
-                          <Text>{crum.message}</Text>
+                          <Text style={styles.each}>{crum.message}</Text>
                         )}
-                        <Text>From: {crum.user.userName}</Text>
+                        <Text style={styles.each}>
+                          From: {crum.user.userName}
+                        </Text>
                       </View>
                     </View>
                   ))}
@@ -103,8 +107,8 @@ class CollectedCrumsModal extends React.Component {
                   this.setModalVisible(!this.state.visible)
                 }}
               >
-                <Text style={{color: '#19ae9f'}} title="edit">
-                  b a c k
+                <Text style={styles.back} title="back">
+                  back
                 </Text>
               </TouchableOpacity>
             </View>
@@ -121,13 +125,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 16,
     fontWeight: 'bold',
-    fontFamily: 'APompadourBold'
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   },
   count: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
     fontSize: 40
+  },
+  noCrums: {
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   },
   crumsTitle: {
     fontWeight: 'bold',
@@ -174,6 +183,9 @@ const styles = StyleSheet.create({
   instanceText: {
     flexDirection: 'column'
   },
+  each: {
+    fontFamily: 'APompadour'
+  },
   btnDrop: {
     height: 60,
     width: '90%',
@@ -189,6 +201,11 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2
+  },
+  back: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })
 

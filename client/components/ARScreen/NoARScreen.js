@@ -226,11 +226,15 @@ class DisARScreen extends React.Component {
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length > 24 ? (
-                          <Text>{crum.message.slice(0, 24)}...</Text>
+                          <Text style={styles.each}>
+                            {crum.message.slice(0, 24)}...
+                          </Text>
                         ) : (
-                          <Text>{crum.message}</Text>
+                          <Text style={styles.each}>{crum.message}</Text>
                         )}
-                        <Text>By: {crum.user.userName}</Text>
+                        <Text style={styles.each}>
+                          By: {crum.user.userName}
+                        </Text>
                       </View>
                     </View>
                   ))}
@@ -359,6 +363,9 @@ const styles = StyleSheet.create({
   },
   instanceText: {
     flexDirection: 'column'
+  },
+  each: {
+    fontFamily: 'APompadour'
   },
   btnDrop: {
     height: 60,
