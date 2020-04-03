@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
-/* eslint-disable no-multi-spaces */
+/* eslint no-multi-spaces: 0 */
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
