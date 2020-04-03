@@ -75,7 +75,7 @@ class EditUserModalForm extends React.Component {
         >
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
-              <Text> e d i t u s e r i n f o</Text>
+              <Text style={styles.header}> Edit User Info</Text>
               <View style={styles.inputForm}>
                 <Text style={styles.text_footer}>Username</Text>
                 <View style={styles.action}>
@@ -118,7 +118,7 @@ class EditUserModalForm extends React.Component {
                   this.setModalVisible(!this.state.visible)
                 }}
               >
-                <Text style={{color: '#19ae9f'}} title="edit">
+                <Text style={styles.update} title="edit">
                   u p d a t e
                 </Text>
               </TouchableOpacity>
@@ -175,11 +175,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingLeft: '3%',
     marginTop: '1%',
-    marginBottom: '1%'
+    marginBottom: '1%',
+    fontFamily: 'APompadour'
   },
   inputForm: {
     width: '90%',
     backgroundColor: 'white'
+  },
+  header: {
+    fontWeight: 'bold',
+    fontSize: 16
   },
   text_footer: {
     color: '#05375a',
@@ -194,6 +199,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: '2%'
+  },
+  update: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold'
   }
 })
 

@@ -48,7 +48,7 @@ function UserProfile(props) {
       <View style={styles.container}>
         <View style={styles.bottomContainer}>
           <View style={styles.editButtons}>
-            <Text style={styles.heading}>u s e r n a m e</Text>
+            <Text style={styles.heading}>username</Text>
             <View>
               <EditUserModalForm />
             </View>
@@ -69,7 +69,7 @@ function UserProfile(props) {
             colors={['#19ae9f', '#26decb']}
           >
             <TouchableOpacity onPress={() => props.logout()}>
-              <Text style={{color: 'white'}}>l o g o u t</Text>
+              <Text style={styles.logout}>logout</Text>
             </TouchableOpacity>
           </LinearGradient>
           <UserSettingsModal style={styles.btnCrum} />
@@ -101,19 +101,23 @@ const styles = StyleSheet.create({
     width: 220,
     height: 220,
     marginRight: 10,
+    marginLeft: 10,
     marginBottom: 12,
     marginTop: '15%'
   },
   heading: {
+    fontFamily: 'APompadourBold',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    letterSpacing: 7
   },
   text: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16
+    marginTop: 16,
+    fontFamily: 'APompadour'
   },
   bottomContainer: {
     flex: 1,
@@ -147,7 +151,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 10
   },
-
+  logout: {
+    color: 'white',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
+  },
   input: {
     height: 60,
     width: '90%',

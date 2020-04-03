@@ -242,13 +242,8 @@ class DisARScreen extends React.Component {
                   this.showDropCrumForm()
                 }}
               >
-                <Text
-                  style={{
-                    color: '#19ae9f'
-                  }}
-                  title="Drop!"
-                >
-                  d r o p n e w c r u m
+                <Text style={styles.drop} title="Drop!">
+                  drop new crum
                 </Text>
               </TouchableOpacity>
 
@@ -380,5 +375,10 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2
+  },
+  drop: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })

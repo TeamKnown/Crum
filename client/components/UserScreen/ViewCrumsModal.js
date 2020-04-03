@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'APompadourBold'
   },
   count: {
     justifyContent: 'center',

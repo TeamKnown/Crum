@@ -62,7 +62,7 @@ class UserSettingsModal extends React.Component {
               this.setModalVisible(true)
             }}
           >
-            <Text style={{color: 'white'}} title="settings">
+            <Text style={styles.settings} title="settings">
               s e t t i n g s
             </Text>
           </TouchableOpacity>
@@ -120,7 +120,7 @@ class UserSettingsModal extends React.Component {
                     this.setModalVisible(!this.state.visible)
                   }}
                 >
-                  <Text style={{color: '#19ae9f'}} title="edit">
+                  <Text style={styles.update} title="edit">
                     u p d a t e
                   </Text>
                 </TouchableOpacity>
@@ -155,11 +155,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16
   },
-
+  settings: {
+    color: 'white',
+    fontFamily: 'APompadourBold'
+  },
+  update: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold'
+  },
   type: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
+    fontFamily: 'APompadour',
     fontSize: 40
   },
 
@@ -196,17 +204,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   info: {
-    fontStyle: 'italic'
+    fontStyle: 'italic',
+    fontFamily: 'APompadour',
+    textAlign: 'center'
   },
 
   picker: {
-    // flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     width: '100%'
   },
   pickerItem: {
-    height: 120
+    height: 120,
+    fontFamily: 'APompadourBold'
   }
 })
 
