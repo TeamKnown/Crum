@@ -1,4 +1,4 @@
-/* eslint no-multi-spaces: 0 */
+/* eslint-disable */
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../../store'
