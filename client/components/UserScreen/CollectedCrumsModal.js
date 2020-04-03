@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as React from 'react'
 import {connect} from 'react-redux'
-import {imageThumbnails} from '../../../assets'
+import {imageThumbnails, background} from '../../../assets'
 
 import {
   Platform,
@@ -62,6 +62,7 @@ class CollectedCrumsModal extends React.Component {
             <Text style={styles.count}>0</Text>
           )}
         </TouchableOpacity>
+
         <Modal
           animationType="slide"
           transparent={false}
@@ -70,49 +71,51 @@ class CollectedCrumsModal extends React.Component {
             Alert.alert('Modal closed')
           }}
         >
-          <View style={styles.modalContainer}>
-            <View style={styles.modal}>
-              {!crumInstances.length ? (
-                <Text style={styles.noCrums}>no crums</Text>
-              ) : (
-                <Text style={styles.crumsTitle}>My Crums:</Text>
-              )}
-              <ScrollView style={styles.scrollBox}>
-                {crumInstances &&
-                  crumInstances.length > 0 &&
-                  crumInstances.map(crum => (
-                    <View style={styles.instance} key={crum.id}>
-                      <Image
-                        source={imageThumbnails[crum.crum.name]}
-                        style={styles.imageThumbs}
-                      />
-                      <View style={styles.instanceText}>
-                        {crum.message.length > 24 ? (
+          <ImageBackground source={background} style={styles.root}>
+            <View style={styles.modalContainer}>
+              <View style={styles.modal}>
+                {!crumInstances.length ? (
+                  <Text style={styles.noCrums}>no crums</Text>
+                ) : (
+                  <Text style={styles.crumsTitle}>My Crums:</Text>
+                )}
+                <ScrollView style={styles.scrollBox}>
+                  {crumInstances &&
+                    crumInstances.length > 0 &&
+                    crumInstances.map(crum => (
+                      <View style={styles.instance} key={crum.id}>
+                        <Image
+                          source={imageThumbnails[crum.crum.name]}
+                          style={styles.imageThumbs}
+                        />
+                        <View style={styles.instanceText}>
+                          {crum.message.length > 24 ? (
+                            <Text style={styles.each}>
+                              {crum.message.slice(0, 24)}...
+                            </Text>
+                          ) : (
+                            <Text style={styles.each}>{crum.message}</Text>
+                          )}
                           <Text style={styles.each}>
-                            {crum.message.slice(0, 24)}...
+                            From: {crum.user.userName}
                           </Text>
-                        ) : (
-                          <Text style={styles.each}>{crum.message}</Text>
-                        )}
-                        <Text style={styles.each}>
-                          From: {crum.user.userName}
-                        </Text>
+                        </View>
                       </View>
-                    </View>
-                  ))}
-              </ScrollView>
-              <TouchableOpacity
-                style={styles.btnDrop}
-                onPress={() => {
-                  this.setModalVisible(!this.state.visible)
-                }}
-              >
-                <Text style={styles.back} title="back">
-                  back
-                </Text>
-              </TouchableOpacity>
+                    ))}
+                </ScrollView>
+                <TouchableOpacity
+                  style={styles.btnDrop}
+                  onPress={() => {
+                    this.setModalVisible(!this.state.visible)
+                  }}
+                >
+                  <Text style={styles.back} title="back">
+                    back
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </ImageBackground>
         </Modal>
       </View>
     )
@@ -120,6 +123,10 @@ class CollectedCrumsModal extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    height: '100%'
+  },
   heading: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -140,7 +147,8 @@ const styles = StyleSheet.create({
   },
   crumsTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'APompadourBold'
   },
   imageThumbs: {
     width: 40,

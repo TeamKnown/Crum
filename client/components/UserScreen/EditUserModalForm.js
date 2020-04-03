@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'APompadourBold'
   },
   text_footer: {
     color: '#05375a',
