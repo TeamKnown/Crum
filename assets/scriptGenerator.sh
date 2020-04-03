@@ -5,28 +5,28 @@
 # for each thumbnails
 # check if the full size version exists
 
-# for file in ./assets/Crums/01-SMILEY/*
+# for file in ./assets/Crums/*/*
 # do echo $file
-#  mv "$file" `echo $file | tr '' '_'`
+#  do mv "$file" `echo $file | tr '' '_'`
 # done
 
-# for fileFullName in $(find ./assets/CrumThumbnails -name "*.png")
-# do
-#    :
-#   fileBaseName="$(basename -- $fileFullName)"
-#   fileDirName="$(basename $(dirname $fileFullName))"
-#   if [ $fileDirName != . ]
-#   then
-#   # mv -i "$fileFullName" "${fileFullName// /_}"
-#   FILE=./assets/Crums/$fileDirName/$fileBaseName
-#   if ! [ -f "$FILE" ]; then
-#     echo "$fileFullName do not exist as full size"
-#     # rm ./assets/CrumThumbnails/$fileDirName/$fileBaseName
-#   # else
-#     # echo "$fileBaseName exist as full size"
-#   fi
-#   fi
-# done
+for fileFullName in $(find ./assets/CrumThumbnails -name "*.png")
+do
+   :
+  fileBaseName="$(basename -- $fileFullName)"
+  fileDirName="$(basename $(dirname $fileFullName))"
+  if [ $fileDirName != . ]
+  then
+  # mv -i "$fileFullName" "${fileFullName// /_}"
+  FILE=./assets/Crums/$fileDirName/$fileBaseName
+  if ! [ -f "$FILE" ]; then
+    echo "$fileFullName do not exist as full size"
+    rm ./assets/CrumThumbnails/$fileDirName/$fileBaseName
+  # else
+    # echo "$fileBaseName exist as full size"
+  fi
+  fi
+done
 
 
 
@@ -41,14 +41,14 @@ do
   FILE=./assets/CrumThumbnails/$fileDirName/$fileBaseName
   if ! [ -f "$FILE" ]; then
     echo "$fileFullName do not exist as small size"
-    # rm ./assets/CrumThumbnails/$fileDirName/$fileBaseName.png
+    rm ./assets/CrumThumbnails/$fileDirName/$fileBaseName
   # else
     # echo "$fileBaseName exist as full size"
   fi
   fi
 done
 
-seed files
+# seed files
 touch ./script/crumSeed.js
 cat /dev/null > ./script/crumSeed.js
 echo "const crums = [" >> ./script/crumSeed.js
