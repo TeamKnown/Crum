@@ -52,7 +52,11 @@ export default function App(props) {
           ...Ionicons.font,
           FuturaBold: require('./assets/fonts/FuturaBold.ttf'),
           FuturaBoldE: require('./assets/fonts/FuturaExtra.ttf'),
-          FuturaBoldI: require('./assets/fonts/FuturaBoldItalic.ttf')
+          FuturaBoldI: require('./assets/fonts/FuturaBoldItalic.ttf'),
+          KenyanCoffee: require('./assets/fonts/kenyancoffeerg.ttf'),
+          FuturistFixedwidthBold: require('./assets/fonts/FuturistFixedwidthBold.ttf'),
+          APompadour: require('./assets/fonts/APompadour.ttf'),
+          APompadourBold: require('./assets/fonts/APompadourBold.ttf')
         })
       } catch (e) {
         // We might want to provide this error information to an error reporting service

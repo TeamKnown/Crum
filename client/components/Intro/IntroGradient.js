@@ -10,7 +10,7 @@ const slides = [
   {
     key: 'firstSlide',
     title: 'DROP A CRUM',
-    text: `Head to the View tab and tap anywhere to\n drop your first Crum.\n\n  Pick your favorite icon and add a message before you drop. Look around... it’s alive!\n\nOld phone? No problem. We support devices\nthat aren’t AR-equipped. Go to Settings to accomodate your device`,
+    text: `Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!\n\n Old phone? No problem. We support devices that aren’t AR-equipped. Go to Settings to accomodate your device`,
     icon: 'ios-pin',
     colors: ['#19ae9f', '#4272a0']
   },
@@ -18,7 +18,7 @@ const slides = [
     key: 'secondSlide',
     title: 'FOLLOW THE MAP',
     text:
-      'Navigate to the Map tab to locate Crums near you.\n\n Tap on a Crum for additional information, such as ETA and directions',
+      'Use the Map tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there',
     icon: 'ios-navigate',
     colors: ['#2a969f', '#535a9f']
   },
@@ -26,7 +26,7 @@ const slides = [
     key: 'thirdSlide',
     title: 'INTERACT',
     text:
-      'Drop, collect, and comment on Crums as you wander around town.\n\n Every Crum has a limit on how many times it can be collected, so do not miss out!',
+      'Drop, collect, and comment on Crums as you wander around town.\n\n Every Crum has a limit on how many times it can be collected, so get to it before someone else does!',
     icon: 'ios-walk',
     colors: ['#4272a0', '#6c379f']
   },
@@ -34,7 +34,7 @@ const slides = [
     key: 'fourthSlide',
     title: 'ENJOY',
     text:
-      'Have fun exploring and always be aware of\n your surroundings.\n\nWherever you are, there just might be waiting around the corner!',
+      'Have fun exploring! \n\nNo matter where you are, there could be Crums all around you!',
     icon: 'ios-happy',
     colors: ['#535a9f', '#7C1E9F']
   }
@@ -111,7 +111,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 16,
     backgroundColor: 'transparent',
     textAlign: 'center',
     marginBottom: '15%',

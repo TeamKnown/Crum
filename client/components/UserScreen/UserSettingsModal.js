@@ -1,3 +1,4 @@
+/* eslint no-multi-spaces: 0 */
 import * as React from 'react'
 import {connect} from 'react-redux'
 import {getSingleUser} from '../../store'
@@ -61,8 +62,8 @@ class UserSettingsModal extends React.Component {
               this.setModalVisible(true)
             }}
           >
-            <Text style={{color: 'white'}} title="settings">
-              s e t t i n g s
+            <Text style={styles.settings} title="settings">
+              settings
             </Text>
           </TouchableOpacity>
 
@@ -82,13 +83,13 @@ class UserSettingsModal extends React.Component {
                       Recommended Device Setting:
                     </Text>
                     {this.getiPhoneModel() === 'noAR' && (
-                      <Text style={styles.type}>n o A R</Text>
+                      <Text style={styles.type}>no AR</Text>
                     )}
                     {this.getiPhoneModel() === 'standard' && (
-                      <Text style={styles.type}>s t a n d a r d</Text>
+                      <Text style={styles.type}>standard</Text>
                     )}
                     {this.getiPhoneModel() === 'advanced' && (
-                      <Text style={styles.type}>a d v a n c e d</Text>
+                      <Text style={styles.type}>advanced</Text>
                     )}
                   </View>
                   <Text />
@@ -106,7 +107,7 @@ class UserSettingsModal extends React.Component {
                   selectedValue={this.state.device}
                   onValueChange={this.handleSelectMode}
                 >
-                  <Picker.Item label="n o A R" value="noAR" />
+                  <Picker.Item label="n o  A R" value="noAR" />
                   <Picker.Item label="s t a n d a r d" value="standard" />
                   <Picker.Item label="a d v a n c e d" value="advanced" />
                 </Picker>
@@ -119,8 +120,8 @@ class UserSettingsModal extends React.Component {
                     this.setModalVisible(!this.state.visible)
                   }}
                 >
-                  <Text style={{color: '#19ae9f'}} title="edit">
-                    u p d a t e
+                  <Text style={styles.update} title="edit">
+                    update
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -154,12 +155,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16
   },
-
+  settings: {
+    color: 'white',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
+  },
+  update: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
+  },
   type: {
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    fontSize: 40
+    fontFamily: 'APompadour',
+    fontSize: 40,
+    letterSpacing: 7
   },
 
   btnDrop: {
@@ -195,17 +207,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   info: {
-    fontStyle: 'italic'
+    fontFamily: 'APompadour',
+    textAlign: 'center'
   },
 
   picker: {
-    // flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     width: '100%'
   },
   pickerItem: {
-    height: 120
+    height: 120,
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })
 

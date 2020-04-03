@@ -181,7 +181,7 @@ class DisEditDeleteCrumForm extends React.Component {
                           ))}
                         </View>
                       ) : (
-                        <Text>
+                        <Text style={styles.text}>
                           No one has commented on this crum, add one now!
                         </Text>
                       )}
@@ -196,7 +196,8 @@ class DisEditDeleteCrumForm extends React.Component {
                       onChange={this.handleTypeComment}
                       textAlign="center"
                       style={{
-                        color: 'black'
+                        color: 'black',
+                        fontFamily: 'APompadour'
                       }}
                       placeholder="Leave your comment here"
                       autoComplete="text"
@@ -262,7 +263,9 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text title="EditDelete!">delete</Text>
+                        <Text title="EditDelete!" style={styles.button}>
+                          delete
+                        </Text>
                       </TouchableOpacity>
                     )}
                     <TouchableOpacity
@@ -271,7 +274,9 @@ class DisEditDeleteCrumForm extends React.Component {
                         this.props.hideEditDeleteCrumForm()
                       }}
                     >
-                      <Text title="EditDelete!">back</Text>
+                      <Text title="EditDelete!" style={styles.button}>
+                        back
+                      </Text>
                     </TouchableOpacity>
                   </View>
                 </View>
@@ -419,13 +424,18 @@ const styles = StyleSheet.create({
     height: '90%',
     flex: 3,
     flexBasis: '15%',
-    borderColor: 'white',
+    borderColor: '#19ae9f',
     borderWidth: 2,
     textAlign: 'center',
-    borderRadius: 20,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 5
+  },
+  button: {
+    fontFamily: 'APompadourBold',
+    color: '#19ae9f',
+    letterSpacing: 4
   },
   modalInput: {
     backgroundColor: 'rgba(250,250,250,0.8)',
@@ -440,5 +450,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10
   },
   validation: {color: 'red', textAlign: 'left', marginLeft: 10},
-  subtitle: {fontSize: 18, fontWeight: 'bold'}
+  subtitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'APompadourBold'
+  },
+  text: {
+    fontFamily: 'APompadour'
+  }
 })

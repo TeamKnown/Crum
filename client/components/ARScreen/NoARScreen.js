@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 /* eslint-disable no-use-before-define */
+/* eslint no-multi-spaces: 0 */
 import {AR} from 'expo'
 import {GraphicsView} from 'expo-graphics'
 import {Renderer, THREE} from 'expo-three'
@@ -225,11 +226,15 @@ class DisARScreen extends React.Component {
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length > 24 ? (
-                          <Text>{crum.message.slice(0, 24)}...</Text>
+                          <Text style={styles.each}>
+                            {crum.message.slice(0, 24)}...
+                          </Text>
                         ) : (
-                          <Text>{crum.message}</Text>
+                          <Text style={styles.each}>{crum.message}</Text>
                         )}
-                        <Text>By: {crum.user.userName}</Text>
+                        <Text style={styles.each}>
+                          By: {crum.user.userName}
+                        </Text>
                       </View>
                     </View>
                   ))}
@@ -241,13 +246,8 @@ class DisARScreen extends React.Component {
                   this.showDropCrumForm()
                 }}
               >
-                <Text
-                  style={{
-                    color: '#19ae9f'
-                  }}
-                  title="Drop!"
-                >
-                  d r o p n e w c r u m
+                <Text style={styles.drop} title="Drop!">
+                  drop new crum
                 </Text>
               </TouchableOpacity>
 
@@ -364,6 +364,9 @@ const styles = StyleSheet.create({
   instanceText: {
     flexDirection: 'column'
   },
+  each: {
+    fontFamily: 'APompadour'
+  },
   btnDrop: {
     height: 60,
     width: '90%',
@@ -379,5 +382,10 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2
+  },
+  drop: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })

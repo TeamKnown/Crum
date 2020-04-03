@@ -1,3 +1,4 @@
+/* eslint no-multi-spaces: 0 */
 import * as React from 'react'
 import {connect} from 'react-redux'
 // import {
@@ -30,10 +31,6 @@ class ViewCrumsModal extends React.Component {
   state = {
     visible: false
   }
-  // componentDidMount() {
-  //   this.props.getSingleUser(this.props.user.id)
-
-  // }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
@@ -62,8 +59,8 @@ class ViewCrumsModal extends React.Component {
             this.setModalVisible(true)
           }}
         >
-          <Text style={styles.heading}>c r u m s</Text>
-          <Text style={styles.heading}>d r o p p e d</Text>
+          <Text style={styles.heading}>crums</Text>
+          <Text style={styles.heading}>dropped</Text>
           {user.id ? (
             <Text style={styles.count}>{user.totalCrums}</Text>
           ) : (
@@ -96,15 +93,21 @@ class ViewCrumsModal extends React.Component {
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length > 24 ? (
-                          <Text>{crum.message.slice(0, 24)}...</Text>
+                          <Text style={styles.each}>
+                            {crum.message.slice(0, 24)}...
+                          </Text>
                         ) : (
-                          <Text>{crum.message}</Text>
+                          <Text style={styles.each}>{crum.message}</Text>
                         )}
                         {crum.status === 'floating' && (
-                          <Text>Remaining: {crum.numLeft}</Text>
+                          <Text style={styles.each}>
+                            Remaining: {crum.numLeft}
+                          </Text>
                         )}
                         {crum.status === 'collected' && (
-                          <Text>Collected by: {crum.recipient.userName}</Text>
+                          <Text style={styles.each}>
+                            Collected by: {crum.recipient.userName}
+                          </Text>
                         )}
                         {/* <Text>Dropped at: {crum.createdAt}</Text> */}
                       </View>
@@ -117,8 +120,8 @@ class ViewCrumsModal extends React.Component {
                   this.setModalVisible(!this.state.visible)
                 }}
               >
-                <Text style={{color: '#19ae9f'}} title="edit">
-                  b a c k
+                <Text style={styles.update} title="edit">
+                  back
                 </Text>
               </TouchableOpacity>
             </View>
@@ -134,7 +137,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   },
   count: {
     justifyContent: 'center',
@@ -184,6 +189,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2
   },
+  each: {
+    fontFamily: 'APompadour'
+  },
   btnDrop: {
     height: 60,
     width: '90%',
@@ -199,6 +207,11 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2
+  },
+  update: {
+    color: '#19ae9f',
+    fontFamily: 'APompadourBold',
+    letterSpacing: 7
   }
 })
 
