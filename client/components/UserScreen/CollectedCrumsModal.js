@@ -73,6 +73,7 @@ class CollectedCrumsModal extends React.Component {
           <View style={styles.modalContainer}>
             <View style={styles.modal}>
               {!crumInstances.length ? (
+                /*eslint-disable-next-line:*/
                 <Text style={styles.crumsTitle}>n o c r u m s</Text>
               ) : (
                 <Text style={styles.crumsTitle}>My Crums:</Text>
