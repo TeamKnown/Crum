@@ -1,10 +1,6 @@
+/* eslint no-multi-spaces: 0 */
 import * as React from 'react'
 import {connect} from 'react-redux'
-// import {
-//   getSingleUser,
-//   fetchCollectedCrumInstances,
-
-// } from '../store'
 import {imageThumbnails} from '../../../assets'
 
 import {
@@ -22,8 +18,6 @@ import {
   Alert,
   ScrollView
 } from 'react-native'
-// import crumInstancesReducer from '../store/crumInstances'
-
 class CollectedCrumsModal extends React.Component {
   constructor(props) {
     super(props)
@@ -32,10 +26,6 @@ class CollectedCrumsModal extends React.Component {
   state = {
     visible: false
   }
-  // componentDidMount() {
-  //   this.props.getSingleUser(this.props.user.id)
-
-  // }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
@@ -55,7 +45,6 @@ class CollectedCrumsModal extends React.Component {
     }
     const {user, crumInstances, crums} = this.props
 
-    const total = crumInstances.filter(each => each.recipientId === user.id)
     return (
       <View>
         <TouchableOpacity

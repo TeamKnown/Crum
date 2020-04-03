@@ -1,3 +1,4 @@
+/* eslint no-multi-spaces: 0 */
 import * as React from 'react'
 import {connect} from 'react-redux'
 // import {
@@ -30,10 +31,6 @@ class ViewCrumsModal extends React.Component {
   state = {
     visible: false
   }
-  // componentDidMount() {
-  //   this.props.getSingleUser(this.props.user.id)
-
-  // }
 
   async handleGetCrum(userId) {
     this.props.getSingleUser(userId)
