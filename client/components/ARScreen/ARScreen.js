@@ -150,7 +150,7 @@ class DisARScreen extends React.Component {
           scene.add(plane)
 
           if (crumInstance.recipientId === props.user.id) {
-            let planeOutline = await createPlaneOutline(0xbd7cde, pos)
+            let planeOutline = await createPlaneOutline(0x26decb, pos)
             let outlineName = outlineInstanceNamer(crumInstance)
             planeOutline.name = outlineName
             scene.add(planeOutline)
@@ -159,7 +159,7 @@ class DisARScreen extends React.Component {
             crumInstance.userId === props.user.id &&
             crumInstance.recipientId !== null
           ) {
-            let planeOutline = await createPlaneOutline(0x26decb, pos)
+            let planeOutline = await createPlaneOutline(0xbd7cde, pos)
             let outlineName = outlineInstanceNamer(crumInstance)
             planeOutline.name = outlineName
             scene.add(planeOutline)
