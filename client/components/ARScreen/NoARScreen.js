@@ -341,7 +341,8 @@ const styles = StyleSheet.create({
   },
   crumsTitle: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'APompadourBold'
   },
   scrollBox: {
     width: '100%',
