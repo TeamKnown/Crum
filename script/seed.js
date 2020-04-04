@@ -805,6 +805,7 @@ const seed = async () => {
     await Promise.all(users.map(user => User.create(user)))
     await Promise.all(crums.map(crum => Crum.create(crum)))
 
+    /// seed landmark crums
     await Promise.all(
       crumInstances.map(crumInstance => CrumInstance.create(crumInstance))
     )
@@ -835,6 +836,7 @@ const seed = async () => {
       await crumInstanceI.setUser(userK)
     }
 
+    /// seed crums between the 4 authors of the app
     let April = await User.findOne({where: {userName: 'April'}})
     let Mark = await User.findOne({where: {userName: 'Mark'}})
     let Peter = await User.findOne({where: {userName: 'Peter'}})
