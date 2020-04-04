@@ -254,7 +254,8 @@ class DisDropCrumForm extends React.Component {
                                 ? 1
                                 : this.state.num,
                             latitude: locations.latitude,
-                            longitude: locations.longitude
+                            longitude: locations.longitude,
+                            isPrivate: this.state.sendMode === 'secret crum'
                           },
                           user.id,
                           this.state.imgId

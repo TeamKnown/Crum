@@ -34,6 +34,9 @@ const CrumInstance = db.define('crumInstance', {
   },
   fromId: {
     type: Sequelize.INTEGER
+  },
+  isPrivate: {
+    type: Sequelize.BOOLEAN
   }
 })
 

@@ -85,9 +85,7 @@ class CollectedCrumsModal extends React.Component {
                       <Image
                         source={imageThumbnails[crum.crum.name]}
                         style={styles.imageThumbs}
-                        // borderWidth={
-                        //   crum.recipientId === this.props.user.id ? 2 : 0
-                        // }
+                        borderWidth={crum.isPrivate === true ? 2 : 0}
                       />
                       <View style={styles.instanceText}>
                         {crum.message.length > 24 ? (
@@ -148,9 +146,9 @@ const styles = StyleSheet.create({
   imageThumbs: {
     width: 40,
     height: 40,
-    margin: 10
-    // borderRadius: 3,
-    // borderColor: 0xbd7cde
+    margin: 10,
+    borderRadius: 3,
+    borderColor: 0xbd7cde
   },
   modal: {
     flexDirection: 'column',
