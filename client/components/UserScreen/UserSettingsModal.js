@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
 
   heading: {
     fontWeight: 'bold',
-    fontSize: 16
+    fontSize: 16,
+    fontFamily: 'APompadourBold'
   },
   settings: {
     color: 'white',
