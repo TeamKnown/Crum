@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject
   },
-  callout: {width: 200, height: 20},
+  callout: {width: 200},
   markerimg: {
     height: 30,
     width: 30,

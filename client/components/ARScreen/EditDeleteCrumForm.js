@@ -217,7 +217,12 @@ class DisEditDeleteCrumForm extends React.Component {
                         )
                       }}
                     >
-                      <Text title="EditDelete!">comment</Text>
+                      <Text
+                        style={self ? styles.buttonTight : styles.button}
+                        title="EditDelete!"
+                      >
+                        comment
+                      </Text>
                     </TouchableOpacity>
 
                     {(isRecipient || isForAll) && (
@@ -232,7 +237,12 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text title="EditDelete!">collect</Text>
+                        <Text
+                          style={self ? styles.buttonTight : styles.button}
+                          title="EditDelete!"
+                        >
+                          collect
+                        </Text>
                       </TouchableOpacity>
                     )}
                     {self && (
@@ -248,7 +258,12 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text title="EditDelete!">edit</Text>
+                        <Text
+                          style={self ? styles.buttonTight : styles.button}
+                          title="EditDelete!"
+                        >
+                          edit
+                        </Text>
                       </TouchableOpacity>
                     )}
                     {self && (
@@ -263,7 +278,10 @@ class DisEditDeleteCrumForm extends React.Component {
                           )
                         }}
                       >
-                        <Text title="EditDelete!" style={styles.button}>
+                        <Text
+                          title="EditDelete!"
+                          style={self ? styles.buttonTight : styles.button}
+                        >
                           delete
                         </Text>
                       </TouchableOpacity>
@@ -274,7 +292,10 @@ class DisEditDeleteCrumForm extends React.Component {
                         this.props.hideEditDeleteCrumForm()
                       }}
                     >
-                      <Text title="EditDelete!" style={styles.button}>
+                      <Text
+                        title="EditDelete!"
+                        style={self ? styles.buttonTight : styles.button}
+                      >
                         back
                       </Text>
                     </TouchableOpacity>
@@ -436,6 +457,12 @@ const styles = StyleSheet.create({
     fontFamily: 'APompadourBold',
     color: '#19ae9f',
     letterSpacing: 4
+  },
+  buttonTight: {
+    fontFamily: 'APompadourBold',
+    color: '#19ae9f',
+    letterSpacing: 0,
+    fontSize: 12
   },
   modalInput: {
     backgroundColor: 'rgba(250,250,250,0.8)',
