@@ -1,5 +1,4 @@
 export const background = require('./background.png')
-export const defaultProfile = require('./crumIcon.png')
 export const editIcon = require('./editIcon.png')
 export const deleteIcon = require('./deleteIcon.png')
 export const purpleCrumIcon = require('./purpleCrumIcon.png')
