@@ -20,9 +20,9 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 - Once the QR code is detected, you will receive a push notification to open the “exp” link, click on this and Expo will start downloading the JavaScript bundle
 - Log in or sign up and drop some Crums!
 
-## Tech Stack
+# Tech Stack
 
-# Front-End
+## Front-End
 
 - [Expo](https://expo.io/learn)
 - [Expo-Three](https://github.com/expo/expo-three)
@@ -30,7 +30,7 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 - [React-Native](https://github.com/facebook/react-native)
 - [Redux](https://redux.js.org/)
 
-# Back-end
+## Back-end
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
@@ -38,14 +38,23 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 #### Demo chat features
 
-## Features
+# Features
 
+## Drop and collect Public Crum
 <p align="center">
   <img src="public/readme/AdminEditUser.gif">
 </p>
 
-## Project Challenges
+## Drop and collect Private Crum
 
-## Learning Takeaways
+## Direction Finder
 
-## Features - time permitting and stretch goals
+## Devide info detection
+
+# Project Challenges
+
+## Preserve location and heading of the crums
+
+# Learning Takeaways
+
+# Features - time permitting and stretch goals
