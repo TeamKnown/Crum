@@ -27,7 +27,7 @@ import {
   Alert
 } from 'react-native'
 import {useFocusEffect} from '@react-navigation/native'
-import {defaultProfile} from '../../../assets'
+import {purpleCrumIcon} from '../../../assets'
 function UserProfile(props) {
   useFocusEffect(
     React.useCallback(() => {
@@ -43,7 +43,7 @@ function UserProfile(props) {
   return (
     <View style={styles.main}>
       <View style={styles.topContainer}>
-        <Image source={defaultProfile} style={styles.profilePic} />
+        <Image source={purpleCrumIcon} style={styles.profilePic} />
       </View>
       <View style={styles.container}>
         <View style={styles.bottomContainer}>

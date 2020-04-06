@@ -10,7 +10,7 @@ const slides = [
   {
     key: 'firstSlide',
     title: 'DROP A CRUM',
-    text: `Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!\n\n Old phone? No problem. We support devices that aren’t AR-equipped. Go to Settings to accomodate your device`,
+    text: `Head to the View tab and tap\n anywhere to drop your first Crum.\n\n  Don’t forget to select an icon and \nadd a message before you drop. \nLook around... there it is!\n\n Old phone? No problem. We support devices that aren’t AR-equipped. Go to Settings to accomodate your device.`,
     icon: 'ios-pin',
     colors: ['#19ae9f', '#4272a0']
   },
@@ -18,7 +18,7 @@ const slides = [
     key: 'secondSlide',
     title: 'FOLLOW THE MAP',
     text:
-      'Use the Map tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there',
+      'Use the Map tab \nto find nearby Crums.\n\n Tap on a Crum if you need help finding it - we’ll tell you how far away it is and how to get there.',
     icon: 'ios-navigate',
     colors: ['#2a969f', '#535a9f']
   },
