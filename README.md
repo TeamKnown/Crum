@@ -68,10 +68,10 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 Dropped and Collected crum wiil be recorded in user profile
 
 <p float="left">
-<img width='24%' src="public/Public_5.jpeg">
-<img width='24%' src="public/Public_6.jpeg">
-<img width='24%' src="public/Public_7.jpeg">
-<img width='24%' src="public/Public_8.jpeg">
+<img width='24%' src="public/Public_5.png">
+<!-- <img width='24%' src="public/Public_6.png">
+<img width='24%' src="public/Public_7.png">
+<img width='24%' src="public/Public_8.png"> -->
 </p>
 
 ## Private Crum
@@ -86,8 +86,8 @@ We make the private crum look different by adding a ring around it. Dropper will
 Dropped and Collected crum wiil be recorded in user profile. Dropper will see the crum with purple border, receiver will see the crum with teal border.
 
 <p float="left">
-<img width='30%' src="public/Private_3.jpeg">
-<img width='30%' src="public/Private_4.jpeg">
+<img width='30%' src="public/Private_3.png">
+<img width='30%' src="public/Private_4.png">
 </p>
 
 #### Map
