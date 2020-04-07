@@ -67,7 +67,7 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 </p >
 
 <p float="left">
-<figure width='24%' align="left">
+<figure width='24%' flex-direction='column' >
 <img src="public/Public_1.gif">
 <figcaption>image_caption</figcaption>
  </figure>
