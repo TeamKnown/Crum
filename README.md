@@ -64,15 +64,10 @@ Other users can collect the crum, but no one is allowed to collect the same crum
     <th width='24%'>Lastname</th>
     <th width='24%'>Age</th>
   </tr>
-  <!-- <tr>
-    <td>Jill</td>
-    <td>Smith</td>
-    <td>50</td>
-  </tr>
   <tr>
-    <td>Eve</td>
-    <td>Jackson</td>
-    <td>94</td>
+    <td><img src="public/Public_1.gif"></td>
+    <td><img src="public/Public_1.gif"></td>
+    <td><img src="public/Public_1.gif"></td>
   </tr>
   <tr>
     <td>John</td>
