@@ -21,7 +21,9 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 - Log in or sign up and drop some Crums!
 
 ## Tech Stack
+
 Front-End
+
 - [Expo](https://expo.io/learn)
 - [Expo-Three](https://github.com/expo/expo-three)
 - [React](https://facebook.github.io/react/)
@@ -31,35 +33,69 @@ Front-End
 - [Redux](https://redux.js.org/)
 
 Back-end
+
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 
+#### Demo chat features
+
+# Features
+
+## Profile
+
 #### Login
 
-<p float="left">
-  <img src="public/Login.gif">
-</p>
-
-#### Profile
+To adapt to different phone module, we automatically detect phone module.
 
 <p float="left">
-  <img src="public/Profile.gif">
   <img src="public/Device.gif">
 </p>
 
-#### Drop Crum
+## Public Crum
+
+User can drop a crum to the public and specify the number of time it can be collected.
+
+Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
 <p float="left">
-  <img src="public/Drop_Public_Crum.gif">
-  <img src="public/Drop_Private_Crum.gif">
+<em min-width='24%'>image_caption</em>
+<em minWidth='24%'>image_caption</em>
+<em text-align='center' width='24%'>image_caption</em>
+<em width='24%'>image_caption</em>
+
+</p >
+
+<p float="left">
+<img width='24%' src="public/Public_1.gif">
+<img width='24%'src="public/Public_2.gif">
+<img width='24%'src="public/Public_3.gif">
+<img width='24%'src="public/Public_4.gif">
+</p >
+
+Dropped and Collected crum wiil be recorded in user profile
+
+<p float="left">
+<img width='24%' src="public/Public_5.gif">
+<img width='24%' src="public/Public_6.gif">
+<img width='24%' src="public/Public_7.gif">
+<img width='24%' src="public/Public_8.gif">
 </p>
 
-#### Collect Crum
+## Private Crum
+
+We make the private crum look different by adding a ring around it. Dropper will see the crum with purple ring, receiver will see the crum with teal ring. Private crum will disappear once collected from the AR space.
 
 <p float="left">
-  <img src="public/Drop_Public_Crum.gif">
-  <img src="public/Drop_Private_Crum.gif">
+<img width='30%' src="public/Private_1.gif">
+<img width='30%' src="public/Private_2.gif">
+</p>
+
+Dropped and Collected crum wiil be recorded in user profile. Dropper will see the crum with purple border, receiver will see the crum with teal border.
+
+<p float="left">
+<img width='30%' src="public/Private_3.gif">
+<img width='30%' src="public/Private_4.gif">
 </p>
 
 #### Map
@@ -80,4 +116,5 @@ Back-end
 # Learning Takeaways
 
 # Features - time permitting and stretch goals
+
 - socket.io integration
