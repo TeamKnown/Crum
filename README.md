@@ -39,8 +39,6 @@ Back-end
 - [PostgreSQL](https://www.postgresql.org/)
 - [Ngrok](https://ngrok.com/)
 
-#### Demo chat features
-
 # Features
 
 ## Profile
@@ -77,7 +75,7 @@ Dropped and Collected Crums will be recorded in the user's profile
 
 <p float="left">
 <em minWidth=’24%’>Exhibit 1: April is able to check her history of dropped Crums in her user profile. She can also see which user has collected her Crum.</em><br/>
-<em minWidth=‘24%’>Exhibit 2: Mark checks his history of collected Crums.</em><br/>
+<em minWidth=‘24%’>Exhibit 2: Mark, Peter and Thomas checks his history of collected Crums.</em><br/>
 </p >
 
 <p float="left">
@@ -92,7 +90,7 @@ Dropped and Collected Crums will be recorded in the user's profile
 A user who drops a private Crum must specify a designated recipient. We differentiate private Crums from public Crums by adding a colored ring around them. Users who drop a private Crum will see a purple ring around it. The recipient of the private Crum will see a teal ring around it. Private Crums will also be immediately removed from the AR view once collected.
 
 <p float="left">
-<em minWidth=’24%’>Exhibit 1: April wants to send some healthy snacks to just Thomas. She selects the private Crum option, specifies the recipient name, and confirms the drop.</em><br/>
+<em minWidth=’24%’>Exhibit 1: Peter wants to send some healthy snacks to just Thomas. She selects the private Crum option, specifies the recipient name, and confirms the drop.</em><br/>
 <em minWidth=‘24%’>Exhibit 2: Thomas comes across a teal-bordered Crum, so he knows it was personally dropped for him. Since he is the recipient, he is able to collect the Crum.</em><br/>
 </p >
 
@@ -113,8 +111,8 @@ Similar to the AR view, Privately Dropped and Collected Crums wiil be recorded i
 The map view will show all nearby public and private Crums, indicated by color. Swiping through the carousel of Crums will navigate the user to it's respective location on the map and display an estimated time of arrival.
 
 <p float="left">
-<em minWidth=’24%’>Exhibit 1: Thomas swipes through the carousel of nearby Crums to see what users have been dropping.</em><br/>
-<em minWidth=‘24%’>Exhibit 2: Each Crum is displayed with an ETA along with a brief description.</em><br/>
+<em minWidth=’30%’>Exhibit 1: Thomas swipes through the carousel of nearby Crums to see what users have been dropping.</em><br/>
+<em minWidth=‘30%’>Exhibit 2: Each Crum is displayed with an ETA along with a brief description.</em><br/>
 </p >
 
 <p float="left">
