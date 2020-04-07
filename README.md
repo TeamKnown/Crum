@@ -60,8 +60,8 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 <p float="left">
 <em min-width='24%'>image_caption</em>
-<em width='24%'>image_caption</em>
-<em width='24%'>image_caption</em>
+<em minWidth='24%'>image_caption</em>
+<em text-align='center' width='24%'>image_caption</em>
 <em width='24%'>image_caption</em>
 
 </p >
