@@ -68,18 +68,13 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 <img src="public/Public_4.gif">
 </p >
 
-Dropped crum wiil be recorded in user profile
+Dropped and Collected crum wiil be recorded in user profile
 
 <p float="left">
-<img src="public/Public_5.gif">
-</p>
-
-Collected crum wiil also be recorded in user profile
-
-<p float="left">
-<img src="public/Public_6.gif">
-<img src="public/Public_7.gif">
-<img src="public/Public_8.gif">
+<img width=24 src="public/Public_5.gif">
+<img width=24 src="public/Public_6.gif">
+<img width=24 src="public/Public_7.gif">
+<img width=24 src="public/Public_8.gif">
 </p>
 
 ## Private Crum
@@ -87,6 +82,11 @@ Collected crum wiil also be recorded in user profile
 <p float="left">
 <img src="public/Private_1.gif">
 <img src="public/Private_2.gif">
+</p>
+
+<p float="left">
+<img src="public/Private_3.gif">
+<img src="public/Private_4.gif">
 </p>
 
 #### Map
