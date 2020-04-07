@@ -1,8 +1,8 @@
 # Crum - Augmented Reality Mobile Application
 
-An augmented reality and social media application which allows users to create and collect messages with png images in a shared augmented reality space. We refer to a message with a png image as a “crum”.
+An augmented reality and social media application which allows users to create, collect, and interact with "Crums" - digital images with personalized messages. Users express themselves by sharing Crums, superimposing these objects into the augmented reality space.
 
-Develop by Thomas Zhang, Mark Czernyk, Apirl(TianXin) Angland and Peter(CHAOHUI) Chen
+Developed by Thomas Zhang, Mark Czernyk, Apirl(TianXin) Angland and Peter(CHAOHUI) Chen
 
 # SetUp
 
@@ -10,15 +10,15 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 - Run `git clone https://github.com/TeamKnown/Crum.git` and open up the project in your code editor of choice
 - On your phone, Download Expo Client in the Apple App Store
-- In your code editor, from the root directory, run `npm install`
-- Run `brew cask install ngrok` then run `ngrok http 19001` and you will be provided a “Forwarding” link similar to `http://bf5e2801.ngrok.io`
+- In your code editor, from the project root directory, run `npm install`
+- Run `brew cask install ngrok` then run `ngrok http 19001` and you will be provided a “Forwarding” link formatted as such: `http://bf5e2801.ngrok.io`
 - Copy this link and navigate to secretDom.js in the project root directory
-- Set “export const BASE_URL” to that ngrok forwarding link
+- Set “export const BASE_URL” to your ngrok forwarding link
 - Leave ngrok open in this terminal
 - In a new terminal, run `npm run start-dev` to be redirected to localhost
-- On localhost, you will see a QR code. Open up the camera on your iPhone and scan this code
+- In localhost, you will see a QR code. Open up the camera on your iPhone and scan this code
 - Once the QR code is detected, you will receive a push notification to open the “exp” link, click on this and Expo will start downloading the JavaScript bundle
-- Log in or sign up and drop some Crums!
+- Log in or sign up and start dropping some Crums!
 
 ## Tech Stack
 
@@ -37,6 +37,7 @@ Back-end
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/)
+- [Ngrok](https://ngrok.com/)
 
 #### Demo chat features
 
@@ -46,7 +47,7 @@ Back-end
 
 #### Login
 
-To adapt to different phone module, we automatically detect phone module.
+To account for AR compatability on different phone models, we automatically detect the user's phone model. However, the user also has the ability to modify these settings.
 
 <p float="left">
   <img src="public/Device.gif">
@@ -56,14 +57,13 @@ To adapt to different phone module, we automatically detect phone module.
 
 User can drop a crum to the public and specify the number of time it can be collected.
 
-Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
+The public Crum is available for all users to collect, but no one is allowed to collect the same Crum twice. After the last Crum is collected, it will disappear from the AR view
 
 <p float="left">
-<em min-width='24%'>image_caption</em>
-<em minWidth='24%'>image_caption</em>
-<em text-align='center' width='24%'>image_caption</em>
-<em width='24%'>image_caption</em>
-
+<em minWidth=’24%’>Exhibit 1: April taps anywhere within the AR view, selects a Crum, specifies the amount, incluides a message, and confirms the drop. Users can then comment on, or collect the Crum.</em><br/>
+<em minWidth=‘24%’>Exhibit 2: Mark leaves a comment and collects the Crum, which is then reflected in his user profile.</em><br/>
+<em minWidth=‘24%’>Exhibit 3: Peter comes across the same Crum, he also comments and collects it.</em><br/>
+<em minWidth=‘24%’>Exhibit 4: Thomas picks up the last Crum, so it immediately dissapears from the AR view.</em><br/>
 </p >
 
 <p float="left">
@@ -73,7 +73,12 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 <img width='24%'src="public/Public_4.gif">
 </p >
 
-Dropped and Collected crum wiil be recorded in user profile
+Dropped and Collected Crums will be recorded in the user's profile
+
+<p float="left">
+<em minWidth=’24%’>Exhibit 1: April is able to check her history of dropped Crums in her user profile. She can also see which user has collected her Crum.</em><br/>
+<em minWidth=‘24%’>Exhibit 2: Mark checks his history of collected Crums.</em><br/>
+</p >
 
 <p float="left">
 <img width='24%' src="public/Public_5.gif">
@@ -84,14 +89,19 @@ Dropped and Collected crum wiil be recorded in user profile
 
 ## Private Crum
 
-We make the private crum look different by adding a ring around it. Dropper will see the crum with purple ring, receiver will see the crum with teal ring. Private crum will disappear once collected from the AR space.
+A user who drops a private Crum must specify a designated recipient. We differentiate private Crums from public Crums by adding a colored ring around them. Users who drop a private Crum will see a purple ring around it. The recipient of the private Crum will see a teal ring around it. Private Crums will also be immediately removed from the AR view once collected.
+
+<p float="left">
+<em minWidth=’24%’>Exhibit 1: April wants to send some healthy snacks to just Thomas. She selects the private Crum option, specifies the recipient name, and confirms the drop.</em><br/>
+<em minWidth=‘24%’>Exhibit 2: Thomas comes across a teal-bordered Crum, so he knows it was personally dropped for him. Since he is the recipient, he is able to collect the Crum.</em><br/>
+</p >
 
 <p float="left">
 <img width='30%' src="public/Private_1.gif">
 <img width='30%' src="public/Private_2.gif">
 </p>
 
-Dropped and Collected crum wiil be recorded in user profile. Dropper will see the crum with purple border, receiver will see the crum with teal border.
+Similar to the AR view, Privately Dropped and Collected Crums wiil be recorded in the user's profile with its respective purple and teal bordered rings.
 
 <p float="left">
 <img width='30%' src="public/Private_3.gif">
@@ -99,6 +109,13 @@ Dropped and Collected crum wiil be recorded in user profile. Dropper will see th
 </p>
 
 #### Map
+
+The map view will show all nearby public and private Crums, indicated by color. Swiping through the carousel of Crums will navigate the user to it's respective location on the map and display an estimated time of arrival.
+
+<p float="left">
+<em minWidth=’24%’>Exhibit 1: Thomas swipes through the carousel of nearby Crums to see what users have been dropping.</em><br/>
+<em minWidth=‘24%’>Exhibit 2: Each Crum is displayed with an ETA along with a brief description.</em><br/>
+</p >
 
 <p float="left">
   <img src="public/Map.gif">
@@ -116,5 +133,8 @@ Dropped and Collected crum wiil be recorded in user profile. Dropper will see th
 # Learning Takeaways
 
 # Features - time permitting and stretch goals
+- Socket.io integration to allow users to see Crum updates in realtime
+- Add a friend's list component to the user profile that would allow users to add, edit, and delete other users
+- Chat functionality to allow users to communicate with each other
+- Render 3D objects to the AR view
 
-- socket.io integration
