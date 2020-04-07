@@ -66,14 +66,14 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 </p > -->
 
-<p float="left">
+<p float="left" display="flex" flex-direction="row">
 <figure maxWidth='24%' display="flex" flex-direction="column">
 <img src="public/Public_1.gif">
 <em>image_caption</em>
  </figure>
-<img width='24%'src="public/Public_2.gif">
+<!-- <img width='24%'src="public/Public_2.gif">
 <img width='24%'src="public/Public_3.gif">
-<img width='24%'src="public/Public_4.gif">
+<img width='24%'src="public/Public_4.gif"> -->
 </p >
 
 Dropped and Collected crum wiil be recorded in user profile
