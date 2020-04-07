@@ -60,16 +60,16 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 <table style="border: 1px solid red">
   <tr>
-    <th width='24%'>Firstname</th>
-    <th width='24%'>Lastname</th>
-    <th width='24%'>Age</th>
-    <th width='24%'>Age</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Age</th>
+    <th>Age</th>
   </tr>
   <tr>
-    <td ><img src="public/Public_1.gif"></td>
-    <td width='24%'><img src="public/Public_2.gif"></td>
-    <td width='24%'><img src="public/Public_3.gif"></td>
-    <td width='24%'><img src="public/Public_4.gif"></td>
+    <td><img src="public/Public_1.gif"></td>
+    <td><img src="public/Public_2.gif"></td>
+    <td><img src="public/Public_3.gif"></td>
+    <td><img src="public/Public_4.gif"></td>
   </tr>
 </table>
 
