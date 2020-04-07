@@ -60,7 +60,7 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 <style>.my-red-bordered-table table { border: 2px solid red;  }</style>
 
-<table border="20" width="0">
+<table border="0" width="0">
   <tr>
     <th>Firstname</th>
     <th>Lastname</th>
