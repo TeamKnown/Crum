@@ -63,12 +63,19 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 <img width='24%' src="public/Public_1.gif">
 <em>image_caption</em>
 </figure>
+
+<figure>
 <img width='24%'src="public/Public_2.gif">
 <em>image_caption</em>
+</figure>
+<figure>
 <img width='24%'src="public/Public_3.gif">
 <em>image_caption</em>
+</figure>
+<figure>
 <img width='24%'src="public/Public_4.gif">
 <em>image_caption</em>
+</figure>
 </p >
 
 Dropped and Collected crum wiil be recorded in user profile
