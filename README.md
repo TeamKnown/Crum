@@ -68,20 +68,20 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 <p float="left">
 <figure width='24%'>
-<img width='24%' src="public/Public_1.gif">
-<em>image_caption</em>
+<img src="public/Public_1.gif">
+<figcaption>image_caption</figcaption>
  </figure>
  <figure width='24%'>
 <img src="public/Public_2.gif">
-<em>image_caption</em>
+<figcaption>image_caption</figcaption>
  </figure>
   <figure width='24%'>
 <img src="public/Public_3.gif">
-<em>image_caption</em>
+<figcaption>image_caption</figcaption>
  </figure>
   <figure width='24%'>
 <img src="public/Public_4.gif">
-<em>image_caption</em>
+<figcaption>image_caption</figcaption>
  </figure>
 <!-- <img width='24%'src="public/Public_2.gif">
 <img width='24%'src="public/Public_3.gif">
