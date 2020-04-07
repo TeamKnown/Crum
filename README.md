@@ -46,20 +46,39 @@ Back-end
 
 #### Login
 
+To adapt to different phone module, we automatically detect phone module.
+
 <p float="left">
-  <img src="public/Profile.gif">
   <img src="public/Device.gif">
 </p>
 
 ## Public Crum
 
-#### Profile
+User can drop a crum to the public and specify the number of time it can be collected
 
 <p float="left">
 <img src="public/Public_1.gif">
+<p float="left">
+
+Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
+
+</p>
 <img src="public/Public_2.gif">
 <img src="public/Public_3.gif">
 <img src="public/Public_4.gif">
+<p float="left">
+
+Dropped and Collected crum wiil be recorded in user profile
+
+</p>
+<img src="public/Public_5.gif">
+</p>
+
+</p>
+<img src="public/Public_6.gif">
+<img src="public/Public_7.gif">
+<img src="public/Public_8.gif">
+</p>
 
 ## Private Crum
 
@@ -67,23 +86,6 @@ Back-end
 <img src="public/Private_1.gif">
 <img src="public/Private_2.gif">
 </p>
-
-<!--
-## Drop Crum
-#### Drop Crum
-
-
-<p float="left">
-  <img src="public/Drop_Public_Crum.gif">
-  <img src="public/Drop_Private_Crum.gif">
-</p>
-
-#### Collect Crum
-
-<p float="left">
-  <img src="public/Drop_Public_Crum.gif">
-  <img src="public/Drop_Private_Crum.gif">
-</p> -->
 
 #### Map
 
