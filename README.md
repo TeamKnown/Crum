@@ -68,22 +68,26 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 Dropped and Collected crum wiil be recorded in user profile
 
 <p float="left">
-<img width='24%' src="public/Public_5.gif">
-<img width='24%' src="public/Public_6.gif">
-<img width='24%' src="public/Public_7.gif">
-<img width='24%' src="public/Public_8.gif">
+<img width='24%' src="public/Public_5.jpeg">
+<img width='24%' src="public/Public_6.jpeg">
+<img width='24%' src="public/Public_7.jpeg">
+<img width='24%' src="public/Public_8.jpeg">
 </p>
 
 ## Private Crum
+
+We make the private crum look different by adding a ring around it. Dropper will see the crum with purple ring, receiver will see the crum with teal ring. Private crum will disappear once collected from the AR space.
 
 <p float="left">
 <img width='30%' src="public/Private_1.gif">
 <img width='30%' src="public/Private_2.gif">
 </p>
 
+Dropped and Collected crum wiil be recorded in user profile. Dropper will see the crum with purple border, receiver will see the crum with teal border.
+
 <p float="left">
-<img width='30%' src="public/Private_3.gif">
-<img width='30%' src="public/Private_4.gif">
+<img width='30%' src="public/Private_3.jpeg">
+<img width='30%' src="public/Private_4.jpeg">
 </p>
 
 #### Map
