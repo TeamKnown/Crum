@@ -59,8 +59,8 @@ User can drop a crum to the public and specify the number of time it can be coll
 Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
 <p float="left">
-<span width='24%'>image_caption</span>
-<span width='24%'>image_caption</span>
+<span minWidth='24%'>image_caption</span>
+<span min-width='24%'>image_caption</span>
 <span width='24%'>image_caption</span>
 <span width='24%'>image_caption</span>
 
