@@ -33,20 +33,20 @@ Back-end
 - [Express](http://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 
-#### Demo chat features
 
-# Features
 
-## Drop and collect Public Crum
+## Features
+
+#### Drop and collect Public Crum
 <p align="center">
   <img src="public/readme/AdminEditUser.gif">
 </p>
 
-## Drop and collect Private Crum
+#### Drop and collect Private Crum
 
-## Direction Finder
+#### Direction Finder
 
-## Devide info detection
+#### Devide info detection
 
 ## Project Challenges
 
