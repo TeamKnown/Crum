@@ -54,15 +54,12 @@ To adapt to different phone module, we automatically detect phone module.
 
 ## Public Crum
 
-User can drop a crum to the public and specify the number of time it can be collected
-
-<p float="left">
-<img src="public/Public_1.gif">
-</p>
+User can drop a crum to the public and specify the number of time it can be collected.
 
 Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
 <p float="left">
+<img width='24%' src="public/Public_1.gif">
 <img width='24%'src="public/Public_2.gif">
 <img width='24%'src="public/Public_3.gif">
 <img width='24%'src="public/Public_4.gif">
@@ -72,21 +69,21 @@ Dropped and Collected crum wiil be recorded in user profile
 
 <p float="left">
 <img width='24%' src="public/Public_5.gif">
-<img width=24 src="public/Public_6.gif">
-<img width=24 src="public/Public_7.gif">
-<img width=24 src="public/Public_8.gif">
+<img width='24%' src="public/Public_6.gif">
+<img width='24%' src="public/Public_7.gif">
+<img width='24%' src="public/Public_8.gif">
 </p>
 
 ## Private Crum
 
 <p float="left">
-<img src="public/Private_1.gif">
-<img src="public/Private_2.gif">
+<img width='30%' src="public/Private_1.gif">
+<img width='30%' src="public/Private_2.gif">
 </p>
 
 <p float="left">
-<img src="public/Private_3.gif">
-<img src="public/Private_4.gif">
+<img width='30%' src="public/Private_3.gif">
+<img width='30%' src="public/Private_4.gif">
 </p>
 
 #### Map
