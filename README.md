@@ -106,7 +106,7 @@ Similar to the AR view, Privately Dropped and Collected Crums will be recorded i
 <img width='30%' src="public/Private_4.gif">
 </p>
 
-#### Map
+## Map
 
 The *Map View* shows all nearby public and private Crums, indicated by color. Swiping through the carousel at the bottom of this screen will bring the user to each Crum's location, where they can see a message preview. If the user wants to go collect or comment on a Crum, they can click on its icon to see how far away it is from the user’s current location and even get directions
 
@@ -120,11 +120,7 @@ The *Map View* shows all nearby public and private Crums, indicated by color. Sw
   <img src="public/Direction.gif">
 </p>
 
-#### Direction Finder
-
-#### Devide info detection
-
-## Project Challenges
+# Project Challenges
 
 *Rendering Crums*: 
 We initially rendered Crums using longitute and latitude alone, but that did not provide very precise results, as the orientation of a Crum relative to the user is determined by their device camera. For example, if a crum is south of a user, and the user is facing north, then crum should show up behind the user, not in front of them. To solve this problem, we used the iPhone's internal compass to determine which way a user is facing, then derived where in the camera view to populate the Crum.
