@@ -40,20 +40,38 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 # Features
 
-## Drop and collect Public Crum
+## Login
+
+<p float="left">
+  <img src="public/Login.gif">
+</p>
+
+## Profile
+
+<p float="left">
+  <img src="public/Profile.gif">
+  <img src="public/Device.gif">
+</p>
+
+## Drop Crum
 
 <p float="left">
   <img src="public/Drop_Public_Crum.gif">
   <img src="public/Drop_Private_Crum.gif">
 </p>
 
+## Collect Crum
+
+<p float="left">
+  <img src="public/Drop_Public_Crum.gif">
+  <img src="public/Drop_Private_Crum.gif">
 </p>
 
-<p align="center">
-  <img src="public/Drop_Public_Crum.gif">
-</p>
-<p align="center">
-  <img src="public/Drop_Private_Crum.gif">
+## Map
+
+<p float="left">
+  <img src="public/Map.gif">
+  <img src="public/Direction.gif">
 </p>
 
 ## Direction Finder
