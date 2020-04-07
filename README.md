@@ -58,6 +58,29 @@ User can drop a crum to the public and specify the number of time it can be coll
 
 Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
+<table style="width:100%">
+  <tr>
+    <th width='24%'>Firstname</th>
+    <th width='24%'>Lastname</th>
+    <th width='24%'>Age</th>
+  </tr>
+  <!-- <tr>
+    <td>Jill</td>
+    <td>Smith</td>
+    <td>50</td>
+  </tr>
+  <tr>
+    <td>Eve</td>
+    <td>Jackson</td>
+    <td>94</td>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>Doe</td>
+    <td>80</td>
+  </tr> -->
+</table>
+
 <p float="left">
 <span minWidth='24%'>image_caption</span>
 <span min-width='24%'>image_caption</span>
