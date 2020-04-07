@@ -1,6 +1,6 @@
-# Crum - Explore & Share on an Interactive Location-based AR Platform 
+# Crum - Explore & Share on an Interactive Location-based Augmented Reality Platform 
 
-***Crum*** is an interactive social application that allows users to create, collect, and comment on “Crums” - digital images with personalized messages superimposed onto the real world.
+***Crum*** is a social mobile application that allows users to create, collect, and comment on “Crums” - digital images with personalized messages superimposed onto the real world.
 
 *Developed by Thomas Zhang, Mark Czernyk, April (TianXin) Angland and Peter (CHAOHUI) Chen*
 
