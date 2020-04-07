@@ -58,16 +58,16 @@ User can drop a crum to the public and specify the number of time it can be coll
 
 Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
-<!-- <p float="left">
-<pre min-width='24%'>image_caption</pre>
-<pre minWidth='24%'>image_caption</pre>
-<pre text-align='center' width='24%'>image_caption</pre>
-<pre width='24%'>image_caption</pre>
+<p float="left">
+<div width='24%'>image_caption</pre>
+<div width='24%'>image_caption</pre>
+<div width='24%'>image_caption</pre>
+<div width='24%'>image_caption</pre>
 
-</p > -->
+</p >
 
 <p float="left">
-<figure width='24%'>
+<figure width='24%' align="left">
 <img src="public/Public_1.gif">
 <figcaption>image_caption</figcaption>
  </figure>
