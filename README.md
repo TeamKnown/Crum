@@ -66,7 +66,7 @@ Other users can collect the crum, but no one is allowed to collect the same crum
     <th width='24%'>Age</th>
   </tr>
   <tr>
-    <td width='24%'><img src="public/Public_1.gif"></td>
+    <td width='24%' margin=0><img src="public/Public_1.gif"></td>
     <td width='24%'><img src="public/Public_2.gif"></td>
     <td width='24%'><img src="public/Public_3.gif"></td>
     <td width='24%'><img src="public/Public_4.gif"></td>
