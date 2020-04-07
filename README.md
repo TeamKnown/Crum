@@ -60,18 +60,22 @@ Other users can collect the crum, but no one is allowed to collect the same crum
 
 <p float="left">
 <img width='24%' src="public/Public_1.gif">
+<em>image_caption</em>
 <img width='24%'src="public/Public_2.gif">
+<em>image_caption</em>
 <img width='24%'src="public/Public_3.gif">
+<em>image_caption</em>
 <img width='24%'src="public/Public_4.gif">
+<em>image_caption</em>
 </p >
 
 Dropped and Collected crum wiil be recorded in user profile
 
 <p float="left">
-<img width='24%' src="public/Public_5.png">
-<!-- <img width='24%' src="public/Public_6.png">
-<img width='24%' src="public/Public_7.png">
-<img width='24%' src="public/Public_8.png"> -->
+<img width='24%' src="public/Public_5.gif">
+<img width='24%' src="public/Public_6.gif">
+<img width='24%' src="public/Public_7.gif">
+<img width='24%' src="public/Public_8.gif">
 </p>
 
 ## Private Crum
@@ -86,8 +90,8 @@ We make the private crum look different by adding a ring around it. Dropper will
 Dropped and Collected crum wiil be recorded in user profile. Dropper will see the crum with purple border, receiver will see the crum with teal border.
 
 <p float="left">
-<img width='30%' src="public/Private_3.png">
-<img width='30%' src="public/Private_4.png">
+<img width='30%' src="public/Private_3.gif">
+<img width='30%' src="public/Private_4.gif">
 </p>
 
 #### Map
