@@ -1,6 +1,6 @@
 # Crum - Augmented Reality Mobile Application
 
-An augmented reality and social media application which allows users to create and collect messages with png images in a shared augmented reality space. We refer to a message with a png image as a “crum”. 
+An augmented reality and social media application which allows users to create and collect messages with png images in a shared augmented reality space. We refer to a message with a png image as a “crum”.
 
 Develop by Thomas Zhang, Mark Czernyk, Apirl(TianXin) Angland and Peter(CHAOHUI) Chen
 
@@ -35,16 +35,39 @@ Back-end
 - [Express](http://expressjs.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 
+#### Login
 
-
-## Features
-
-#### Drop and collect Public Crum
-<p align="center">
-  <img src="public/readme/AdminEditUser.gif">
+<p float="left">
+  <img src="public/Login.gif">
 </p>
 
-#### Drop and collect Private Crum
+#### Profile
+
+<p float="left">
+  <img src="public/Profile.gif">
+  <img src="public/Device.gif">
+</p>
+
+#### Drop Crum
+
+<p float="left">
+  <img src="public/Drop_Public_Crum.gif">
+  <img src="public/Drop_Private_Crum.gif">
+</p>
+
+#### Collect Crum
+
+<p float="left">
+  <img src="public/Drop_Public_Crum.gif">
+  <img src="public/Drop_Private_Crum.gif">
+</p>
+
+#### Map
+
+<p float="left">
+  <img src="public/Map.gif">
+  <img src="public/Direction.gif">
+</p>
 
 #### Direction Finder
 
