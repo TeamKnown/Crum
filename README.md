@@ -40,12 +40,6 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 # Features
 
-## Login
-
-<p float="left">
-  <img src="public/Login.gif">
-</p>
-
 ## Profile
 
 <p float="left">
@@ -53,7 +47,24 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
   <img src="public/Device.gif">
 </p>
 
+## Public Crum
+
+<p float="left">
+<img src="public/Public_1.gif">
+<img src="public/Public_2.gif">
+<img src="public/Public_3.gif">
+<img src="public/Public_4.gif">
+
+## Private Crum
+
+<p float="left">
+<img src="public/Private_1.gif">
+<img src="public/Private_2.gif">
+</p>
+
+<!--
 ## Drop Crum
+
 
 <p float="left">
   <img src="public/Drop_Public_Crum.gif">
@@ -65,7 +76,7 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 <p float="left">
   <img src="public/Drop_Public_Crum.gif">
   <img src="public/Drop_Private_Crum.gif">
-</p>
+</p> -->
 
 ## Map
 
