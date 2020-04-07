@@ -26,6 +26,8 @@ Front-End
 - [Expo-Three](https://github.com/expo/expo-three)
 - [React](https://facebook.github.io/react/)
 - [React-Native](https://github.com/facebook/react-native)
+- [React-Native-Navigation](https://github.com/wix/react-native-navigation)
+- [React-Native-Maps](https://github.com/react-native-community/react-native-maps)
 - [Redux](https://redux.js.org/)
 
 Back-end
