@@ -63,48 +63,15 @@ Other users can collect the crum, but no one is allowed to collect the same crum
     <th width='24%'>Firstname</th>
     <th width='24%'>Lastname</th>
     <th width='24%'>Age</th>
+    <th width='24%'>Age</th>
   </tr>
   <tr>
-    <td><img src="public/Public_1.gif"></td>
-    <td><img src="public/Public_1.gif"></td>
-    <td><img src="public/Public_1.gif"></td>
+    <td width='24%'><img src="public/Public_1.gif"></td>
+    <td width='24%'><img src="public/Public_2.gif"></td>
+    <td width='24%'><img src="public/Public_3.gif"></td>
+    <td width='24%'><img src="public/Public_4.gif"></td>
   </tr>
-  <tr>
-    <td>John</td>
-    <td>Doe</td>
-    <td>80</td>
-  </tr> -->
 </table>
-
-<p float="left">
-<span minWidth='24%'>image_caption</span>
-<span min-width='24%'>image_caption</span>
-<span width='24%'>image_caption</span>
-<span width='24%'>image_caption</span>
-
-</p >
-
-<p float="left" flex-direction='row'>
-<figure width='24%' flex-direction='column' >
-<img src="public/Public_1.gif">
-<figcaption>image_caption</figcaption>
- </figure>
- <figure width='24%'>
-<img src="public/Public_2.gif">
-<figcaption>image_caption</figcaption>
- </figure>
-  <figure width='24%'>
-<img src="public/Public_3.gif">
-<figcaption>image_caption</figcaption>
- </figure>
-  <figure width='24%'>
-<img src="public/Public_4.gif">
-<figcaption>image_caption</figcaption>
- </figure>
-<!-- <img width='24%'src="public/Public_2.gif">
-<img width='24%'src="public/Public_3.gif">
-<img width='24%'src="public/Public_4.gif"> -->
-</p >
 
 Dropped and Collected crum wiil be recorded in user profile
 
