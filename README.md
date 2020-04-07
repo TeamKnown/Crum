@@ -20,17 +20,19 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 - Once the QR code is detected, you will receive a push notification to open the “exp” link, click on this and Expo will start downloading the JavaScript bundle
 - Log in or sign up and drop some Crums!
 
-# Tech Stack
+## Tech Stack
 
-## Front-End
+Front-End
 
 - [Expo](https://expo.io/learn)
 - [Expo-Three](https://github.com/expo/expo-three)
 - [React](https://facebook.github.io/react/)
 - [React-Native](https://github.com/facebook/react-native)
+- [React-Native-Navigation](https://github.com/wix/react-native-navigation)
+- [React-Native-Maps](https://github.com/react-native-community/react-native-maps)
 - [Redux](https://redux.js.org/)
 
-## Back-end
+Back-end
 
 - [Node.js](https://nodejs.org/en/)
 - [Express](http://expressjs.com/)
@@ -42,12 +44,16 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 ## Profile
 
+#### Login
+
 <p float="left">
   <img src="public/Profile.gif">
   <img src="public/Device.gif">
 </p>
 
 ## Public Crum
+
+#### Profile
 
 <p float="left">
 <img src="public/Public_1.gif">
@@ -64,6 +70,7 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
 
 <!--
 ## Drop Crum
+#### Drop Crum
 
 
 <p float="left">
@@ -71,32 +78,30 @@ Note: iPhone 6s and newer is recommended for optimal performance on Crum
   <img src="public/Drop_Private_Crum.gif">
 </p>
 
-## Collect Crum
+#### Collect Crum
 
 <p float="left">
   <img src="public/Drop_Public_Crum.gif">
   <img src="public/Drop_Private_Crum.gif">
 </p> -->
 
-## Map
+#### Map
 
 <p float="left">
   <img src="public/Map.gif">
   <img src="public/Direction.gif">
 </p>
 
-## Direction Finder
+#### Direction Finder
 
-## Devide info detection
+#### Devide info detection
 
-# Project Challenges
+## Project Challenges
 
-## Render Crums in the most precise way
-
-We initially render the crums using longitute and latitude, but that did not give use very precise result. For example, if a crum is south of a user, and the user is facing left, then crum should show up behind the user. We need to know which way the phone is facing by accesssing to the iphone internal compass, and derive where in the camera view to populate the crum.
+- Render Crums in the most precise way. We initially render the crums using longitute and latitude, but that did not give use very precise result. For example, if a crum is south of a user, and the user is facing left, then crum should show up behind the user. We need to know which way the phone is facing by accesssing to the iphone internal compass, and derive where in the camera view to populate the crum.
 
 # Learning Takeaways
 
 # Features - time permitting and stretch goals
 
-## socket.io integration
+- socket.io integration
