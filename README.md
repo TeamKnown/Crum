@@ -58,12 +58,10 @@ User can drop a crum to the public and specify the number of time it can be coll
 
 Other users can collect the crum, but no one is allowed to collect the same crum twice. After the last crum is collected, it will disappear from the AR view
 
-<style>.my-red-bordered-table table { border: 2px solid red;  }</style>
-
-<table border="0">
-  <tr border="0">
-    <th border="0">Firstname</th>
-    <th border="0">Lastname</th>
+<table color='red'>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
     <th>Age</th>
     <th>Age</th>
   </tr>
