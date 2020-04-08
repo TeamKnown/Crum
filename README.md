@@ -41,9 +41,7 @@ Back-end
 
 # Features
 
-## Profile
-
-#### Login
+## Device Info
 
 To account for AR compatibility on different devices, we automatically detect the user's phone model in the *Settings* page. The user has the ability to modify these settings to accommodate their device.
 
@@ -120,12 +118,18 @@ The *Map View* shows all nearby public and private Crums, indicated by color. Sw
   <img src="public/Direction.gif">
 </p>
 
-# Project Challenges
+# Technical highlight
 
-*Rendering Crums*: 
+*Rendering Crums at Exact Location*: 
 We initially rendered Crums using longitude and latitude alone, but that did not provide very precise results, as the orientation of a Crum relative to the user is determined by their device camera. For example, if a Crum is south of a user, and the user is facing north, then the Crum should show up behind the user, not in front of them. To solve this problem, we used the iPhone's internal compass to determine which way a user is facing, then derived where in the camera view to populate the Crum.
 
-# Learning Takeaways
+# Challenges & Takeaways
+
+*Communication in a Remote Setting*: 
+We worked in a remote setting. In a remote setting, proactively over-communicate is especially essential. Because we are not seeing each other face to face, we made a point to keep the team updated with what we are working on and what is our next step. 
+
+*Prioritization*: 
+We faced a tight time constraint (2.5 weeks) for this project. To ensure we have a full functional product, we broke down project requirements into tiers and prioritized essential features and user experiences. We did not end up building all features we wanted, but we have a very well rounded product. 
 
 # Features - time permitting and stretch goals
 - Socket.io integration to allow users at the same latitude/longitude coordinates to see Crum updates in real time
