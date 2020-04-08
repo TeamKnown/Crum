@@ -41,7 +41,7 @@ Back-end
 
 # Features
 
-## Device Info
+## Detect Device
 
 To account for AR compatibility on different devices, we automatically detect the user's phone model in the *Settings* page. The user has the ability to modify these settings to accommodate their device.
 
@@ -49,7 +49,7 @@ To account for AR compatibility on different devices, we automatically detect th
   <img src="public/Device.gif">
 </p>
 
-## Public Crum
+## Public Crums
 
 Users can drop a Crum to the public and specify the number of times it can be collected.
 
@@ -83,7 +83,7 @@ Dropped and Collected Crums are recorded in the user's Profile
 <img width='24%' src="public/Public_8.gif">
 </p>
 
-## Private Crum
+## Private Crums
 
 A user who drops a **private** Crum must specify a designated recipient. We differentiate private Crums from public Crums by adding a colored ring around them. Users who drop a private Crum see a purple ring around it. The recipient of the private Crum sees a teal ring around it. Private Crums are immediately removed from the AR view once collected.
 
@@ -118,7 +118,7 @@ The *Map View* shows all nearby public and private Crums, indicated by color. Sw
   <img src="public/Direction.gif">
 </p>
 
-# Technical highlight
+# Technical Highlights
 
 *Rendering Crums at Exact Location*: 
 We initially rendered Crums using longitude and latitude alone, but that did not provide very precise results, as the orientation of a Crum relative to the user is determined by their device camera. For example, if a Crum is south of a user, and the user is facing north, then the Crum should show up behind the user, not in front of them. To solve this problem, we used the iPhone's internal compass to determine which way a user is facing, then derived where in the camera view to populate the Crum.
@@ -126,10 +126,10 @@ We initially rendered Crums using longitude and latitude alone, but that did not
 # Challenges & Takeaways
 
 *Communication in a Remote Setting*: 
-We worked in a remote setting. In a remote setting, proactively over-communicate is especially essential. Because we are not seeing each other face to face, we made a point to keep the team updated with what we are working on and what is our next step. 
+We worked in a remote setting, where proactive over-communication is essential. Because we were not able to see each other face to face, we took extra effort to keep the team updated with our current work and upcoming plans. 
 
 *Prioritization*: 
-We faced a tight time constraint (2.5 weeks) for this project. To ensure we have a full functional product, we broke down project requirements into tiers and prioritized essential features and user experiences. We did not end up building all features we wanted, but we have a very well rounded product. 
+We faced a tight time constraint (2.5 weeks) for this project. To ensure that we had a fully functional product, we broke down our project requirements into tiers that prioritized essential features and complete user experiences. We did not end up building all of the features we wanted, but we have a very well rounded product. 
 
 # Features - time permitting and stretch goals
 - Socket.io integration to allow users at the same latitude/longitude coordinates to see Crum updates in real time
