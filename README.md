@@ -45,7 +45,7 @@ Back-end
 
 #### Login
 
-To account for AR compatability on different devices, we automatically detect the user's phone model in the *Settings* page. The user has the ability to modify these settings to accomodate their device.
+To account for AR compatibility on different devices, we automatically detect the user's phone model in the *Settings* page. The user has the ability to modify these settings to accommodate their device.
 
 <p float="left">
   <img src="public/Device.gif">
@@ -53,12 +53,12 @@ To account for AR compatability on different devices, we automatically detect th
 
 ## Public Crum
 
-Users can drop a crum to the public and specify the number of times it can be collected.
+Users can drop a Crum to the public and specify the number of times it can be collected.
 
-A **public** Crum is available for **all** users to collect, but no one is allowed to collect the same Crum twice. After the last Crum is collected, it will disappear from the AR view
+A **public** Crum is available for **all** users to collect, but no one is allowed to collect the same Crum twice. After the last Crum is collected, it disappears from the AR view
 
 <p float="left">
-<em minWidth=’24%’>Exhibit 1: April taps anywhere within the AR view, selects a Crum, specifies the amount, incluides a message, and confirms the drop. Users can then comment on or collect the Crum.</em><br/>
+<em minWidth=’24%’>Exhibit 1: April taps anywhere within the AR view, selects a Crum, specifies the amount, includes a message, and confirms the drop. Users can then comment on or collect the Crum.</em><br/>
 <em minWidth=‘24%’>Exhibit 2: Mark leaves a comment and collects the Crum, which is then shown in his user profile.</em><br/>
 <em minWidth=‘24%’>Exhibit 3: Peter comes across the same Crum. He also comments on and collects it.</em><br/>
 <em minWidth=‘24%’>Exhibit 4: Thomas picks up the last Crum, so it immediately disappears from the AR view.</em><br/>
@@ -71,7 +71,7 @@ A **public** Crum is available for **all** users to collect, but no one is allow
 <img width='24%'src="public/Public_4.gif">
 </p >
 
-Dropped and Collected Crums will be recorded in the user's Profile
+Dropped and Collected Crums are recorded in the user's Profile
 
 <p float="left">
 <em minWidth=’24%’>Exhibit 1: April is able to check her history of dropped Crums in her User Profile. She can also see which user has collected her Crum.</em><br/>
@@ -87,7 +87,7 @@ Dropped and Collected Crums will be recorded in the user's Profile
 
 ## Private Crum
 
-A user who drops a **private** Crum must specify a designated recipient. We differentiate private Crums from public Crums by adding a colored ring around them. Users who drop a private Crum will see a purple ring around it. The recipient of the private Crum will see a teal ring around it. Private Crums are immediately removed from the AR view once collected.
+A user who drops a **private** Crum must specify a designated recipient. We differentiate private Crums from public Crums by adding a colored ring around them. Users who drop a private Crum see a purple ring around it. The recipient of the private Crum sees a teal ring around it. Private Crums are immediately removed from the AR view once collected.
 
 <p float="left">
 <em minWidth=’24%’>Exhibit 1: Peter just wants to leave some healthy snacks for Thomas. He selects the private Crum option, specifies the recipient name, and confirms the drop.</em><br/>
@@ -99,7 +99,7 @@ A user who drops a **private** Crum must specify a designated recipient. We diff
 <img width='30%' src="public/Private_2.gif">
 </p>
 
-Similar to the AR view, Privately Dropped and Collected Crums will be recorded in the user's Profile with purple and teal borders respectively.
+Similar to the AR view, privately dropped and collected Crums are recorded in the user's Profile with purple and teal borders respectively.
 
 <p float="left">
 <img width='30%' src="public/Private_3.gif">
@@ -108,7 +108,7 @@ Similar to the AR view, Privately Dropped and Collected Crums will be recorded i
 
 ## Map
 
-The *Map View* shows all nearby public and private Crums, indicated by color. Swiping through the carousel at the bottom of this screen will bring the user to each Crum's location, where they can see a message preview. If the user wants to go collect or comment on a Crum, they can click on its icon to see how far away it is from the user’s current location and even get directions
+The *Map View* shows all nearby public and private Crums, indicated by color. Swiping through the carousel at the bottom of this screen brings the user to each Crum's location, where they can see a message preview. If the user wants to go collect or comment on a Crum, they can click on its icon to see how far away it is from the user’s current location and even get directions
 
 <p float="left">
 <em minWidth=’30%’>Exhibit 1: Thomas swipes through the carousel of nearby Crums to see what users have been dropping.</em><br/>
@@ -123,13 +123,14 @@ The *Map View* shows all nearby public and private Crums, indicated by color. Sw
 # Project Challenges
 
 *Rendering Crums*: 
-We initially rendered Crums using longitute and latitude alone, but that did not provide very precise results, as the orientation of a Crum relative to the user is determined by their device camera. For example, if a crum is south of a user, and the user is facing north, then crum should show up behind the user, not in front of them. To solve this problem, we used the iPhone's internal compass to determine which way a user is facing, then derived where in the camera view to populate the Crum.
+We initially rendered Crums using longitude and latitude alone, but that did not provide very precise results, as the orientation of a Crum relative to the user is determined by their device camera. For example, if a Crum is south of a user, and the user is facing north, then the Crum should show up behind the user, not in front of them. To solve this problem, we used the iPhone's internal compass to determine which way a user is facing, then derived where in the camera view to populate the Crum.
 
 # Learning Takeaways
 
 # Features - time permitting and stretch goals
-- Socket.io integration to allow users to see Crum updates in realtime
-- Add a friend's list component to the User Profile that would allow users to add, edit, and delete other users
+- Socket.io integration to allow users at the same latitude/longitude coordinates to see Crum updates in real time
+- Add a friend's list component to the User Profile that allows users to add, edit, and delete friends
 - Chat functionality to allow users to communicate with each other
 - Render 3D objects in the AR view
+- Allow users to upload their own images to create unique Crums
 
