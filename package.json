@@ -158,7 +158,7 @@
     "eslint-plugin-react": "^7.19.0",
     "git-url-parse": "^11.1.2",
     "husky": "^4.2.3",
-    "jsdom": "16.2.1",
+    "jsdom": "16.5.0",
     "jsdom-global": "3.0.2",
     "lint-staged": "^10.0.8",
     "mocha": "^7.1.1",
