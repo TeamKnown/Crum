@@ -104,7 +104,7 @@
     "react-native-numeric-input": "^1.8.3",
     "react-native-paper": "^3.7.0",
     "react-native-permissions": "^2.0.10",
-    "react-native-reanimated": "~1.4.0",
+    "react-native-reanimated": "~2.10.0",
     "react-native-router-flux": "^4.2.0",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
